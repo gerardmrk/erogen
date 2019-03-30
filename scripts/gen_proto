@@ -1,0 +1,119 @@
+#!/bin/bash
+#
+# Example script template
+#
+# Credits:
+# this is an amalgation of various sources online that follows best practices
+# most notably the AWS-Terraform-Vault module.
+#
+# <- SHORT DESCRIPTION OF SCRIPT HERE ->
+#
+
+set -e
+
+# **************************************************************************************************
+#    CONSTANTS
+
+# script name
+readonly SCRIPT_NAME="$(basename "$0")"
+# directory paths
+readonly ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly SCRIPT_DIR="$(cd "${ROOT_DIR}/scripts" && pwd)"
+readonly BINARY_DIR="$(cd "${ROOT_DIR}/.bin" && pwd)"
+
+# **************************************************************************************************
+#    MAIN FUNCS
+
+# script entrypoint.
+main() {
+  # ensure required binaries are installed
+  check_required_binaries "protoc"
+
+  log_info "Starting..."
+
+  generate_proto_code "./proto/user" "./proto/user/user.proto" "./proto/user/user_pb"
+  generate_proto_code "./proto/i18n" "./proto/i18n/i18n.proto" "./proto/i18n/i18n_pb"
+
+  log_info "Done!"
+}
+
+generate_proto_code() {
+  local readonly base_path="$1"
+  local readonly file_path="$2"
+  local readonly output_path="$3"
+  (
+    cd "$ROOT_DIR" && \
+    protoc "$file_path" \
+      --cpp_out=. \
+      --go_out=plugins=grpc:. \
+      --js_out=library="$output_path":. \
+      --ruby_out=. \
+      --python_out=. \
+      --csharp_out="$base_path"
+  )
+  
+}
+
+
+# **************************************************************************************************
+#    HELPER FUNCS
+
+
+# check for required binaries
+check_required_binaries() {
+  local readonly bin_name="$1"
+
+  if [[ ! $(command -v ${bin_name}) ]]; then
+    log_error "missing binary: '$bin_name' is required to run this script but is not in the system's PATH"
+    exit 1
+  fi
+}
+
+# **************************************************************************************************
+#    LOGGERS
+
+# base logger
+log() {
+  local readonly lvl="$1"
+  local readonly msg="$2"
+  local readonly tst=$(date +"%m/%d %H:%M:%S")
+  >&2 printf "${tst} ${lvl} [$SCRIPT_NAME] ${msg}\n\033[0m"
+}
+
+# logger - LVL INFO
+log_info() {
+  log "\e[38;2;0;255;255m INFO" "$1"
+}
+
+# logger - LVL WARN
+log_warn() {
+  log "\e[38;2;255;165;0m WARN" "$1"
+}
+
+# logger - LVL ERROR
+log_error() {
+  log "\e[38;2;255;0;0mERROR" "$1"
+}
+
+# prints script usage
+print_usage() {
+  echo
+  echo "Usage: ${SCRIPT_NAME} [OPTIONS]"
+  echo
+  echo "This script builds binaries in ./cmd/** and installs it to ./bin/**"
+  echo
+  echo "Options:"
+  echo
+  echo -e "   --name  [required] Binary name."
+  echo -e "   --help             Print usage."
+  echo
+  echo "Example:"
+  echo
+  echo "   > ${SCRIPT_NAME} --name enstyre"
+  echo
+}
+
+# **************************************************************************************************
+#    Execute
+main "$@"
+exit 0

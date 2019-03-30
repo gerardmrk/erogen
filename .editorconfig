@@ -1,0 +1,18 @@
+[*.tf,*.tfvars]
+indent_style = space
+indent_size = 2
+
+[*.toml]
+indent_style = space
+indent_size = 4
+
+[*.go]
+indent_style = tab
+indent_size = 4
+
+[*.{js,jsx,ts,tsx,css,scss}]
+indent_style = space
+indent_size =  4
+
+[*.{txt,yml,yaml,json,toml,csv,md,tf,hcl,conf,ini,env,bzl,bazel}]
+insert_final_newline = true

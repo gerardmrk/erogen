@@ -1,0 +1,90 @@
+name = "erogen"
+
+aws_region = "us-west-2"
+
+aws_access_key = "xo"
+
+aws_secret_key = "xo"
+
+gitlab_access_token = "xo"
+
+environments = [
+  {
+    name         = "dev"
+    full_name    = "development"
+    description  = "Cost-effective, non-HA cluster for development."
+    aws_region   = "us-west-2"
+    aws_role_arn = "xo"
+  },
+  {
+    name         = "test"
+    full_name    = "test"
+    description  = "Cost-effective, non-HA cluster for testing. Runtimes here should be automated and torn down after completion."
+    aws_region   = "us-west-2"
+    aws_role_arn = "xo"
+  },
+  {
+    name         = "stage"
+    full_name    = "staging"
+    description  = "Exact replica of production. Runtimes that must mirror live runtime for reproducibility reasons should reside here."
+    aws_region   = "us-west-2"
+    aws_role_arn = "xo"
+  },
+  {
+    name         = "prod"
+    full_name    = "production"
+    description  = "Production environment. This is where the live runtime should reside, and the disaster-recovery runtime to if exists."
+    aws_region   = "us-west-2"
+    aws_role_arn = "xo"
+  },
+]
+
+runtimes = {
+  sbox = {
+    name         = "sandbox"
+    description  = "Long-lived runtime for non-local integrated development environment or experimenting purposes."
+    env          = "dev"
+    phase        = 1
+    long_running = true
+  }
+
+  sit = {
+    name         = "system_integration_tests"
+    description  = "Short-lived runtime for automated system integration testing."
+    env          = "test"
+    phase        = 2
+    long_running = false
+  }
+
+  e2e = {
+    name         = "end_to_end_tests"
+    description  = "Short-lived runtime for automated end-to-end testing."
+    env          = "test"
+    phase        = 3
+    long_running = false
+  }
+
+  ptest = {
+    name         = "performance_tests"
+    description  = "Short-lived runtime for load and stress testing et al. Resides in staging env for consistency of results."
+    env          = "stage"
+    phase        = 4
+    long_running = false
+  }
+
+  uat = {
+    name         = "user_acceptance_tests"
+    description  = "Long-lived runtime for non-automated user acceptance testing by QA team or for demo purposes."
+    env          = "stage"
+    phase        = 4
+    long_running = true
+  }
+
+  live = {
+    name         = "live"
+    description  = "The live runtime itself."
+    env          = "prod"
+    phase        = 5
+    long_running = true
+  }
+}

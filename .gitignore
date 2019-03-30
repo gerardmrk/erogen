@@ -1,0 +1,108 @@
+# ----------------------------------------------------------------------------------------------------------------------
+# General
+# ----------------------------------------------------------------------------------------------------------------------
+
+# thumbnails
+Thumbs.db
+
+# compressed assets
+*.gz
+*.zip
+
+# env variable files
+.env*
+*.env
+!.env.example
+
+# ----------------------------------------------------------------------------------------------------------------------
+# IDE Settings
+# ----------------------------------------------------------------------------------------------------------------------
+
+# Jetbrains IDEs
+.idea/
+
+# Visual Studio IDE
+.vs/
+
+# VSCode Text Editor
+.vscode/
+
+# VIM Editor
+*.swp
+*.swo
+
+# * TODO plugins
+.todo
+
+# ----------------------------------------------------------------------------------------------------------------------
+# OS Specifics
+# ----------------------------------------------------------------------------------------------------------------------
+
+# MacOS
+.DS_Store
+.localized
+
+# Windows
+Desktop.ini
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Generated
+# ----------------------------------------------------------------------------------------------------------------------
+
+# Compiled/transpiled assets
+**/lib/*
+!**/lib/.gitkeep
+**/dist/*
+!**/dist/.gitkeep
+**/build/*
+!**/build/.gitkeep
+
+# Caches
+.cache/*
+!.cache/.gitkeep
+
+# generated logs
+*.log
+
+# generated reports for e.g. test coverage, container-scanning, deps auditing
+.reports/coverage/*
+!.reports/coverage/.gitkeep
+
+# generated binaries
+.bin/*
+!.bin/.gitkeep
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Language/Framework/Tool Specifics
+# ----------------------------------------------------------------------------------------------------------------------
+
+# [JS] Node Modules
+node_modules/
+
+# [JS] Lerna NPM Module lock file
+package.json.lerna_backup
+
+# [TERRAFORM] Providers + plugins
+.terraform/
+
+# [TERRAFORM] Infra state files                                      *SENSITIVE*
+*.tfstate
+*.tfstate.backup
+terraform.tfstate.d/
+
+# [TERRAFORM] Auto-loaded env variable files                         *SENSITIVE*
+*.tfvars
+
+# [BAZEL] Generated output symlinks
+bazel-*
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Project Specific
+# ----------------------------------------------------------------------------------------------------------------------
+
+.state/
+
+# for init script
+.init.json
+
+config/env_vars.toml

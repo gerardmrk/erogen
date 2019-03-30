@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package erogen;
+
+option go_package = "i18n";
+
+service I18nService {
+    rpc CountryInfo(CountryInfoRequest) returns (CountryInfoResponse) {};
+    rpc CountriesInfo(CountriesInfoRequest) returns (stream CountryInfoResponse) {};
+}
+
+message CountryInfoRequest {
+    uint32 id = 1;
+}
+
+message CountryInfoResponse {
+    CountryInfo country = 1;
+}
+
+message CountriesInfoRequest {
+    string filter = 1;
+    uint32 count = 2;
+    uint32 offset = 3;
+}
+
+message CountryInfo {
+    uint32 id = 1;
+    string iso_2 = 2;
+    string iso_3 = 3;
+    string name = 4;
+}

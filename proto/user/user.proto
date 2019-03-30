@@ -1,0 +1,175 @@
+syntax = "proto3";
+
+package erogen;
+
+option go_package = "user";
+
+service UserService {
+    // unauthenticated requests
+    rpc Login(LoginRequest) returns (LoginResponse) {};
+    rpc Register(RegisterRequest) returns (RegisterResponse) {};
+    rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse) {};
+    rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {};
+    rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse) {};
+
+    // authenticated write requests
+    rpc ChangeEmail(ChangeEmailRequest) returns (ChangeEmailResponse) {};
+    rpc ChangeUsername(ChangeUsernameRequest) returns (ChangeUsernameResponse) {};
+    rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse) {};
+    rpc VerifySecurityQA(VerifySecurityQARequest) returns (VerifySecurityQAResponse) {};
+    rpc Update(UpdateRequest) returns (UpdateResponse) {};
+    rpc Delete(DeleteRequest) returns (UpdateResponse) {};
+
+    // authenticated read requests
+    rpc User(UserRequest) returns (UserResponse) {};
+    rpc Users(UsersRequest) returns (stream UserResponse) {};
+}
+
+message LoginRequest {
+    string identifier = 1;
+    UserIdentifierType identifier_type = 2;
+    string password = 3;
+    bool remember = 4;
+    uint32 remember_for = 5;
+    bool fetch_tokens = 6;
+}
+
+message LoginResponse {
+    bool success = 1;
+    TokenPayload payload = 2;
+
+    message TokenPayload {
+        string id_token = 1;
+        string access_token = 2;
+        string refresh_token = 3;
+        string token_type = 4;
+        string scope = 5;
+        int32 expires_in = 6;
+    }
+}
+
+message RegisterRequest {
+    string username = 1;
+    string email_address = 2;
+    string password = 3;
+    string accepted_tos_version = 4;
+}
+
+message RegisterResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message ChangeEmailRequest {
+    string id = 1;
+    string current_email = 2;
+    string new_email = 3;
+}
+
+message ChangeEmailResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message ChangeUsernameRequest {
+    string id = 1;
+    string current_username = 2;
+    string new_username = 3;
+}
+
+message ChangeUsernameResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message ChangePasswordRequest {
+    string id = 1;
+    string current_password = 2;
+    string new_password = 3;
+}
+
+message ChangePasswordResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message ForgotPasswordRequest {
+    string email_address = 1;
+}
+
+message ForgotPasswordResponse {
+    bool user_exists = 1;
+    bool sendemail_queued = 2;
+}
+
+message ResetPasswordRequest {
+    string user_id = 1;
+    string new_password = 2;
+}
+
+message ResetPasswordResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message ValidateTokenRequest {
+    string token = 1;
+    Scope scope = 2;
+
+    enum Scope {
+        EMAIL_VERIFICATION = 0;
+        PASSWORD_RESET = 1;
+    }
+}
+
+message ValidateTokenResponse {
+    bool success = 1;
+}
+
+message VerifySecurityQARequest {
+    string answer = 1;
+}
+
+message VerifySecurityQAResponse {
+    bool success = 1;
+}
+
+message UpdateRequest {
+    User user = 1;
+}
+
+message UpdateResponse {
+    bool success = 1;
+    User user = 2;
+}
+
+message DeleteRequest {
+    string id = 1;
+}
+
+message DeleteResponse {
+    bool success = 1;
+}
+
+message UserRequest {
+    string id = 1;
+}
+
+message UserResponse {
+    User user = 1;
+}
+
+message UsersRequest {
+    string filter = 1;
+    uint32 count = 2;
+    uint32 offset = 3;
+}
+
+enum UserIdentifierType {
+    UNKNOWN = 0;
+    USERNAME = 1;
+    EMAIL_ADDRESS = 2;
+    MOBILE_NUMBER = 3;
+}
+
+message User {}
