@@ -1,90 +1,108 @@
-name = "erogen"
+name = "[ORG_NAME]"
 
-aws_region = "us-west-2"
+aws_region = "[AWS_REGION]"
 
-aws_access_key = "xo"
+aws_access_key = "[AWS_ACCESS_KEY_ID]"
 
-aws_secret_key = "xo"
+aws_secret_key = "[AWS_SECRET_ACCESS_KEY]"
 
-gitlab_access_token = "xo"
+gitlab_access_token = "[GITLAB_ACCESS_TOKEN]"
+
+ops_confs = {
+  iam = {
+    aws_region   = "[AWS_REGION]"
+    aws_role_arn = "arn:aws:iam::[AWS_ACCOUNT_ID]:role/OrganizationAccountAccessRole"
+  }
+
+  audit = {
+    aws_region   = "[AWS_REGION]"
+    aws_role_arn = "arn:aws:iam::[AWS_ACCOUNT_ID]:role/OrganizationAccountAccessRole"
+  }
+
+  delivery = {
+    aws_region   = "[AWS_REGION]"
+    aws_role_arn = "arn:aws:iam::[AWS_ACCOUNT_ID]:role/OrganizationAccountAccessRole"
+  }
+}
 
 environments = [
   {
     name         = "dev"
     full_name    = "development"
     description  = "Cost-effective, non-HA cluster for development."
-    aws_region   = "us-west-2"
-    aws_role_arn = "xo"
+    aws_region   = "[AWS_REGION]"
+    aws_role_arn = "arn:aws:iam::[AWS_ACCOUNT_ID]:role/OrganizationAccountAccessRole"
   },
   {
     name         = "test"
     full_name    = "test"
     description  = "Cost-effective, non-HA cluster for testing. Runtimes here should be automated and torn down after completion."
-    aws_region   = "us-west-2"
-    aws_role_arn = "xo"
+    aws_region   = "[AWS_REGION]"
+    aws_role_arn = "arn:aws:iam::[AWS_ACCOUNT_ID]:role/OrganizationAccountAccessRole"
   },
   {
     name         = "stage"
     full_name    = "staging"
     description  = "Exact replica of production. Runtimes that must mirror live runtime for reproducibility reasons should reside here."
-    aws_region   = "us-west-2"
-    aws_role_arn = "xo"
+    aws_region   = "[AWS_REGION]"
+    aws_role_arn = "arn:aws:iam::[AWS_ACCOUNT_ID]:role/OrganizationAccountAccessRole"
   },
   {
     name         = "prod"
     full_name    = "production"
     description  = "Production environment. This is where the live runtime should reside, and the disaster-recovery runtime to if exists."
-    aws_region   = "us-west-2"
-    aws_role_arn = "xo"
+    aws_region   = "[AWS_REGION]"
+    aws_role_arn = "arn:aws:iam::[AWS_ACCOUNT_ID]:role/OrganizationAccountAccessRole"
   },
 ]
 
-runtimes = {
-  sbox = {
-    name         = "sandbox"
+runtimes = [
+  {
+    name         = "sbox"
+    full_name    = "sandbox"
     description  = "Long-lived runtime for non-local integrated development environment or experimenting purposes."
     env          = "dev"
     phase        = 1
     long_running = true
-  }
-
-  sit = {
-    name         = "system_integration_tests"
+  },
+  {
+    name         = "sit"
+    full_name    = "system_integration"
     description  = "Short-lived runtime for automated system integration testing."
     env          = "test"
     phase        = 2
     long_running = false
-  }
-
-  e2e = {
-    name         = "end_to_end_tests"
+  },
+  {
+    name         = "e2e"
+    full_name    = "end_to_end"
     description  = "Short-lived runtime for automated end-to-end testing."
     env          = "test"
     phase        = 3
     long_running = false
-  }
-
-  ptest = {
-    name         = "performance_tests"
+  },
+  {
+    name         = "perft"
+    full_name    = "performance"
     description  = "Short-lived runtime for load and stress testing et al. Resides in staging env for consistency of results."
     env          = "stage"
     phase        = 4
     long_running = false
-  }
-
-  uat = {
-    name         = "user_acceptance_tests"
+  },
+  {
+    name         = "uat"
+    full_name    = "user_acceptance"
     description  = "Long-lived runtime for non-automated user acceptance testing by QA team or for demo purposes."
     env          = "stage"
     phase        = 4
     long_running = true
-  }
-
-  live = {
+  },
+  {
     name         = "live"
+    full_name    = "live"
     description  = "The live runtime itself."
     env          = "prod"
     phase        = 5
     long_running = true
-  }
-}
+  },
+]

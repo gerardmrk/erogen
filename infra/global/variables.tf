@@ -53,6 +53,23 @@ GitLab access token. The token must have the necessary permissions to:
 EOF
 }
 
+variable "ops_confs" {
+  type = "map" # TODO: [v0.12 upgrade] able to specify stricter type.
+
+  description = <<EOF
+A map of objects in the format:
+  |  {
+  |     iam = { aws_role_arn, aws_region }
+  |     audit = { aws_role_arn, aws_region }
+  |     delivery = { aws_role_arn, aws_region }
+  |  }
+
+These are AWS accounts with dev operations responsibilities. While the business
+enviroments and runtimes can be fluid, the ops accounts are fixed; the specified
+accounts must exists.
+EOF
+}
+
 variable "environments" {
   type = "list" # TODO: [v0.12 upgrade] able to specify stricter type.
 
@@ -62,13 +79,13 @@ A list of objects in the format:
   |     name         = string # environment name in short form.
   |     full_name    = string # full name of the environment.
   |     description  = string # environment's description.
-  |     aws_role_arn = string # AWS IAM Role to assume for the environment.
-  |     aws_region   = string # AWS region code of the environment.
+  |     aws_role_arn = string # AWS IAM Role to assume for the env account.
+  |     aws_region   = string # AWS region code of the env account.
   |  }]
 
-Environments are represented as individual AWS Accounts, each containing a
-main compute cluster, whereas runtimes are groups of services running on the
-aforementioned cluster, differentiated by unique resource/service names.
+Environments are represented as individual AWS Accounts, each 
+containing a main compute cluster, whereas runtimes are groups of services
+running on the said cluster, differentiated by unique resource/service names.
 
 This makes it cost-effective as opposed to each runtime having their own clusters.
 E.G. the dev env may hold the sandbox runtime, while the stage env contains the
