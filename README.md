@@ -2,35 +2,38 @@
 
 **Work In Progress.**
 
-This is a fake organization created as an excuse to play around with tools in my free time that can help satiate my unhealthy obsession with control and automation.
+This is a fake organization created as an excuse to experiment with automation and stuff.
+
+See [setup instructions](docs/setup/setup.md) for details.
 
 ## Cloud Layout
 
 ```
-├── Bastion Service
+├── Master
 │
-├── Environments
-│   │
-│   ├── Development Cluster
-│   │   └── Sandbox Runtime
-│   │
-│   ├── Test Cluster
-│   │   ├── E2E Runtime
-│   │   └── SIT Runtime
-│   │
-│   ├── Staging Cluster
-│   │   ├── Perf Runtime
-│   │   └── UAT Runtime
-│   │
-│   └── Production Cluster
-│       ├── Live Runtime
-│       └── Standby
-│
-└── Operations
+└── [Operations]
     │
+    ├── IAM Services
     ├── Audit Services
-    │
     ├── Delivery Services
     │
-    └── IAM Services
+    └── [Environments]
+        │
+        ├── [Development Cluster]
+        │   │
+        │   └── Sandbox Runtime
+        │
+        ├── [Test Cluster]
+        │   │
+        │   ├── E2E Runtime
+        │   └── SIT Runtime
+        │
+        ├── [Staging Cluster]
+        │   │
+        │   ├── Perf Runtime
+        │   └── UAT Runtime
+        │
+        └── [Production Cluster]
+            │
+            └── Live Runtime
 ```

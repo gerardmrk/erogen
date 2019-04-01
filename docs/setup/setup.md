@@ -1,20 +1,18 @@
 # Setup
 
-For brevity and simplicity, the docs will use example names and identifiers.
-
-Replace all examples according to your own preferences.
+To keep the docs short and concise, the docs will use example names and identifiers. It is up to you to replace all examples accordingly when setting up this project for yourself.
 
 ## 01. Domain name
 
 cost: `depends on the domain`
 
-Acquire an internal domain name from **NameCheap**:
+Sign up for a [**NameCheap**](https://www.namecheap.com/) account if you do not already have one and acquire an "internal" domain name from the site.
 
 ```
 erogen.host // e.g. if your public domain name is "erogen.com"
 ```
 
-_"Internal" domains like `.host`, `.systems`, `.admin` are typically cheap (around 9-15\$ a year)._
+_Domains like `.host`, `.systems`, `.admin` are typically cheap (around 9-15\$ a year) and are suitable for use as an internal-facing domain name._
 
 ## 02. Email-forwarding
 
@@ -28,7 +26,7 @@ _Organize the target email address's inbox accordingly, esp. if it's your person
 
 cost: `free`
 
-Currently AWS is the primary cloud service provider for this project. Sign up for an account using `cloudadmin.master.host`. This account will be the billing account.
+Currently AWS is the primary cloud service provider for this project. Sign up for an account using `cloudadmin.master@erogen.host`. This account will be the billing account.
 
 Complete the signup flow and save your login credentials with [**Bitwarden**](https://bitwarden.com/) or your password manager of choice. Do the same with the other member accounts listed in step 5.
 
