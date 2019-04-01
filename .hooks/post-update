@@ -1,0 +1,70 @@
+#!/bin/bash
+#
+
+
+set -e
+
+# **************************************************************************************************
+#    CONSTANTS
+
+# script name
+readonly SCRIPT_NAME="$(basename "$0")"
+# directory paths
+readonly ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+readonly SCRIPT_DIR="$(cd "${ROOT_DIR}/.scripts" && pwd)"
+
+
+# **************************************************************************************************
+#    MAIN FUNCS
+
+# script entrypoint.
+main() {
+  log_info "Starting..."
+
+  log_info "Completed"
+}
+
+# **************************************************************************************************
+#    HELPER FUNCS
+
+
+# check for required binaries
+check_required_binaries() {
+  local readonly bin_name="$1"
+
+  if [[ ! $(command -v ${bin_name}) ]]; then
+    log_error "Missing binary: '$bin_name' is required to run this script but is not in the system's PATH"
+    exit 1
+  fi
+}
+
+# **************************************************************************************************
+#    LOGGERS
+
+# base logger
+log() {
+  local readonly lvl="$1"
+  local readonly msg="$2"
+  local readonly tst=$(date +"%m/%d %H:%M:%S")
+  >&2 printf "${tst} ${lvl} [$SCRIPT_NAME] ${msg}\n\033[0m"
+}
+
+# logger - LVL INFO
+log_info() {
+  log "\e[38;2;0;255;255m INFO" "$1"
+}
+
+# logger - LVL WARN
+log_warn() {
+  log "\e[38;2;255;165;0m WARN" "$1"
+}
+
+# logger - LVL ERROR
+log_error() {
+  log "\e[38;2;255;0;0mERROR" "$1"
+}
+
+# **************************************************************************************************
+#    Execute
+main "$@"
+exit 0
