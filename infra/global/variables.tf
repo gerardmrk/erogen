@@ -53,7 +53,7 @@ GitLab access token. The token must have the necessary permissions to:
 EOF
 }
 
-variable "ops_confs" {
+variable "ops_conf" {
   type = "map" # TODO: [v0.12 upgrade] able to specify stricter type.
 
   description = <<EOF
@@ -70,18 +70,17 @@ accounts must exists.
 EOF
 }
 
-variable "environments" {
-  type = "list" # TODO: [v0.12 upgrade] able to specify stricter type.
+variable "envs_conf" {
+  type = "map" # TODO: [v0.12 upgrade] able to specify stricter type.
 
   description = <<EOF
-A list of objects in the format:
-  |  [{
-  |     name         = string # environment name in short form.
-  |     full_name    = string # full name of the environment.
-  |     description  = string # environment's description.
-  |     aws_role_arn = string # AWS IAM Role to assume for the env account.
-  |     aws_region   = string # AWS region code of the env account.
-  |  }]
+A map of objects in the format:
+  |  {
+  |     dev = { aws_role_arn, aws_region }
+  |     test = { aws_role_arn, aws_region }
+  |     stage = { aws_role_arn, aws_region }
+  |     prod = { aws_role_arn, aws_region }
+  |  }
 
 Environments are represented as individual AWS Accounts, each 
 containing a main compute cluster, whereas runtimes are groups of services

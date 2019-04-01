@@ -8,8 +8,8 @@ aws_secret_key = "[AWS_SECRET_ACCESS_KEY]"
 
 gitlab_access_token = "[GITLAB_ACCESS_TOKEN]"
 
-ops_confs = {
-  iam = {
+ops_conf = {
+  bastion = {
     aws_region   = "[AWS_REGION]"
     aws_role_arn = "arn:aws:iam::[AWS_ACCOUNT_ID]:role/OrganizationAccountAccessRole"
   }
@@ -25,36 +25,27 @@ ops_confs = {
   }
 }
 
-environments = [
-  {
-    name         = "dev"
-    full_name    = "development"
-    description  = "Cost-effective, non-HA cluster for development."
+envs_conf = {
+  dev = {
     aws_region   = "[AWS_REGION]"
     aws_role_arn = "arn:aws:iam::[AWS_ACCOUNT_ID]:role/OrganizationAccountAccessRole"
-  },
-  {
-    name         = "test"
-    full_name    = "test"
-    description  = "Cost-effective, non-HA cluster for testing. Runtimes here should be automated and torn down after completion."
+  }
+
+  test = {
     aws_region   = "[AWS_REGION]"
     aws_role_arn = "arn:aws:iam::[AWS_ACCOUNT_ID]:role/OrganizationAccountAccessRole"
-  },
-  {
-    name         = "stage"
-    full_name    = "staging"
-    description  = "Exact replica of production. Runtimes that must mirror live runtime for reproducibility reasons should reside here."
+  }
+
+  stage = {
     aws_region   = "[AWS_REGION]"
     aws_role_arn = "arn:aws:iam::[AWS_ACCOUNT_ID]:role/OrganizationAccountAccessRole"
-  },
-  {
-    name         = "prod"
-    full_name    = "production"
-    description  = "Production environment. This is where the live runtime should reside, and the disaster-recovery runtime to if exists."
+  }
+
+  prod = {
     aws_region   = "[AWS_REGION]"
     aws_role_arn = "arn:aws:iam::[AWS_ACCOUNT_ID]:role/OrganizationAccountAccessRole"
-  },
-]
+  }
+}
 
 runtimes = [
   {
