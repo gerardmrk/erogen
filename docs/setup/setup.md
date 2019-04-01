@@ -16,7 +16,7 @@ _Domains like `.host`, `.systems`, `.admin` are typically cheap (around 9-15\$ a
 
 ## 02. Email-forwarding
 
-cost: `free for NameCheap`
+cost: `free`
 
 Setup a "catch-all" email-forwarding rule on your internal domain name from step 1 to a single email address. See instructions [here](https://www.namecheap.com/support/knowledgebase/article.aspx/308/2214/how-to-set-up-free-email-forwarding).
 
