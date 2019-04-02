@@ -1,15 +1,23 @@
-variable "project_name" {
+variable "namespace" {
   type        = "string"
-  description = "Project name."
+  description = "The namespace for resources in this module. Ideally the organization name or abbreviation"
+  default     = ""
 }
 
-variable "stage_name" {
+variable "environment" {
   type        = "string"
-  description = "Stage name."
+  description = "Environment of this VPC"
+  default     = ""
+}
+
+variable "stage" {
+  type        = "string"
+  description = "Runtime / environment stage of this VPC"
+  default     = ""
 }
 
 variable "additional_tags" {
   type        = "map"
-  description = "Additional resource tags to attach to resources in this module."
+  description = "Additional resource tags to attach to this module's resources."
   default     = {}
 }

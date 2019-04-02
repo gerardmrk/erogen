@@ -1,11 +1,9 @@
 output "id" {
-  type        = "string"
   description = "The VPC ID."
   value       = "${aws_vpc.main.id}"
 }
 
 output "default_resource_ids" {
-  type        = "map"
   description = "IDs of default VPC resources. It is not recommended to reference these IDs but they are exported just in case."
 
   value = {
@@ -16,7 +14,6 @@ output "default_resource_ids" {
 }
 
 output "subnet_ids" {
-  type        = "map"
   description = "Map of VPC subnet ID lists."
 
   value = {
@@ -25,18 +22,16 @@ output "subnet_ids" {
   }
 }
 
-output "route_table_ids" {
-  type        = "map"
-  description = "Map of VPC route table IDs"
+# output "route_table_ids" {
+#   description = "Map of VPC route table IDs"
 
-  value = {
-    private = "${aws_route_table.private.id}"
-    public  = "${aws_route_table.public.id}"
-  }
-}
+#   value = {
+#     private = "${aws_route_table.private.id}"
+#     public  = "${aws_route_table.public.id}"
+#   }
+# }
 
 output "av_zones" {
-  type        = "list"
   description = "List of AWS availability zone names."
   value       = ["${data.aws_availability_zones.main.names}"]
 }

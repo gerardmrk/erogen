@@ -88,12 +88,12 @@ locals {
   output_context     = "${local.context}"
   output_attribute   = "${distinct(compact(flatten(var.attribute)))}"
 
-  output_tags = "${merge(map(
+  output_tags = "${merge(local.tags, map(
       "Name", "${local.output_id}",
       "Namespace", "${local.output_namespace == "" ? "-" : local.output_namespace}",
       "Environment", "${local.output_environment == "" ? "-" : local.output_environment}",
       "Stage", "${local.output_stage == "" ? "-" : local.output_stage}",
       "Context", "${local.output_context == "" ? "-" : local.output_context}",
       "Attribute", "${join(",", local.output_attribute)}"
-  ), local.tags)}"
+  ))}"
 }

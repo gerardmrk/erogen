@@ -1,11 +1,3 @@
-locals {
-  # newbits = 3
-  cidr_nnum_priv = [0, 2, 4]
-
-  # newbits = 4
-  cidr_nnum_publ = [2, 6, 10]
-}
-
 # ==================================================================================================
 # Properties
 # ==================================================================================================
@@ -13,35 +5,149 @@ locals {
 module "props" {
   source = "../../props"
 
-  namespace = "${var.project_name}"
-  context   = "network"
-  tags      = "${var.additional_tags}"
+  conf_delimiter_type = "spinalcase"
+
+  namespace   = "${var.namespace}"
+  environment = "${var.environment}"
+  stage       = "${var.stage}"
+  context     = "vpc"
+  tags        = "${var.additional_tags}"
+}
+
+module "props_default" {
+  source = "../../props"
+
+  conf_delimiter_type = "spinalcase"
+
+  attribute   = ["default"]
+  namespace   = "${module.props.namespace}"
+  environment = "${module.props.environment}"
+  stage       = "${module.props.stage}"
+  context     = "${module.props.context}"
+  tags        = "${module.props.tags}"
 }
 
 module "props_private" {
-  source = "../props"
+  source = "../../props"
 
-  attribute = "${module.props.family}"
-  namespace = "${module.props.namespace}"
-  context   = "private"
-  tags      = "${module.props.tags}"
+  conf_delimiter_type = "spinalcase"
+
+  attribute   = ["private"]
+  namespace   = "${module.props.namespace}"
+  environment = "${module.props.environment}"
+  stage       = "${module.props.stage}"
+  tags        = "${module.props.tags}"
 }
 
 module "props_public" {
-  source = "../props"
+  source = "../../props"
 
-  context   = "public"
-  family    = "${module.props.family}"
-  namespace = "${module.props.namespace}"
-  tags      = "${module.props.tags}"
+  conf_delimiter_type = "spinalcase"
+
+  attribute   = ["public"]
+  namespace   = "${module.props.namespace}"
+  environment = "${module.props.environment}"
+  stage       = "${module.props.stage}"
+  tags        = "${module.props.tags}"
+}
+
+module "props_nat_gateway" {
+  source = "../../props"
+
+  conf_delimiter_type = "spinalcase"
+
+  attribute   = ["nat-gateway"]
+  namespace   = "${module.props.namespace}"
+  environment = "${module.props.environment}"
+  stage       = "${module.props.stage}"
+  tags        = "${module.props.tags}"
+}
+
+module "props_int_gateway" {
+  source = "../../props"
+
+  conf_delimiter_type = "spinalcase"
+
+  attribute   = ["internet-gateway"]
+  namespace   = "${module.props.namespace}"
+  environment = "${module.props.environment}"
+  stage       = "${module.props.stage}"
+  tags        = "${module.props.tags}"
+}
+
+module "props_routes_priv" {
+  source = "../../props"
+
+  conf_delimiter_type = "spinalcase"
+
+  attribute   = ["${module.props_private.attribute}", "routes"]
+  namespace   = "${module.props_private.namespace}"
+  environment = "${module.props_private.environment}"
+  stage       = "${module.props_private.stage}"
+  context     = "${module.props_private.context}"
+  tags        = "${module.props_private.tags}"
+}
+
+module "props_routes_publ" {
+  source = "../../props"
+
+  conf_delimiter_type = "spinalcase"
+
+  attribute   = ["${module.props_public.attribute}", "routes"]
+  namespace   = "${module.props_public.namespace}"
+  environment = "${module.props_public.environment}"
+  stage       = "${module.props_public.stage}"
+  context     = "${module.props_public.context}"
+  tags        = "${module.props_public.tags}"
+}
+
+module "props_subnet_priv" {
+  source = "../../props"
+
+  conf_delimiter_type = "spinalcase"
+
+  attribute   = ["${module.props_private.attribute}", "subnet"]
+  namespace   = "${module.props_private.namespace}"
+  environment = "${module.props_private.environment}"
+  stage       = "${module.props_private.stage}"
+  context     = "${module.props_private.context}"
+  tags        = "${module.props_private.tags}"
+}
+
+module "props_subnet_publ" {
+  source = "../../props"
+
+  conf_delimiter_type = "spinalcase"
+
+  attribute   = ["${module.props_public.attribute}", "subnet"]
+  namespace   = "${module.props_public.namespace}"
+  environment = "${module.props_public.environment}"
+  stage       = "${module.props_public.stage}"
+  context     = "${module.props_public.context}"
+  tags        = "${module.props_public.tags}"
 }
 
 # ==================================================================================================
-# Data Sources
+# Data Sources, Locals
 # ==================================================================================================
 
 data "aws_availability_zones" "main" {
   state = "available"
+}
+
+locals {
+  # newbits = 3
+  cidr_nnum_priv = [0, 2, 4, 6]
+
+  # newbits = 4
+  cidr_nnum_publ = [2, 6, 10, 14]
+}
+
+locals {
+  subnet_count = "${min(
+    length(local.cidr_nnum_priv),
+    length(data.aws_availability_zones.main.names)
+  )}"
 }
 
 # ==================================================================================================
@@ -51,7 +157,7 @@ data "aws_availability_zones" "main" {
 # the VPC itself
 resource "aws_vpc" "main" {
   cidr_block                       = "10.0.0.0/16"
-  tenancy_type                     = "default"
+  instance_tenancy                 = "default"
   enable_dns_support               = true
   enable_dns_hostnames             = true
   assign_generated_ipv6_cidr_block = true
@@ -67,7 +173,7 @@ resource "aws_vpc" "main" {
 
 resource "aws_default_network_acl" "main" {
   default_network_acl_id = "${aws_vpc.main.default_network_acl_id}"
-  tags                   = "${module.props.tags}"
+  tags                   = "${module.props_default.tags}"
 
   ingress {
     protocol   = -1
@@ -90,7 +196,7 @@ resource "aws_default_network_acl" "main" {
 
 resource "aws_default_security_group" "main" {
   vpc_id = "${aws_vpc.main.id}"
-  tags   = "${module.props.tags}"
+  tags   = "${module.props_default.tags}"
 
   ingress {
     protocol  = -1
@@ -109,7 +215,7 @@ resource "aws_default_security_group" "main" {
 
 resource "aws_default_route_table" "main" {
   default_route_table_id = "${aws_vpc.main.default_route_table_id}"
-  tags                   = "${module.props.tags}"
+  tags                   = "${module.props_default.tags}"
 }
 
 # ------------------------------------------------------------------------------
@@ -127,8 +233,8 @@ resource "aws_eip" "main" {
 # VPC's main NAT gateway.
 resource "aws_nat_gateway" "main" {
   allocation_id = "${aws_eip.main.id}"
-  subnet_id     = "${aws_subnet.zone_a_public.id}"
-  tags          = "${module.props.tags}"
+  subnet_id     = "${aws_subnet.public.*.id[0]}"
+  tags          = "${module.props_nat_gateway.tags}"
 
   depends_on = ["aws_internet_gateway.main"]
 }
@@ -136,13 +242,13 @@ resource "aws_nat_gateway" "main" {
 # VPC's internet gateway.
 resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.main.id}"
-  tags   = "${module.props.tags}"
+  tags   = "${module.props_int_gateway.tags}"
 }
 
 # VPC's route table for private subnets.
 resource "aws_route_table" "private" {
   vpc_id = "${aws_vpc.main.id}"
-  tags   = "${module.props_private.tags}"
+  tags   = "${module.props_routes_priv.tags}"
 
   route {
     cidr_block     = "0.0.0.0/0"
@@ -153,7 +259,7 @@ resource "aws_route_table" "private" {
 # VPC's route table for public subnets.
 resource "aws_route_table" "public" {
   vpc_id = "${aws_vpc.main.id}"
-  tags   = "${module.props_public.tags}"
+  tags   = "${module.props_routes_publ.tags}"
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -167,43 +273,47 @@ resource "aws_route_table" "public" {
 # These resources completes a standard, feature-complete network.
 # ------------------------------------------------------------------------------
 resource "aws_subnet" "private" {
-  count = "${length(data.aws_availability_zones.main.names)}"
+  count = "${local.subnet_count}"
 
   map_public_ip_on_launch         = true
-  assign_ipv6_address_on_creation = true
+  assign_ipv6_address_on_creation = false
   vpc_id                          = "${aws_vpc.main.id}"
   availability_zone               = "${data.aws_availability_zones.main.names[count.index]}"
   cidr_block                      = "${cidrsubnet(aws_vpc.main.cidr_block, 3, local.cidr_nnum_priv[count.index])}"
 
   tags = "${
     merge(
-      module.props_private.tags,
-      map("Name", "${module.props_private.id}-${data.aws_availability_zones.main.names[count.index]}")
+      module.props_subnet_priv.tags,
+      map("Name", "${module.props_subnet_priv.id}-${element(split("-", data.aws_availability_zones.main.names[count.index]), 2)}")
     )}"
 }
 
 resource "aws_subnet" "public" {
-  count = "${length(data.aws_availability_zones.main.names)}"
+  count = "${local.subnet_count}"
 
   map_public_ip_on_launch         = true
-  assign_ipv6_address_on_creation = true
+  assign_ipv6_address_on_creation = false
   vpc_id                          = "${aws_vpc.main.id}"
   availability_zone               = "${data.aws_availability_zones.main.names[count.index]}"
-  cidr_block                      = "${cidrsubnet(aws_vpc.main.cidr_block, 3, local.cidr_nnum_publ[count.index])}"
+  cidr_block                      = "${cidrsubnet(aws_vpc.main.cidr_block, 4, local.cidr_nnum_publ[count.index])}"
 
   tags = "${
     merge(
-      module.props_public.tags,
-      map("Name", "${module.props_public.id}-${data.aws_availability_zones.main.names[count.index]}")
+      module.props_subnet_publ.tags,
+      map("Name", "${module.props_subnet_publ.id}-${element(split("-", data.aws_availability_zones.main.names[count.index]), 2)}")
     )}"
 }
 
 resource "aws_route_table_association" "private" {
-  subnet_id      = "${aws_subnet.private.*.id}"
+  count = "${local.subnet_count}"
+
+  subnet_id      = "${aws_subnet.private.*.id[count.index]}"
   route_table_id = "${aws_route_table.private.id}"
 }
 
 resource "aws_route_table_association" "public" {
-  subnet_id      = "${aws_subnet.public.*.id}"
+  count = "${local.subnet_count}"
+
+  subnet_id      = "${aws_subnet.public.*.id[count.index]}"
   route_table_id = "${aws_route_table.public.id}"
 }
