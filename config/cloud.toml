@@ -1,0 +1,89 @@
+[master]
+name         = "master"
+description  = "Master account for consolidated billing and IAM."
+aws_region   = "us-west-2"
+aws_profile  = ""
+
+[operations.shared]
+name         = "shared"
+description  = "Shared resources like dev binaries."
+aws_region   = "us-west-2"
+aws_role_arn = "arn:aws:iam::687673703677:role/OrganizationAccountAccessRole"
+
+[operations.audit]
+name         = "audit"
+description  = "Observability, aka Hotel Audit. Metrics, tracing, logging etc."
+aws_region   = "us-west-2"
+aws_role_arn = "arn:aws:iam::086376689200:role/OrganizationAccountAccessRole"
+
+[operations.delivery]
+name         = "delivery"
+description  = "Continuous integration and delivery pipeline."
+aws_region   = "us-west-2"
+aws_role_arn = "arn:aws:iam::324552860644:role/OrganizationAccountAccessRole"
+
+[environment.dev]
+name         = "development"
+description  = "Cost-effective, non-HA cluster for development."
+aws_region   = "us-west-2"
+aws_role_arn = "arn:aws:iam::171589680646:role/OrganizationAccountAccessRole"
+
+[environment.test]
+name         = "test"
+description  = "Cost-effective, non-HA cluster for testing. Runtimes here should be automated and torn down after completion."
+aws_region   = "us-west-2"
+aws_role_arn = "arn:aws:iam::523221105715:role/OrganizationAccountAccessRole"
+
+[environment.stage]
+name         = "staging"
+description  = "Exact replica of production. Runtimes that must mirror live runtime for reproducibility reasons should reside here."
+aws_region   = "us-west-2"
+aws_role_arn = "arn:aws:iam::064766899163:role/OrganizationAccountAccessRole"
+
+[environment.prod]
+name         = "production"
+description  = "Production environment. This is where the live runtime should reside, and the disaster-recovery runtime to if exists."
+aws_region   = "us-west-2"
+aws_role_arn = "arn:aws:iam::295473923500:role/OrganizationAccountAccessRole"
+
+[runtime.sbox]
+name         = "sandbox"
+description  = "Long-lived runtime for non-local integrated development environment or experimenting purposes."
+env          = "dev"
+phase        = 1
+long_running = true
+
+[runtime.sit]
+name         = "system_integration"
+description  = "Short-lived runtime for automated system integration testing."
+env          = "test"
+phase        = 2
+long_running = false
+
+[runtime.e2e]
+name         = "end_to_end"
+description  = "Short-lived runtime for automated end-to-end testing."
+env          = "test"
+phase        = 3
+long_running = false
+
+[runtime.perf]
+name         = "performance"
+description  = "Short-lived runtime for load and stress testing et al. Resides in staging env for consistency of results."
+env          = "stage"
+phase        = 4
+long_running = false
+
+[runtime.uat]
+name         = "user_acceptance"
+description  = "Long-lived runtime for non-automated user acceptance testing by QA team or for demo purposes."
+env          = "stage"
+phase        = 4
+long_running = true
+
+[runtime.live]
+name         = "live"
+description  = "The live runtime itself."
+env          = "prod"
+phase        = 5
+long_running = true

@@ -137,10 +137,10 @@ data "aws_availability_zones" "main" {
 
 locals {
   # newbits = 3
-  cidr_nnum_priv = [0, 2, 4, 6]
+  cidr_nnum_priv = [0, 2, 4]
 
   # newbits = 4
-  cidr_nnum_publ = [2, 6, 10, 14]
+  cidr_nnum_publ = [2, 6, 10]
 }
 
 locals {

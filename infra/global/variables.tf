@@ -3,9 +3,16 @@ variable "name" {
 
   description = <<EOF
   Name of the project/product/solution/organization. This will be used for
-  resource-tagging where applicable, and also for resource name prefixing. Use
-  an abbreviation instead if the name is too long, as Cloud Providers impose a
-  character limit on certain resource names.
+  resource-tagging where applicable, and also for resource name prefixing.
+EOF
+}
+
+variable "name_abbreviation" {
+  type = "string"
+
+  description = <<EOF
+Abbreviation for `var.name`. This will be use in place of `var.name` for
+resource names that have a short character limit on them.
 EOF
 }
 

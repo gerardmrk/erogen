@@ -5,9 +5,10 @@ provider "aws" {
 }
 
 locals {
-  project_name = "${var.name}"
+  namespace      = "${var.name}"
+  namespace_abrv = "${var.name_abbreviation}"
 
-  additional_tags = {
+  common_tags = {
     Scope      = "global"
     CostCenter = "technology/dev"
   }
