@@ -9,7 +9,7 @@ import (
 )
 
 type UserRPC struct {
-	repo    userSVC.UserRepo
+	repo       userSVC.UserRepo
 	authClient authpb.AuthServiceClient
 }
 
@@ -30,7 +30,7 @@ func (rpc *UserRPC) Login(ctx context.Context, req *userpb.LoginRequest) (*userp
 	if req.IncludeTokens == true {
 		// TODO: consul connect
 		tokens, err := rpc.authClient.Tokens(ctx, &authpb.TokensRequest{
-			UserId: user.ID,
+			UserId:         user.ID,
 			IncludeIdToken: true,
 		})
 
@@ -38,12 +38,12 @@ func (rpc *UserRPC) Login(ctx context.Context, req *userpb.LoginRequest) (*userp
 			return nil, err
 		}
 		resp.Payload = &userpb.LoginResponse_TokenPayload{
-			IdToken: tokens.IdToken,
-			AccessToken: tokens.AccessToken,
+			IdToken:      tokens.IdToken,
+			AccessToken:  tokens.AccessToken,
 			RefreshToken: tokens.RefreshToken,
-			TokenType:tokens.TokenType,
-			Scope: tokens.Scope,
-			ExpiresIn:tokens.ExpiresIn,
+			TokenType:    tokens.TokenType,
+			Scope:        tokens.Scope,
+			ExpiresIn:    tokens.ExpiresIn,
 		}
 	}
 

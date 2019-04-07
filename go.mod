@@ -3,6 +3,7 @@ module github.com/gerardmrk/erogen
 go 1.12
 
 require (
+	github.com/boltdb/bolt v1.3.1
 	github.com/golang-migrate/migrate/v4 v4.2.5
 	github.com/golang/protobuf v1.3.1
 	github.com/lib/pq v1.0.0

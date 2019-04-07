@@ -5,10 +5,10 @@ import (
 )
 
 // UserCache is a BoltDB implementation of usvc.UserStore
-type UserCache struct {}
+type UserCache struct{}
 
-// NewCache returns a new UserCache instance
-func NewCache() *UserCache {
+// NewUserCache returns a new UserCache instance
+func NewUserCache() *UserCache {
 	return &UserCache{}
 }
 

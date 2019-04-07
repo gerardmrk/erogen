@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/gerardmrk/erogen/svc/user/cache/boltdb"
-	"github.com/gerardmrk/erogen/svc/user/database/postgres"
 	"log"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/gerardmrk/erogen/svc/user/cache/boltdb"
+	"github.com/gerardmrk/erogen/svc/user/database/postgres"
 )
 
 // Database settings
@@ -43,6 +44,15 @@ func init() {
 }
 
 func main() {
+	cache := boltdb.NewCache("")
+
+	defer func() {
+		if err := cache.Close(); err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	userCache := boltdb.NewUserCache()
 
 	db := postgres.NewDB(&postgres.DBConfig{
 		Host:     DBHost,
@@ -59,9 +69,7 @@ func main() {
 		}
 	}()
 
-	cache := boltdb.NewCache()
-
-	userDB := postgres.NewUserDB(db, cache)
+	userDB := postgres.NewUserDB(db, userCache)
 	u, err := userDB.User()
 	if err != nil {
 		log.Fatal(err)
