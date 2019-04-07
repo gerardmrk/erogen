@@ -1,64 +1,98 @@
 package main
 
 import (
-	"context"
-	"gitlab.com/erogen_org/erogen/proto/user"
+	"github.com/gerardmrk/erogen/pkg/passwordhash"
+	authpb "github.com/gerardmrk/erogen/proto/auth"
+	userpb "github.com/gerardmrk/erogen/proto/user"
+	"golang.org/x/net/context"
 )
 
-func main() {
-
+type UserRPC struct {
+	repo    UserRepo
+	authSVC authpb.AuthServiceClient
 }
 
-type UserService struct{}
+func (rpc *UserRPC) Login(ctx context.Context, req *userpb.LoginRequest) (*userpb.LoginResponse, error) {
+	user, err := rpc.repo.FindByAlias(req.GetAliasType(), req.GetAlias())
+	if err != nil {
+		return nil, err
+	}
 
-func (svc *UserService) Login(ctx context.Context, request *user.LoginRequest) (response *user.LoginResponse, error) {
+	validPassword, err := passwordhash.CheckPasswordString(req.GetPassword(), user.Password)
+	if err != nil {
+		return nil, err
+	}
+
+	resp := new(userpb.LoginResponse)
+	resp.Success = validPassword
+
+	if req.IncludeTokens == true {
+		// TODO: consul connect
+		tokens, err := rpc.authSVC.Tokens(ctx, &authpb.TokensRequest{
+			UserId: user.ID,
+			IncludeIdToken: true,
+		})
+
+		if err != nil {
+			return nil, err
+		}
+		resp.Payload = &userpb.LoginResponse_TokenPayload{
+			IdToken: tokens.IdToken,
+			AccessToken: tokens.AccessToken,
+			RefreshToken: tokens.RefreshToken,
+			TokenType:tokens.TokenType,
+			Scope: tokens.Scope,
+			ExpiresIn:tokens.ExpiresIn,
+		}
+	}
+
+	return resp, nil
+}
+
+func (rpc *UserRPC) Register(ctx context.Context, req *userpb.RegisterRequest) (*userpb.RegisterResponse, error) {
 	panic("implement me")
 }
 
-func (svc *UserService) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
+func (rpc *UserRPC) ForgotPassword(ctx context.Context, req *userpb.ForgotPasswordRequest) (*userpb.ForgotPasswordResponse, error) {
 	panic("implement me")
 }
 
-func (svc *UserService) ForgotPassword(context.Context, *ForgotPasswordRequest) (*ForgotPasswordResponse, error) {
+func (rpc *UserRPC) ResetPassword(ctx context.Context, req *userpb.ResetPasswordRequest) (*userpb.ResetPasswordResponse, error) {
 	panic("implement me")
 }
 
-func (svc UserService) ResetPassword(context.Context, *ResetPasswordRequest) (*ResetPasswordResponse, error) {
+func (rpc *UserRPC) ValidateToken(ctx context.Context, req *userpb.ValidateTokenRequest) (*userpb.ValidateTokenResponse, error) {
 	panic("implement me")
 }
 
-func (svc UserService) ValidateToken(context.Context, *ValidateTokenRequest) (*ValidateTokenResponse, error) {
+func (rpc *UserRPC) ChangeEmail(ctx context.Context, req *userpb.ChangeEmailRequest) (*userpb.ChangeEmailResponse, error) {
 	panic("implement me")
 }
 
-func (svc UserService) ChangeEmail(context.Context, *ChangeEmailRequest) (*ChangeEmailResponse, error) {
+func (rpc *UserRPC) ChangeUsername(ctx context.Context, req *userpb.ChangeUsernameRequest) (*userpb.ChangeUsernameResponse, error) {
 	panic("implement me")
 }
 
-func (svc UserService) ChangeUsername(context.Context, *ChangeUsernameRequest) (*ChangeUsernameResponse, error) {
+func (rpc *UserRPC) ChangePassword(ctx context.Context, req *userpb.ChangePasswordRequest) (*userpb.ChangePasswordResponse, error) {
 	panic("implement me")
 }
 
-func (svc UserService) ChangePassword(context.Context, *ChangePasswordRequest) (*ChangePasswordResponse, error) {
+func (rpc *UserRPC) VerifySecurityQA(ctx context.Context, req *userpb.VerifySecurityQARequest) (*userpb.VerifySecurityQAResponse, error) {
 	panic("implement me")
 }
 
-func (svc UserService) VerifySecurityQA(context.Context, *VerifySecurityQARequest) (*VerifySecurityQAResponse, error) {
+func (rpc *UserRPC) Update(ctx context.Context, req *userpb.UpdateRequest) (*userpb.UpdateResponse, error) {
 	panic("implement me")
 }
 
-func (svc UserService) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+func (rpc *UserRPC) Delete(ctx context.Context, req *userpb.DeleteRequest) (*userpb.UpdateResponse, error) {
 	panic("implement me")
 }
 
-func (svc UserService) Delete(context.Context, *DeleteRequest) (*UpdateResponse, error) {
+func (rpc *UserRPC) User(ctx context.Context, req *userpb.UserRequest) (*userpb.UserResponse, error) {
 	panic("implement me")
 }
 
-func (svc UserService) User(context.Context, *UserRequest) (*UserResponse, error) {
-	panic("implement me")
-}
-
-func (svc UserService) Users(*UsersRequest, UserService_UsersServer) error {
+func (rpc *UserRPC) Users(req *userpb.UsersRequest, srv userpb.UserService_UsersServer) error {
 	panic("implement me")
 }

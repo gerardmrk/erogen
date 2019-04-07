@@ -130,7 +130,7 @@ proto.erogen.CountryInfoRequest.prototype.toObject = function(opt_includeInstanc
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.CountryInfoRequest.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
 
@@ -255,7 +255,7 @@ proto.erogen.CountryInfoResponse.prototype.toObject = function(opt_includeInstan
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.CountryInfoResponse.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     country: (f = msg.getCountry()) && proto.erogen.CountryInfo.toObject(includeInstance, f)
   };
 
@@ -400,7 +400,7 @@ proto.erogen.CountriesInfoRequest.prototype.toObject = function(opt_includeInsta
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.CountriesInfoRequest.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     filter: jspb.Message.getFieldWithDefault(msg, 1, ""),
     count: jspb.Message.getFieldWithDefault(msg, 2, 0),
     offset: jspb.Message.getFieldWithDefault(msg, 3, 0)
@@ -579,7 +579,7 @@ proto.erogen.CountryInfo.prototype.toObject = function(opt_includeInstance) {
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.CountryInfo.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, 0),
     iso2: jspb.Message.getFieldWithDefault(msg, 2, ""),
     iso3: jspb.Message.getFieldWithDefault(msg, 3, ""),

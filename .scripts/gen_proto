@@ -1,13 +1,17 @@
 #!/bin/bash
 #
-# Example script template
+# generates protocol buffers for definitions in proto/
 #
-# Credits:
-# this is an amalgation of various sources online that follows best practices
-# most notably the AWS-Terraform-Vault module.
-#
-# <- SHORT DESCRIPTION OF SCRIPT HERE ->
-#
+#   (
+#    cd "$ROOT_DIR" && \
+#    protoc "$file_path" \
+#      --cpp_out=. \
+#      --go_out=plugins=grpc:. \
+#      --js_out=library="$output_path":. \
+#      --ruby_out=. \
+#      --python_out=. \
+#      --csharp_out="$base_path"
+#  )
 
 set -e
 
@@ -18,7 +22,7 @@ set -e
 readonly SCRIPT_NAME="$(basename "$0")"
 # directory paths
 readonly ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-readonly SCRIPT_DIR="$(cd "${ROOT_DIR}/scripts" && pwd)"
+readonly SCRIPT_DIR="$(cd "${ROOT_DIR}/.scripts" && pwd)"
 readonly BINARY_DIR="$(cd "${ROOT_DIR}/.bin" && pwd)"
 
 # **************************************************************************************************
@@ -33,6 +37,7 @@ main() {
 
   generate_proto_code "./proto/user" "./proto/user/user.proto" "./proto/user/user_pb"
   generate_proto_code "./proto/i18n" "./proto/i18n/i18n.proto" "./proto/i18n/i18n_pb"
+  generate_proto_code "./proto/auth" "./proto/auth/auth.proto" "./proto/auth/auth.proto"
 
   log_info "Done!"
 }
@@ -44,12 +49,8 @@ generate_proto_code() {
   (
     cd "$ROOT_DIR" && \
     protoc "$file_path" \
-      --cpp_out=. \
       --go_out=plugins=grpc:. \
-      --js_out=library="$output_path":. \
-      --ruby_out=. \
-      --python_out=. \
-      --csharp_out="$base_path"
+      --js_out=library="$output_path":.
   )
   
 }

@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package erogen;
+
+option go_package = "auth";
+
+service AuthService {
+    rpc Tokens(TokensRequest) returns (TokensResponse) {};
+}
+
+message TokensRequest {
+    string user_id = 1;
+    bool include_id_token = 2;
+}
+
+message TokensResponse {
+    string id_token = 1;
+    string access_token = 2;
+    string refresh_token = 3;
+    string token_type = 4;
+    string scope = 5;
+    int32 expires_in = 6;
+}

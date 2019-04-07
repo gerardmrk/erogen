@@ -26,12 +26,12 @@ service UserService {
 }
 
 message LoginRequest {
-    string identifier = 1;
-    UserIdentifierType identifier_type = 2;
+    string alias = 1;
+    UserAliasType alias_type = 2;
     string password = 3;
     bool remember = 4;
     uint32 remember_for = 5;
-    bool fetch_tokens = 6;
+    bool include_tokens = 6;
 }
 
 message LoginResponse {
@@ -165,7 +165,7 @@ message UsersRequest {
     uint32 offset = 3;
 }
 
-enum UserIdentifierType {
+enum UserAliasType {
     UNKNOWN = 0;
     USERNAME = 1;
     EMAIL_ADDRESS = 2;

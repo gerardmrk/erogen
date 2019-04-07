@@ -28,7 +28,7 @@ goog.provide('proto.erogen.ResetPasswordResponse');
 goog.provide('proto.erogen.UpdateRequest');
 goog.provide('proto.erogen.UpdateResponse');
 goog.provide('proto.erogen.User');
-goog.provide('proto.erogen.UserIdentifierType');
+goog.provide('proto.erogen.UserAliasType');
 goog.provide('proto.erogen.UserRequest');
 goog.provide('proto.erogen.UserResponse');
 goog.provide('proto.erogen.UsersRequest');
@@ -638,13 +638,13 @@ proto.erogen.LoginRequest.prototype.toObject = function(opt_includeInstance) {
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.LoginRequest.toObject = function(includeInstance, msg) {
-  var obj = {
-    identifier: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    identifierType: jspb.Message.getFieldWithDefault(msg, 2, 0),
+  var f, obj = {
+    alias: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    aliasType: jspb.Message.getFieldWithDefault(msg, 2, 0),
     password: jspb.Message.getFieldWithDefault(msg, 3, ""),
     remember: jspb.Message.getFieldWithDefault(msg, 4, false),
     rememberFor: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    fetchTokens: jspb.Message.getFieldWithDefault(msg, 6, false)
+    includeTokens: jspb.Message.getFieldWithDefault(msg, 6, false)
   };
 
   if (includeInstance) {
@@ -683,11 +683,11 @@ proto.erogen.LoginRequest.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setIdentifier(value);
+      msg.setAlias(value);
       break;
     case 2:
-      var value = /** @type {!proto.erogen.UserIdentifierType} */ (reader.readEnum());
-      msg.setIdentifierType(value);
+      var value = /** @type {!proto.erogen.UserAliasType} */ (reader.readEnum());
+      msg.setAliasType(value);
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
@@ -703,7 +703,7 @@ proto.erogen.LoginRequest.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 6:
       var value = /** @type {boolean} */ (reader.readBool());
-      msg.setFetchTokens(value);
+      msg.setIncludeTokens(value);
       break;
     default:
       reader.skipField();
@@ -734,14 +734,14 @@ proto.erogen.LoginRequest.prototype.serializeBinary = function() {
  */
 proto.erogen.LoginRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getIdentifier();
+  f = message.getAlias();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = message.getIdentifierType();
+  f = message.getAliasType();
   if (f !== 0.0) {
     writer.writeEnum(
       2,
@@ -769,7 +769,7 @@ proto.erogen.LoginRequest.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getFetchTokens();
+  f = message.getIncludeTokens();
   if (f) {
     writer.writeBool(
       6,
@@ -780,31 +780,31 @@ proto.erogen.LoginRequest.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string identifier = 1;
+ * optional string alias = 1;
  * @return {string}
  */
-proto.erogen.LoginRequest.prototype.getIdentifier = function() {
+proto.erogen.LoginRequest.prototype.getAlias = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.erogen.LoginRequest.prototype.setIdentifier = function(value) {
+proto.erogen.LoginRequest.prototype.setAlias = function(value) {
   jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
- * optional UserIdentifierType identifier_type = 2;
- * @return {!proto.erogen.UserIdentifierType}
+ * optional UserAliasType alias_type = 2;
+ * @return {!proto.erogen.UserAliasType}
  */
-proto.erogen.LoginRequest.prototype.getIdentifierType = function() {
-  return /** @type {!proto.erogen.UserIdentifierType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+proto.erogen.LoginRequest.prototype.getAliasType = function() {
+  return /** @type {!proto.erogen.UserAliasType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
-/** @param {!proto.erogen.UserIdentifierType} value */
-proto.erogen.LoginRequest.prototype.setIdentifierType = function(value) {
+/** @param {!proto.erogen.UserAliasType} value */
+proto.erogen.LoginRequest.prototype.setAliasType = function(value) {
   jspb.Message.setProto3EnumField(this, 2, value);
 };
 
@@ -857,18 +857,18 @@ proto.erogen.LoginRequest.prototype.setRememberFor = function(value) {
 
 
 /**
- * optional bool fetch_tokens = 6;
+ * optional bool include_tokens = 6;
  * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
  * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
-proto.erogen.LoginRequest.prototype.getFetchTokens = function() {
+proto.erogen.LoginRequest.prototype.getIncludeTokens = function() {
   return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 6, false));
 };
 
 
 /** @param {boolean} value */
-proto.erogen.LoginRequest.prototype.setFetchTokens = function(value) {
+proto.erogen.LoginRequest.prototype.setIncludeTokens = function(value) {
   jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
@@ -902,7 +902,7 @@ proto.erogen.LoginResponse.prototype.toObject = function(opt_includeInstance) {
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.LoginResponse.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     success: jspb.Message.getFieldWithDefault(msg, 1, false),
     payload: (f = msg.getPayload()) && proto.erogen.LoginResponse.TokenPayload.toObject(includeInstance, f)
   };
@@ -1026,7 +1026,7 @@ proto.erogen.LoginResponse.TokenPayload.prototype.toObject = function(opt_includ
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.LoginResponse.TokenPayload.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     idToken: jspb.Message.getFieldWithDefault(msg, 1, ""),
     accessToken: jspb.Message.getFieldWithDefault(msg, 2, ""),
     refreshToken: jspb.Message.getFieldWithDefault(msg, 3, ""),
@@ -1336,7 +1336,7 @@ proto.erogen.RegisterRequest.prototype.toObject = function(opt_includeInstance) 
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.RegisterRequest.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     username: jspb.Message.getFieldWithDefault(msg, 1, ""),
     emailAddress: jspb.Message.getFieldWithDefault(msg, 2, ""),
     password: jspb.Message.getFieldWithDefault(msg, 3, ""),
@@ -1542,7 +1542,7 @@ proto.erogen.RegisterResponse.prototype.toObject = function(opt_includeInstance)
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.RegisterResponse.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     success: jspb.Message.getFieldWithDefault(msg, 1, false),
     message: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
@@ -1696,7 +1696,7 @@ proto.erogen.ChangeEmailRequest.prototype.toObject = function(opt_includeInstanc
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.ChangeEmailRequest.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     currentEmail: jspb.Message.getFieldWithDefault(msg, 2, ""),
     newEmail: jspb.Message.getFieldWithDefault(msg, 3, "")
@@ -1875,7 +1875,7 @@ proto.erogen.ChangeEmailResponse.prototype.toObject = function(opt_includeInstan
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.ChangeEmailResponse.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     success: jspb.Message.getFieldWithDefault(msg, 1, false),
     message: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
@@ -2029,7 +2029,7 @@ proto.erogen.ChangeUsernameRequest.prototype.toObject = function(opt_includeInst
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.ChangeUsernameRequest.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     currentUsername: jspb.Message.getFieldWithDefault(msg, 2, ""),
     newUsername: jspb.Message.getFieldWithDefault(msg, 3, "")
@@ -2208,7 +2208,7 @@ proto.erogen.ChangeUsernameResponse.prototype.toObject = function(opt_includeIns
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.ChangeUsernameResponse.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     success: jspb.Message.getFieldWithDefault(msg, 1, false),
     message: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
@@ -2362,7 +2362,7 @@ proto.erogen.ChangePasswordRequest.prototype.toObject = function(opt_includeInst
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.ChangePasswordRequest.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     currentPassword: jspb.Message.getFieldWithDefault(msg, 2, ""),
     newPassword: jspb.Message.getFieldWithDefault(msg, 3, "")
@@ -2541,7 +2541,7 @@ proto.erogen.ChangePasswordResponse.prototype.toObject = function(opt_includeIns
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.ChangePasswordResponse.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     success: jspb.Message.getFieldWithDefault(msg, 1, false),
     message: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
@@ -2695,7 +2695,7 @@ proto.erogen.ForgotPasswordRequest.prototype.toObject = function(opt_includeInst
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.ForgotPasswordRequest.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     emailAddress: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
@@ -2820,7 +2820,7 @@ proto.erogen.ForgotPasswordResponse.prototype.toObject = function(opt_includeIns
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.ForgotPasswordResponse.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     userExists: jspb.Message.getFieldWithDefault(msg, 1, false),
     sendemailQueued: jspb.Message.getFieldWithDefault(msg, 2, false)
   };
@@ -2976,7 +2976,7 @@ proto.erogen.ResetPasswordRequest.prototype.toObject = function(opt_includeInsta
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.ResetPasswordRequest.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     userId: jspb.Message.getFieldWithDefault(msg, 1, ""),
     newPassword: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
@@ -3128,7 +3128,7 @@ proto.erogen.ResetPasswordResponse.prototype.toObject = function(opt_includeInst
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.ResetPasswordResponse.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     success: jspb.Message.getFieldWithDefault(msg, 1, false),
     message: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
@@ -3282,7 +3282,7 @@ proto.erogen.ValidateTokenRequest.prototype.toObject = function(opt_includeInsta
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.ValidateTokenRequest.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     token: jspb.Message.getFieldWithDefault(msg, 1, ""),
     scope: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
@@ -3442,7 +3442,7 @@ proto.erogen.ValidateTokenResponse.prototype.toObject = function(opt_includeInst
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.ValidateTokenResponse.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     success: jspb.Message.getFieldWithDefault(msg, 1, false)
   };
 
@@ -3569,7 +3569,7 @@ proto.erogen.VerifySecurityQARequest.prototype.toObject = function(opt_includeIn
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.VerifySecurityQARequest.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     answer: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
@@ -3694,7 +3694,7 @@ proto.erogen.VerifySecurityQAResponse.prototype.toObject = function(opt_includeI
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.VerifySecurityQAResponse.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     success: jspb.Message.getFieldWithDefault(msg, 1, false)
   };
 
@@ -3821,7 +3821,7 @@ proto.erogen.UpdateRequest.prototype.toObject = function(opt_includeInstance) {
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.UpdateRequest.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     user: (f = msg.getUser()) && proto.erogen.User.toObject(includeInstance, f)
   };
 
@@ -3966,7 +3966,7 @@ proto.erogen.UpdateResponse.prototype.toObject = function(opt_includeInstance) {
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.UpdateResponse.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     success: jspb.Message.getFieldWithDefault(msg, 1, false),
     user: (f = msg.getUser()) && proto.erogen.User.toObject(includeInstance, f)
   };
@@ -4140,7 +4140,7 @@ proto.erogen.DeleteRequest.prototype.toObject = function(opt_includeInstance) {
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.DeleteRequest.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
@@ -4265,7 +4265,7 @@ proto.erogen.DeleteResponse.prototype.toObject = function(opt_includeInstance) {
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.DeleteResponse.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     success: jspb.Message.getFieldWithDefault(msg, 1, false)
   };
 
@@ -4392,7 +4392,7 @@ proto.erogen.UserRequest.prototype.toObject = function(opt_includeInstance) {
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.UserRequest.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
@@ -4517,7 +4517,7 @@ proto.erogen.UserResponse.prototype.toObject = function(opt_includeInstance) {
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.UserResponse.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     user: (f = msg.getUser()) && proto.erogen.User.toObject(includeInstance, f)
   };
 
@@ -4662,7 +4662,7 @@ proto.erogen.UsersRequest.prototype.toObject = function(opt_includeInstance) {
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.UsersRequest.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
     filter: jspb.Message.getFieldWithDefault(msg, 1, ""),
     count: jspb.Message.getFieldWithDefault(msg, 2, 0),
     offset: jspb.Message.getFieldWithDefault(msg, 3, 0)
@@ -4841,7 +4841,7 @@ proto.erogen.User.prototype.toObject = function(opt_includeInstance) {
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.erogen.User.toObject = function(includeInstance, msg) {
-  var obj = {
+  var f, obj = {
 
   };
 
@@ -4914,7 +4914,7 @@ proto.erogen.User.serializeBinaryToWriter = function(message, writer) {
 /**
  * @enum {number}
  */
-proto.erogen.UserIdentifierType = {
+proto.erogen.UserAliasType = {
   UNKNOWN: 0,
   USERNAME: 1,
   EMAIL_ADDRESS: 2,
