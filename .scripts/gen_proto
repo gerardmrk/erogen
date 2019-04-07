@@ -49,8 +49,7 @@ generate_proto_code() {
   (
     cd "$ROOT_DIR" && \
     protoc "$file_path" \
-      --go_out=plugins=grpc:. \
-      --js_out=library="$output_path":.
+      --go_out=plugins=grpc:.
   )
   
 }
