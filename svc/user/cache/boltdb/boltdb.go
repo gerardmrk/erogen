@@ -12,6 +12,6 @@ func NewUserCache() *UserCache {
 	return &UserCache{}
 }
 
-func (u *UserCache) User() (*usvc.User, error) {
+func (u *UserCache) User(id string) (*usvc.User, error) {
 	return &usvc.User{}, nil
 }

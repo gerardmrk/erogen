@@ -11,6 +11,11 @@ import (
 	"github.com/gerardmrk/erogen/svc/user/database/postgres"
 )
 
+// Cache settings
+var (
+	CacheFile = ""
+)
+
 // Database settings
 var (
 	DBHost     = "localhost"
@@ -22,6 +27,10 @@ var (
 )
 
 func init() {
+	if envCacheFile := os.Getenv("EROGEN_USERCACHE_FILE"); envCacheFile != "" {
+		CacheFile = strings.TrimSpace(envCacheFile)
+	}
+
 	if envDBHost := os.Getenv("EROGEN_USERDB_HOST"); envDBHost != "" {
 		DBHost = strings.TrimSpace(envDBHost)
 	}
@@ -44,7 +53,7 @@ func init() {
 }
 
 func main() {
-	cache := boltdb.NewCache("")
+	cache := boltdb.NewCache(CacheFile)
 
 	defer func() {
 		if err := cache.Close(); err != nil {
@@ -70,7 +79,7 @@ func main() {
 	}()
 
 	userDB := postgres.NewUserDB(db, userCache)
-	u, err := userDB.User()
+	u, err := userDB.User("x")
 	if err != nil {
 		log.Fatal(err)
 	}

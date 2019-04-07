@@ -12,7 +12,7 @@ type User struct {
 }
 
 type UserStore interface {
-	User() (*User, error)
+	User(id string) (*User, error)
 }
 
 type UserRepo interface {
