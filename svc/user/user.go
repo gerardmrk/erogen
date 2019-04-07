@@ -1,4 +1,4 @@
-package main
+package user
 
 import (
 	userpb "github.com/gerardmrk/erogen/proto/user"
@@ -12,10 +12,11 @@ type User struct {
 }
 
 type UserStore interface {
-	User() (User, error)
+	User() (*User, error)
 }
 
 type UserRepo interface {
 	Find(id string) (User, error)
 	FindByAlias(aType userpb.UserAliasType, aValue string) (User, error)
+	Update() error
 }

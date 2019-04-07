@@ -4,12 +4,13 @@ import (
 	"github.com/gerardmrk/erogen/pkg/passwordhash"
 	authpb "github.com/gerardmrk/erogen/proto/auth"
 	userpb "github.com/gerardmrk/erogen/proto/user"
+	userSVC "github.com/gerardmrk/erogen/svc/user"
 	"golang.org/x/net/context"
 )
 
 type UserRPC struct {
-	repo    UserRepo
-	authSVC authpb.AuthServiceClient
+	repo    userSVC.UserRepo
+	authClient authpb.AuthServiceClient
 }
 
 func (rpc *UserRPC) Login(ctx context.Context, req *userpb.LoginRequest) (*userpb.LoginResponse, error) {
@@ -28,7 +29,7 @@ func (rpc *UserRPC) Login(ctx context.Context, req *userpb.LoginRequest) (*userp
 
 	if req.IncludeTokens == true {
 		// TODO: consul connect
-		tokens, err := rpc.authSVC.Tokens(ctx, &authpb.TokensRequest{
+		tokens, err := rpc.authClient.Tokens(ctx, &authpb.TokensRequest{
 			UserId: user.ID,
 			IncludeIdToken: true,
 		})

@@ -1,10 +1,23 @@
 package postgres
 
 import (
-	"github.com/gerardmrk/erogen/svc/user/cache/boltdb"
+	"database/sql"
+	usvc "github.com/gerardmrk/erogen/svc/user"
 )
 
-// implements user store
 type UserDB struct {
-	cache boltdb.UserCache
+	db *sql.DB
+	cache usvc.UserStore
 }
+
+func NewUserDB(db *sql.DB, cache usvc.UserStore) *UserDB {
+	return &UserDB{
+		db:db,
+		cache:cache,
+	}
+}
+
+func (udb *UserDB) User() (*usvc.User, error) {
+	return &usvc.User{}, nil
+}
+

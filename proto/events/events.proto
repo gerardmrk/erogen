@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package erogen;
+
+option go_package = "events";
+
+
+service EventsService {
+    rpc Publish(PublishRequest) returns (PublishResponse) {};
+    rpc Subscribe(SubscribeRequest) returns (SubscribeResponse) {};
+}
+
+message PublishRequest {}
+
+message PublishResponse {}
+
+message SubscribeRequest {
+    string topic_id = 1;
+}
+
+message SubscribeResponse {}
