@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "target": "es5",
+    "lib": ["dom", "scripthost", "es6", "es2017", "es2017.object"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "sourceMap": true,
+    "jsx": "react",
+    "paths": {
+      "@client/*": [
+        "src/client/*",
+        "src/client/*/index.ts",
+        "src/client/*/index.tsx",
+        "src/client/*/index.js",
+        "src/client/*/index.jsx",
+        "src/client/*/index.json"
+      ],
+      "@renderer/*": [
+        "src/renderer/*",
+        "src/renderer/*/index.ts",
+        "src/renderer/*/index.tsx",
+        "src/renderer/*/index.js",
+        "src/renderer/*/index.jsx",
+        "src/renderer/*/index.json"
+      ]
+    }
+  },
+
+  "include": ["./src/**/*.tsx", "./src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
