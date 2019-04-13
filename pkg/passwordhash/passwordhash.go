@@ -1,5 +1,13 @@
 package passwordhash
 
+/*
+
+Password-hashing package. Uses Argon2.
+
+see -> https://github.com/P-H-C/phc-winner-argon2
+
+*/
+
 import (
 	"bufio"
 	"bytes"
@@ -56,6 +64,10 @@ func EncodeString(password string, params *HasherParams) (string, error) {
 }
 
 // Encode returns the encoded hash and others for the given password with the specified settings.
+// Outputs an encoded hash in the following format:
+//
+// "$argon2i$v=[version]$m=[memory],t=[iterations],p=[parallelism]$[salt]$[key]"
+//
 func Encode(password []byte, params *HasherParams) ([]byte, error) {
 	encoded := bytes.NewBufferString(fmt.Sprintf(
 		"$%s$v=%d$m=%d,t=%d,p=%d",
@@ -117,7 +129,6 @@ func DecodeString(encoded string) (params *HasherParams, salt string, key string
 
 // Decode decodes the given byte slice into a password hash.
 func Decode(encoded []byte) (params *HasherParams, salt []byte, key []byte, err error) {
-	tokens := make([][]byte, 5)
 	scr := bufio.NewScanner(bytes.NewReader(encoded))
 	scr.Split(func(data []byte, atEOF bool) (advance int, token []byte, err error) {
 		if atEOF && len(data) == 0 {
@@ -133,9 +144,9 @@ func Decode(encoded []byte) (params *HasherParams, salt []byte, key []byte, err 
 		return i + 1, data[0:i], nil
 	})
 
-	i := 0
+	i, tokens := 0, make([][]byte, 5)
 	for scr.Scan() {
-		// fill array instead of appending to prevent
+		// fill slice instead of appending to prevent
 		// reallocation and new slice creation each loop.
 		tokens[i] = scr.Bytes()
 		i++
@@ -144,16 +155,14 @@ func Decode(encoded []byte) (params *HasherParams, salt []byte, key []byte, err 
 	if i != 5 {
 		return nil, nil, nil, ErrInvalidHashFormat
 	}
-
 	if string(tokens[0]) != HasherID {
 		return nil, nil, nil, ErrInvalidHashID
 	}
-
 	var version int
 	if _, err = fmt.Sscanf(string(tokens[1]), "v=%d", &version); err != nil {
 		return nil, nil, nil, ErrInvalidHashVersion
 	}
-	if version != argon2.Version {
+	if version != HasherVersion {
 		return nil, nil, nil, ErrIncompatibleVersion
 	}
 
@@ -182,7 +191,6 @@ func Decode(encoded []byte) (params *HasherParams, salt []byte, key []byte, err 
 	p.KeyLength = uint32(len(key))
 
 	params = p
-
 	return
 }
 

@@ -4,6 +4,8 @@ package erogen;
 
 option go_package = "user";
 
+import "google/protobuf/timestamp.proto";
+
 service UserService {
     // unauthenticated requests
     rpc Login(LoginRequest) returns (LoginResponse) {};
@@ -117,8 +119,8 @@ message ValidateTokenRequest {
     Scope scope = 2;
 
     enum Scope {
-        EMAIL_VERIFICATION = 0;
-        PASSWORD_RESET = 1;
+        EMAIL_VERIFICATION = 1;
+        PASSWORD_RESET = 2;
     }
 }
 
@@ -153,6 +155,8 @@ message DeleteResponse {
 
 message UserRequest {
     string id = 1;
+    bool include_account = 2;
+    bool include_login = 3;
 }
 
 message UserResponse {
@@ -172,4 +176,156 @@ enum UserAliasType {
     MOBILE_NUMBER = 3;
 }
 
-message User {}
+message User {
+    string id = 1;
+    UserLogin login = 2;
+    UserAccount account = 3;
+    UserProfile profile = 4;
+}
+
+message UserLogin {
+    string user_id = 1;
+    string user_username = 2;
+    string user_email = 3;
+
+    string password_hash = 4;
+    string verification_token_email = 5;
+    string verification_token_password = 6;
+    
+    SecurityQuestion security_question = 7;
+    string security_answer = 8;
+}
+
+message UserProfile {
+    string title = 1;
+    string given_name = 2;
+    string middle_name = 3;
+    string family_name = 4;
+    string preferred_name = 5;
+
+    string birthdate = 6;
+    string gender = 7;
+    string occupation = 8;
+
+    string profile_pic_url = 9;
+    string banner_pic_url = 10;
+    string bio_description = 11;
+    string website_link = 12;
+    SocialLinks social_links = 13;
+
+    message SocialLinks {
+        string google = 1;
+        string linkedin = 2;
+        string twitter = 3;
+        string facebook = 4;
+        string instagram = 5;
+    }
+}
+
+message UserAccount {
+    string user_id = 1;
+    string username = 2;
+    string email = 3;
+    MobileNumber mobile = 4;
+    PaymentMethod payment_method = 5;
+
+    AccountStatus status = 6;
+    AccountFlag flag = 7;
+
+    bool mfa_enabled = 8;
+
+    string accepted_tos_version = 9;
+    uint32 accepted_tos_version_id = 10;
+
+
+    string last_known_ip = 16;
+
+    string last_known_device = 17;
+
+    string last_known_geolocation = 18;
+
+    repeated string previous_ips = 19;
+
+    repeated string trusted_devices = 20;
+
+    uint32 failed_login_attempts = 21;
+
+    google.protobuf.Timestamp last_login_at = 22;
+
+    google.protobuf.Timestamp lockout_timestamp = 23;
+
+    string admin_notes = 8;
+
+    google.protobuf.Timestamp created_at = 24;
+
+    string created_by = 25;
+
+    google.protobuf.Timestamp updated_at = 26;
+
+    string updated_by = 27;
+
+    google.protobuf.Timestamp deleted_at = 28;
+
+    string deleted_by = 29;
+
+    message MobileNumber {
+    }
+    message PaymentMethod {}
+}
+
+message AccountFlag {
+    uint32 id = 1;
+    string name = 2;
+    string label = 3;
+    string description = 4;
+    uint32 severity = 5;
+}
+
+message AccountStatus {
+    uint32 id = 1;
+    string name = 2;
+    string label = 3;
+    string description = 4;
+    bool is_active_mode = 5;
+}
+
+message AccountPrivacyLevel {
+    uint32 id = 1;
+    string name = 2;
+    string label = 3;
+    bool ext_visible_profile = 4;
+    bool int_visible_profile = 5;
+    bool ext_searchable_username = 6;
+    bool int_searchable_username = 7;
+    bool ext_searchable_email = 8;
+    bool int_searchable_email = 9;
+}
+
+message SecurityQuestion {
+    uint32 id = 1;
+    string display_text = 2;
+    bool currently_active = 3;
+}
+
+message SubscriptionPlan {
+    uint32 id = 1;
+    string name = 2;
+    string label = 3;
+    string description = 4;
+    uint32 price_per_week = 5;
+    uint32 price_per_month = 6;
+    uint32 price_per_year = 7;
+    uint32 max_discount_percent = 8;
+    repeated SubscriptionFeature base_features = 9;
+    repeated SubscriptionFeature inherited_features = 10;
+    uint32 parent_plan_id = 11;
+    bool currently_active = 12;
+}
+
+message SubscriptionFeature {
+    uint32 id = 1;
+    string name = 2;
+    string label = 3;
+    string description = 4;
+    bool currently_active = 5;
+}

@@ -8,6 +8,40 @@ service AuthService {
     rpc Tokens(TokensRequest) returns (TokensResponse) {};
 }
 
+message LoginReq {
+    string alias = 1;
+    AliasType alias_type = 2;
+    string password = 3;
+    uint32 remember_for = 4;
+
+    enum AliasType {
+        unknown = 0;
+        username = 1;
+        email = 2;
+        mobile = 3;
+    }
+}
+
+message LoginResp {}
+
+message ExternalLoginReq {}
+
+message ExternalLoginResp {}
+
+message RegisterReq {}
+
+message RegisterResp {}
+
+message SendPasswordResetTokenReq {}
+
+message SendPasswordResetTokenResp {}
+
+message VerifyEmailRequest {
+    string vtoken = 1;
+}
+
+message VerifyEmailResponse {}
+
 message TokensRequest {
     string user_id = 1;
     bool include_id_token = 2;
