@@ -1,7 +1,7 @@
 import { createStore, combineReducers, Dispatch, Middleware as _Middleware, Reducer, Store as _Store } from "redux"; // prettier-ignore
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { StateType } from "typesafe-actions";
-import { Services } from "@client/services";
+import { IServices } from "@client/services";
 import { composeMiddleware } from "./middleware";
 import * as globalUILoader from "./state/global-ui-loader";
 import * as globalUIMessage from "./state/global-ui-message";
@@ -9,8 +9,8 @@ import * as globalUIMessage from "./state/global-ui-message";
 export type Store = _Store<State, Action>;
 export type State = StateType<typeof reducer>;
 export type Action = globalUILoader.Action | globalUIMessage.Action;
-export type AsyncAction = ThunkAction<Promise<void>, State, Services, Action>;
-export type Dispatcher = Dispatch<Action> & ThunkDispatch<State, Services, Action>; // prettier-ignore
+export type AsyncAction = ThunkAction<Promise<void>, State, IServices, Action>;
+export type Dispatcher = Dispatch<Action> & ThunkDispatch<State, IServices, Action>; // prettier-ignore
 
 type _State = {
   globalUILoader: globalUILoader.State;
@@ -22,7 +22,7 @@ const reducer: Reducer<_State, Action> = combineReducers({
   globalUIMessage: globalUIMessage.reducer,
 });
 
-export const storeCreator = (services: Services, devMode: boolean = false) => (
+export const storeCreator = (services: IServices, devMode: boolean = false) => (
   preloadedState: State | undefined,
 ): Store => {
   return createStore(

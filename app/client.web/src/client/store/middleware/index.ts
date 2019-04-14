@@ -1,7 +1,7 @@
 import asyncActionMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { Middleware as _Middleware, MiddlewareAPI as _MiddlewareAPI, applyMiddleware } from "redux"; // prettier-ignore
-import { Services } from "@client/services";
+import { IServices } from "@client/services";
 import { Dispatcher, State, Action } from "@client/store";
 import { Action as GlobalUILoaderAction } from "@client/store/state/global-ui-loader";
 import { Action as GlobalUIMessageAction } from "@client/store/state/global-ui-message";
@@ -21,7 +21,7 @@ export type ActionWithMeta = Action & {
 };
 
 export const composeMiddleware = (
-  services: Services,
+  services: IServices,
   addDevToolsMiddleware: boolean = false,
 ) => {
   const middleware = applyMiddleware(
