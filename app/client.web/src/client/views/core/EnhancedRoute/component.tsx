@@ -25,16 +25,14 @@ export class EnhancedRoute extends React.Component<Props, State> {
     }
 
     return (
-      <React.StrictMode>
-        <React.Suspense fallback={<LoadingDisplay />}>
-          <BaseRoute
-            path={path}
-            exact={exact}
-            strict={strict}
-            render={this.renderRoute}
-          />
-        </React.Suspense>
-      </React.StrictMode>
+      <React.Suspense fallback={<LoadingDisplay />}>
+        <BaseRoute
+          path={path}
+          exact={exact}
+          strict={strict}
+          render={this.renderRoute}
+        />
+      </React.Suspense>
     );
   }
 }
