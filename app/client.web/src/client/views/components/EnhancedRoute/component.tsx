@@ -4,7 +4,6 @@ import {
   RouteComponentProps,
   Redirect,
 } from "react-router-dom";
-import LoadingDisplay from "./LoadingDisplay";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 
 type Props = LocalProps & StoreProps & DispatchProps;
@@ -25,14 +24,12 @@ export class EnhancedRoute extends React.Component<Props, State> {
     }
 
     return (
-      <React.Suspense fallback={<LoadingDisplay />}>
-        <BaseRoute
-          path={path}
-          exact={exact}
-          strict={strict}
-          render={this.renderRoute}
-        />
-      </React.Suspense>
+      <BaseRoute
+        path={path}
+        exact={exact}
+        strict={strict}
+        render={this.renderRoute}
+      />
     );
   }
 }

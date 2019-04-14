@@ -4,8 +4,8 @@ import { Provider as StoreProvider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import { Services } from "@client/services";
-import { storeCreator, State } from "./store";
-import App from "./views/App";
+import { storeCreator, State } from "@client/store";
+import App from "@client/views/core/App";
 import { configureServiceWorker } from "./offline";
 
 const MOUNT_POINT_ID = "app-mount-point";
