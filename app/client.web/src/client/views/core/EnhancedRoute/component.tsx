@@ -19,6 +19,7 @@ export class EnhancedRoute extends React.Component<Props, State> {
 
   public render() {
     const { path, exact, strict, guarded, isAuthenticated } = this.props;
+
     if (guarded && !isAuthenticated) {
       return <Redirect to={"/"} />;
     }

@@ -1,10 +1,10 @@
 import * as React from "react";
 import { shallow } from "enzyme";
-import { Landing } from "./component";
+import { NotFound } from "./component";
 
-describe("<Landing/>", () => {
+describe("<NotFound/>", () => {
   it("renders ok", async () => {
-    const wrapper = await shallow(<Landing />);
+    const wrapper = await shallow(<NotFound />);
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });
