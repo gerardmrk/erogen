@@ -1,0 +1,17 @@
+.main {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 100%;
+  background-color: crimson;
+}
+
+.container {
+  min-height: 100%;
+  background-color: #f9f9f9;
+
+  & > div {
+    // margin: 2em auto;
+    height: 100%;
+  }
+}

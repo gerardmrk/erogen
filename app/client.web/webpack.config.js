@@ -1,23 +1,23 @@
-const path = require("path")
+const path = require("path");
 
-const Fiber = require("fibers")
-const webpack = require("webpack")
-const webpackNodeExternals = require("webpack-node-externals")
+const Fiber = require("fibers");
+const webpack = require("webpack");
+const webpackNodeExternals = require("webpack-node-externals");
 
-const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin")
-const CleanBuildPlugin = require("clean-webpack-plugin")
-const CompressionPlugin = require("compression-webpack-plugin")
-const CopyPlugin = require("copy-webpack-plugin")
-const ExtractCssChunksPlugin = require("extract-css-chunks-webpack-plugin")
+const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
+const CleanBuildPlugin = require("clean-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+const ExtractCssChunksPlugin = require("extract-css-chunks-webpack-plugin");
 // const FaviconsPlugin = require("favicons-webpack-plugin")
-const HtmlIncludeAssetsPlugin = require("html-webpack-include-assets-plugin")
-const HtmlPlugin = require("html-webpack-plugin")
-const LodashPlugin = require("lodash-webpack-plugin")
-const OfflinePlugin = require("offline-plugin")
-const RemoveServiceWorkerPlugin = require("webpack-remove-serviceworker-plugin")
-const SubresourceIntegrityPlugin = require("webpack-subresource-integrity")
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer")
+const HtmlIncludeAssetsPlugin = require("html-webpack-include-assets-plugin");
+const HtmlPlugin = require("html-webpack-plugin");
+const LodashPlugin = require("lodash-webpack-plugin");
+const OfflinePlugin = require("offline-plugin");
+const RemoveServiceWorkerPlugin = require("webpack-remove-serviceworker-plugin");
+const SubresourceIntegrityPlugin = require("webpack-subresource-integrity");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 // prettier-ignore
 module.exports = async ({ mode = "development", source = "client" }) => {
@@ -80,6 +80,8 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                             ],
                             plugins: [
                                 "@babel/plugin-syntax-typescript",
+                                "@babel/plugin-syntax-dynamic-import",
+                                ["@babel/plugin-proposal-class-properties", { loose: true }],
                                 ["@babel/plugin-transform-runtime", { regenerator: false }],
                                 ["lodash", { id: "lodash-compat" }],
                                 ["transform-imports", { lodash: { transform: "lodash/${member}", preventFullImport: true } }],

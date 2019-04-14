@@ -1,6 +1,9 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
-import { withRouter, RouteComponentProps } from "react-router";
+import { withRouter, RouteComponentProps, Switch } from "react-router";
+import styles from "./App.scss";
+import routeConfs from "./conf.routes";
+import EnhancedRoute from "./core/EnhancedRoute";
 
 type Props = {};
 
@@ -11,7 +14,17 @@ export class App extends React.Component<
   State
 > {
   public render() {
-    return <div>{"App"}</div>;
+    return (
+      <div className={styles.main}>
+        <main className={styles.container}>
+          <Switch>
+            {routeConfs.map((r, i) => (
+              <EnhancedRoute key={i} {...r} />
+            ))}
+          </Switch>
+        </main>
+      </div>
+    );
   }
 }
 
