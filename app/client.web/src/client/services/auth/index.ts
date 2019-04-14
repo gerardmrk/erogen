@@ -1,4 +1,9 @@
-import { IAuthService, LoginParams, LoginResp } from "./interface";
+import {
+  IAuthService,
+  LoginParams,
+  LoginResp,
+  RegisterParams,
+} from "./interface";
 export * from "./interface";
 
 export class AuthService implements IAuthService {
@@ -21,7 +26,7 @@ export class AuthService implements IAuthService {
     return;
   }
 
-  register(params: import("./interface").RegisterParams): void {
+  register(params: RegisterParams): void {
     return;
   }
 

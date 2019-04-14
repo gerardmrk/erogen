@@ -39,12 +39,11 @@ export interface LoginParams {
   alias: string;
   password: string;
   remember: boolean;
-  rememberFor: number;
 }
 
 export interface LoginResp extends BaseAuthResp {
   mfaRequired: boolean;
-  authKeys?: AuthKeys;
+  authKeys: AuthKeys;
 }
 
 export interface RegisterParams {

@@ -1,6 +1,6 @@
 import { Dispatcher, Action } from "..";
 import { Middleware, MiddlewareAPI, ActionWithMeta } from ".";
-import { Action as GlobalUILoaderAction } from "@client/store/state/global-ui-loader";
+import * as actions from "@client/store/state/global-ui-loader/actions";
 
 export const globalUILoaderTrigger: Middleware = (api: MiddlewareAPI) => (
   next: Dispatcher,
@@ -9,14 +9,17 @@ export const globalUILoaderTrigger: Middleware = (api: MiddlewareAPI) => (
 
   if (
     !(<ActionWithMeta>action).meta ||
-    !(<ActionWithMeta>action).meta.triggerLoader
+    (<ActionWithMeta>action).meta.triggerLoader === undefined
   ) {
     return;
   }
 
-  api.dispatch(<GlobalUILoaderAction>(
-    (<ActionWithMeta>action).meta.triggerLoader
-  ));
+  const { triggerLoader } = (<ActionWithMeta>action).meta;
+  if (triggerLoader === true || typeof triggerLoader === "string") {
+    api.dispatch(actions.show(<string>triggerLoader));
+  } else {
+    api.dispatch(actions.hide());
+  }
 };
 
 export default globalUILoaderTrigger;

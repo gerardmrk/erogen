@@ -1,6 +1,6 @@
 import { Dispatcher, Action } from "..";
 import { Middleware, MiddlewareAPI, ActionWithMeta } from ".";
-import { Action as GlobalUIMessageAction } from "@client/store/state/global-ui-message";
+import * as actions from "@client/store/state/global-ui-message/actions";
 
 export const globalUIMessageTrigger: Middleware = (api: MiddlewareAPI) => (
   next: Dispatcher,
@@ -9,14 +9,20 @@ export const globalUIMessageTrigger: Middleware = (api: MiddlewareAPI) => (
 
   if (
     !(<ActionWithMeta>action).meta ||
-    !(<ActionWithMeta>action).meta.triggerMessage
+    (<ActionWithMeta>action).meta.triggerMessage === undefined
   ) {
     return;
   }
 
-  api.dispatch(<GlobalUIMessageAction>(
-    (<ActionWithMeta>action).meta.triggerMessage
-  ));
+  const triggerMessage: unknown = (<ActionWithMeta>action).meta.triggerMessage;
+  if (triggerMessage === false) {
+    api.dispatch(actions.hide());
+  } else {
+    const { message, messageType } = <
+      ReturnType<typeof actions.show>["payload"]
+    >triggerMessage;
+    api.dispatch(actions.show(message, messageType));
+  }
 };
 
 export default globalUIMessageTrigger;

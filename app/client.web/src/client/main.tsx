@@ -8,7 +8,7 @@ import { storeCreator, State } from "./store";
 import App from "./views/App";
 import { configureServiceWorker } from "./offline";
 
-const MOUNT_POINT_ID = "app-container";
+const MOUNT_POINT_ID = "app-mount-point";
 
 const devMode = true;
 
