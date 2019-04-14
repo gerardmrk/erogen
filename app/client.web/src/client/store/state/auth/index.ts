@@ -33,18 +33,22 @@ export const reducer: Reducer<_State, Action> = (
       return state;
 
     case getType(actions.loginSuccess):
-      return state;
+      return {
+        ...state,
+        isAuthenticated: true,
+        authKeys: action.payload.authKeys,
+      };
 
-    case getType(actions.loginSuccess):
+    case getType(actions.loginFailure):
       return state;
 
     case getType(actions.logoutPending):
       return state;
 
     case getType(actions.logoutSuccess):
-      return state;
+      return defaultState;
 
-    case getType(actions.logoutSuccess):
+    case getType(actions.logoutFailure):
       return state;
 
     default:

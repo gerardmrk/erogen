@@ -22,6 +22,10 @@ export const globalUIMessageTrigger: Middleware = (api: MiddlewareAPI) => (
       ReturnType<typeof actions.show>["payload"]
     >triggerMessage;
     api.dispatch(actions.show(message, messageType));
+
+    setTimeout(() => {
+      api.dispatch(actions.hide());
+    }, 2400);
   }
 };
 

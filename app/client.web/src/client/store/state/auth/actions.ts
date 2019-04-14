@@ -26,8 +26,7 @@ export const logoutPending = createAction(
 
 export const logoutSuccess = createAction(
   "auth.logoutSuccess",
-  resolve => (authKeys: AuthKeys, meta: ActionMetaPayload) =>
-    resolve({ authKeys }, meta),
+  resolve => (meta: ActionMetaPayload) => resolve(undefined, meta),
 );
 
 export const logoutFailure = createAction(
