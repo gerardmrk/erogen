@@ -1,1 +1,0 @@
-type TranslationKey = string;

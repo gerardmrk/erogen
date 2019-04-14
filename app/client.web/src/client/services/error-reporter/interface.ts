@@ -1,3 +1,3 @@
 export interface IErrorReporterService {
-  logError(): void;
+  logError(err: Error): void;
 }

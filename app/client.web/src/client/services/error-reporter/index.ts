@@ -4,7 +4,7 @@ export * from "./interface";
 export class ErrorReporterService implements IErrorReporterService {
   public constructor() {}
 
-  public logError(): void {
+  public logError(err: Error): void {
     // ...
   }
 }
