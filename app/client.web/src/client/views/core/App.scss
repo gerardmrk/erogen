@@ -1,7 +1,9 @@
+@import "~@client/views/styles.dimens";
+
 .main {
   min-height: 100%;
   display: grid;
-  grid-template-rows: 100%;
+  grid-template-rows: $app-header-height auto $app-footer-height;
   grid-template-columns: 100%;
   background-color: crimson;
 }

@@ -1,7 +1,23 @@
-export { default } from "./component";
+import { State, Dispatcher } from "@client/store";
+import { connect } from "react-redux";
+
+import { AppHeader } from "./component";
 
 export type LocalProps = {};
 
-export type StoreProps = {};
+export type StoreProps = {
+  isAuthenticated: boolean;
+};
 
 export type DispatchProps = {};
+
+const mapStateToProps = (state: State): StoreProps => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+const mapDispatchToProps = (dispatch: Dispatcher): DispatchProps => ({});
+
+export default connect<StoreProps, DispatchProps, LocalProps, State>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AppHeader);
