@@ -12,7 +12,7 @@ indent_size = 4
 
 [*.{js,jsx,ts,tsx,css,scss}]
 indent_style = space
-indent_size =  4
+indent_size =  2
 
 [*.{txt,yml,yaml,json,toml,csv,md,tf,hcl,conf,ini,env,bzl,bazel}]
 insert_final_newline = true

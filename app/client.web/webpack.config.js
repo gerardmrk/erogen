@@ -9,7 +9,7 @@ const CleanBuildPlugin = require("clean-webpack-plugin")
 const CompressionPlugin = require("compression-webpack-plugin")
 const CopyPlugin = require("copy-webpack-plugin")
 const ExtractCssChunksPlugin = require("extract-css-chunks-webpack-plugin")
-const FaviconsPlugin = require("favicons-webpack-plugin")
+// const FaviconsPlugin = require("favicons-webpack-plugin")
 const HtmlIncludeAssetsPlugin = require("html-webpack-include-assets-plugin")
 const HtmlPlugin = require("html-webpack-plugin")
 const LodashPlugin = require("lodash-webpack-plugin")
@@ -79,15 +79,10 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                                 "@babel/preset-typescript"
                             ],
                             plugins: [
-                                ["@babel/plugin-syntax-decorators", { legacy: true }],
-                                "@babel/plugin-syntax-dynamic-import",
                                 "@babel/plugin-syntax-typescript",
-                                ["@babel/plugin-proposal-decorators", { legacy: true }],
-                                ["@babel/plugin-proposal-class-properties", { loose: true }],
                                 ["@babel/plugin-transform-runtime", { regenerator: false }],
                                 ["lodash", { id: "lodash-compat" }],
                                 ["transform-imports", { lodash: { transform: "lodash/${member}", preventFullImport: true } }],
-                                "transform-react-remove-prop-types",
                                 "react-hot-loader/babel"
                             ]
                         }
@@ -272,27 +267,27 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                     initialStatePlaceholder: devMode ? "undefined" : "{{.InitialState}}",
                 },
             }),
-            !devMode && buildForClient && new FaviconsPlugin({
-                logo: path.resolve(__dirname, "src/client/logo.png"),
-                prefix: `icons-[hash]/`,
-                emitStats: true,
-                statsFilename: `iconstats-[hash].json`,
-                persistentCache: true,
-                inject: true,
-                background: "#fff",
-                title: "x", // TODO: un-hardcode this
-                icons: {
-                    android: true,
-                    appleIcon: true,
-                    appleStartup: true,
-                    coast: false,
-                    favicons: true,
-                    firefox: false,
-                    opengraph: true,
-                    twitter: false,
-                    windows: false,
-                },
-            }),
+            // !devMode && buildForClient && new FaviconsPlugin({
+            //     logo: path.resolve(__dirname, "src/client/logo.png"),
+            //     prefix: `icons-[hash]/`,
+            //     emitStats: true,
+            //     statsFilename: `iconstats-[hash].json`,
+            //     persistentCache: true,
+            //     inject: true,
+            //     background: "#fff",
+            //     title: "x", // TODO: un-hardcode this
+            //     icons: {
+            //         android: true,
+            //         appleIcon: true,
+            //         appleStartup: true,
+            //         coast: false,
+            //         favicons: true,
+            //         firefox: false,
+            //         opengraph: true,
+            //         twitter: false,
+            //         windows: false,
+            //     },
+            // }),
             buildForClient && new HtmlIncludeAssetsPlugin({ append: false, assets: [] }),
             new SubresourceIntegrityPlugin({
                 enabled: !devMode && buildForClient,
