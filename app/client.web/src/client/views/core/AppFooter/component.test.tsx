@@ -6,6 +6,5 @@ describe("<AppFooter/>", () => {
   it("renders ok", async () => {
     const wrapper = await shallow(<AppFooter />);
     expect(wrapper).toExist();
-    expect(wrapper).toHaveClassName("main");
   });
 });

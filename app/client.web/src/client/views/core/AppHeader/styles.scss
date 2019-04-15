@@ -1,5 +1,7 @@
+@import "~@client/views/styles.dimens.scss";
+
 .main {
-  background-color: inherit;
+  height: $app-header-height;
 }
 
 .container {

@@ -1,11 +1,20 @@
 import * as React from "react";
-import { shallow } from "enzyme";
+import { shallow, ShallowWrapper } from "enzyme";
 import { PublicNavs } from "./component";
 
 describe("<PublicNavs/>", () => {
-  it("renders ok", async () => {
-    const wrapper = await shallow(<PublicNavs />);
+  let wrapper: ShallowWrapper;
+
+  beforeAll(() => {
+    wrapper = shallow(<PublicNavs />);
+  });
+
+  it("renders ok", () => {
     expect(wrapper).toExist();
-    expect(wrapper).toHaveClassName("main");
+  });
+
+  it("displays 'Login' and 'Register' link", () => {
+    expect(wrapper).toHaveText("Login");
+    expect(wrapper).toHaveText("Register");
   });
 });

@@ -11,8 +11,10 @@ type State = {};
 export class AppFooter extends React.PureComponent<Props, State> {
   public render() {
     return (
-      <Pane className={styles.main} border={"muted"} background={"tint3"}>
-        <Container className={styles.container}>{"AppFooter"}</Container>
+      <Pane background={"blueTint"}>
+        <footer className={styles.main}>
+          <Container className={styles.container}>{"..."}</Container>
+        </footer>
       </Pane>
     );
   }

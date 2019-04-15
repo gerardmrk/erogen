@@ -10,7 +10,7 @@ export class PublicNavs extends React.PureComponent<Props, State> {
   public render() {
     return (
       <div className={styles.main}>
-        <div className={styles.container}>{"PublicNavs"}</div>
+        <div className={styles.container}>{"Home | Store | About"}</div>
       </div>
     );
   }
