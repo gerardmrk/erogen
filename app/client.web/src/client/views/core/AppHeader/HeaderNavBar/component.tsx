@@ -10,9 +10,9 @@ export type State = {};
 export class HeaderNavBar extends React.Component<Props, State> {
   public render() {
     return (
-      <nav className={styles.main}>
+      <div className={styles.main}>
         {this.props.isAuthenticated ? <PrivateNavs /> : <PublicNavs />}
-      </nav>
+      </div>
     );
   }
 }

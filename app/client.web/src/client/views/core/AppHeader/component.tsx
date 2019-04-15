@@ -3,7 +3,7 @@ import styles from "./styles.scss";
 import { Pane } from "evergreen-ui";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import Container from "@client/views/components/Container";
-import Logo from "@client/views/components/Logo";
+import Logo from "./Logo";
 import HeaderNavBar from "./HeaderNavBar";
 
 export type Props = LocalProps & StoreProps & DispatchProps;
@@ -13,13 +13,13 @@ export type State = {};
 export class AppHeader extends React.PureComponent<Props, State> {
   public render() {
     return (
-      <Pane border={"muted"} background={"blueTint"}>
-        <header className={styles.main}>
-          <Container className={styles.container}>
+      <Pane is={"header"} border={"muted"} background={"blueTint"}>
+        <Container className={styles.container}>
+          <div className={styles.logo}>
             <Logo />
-            <HeaderNavBar />
-          </Container>
-        </header>
+          </div>
+          <HeaderNavBar />
+        </Container>
       </Pane>
     );
   }

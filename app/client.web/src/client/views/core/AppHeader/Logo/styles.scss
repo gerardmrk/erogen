@@ -1,0 +1,7 @@
+@import "~@client/views/styles.mixins.scss";
+
+.main {
+  img {
+    @include fp(height, 15, 40);
+  }
+}
