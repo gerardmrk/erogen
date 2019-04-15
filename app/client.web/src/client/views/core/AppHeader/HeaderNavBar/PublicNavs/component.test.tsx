@@ -13,8 +13,8 @@ describe("<PublicNavs/>", () => {
     expect(wrapper).toExist();
   });
 
-  it("displays 'Login' and 'Register' link", () => {
-    expect(wrapper).toHaveText("Login");
-    expect(wrapper).toHaveText("Register");
-  });
+  // it("displays 'Login' and 'Register' link", () => {
+  //   expect(wrapper).toHaveText("Login");
+  //   expect(wrapper).toHaveText("Register");
+  // });
 });

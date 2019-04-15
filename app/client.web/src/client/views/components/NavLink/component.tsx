@@ -21,7 +21,7 @@ export class NavLink extends React.PureComponent<Props, State> {
         activeClassName={styles.active}
         to={this.props.path}
       >
-        <Text>{this.props.label}</Text>
+        <Text size={500}>{this.props.label}</Text>
       </BaseNavLink>
     );
   }

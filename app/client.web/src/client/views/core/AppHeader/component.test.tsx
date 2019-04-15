@@ -12,7 +12,6 @@ describe("<AppHeader/>", () => {
     it("renders ok", async () => {
       const wrapper = await shallow(<AppHeader {...props} />);
       expect(wrapper).toExist();
-      expect(wrapper).toHaveClassName("main");
     });
   });
 
@@ -25,7 +24,6 @@ describe("<AppHeader/>", () => {
     it("renders ok", async () => {
       const wrapper = await shallow(<AppHeader {...props} />);
       expect(wrapper).toExist();
-      expect(wrapper).toHaveClassName("main");
     });
   });
 });

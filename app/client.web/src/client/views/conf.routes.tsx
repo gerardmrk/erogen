@@ -13,7 +13,8 @@ export type RouteConf = {
 
 export const DEFAULT_PUBLIC_PATH = "/";
 export const DEFAULT_PRIVATE_PATH = "/dashboard";
-export const DEFAULT_AUTH_PATH = "/login";
+export const LOGIN_PATH = "/login";
+export const REGISTER_PATH = "/register";
 
 export const landingPage = {
   title: "Landing",
@@ -23,9 +24,50 @@ export const landingPage = {
   component: React.lazy(() => import("@client/views/routes/Landing")),
 };
 
+export const productPage = {
+  title: "Product",
+  path: "/about/product",
+  exact: true,
+  guarded: false,
+  component: React.lazy(() => import("@client/views/routes/Product")),
+};
+
+export const blogPostPage = {
+  title: "Blog",
+  path: "/blog/:post",
+  exact: true,
+  guarded: false,
+  component: React.lazy(() => import("@client/views/routes/Blog/BlogPost")),
+};
+
+export const blogPage = {
+  title: "Blog",
+  path: "/blog",
+  exact: false,
+  guarded: false,
+  component: React.lazy(() => import("@client/views/routes/Blog")),
+  routes: [blogPostPage],
+};
+
+export const documentationPage = {
+  title: "Documentation",
+  path: "/documentation",
+  exact: true,
+  guarded: false,
+  component: React.lazy(() => import("@client/views/routes/Documentation")),
+};
+
+export const supportPage = {
+  title: "Support",
+  path: "/support",
+  exact: true,
+  guarded: false,
+  component: React.lazy(() => import("@client/views/routes/Support")),
+};
+
 export const loginPage = {
   title: "Login",
-  path: DEFAULT_AUTH_PATH,
+  path: LOGIN_PATH,
   exact: true,
   guarded: false,
   component: React.lazy(() => import("@client/views/routes/Login")),
@@ -33,7 +75,7 @@ export const loginPage = {
 
 export const registerPage = {
   title: "Register",
-  path: "/register",
+  path: REGISTER_PATH,
   exact: true,
   guarded: false,
   component: React.lazy(() => import("@client/views/routes/Register")),
@@ -61,14 +103,6 @@ export const authPage = {
   exact: true,
   guarded: false,
   component: React.lazy(() => import("@client/views/routes/Auth")),
-};
-
-export const profilePage = {
-  title: "Profile",
-  path: "/:user",
-  exact: true,
-  guarded: false,
-  component: React.lazy(() => import("@client/views/routes/Profile")),
 };
 
 export const homeFeedPage = {
@@ -124,6 +158,14 @@ export const maintenancePage = {
   component: React.lazy(() => import("@client/views/routes/Maintenance")),
 };
 
+export const profilePage = {
+  title: "Profile",
+  path: "/:user",
+  exact: true,
+  guarded: false,
+  component: React.lazy(() => import("@client/views/routes/Profile")),
+};
+
 export const serverErrorPage = {
   status: 500,
   title: "500 Server Error",
@@ -143,14 +185,20 @@ export const notFoundPage = {
 
 export const routeConfs: RouteConf[] = [
   landingPage,
+  productPage,
+  blogPage,
+  documentationPage,
+  supportPage,
   loginPage,
   registerPage,
   forgotPasswordPage,
   resetPasswordPage,
   authPage,
-  profilePage,
   dashboardPage,
   homeFeedPage,
   settingsPage,
+  profilePage,
+  serverErrorPage,
+  notFoundPage,
 ];
 export default routeConfs;

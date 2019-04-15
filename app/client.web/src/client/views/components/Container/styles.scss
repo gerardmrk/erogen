@@ -10,7 +10,7 @@
     margin-right: 1em !important;
   }
 
-  @media only screen and (min-width: $tablet-min-width) and (max-width: $mobile-max-width) {
+  @media only screen and (min-width: $tablet-min-width) and (max-width: $tablet-max-width) {
     width: $tablet-width !important;
     margin-left: auto !important;
     margin-right: auto !important;
