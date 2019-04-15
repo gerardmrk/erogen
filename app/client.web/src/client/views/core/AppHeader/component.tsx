@@ -1,17 +1,22 @@
 import * as React from "react";
 import styles from "./styles.scss";
+import { Pane } from "evergreen-ui";
 import { LocalProps, StoreProps, DispatchProps } from ".";
+import Container from "@client/views/components/Container";
+import Logo from "@client/views/components/Logo";
 
-type Props = LocalProps & StoreProps & DispatchProps;
+export type Props = LocalProps & StoreProps & DispatchProps;
 
-type State = {};
+export type State = {};
 
 export class AppHeader extends React.PureComponent<Props, State> {
   public render() {
     return (
-      <div className={styles.main}>
-        <div className={styles.container}>{"AppHeader"}</div>
-      </div>
+      <Pane className={styles.main} border={"muted"}>
+        <Container className={styles.container}>
+          <Logo />
+        </Container>
+      </Pane>
     );
   }
 }

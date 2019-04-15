@@ -1,2 +1,31 @@
+@import "~@client/views/styles.devices.scss";
+
 .main {
+  display: block;
+  width: 100%;
+  max-width: 100% !important;
+
+  @media only screen and (max-width: $mobile-max-width) {
+    width: $mobile-width !important;
+    margin-left: 1em !important;
+    margin-right: 1em !important;
+  }
+
+  @media only screen and (min-width: $tablet-min-width) and (max-width: $mobile-max-width) {
+    width: $tablet-width !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  @media only screen and (min-width: $laptop-min-width) and (max-width: $laptop-max-width) {
+    width: $laptop-width !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  @media only screen and (min-width: $desktop-min-width) {
+    width: $desktop-width !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
 }
