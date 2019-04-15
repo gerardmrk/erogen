@@ -6,6 +6,5 @@ describe("<Login/>", () => {
   it("renders ok", async () => {
     const wrapper = await shallow(<Login />);
     expect(wrapper).toExist();
-    expect(wrapper).toHaveClassName("main");
   });
 });

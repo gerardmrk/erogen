@@ -2,6 +2,7 @@ import * as React from "react";
 import styles from "./styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import AuthNavs from "./AuthNavs";
+import Container from "@client/views/components/Container";
 
 type Props = LocalProps & StoreProps & DispatchProps;
 
@@ -11,10 +12,10 @@ export class AuthRoutesWrapper extends React.PureComponent<Props, State> {
   public render() {
     return (
       <div className={styles.main}>
-        <div className={styles.container}>
+        <Container>
           <div>{this.props.children}</div>
           <AuthNavs />
-        </div>
+        </Container>
       </div>
     );
   }

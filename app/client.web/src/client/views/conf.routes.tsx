@@ -144,7 +144,7 @@ export const profileSettingsPage = {
 export const settingsPage = {
   title: "Settings",
   path: "/settings",
-  exact: true,
+  exact: false,
   guarded: true,
   component: React.lazy(() => import("@client/views/routes/Settings")),
   routes: [profileSettingsPage, accountSettingsPage],
