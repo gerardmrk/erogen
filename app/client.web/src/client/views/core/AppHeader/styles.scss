@@ -6,6 +6,10 @@
   grid-template-columns: auto 78%;
   grid-template-rows: 100%;
   align-items: center;
+
+  @media only screen and (max-width: $mobile-max-width) {
+    grid-template-columns: 100%;
+  }
 }
 
 .logo {

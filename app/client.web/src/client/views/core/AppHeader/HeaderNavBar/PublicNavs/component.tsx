@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Text, Card, Pane } from "evergreen-ui";
 import styles from "./styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import NavLink from "@client/views/components/NavLink";
@@ -14,23 +13,25 @@ export class PublicNavs extends React.PureComponent<Props, State> {
   public render() {
     return (
       <nav className={styles.main}>
-        <Pane>
+        <div className={styles.otherNavsGroup}>
           {headerNavsPublic.map((n, i) => (
-            <NavLink key={i} path={n.to} label={n.label} />
+            <div className={styles.navBox} key={i}>
+              <NavLink path={n.to} label={n.label} />
+            </div>
           ))}
-        </Pane>
+        </div>
 
-        <Pane display={"flex"} justifyContent={"space-between"}>
-          <Card>
+        <div className={styles.defaultNavsGroup}>
+          <div className={styles.navBox}>
             <NavLink path={LOGIN_PATH} label={"Login"} />
-          </Card>
+          </div>
 
-          <Text>{"/"}</Text>
+          <div className={styles.navBox}>{"/"}</div>
 
-          <Card>
+          <div className={styles.navBox}>
             <NavLink path={REGISTER_PATH} label={"Register"} />
-          </Card>
-        </Pane>
+          </div>
+        </div>
       </nav>
     );
   }

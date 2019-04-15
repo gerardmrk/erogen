@@ -3,6 +3,11 @@ import {
   blogPage,
   documentationPage,
   supportPage,
+  dashboardPage,
+  homeFeedPage,
+  registerPage,
+  loginPage,
+  resetPasswordPage,
 } from "@client/views/conf.routes";
 
 export type NavConf = {
@@ -31,6 +36,28 @@ export const headerNavsPublic = [
   },
 ];
 
-export const headerNavsPrivate = [];
+export const headerNavsPrivate = [
+  {
+    label: "Home",
+    to: homeFeedPage.path,
+  },
+  {
+    label: "Dashboard",
+    to: dashboardPage.path,
+  },
+];
 
-export const authNavs = [];
+export const authNavs = [
+  {
+    label: "Login",
+    to: loginPage.path,
+  },
+  {
+    label: "Register",
+    to: registerPage.path,
+  },
+  {
+    label: "Reset Password",
+    to: resetPasswordPage.path,
+  },
+];
