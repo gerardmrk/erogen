@@ -12,6 +12,7 @@ const ExtractCssChunksPlugin = require("extract-css-chunks-webpack-plugin");
 // const FaviconsPlugin = require("favicons-webpack-plugin")
 const HtmlIncludeAssetsPlugin = require("html-webpack-include-assets-plugin");
 const HtmlPlugin = require("html-webpack-plugin");
+const HtmlScriptExtPlugin = require("script-ext-html-webpack-plugin");
 const LodashPlugin = require("lodash-webpack-plugin");
 const OfflinePlugin = require("offline-plugin");
 const RemoveServiceWorkerPlugin = require("webpack-remove-serviceworker-plugin");
@@ -225,14 +226,18 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                 APP_STAGE: "local",
             }),
             devMode && buildForClient && new webpack.HotModuleReplacementPlugin(),
-            !devMode && new CleanBuildPlugin([
+            !devMode && new CleanBuildPlugin({
+              verbose: true,
+              cleanStaleWebpackAssets: true,
+              cleanOnceBeforeBuildPatterns:[
+                '!index.html',
+                '!sw.js',
+                '!report.html',
                 path.resolve(__dirname, "dist/client/scripts/*"),
                 path.resolve(__dirname, "dist/client/styles/*"),
                 path.resolve(__dirname, "dist/client/images/*"),
                 path.resolve(__dirname, "dist/client/fonts/*"),
-            ], {
-                root: path.resolve(__dirname),
-                exclude: ["index.html", "sw.js", "report.html"],
+              ]
             }),
             !devMode && !buildForClient && new webpack.BannerPlugin({
                 raw: true,
@@ -268,6 +273,9 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                     appPlaceholder: devMode ? "" : "{{.App}}",
                     initialStatePlaceholder: devMode ? "undefined" : "{{.InitialState}}",
                 },
+            }),
+            buildForClient && new HtmlScriptExtPlugin({
+              defaultAttribute: "defer"
             }),
             // !devMode && buildForClient && new FaviconsPlugin({
             //     logo: path.resolve(__dirname, "src/client/logo.png"),
@@ -344,8 +352,9 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                     vendors: {
                         test: /[\\/]node_modules[\\/]/,
                         name: "vendors",
-                        chunks: "all"
-                        // ,maxSize: devMode ? undefined : 80000
+                        chunks: "all",
+                        // maxSize: devMode ? undefined : 80000,
+                        maxSize: 80000
                     }
                 }
             },
