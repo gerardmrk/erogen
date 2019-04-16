@@ -2,6 +2,28 @@
 @import "~@client/views/routes/Landing/styles.scss";
 
 .main {
-  height: calc(100vh - #{$name-dropper-height} - #{$app-header-height} - #{$app-footer-height});
+  height: calc(100vh - #{$name-dropper-height} - #{$app-header-height});
   background-color: #143954;
+}
+
+.canvas {
+  padding: 2em 0;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 30% 70%;
+}
+
+.leftPane {
+  color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.rightPane {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }

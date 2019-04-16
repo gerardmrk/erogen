@@ -5,4 +5,8 @@
   display: grid;
   grid-template-rows: $app-header-height auto $app-footer-height;
   grid-template-columns: 100%;
+
+  a {
+    text-decoration: none;
+  }
 }
