@@ -3,5 +3,42 @@
 
   & > div {
     height: 100%;
+
+    & > div {
+      height: 100%;
+
+      & > div {
+        height: 100%;
+      }
+    }
   }
+}
+
+.transitionWrapper {
+  position: relative;
+}
+
+.routeContainer {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.routeEnter {
+  opacity: 0.01;
+}
+
+.routeEnter.routeEnterActive {
+  opacity: 1;
+  transition: opacity 310ms ease-in;
+}
+
+.routeExit {
+  opacity: 1;
+}
+
+.routeExit.routeExitActive {
+  opacity: 0.01;
+  transition: opacity 310ms ease-in;
 }
