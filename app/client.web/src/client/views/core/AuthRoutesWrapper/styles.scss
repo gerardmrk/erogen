@@ -16,7 +16,9 @@
   @include fp(width, 300, 470);
   @include fp(min-height, 300, 470);
   @include fp(padding, 12, 24);
+  border: 1px solid rgb(228, 231, 235);
 }
 
 .content {
+  background: inherit;
 }
