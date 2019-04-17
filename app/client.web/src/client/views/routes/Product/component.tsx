@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Heading } from "evergreen-ui";
 import styles from "./styles.scss";
 import Container from "@client/views/components/Container";
 
@@ -12,7 +11,7 @@ export class Product extends React.PureComponent<Props, State> {
     return (
       <div className={styles.main}>
         <Container>
-          <Heading size={700}>{"Product"}</Heading>
+          <h1>{"Product"}</h1>
         </Container>
       </div>
     );

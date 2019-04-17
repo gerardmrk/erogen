@@ -1,6 +1,24 @@
+@import "~@client/views/styles.colors.scss";
 @import "~@client/views/routes/Landing/styles.scss";
 
 .main {
   height: $name-dropper-height;
   background-color: #f9f9f9;
+}
+
+.brandCarousel {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brandItem {
+  height: 80px;
+  width: 127px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $grey-tint;
+  border: 1px solid rgb(237, 240, 242);
 }

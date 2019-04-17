@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Heading } from "evergreen-ui";
 import styles from "./styles.scss";
 
 type Props = {};
@@ -10,7 +9,7 @@ export class Auth extends React.PureComponent<Props, State> {
   public render() {
     return (
       <div className={styles.main}>
-        <Heading size={700}>{"Auth"}</Heading>
+        <h1>{"Auth"}</h1>
       </div>
     );
   }

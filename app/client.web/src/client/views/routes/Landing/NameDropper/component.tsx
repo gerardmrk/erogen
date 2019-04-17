@@ -1,6 +1,4 @@
 import * as React from "react";
-import { Pane } from "evergreen-ui";
-import { Text } from "evergreen-ui";
 import styles from "./styles.scss";
 import Container from "@client/views/components/Container";
 
@@ -15,27 +13,13 @@ export class NameDropper extends React.PureComponent<Props, State> {
     return (
       <div className={styles.main}>
         <Container>
-          <Pane
-            height={"100%"}
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={"space-between"}
-          >
+          <div className={styles.brandCarousel}>
             {TMP_TEST.map((tt, i) => (
-              <Pane
-                key={i}
-                height={80}
-                width={127}
-                border={"muted"}
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"center"}
-                background={"tint2"}
-              >
-                <Text>{tt}</Text>
-              </Pane>
+              <div className={styles.brandItem} key={i}>
+                <p>{tt}</p>
+              </div>
             ))}
-          </Pane>
+          </div>
         </Container>
       </div>
     );

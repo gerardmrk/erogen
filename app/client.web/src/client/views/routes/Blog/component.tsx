@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Heading } from "evergreen-ui";
 import styles from "./styles.scss";
 import { Switch } from "react-router-dom";
 import { LocalProps } from ".";
@@ -15,7 +14,7 @@ export class Blog extends React.PureComponent<Props, State> {
     return (
       <div className={styles.main}>
         <Container>
-          <Heading size={700}>{"Blog"}</Heading>
+          <h1>{"Blog"}</h1>
 
           <Switch>
             {this.props.routes.map((r, i) => (

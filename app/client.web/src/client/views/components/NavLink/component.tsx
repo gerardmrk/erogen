@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Text } from "evergreen-ui";
 import { NavLink as BaseNavLink } from "react-router-dom";
 import styles from "./styles.scss";
 
@@ -21,7 +20,7 @@ export class NavLink extends React.PureComponent<Props, State> {
         activeClassName={styles.active}
         to={this.props.path}
       >
-        <Text size={500}>{this.props.label}</Text>
+        <span>{this.props.label}</span>
       </BaseNavLink>
     );
   }

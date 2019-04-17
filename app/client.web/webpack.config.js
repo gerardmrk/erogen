@@ -279,10 +279,6 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                 placeholders: true,
             }),
             !devMode && new webpack.HashedModuleIdsPlugin(),
-            buildForClient && new CopyPlugin([{
-                from: "node_modules/normalize.css/normalize.css",
-                to: path.resolve(__dirname, "dist/client/styles/normalize.css"),
-            }]),
             !devMode && buildForClient && new ExtractCssChunksPlugin({
                 filename: "styles/[name].[chunkhash].css",
                 chunkFilename: "styles/[id].[chunkhash].css",

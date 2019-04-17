@@ -1,5 +1,9 @@
 @import "~@client/views/styles.devices.scss";
 
+.main {
+  border-bottom: 1px solid rgb(237, 240, 242);
+}
+
 .container {
   height: 100%;
   display: grid !important;

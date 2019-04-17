@@ -1,4 +1,5 @@
 @import "~@client/views/styles.dimens.scss";
+@import "~@client/views/styles.colors.scss";
 @import "~@client/views/routes/Landing/styles.scss";
 
 .main {
@@ -20,10 +21,20 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+
+  h1 {
+    font-size: 35px;
+    color: $header-color-light;
+    margin-bottom: 1.3em;
+  }
 }
 
 .rightPane {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.fluff {
+  margin-top: 1em;
 }

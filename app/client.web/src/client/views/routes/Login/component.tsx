@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Heading } from "evergreen-ui";
 import styles from "./styles.scss";
 import AuthRoutesWrapper from "@client/views/core/AuthRoutesWrapper";
 
@@ -12,7 +11,7 @@ export class Login extends React.PureComponent<Props, State> {
     return (
       <AuthRoutesWrapper>
         <div className={styles.main}>
-          <Heading size={700}>{"Login"}</Heading>
+          <h1>{"Login"}</h1>
         </div>
       </AuthRoutesWrapper>
     );

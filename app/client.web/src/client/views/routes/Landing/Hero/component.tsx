@@ -1,7 +1,5 @@
 import * as React from "react";
 import styles from "./styles.scss";
-import { Heading, Paragraph } from "evergreen-ui";
-import { TextInput } from "evergreen-ui";
 import Container from "@client/views/components/Container";
 import heroImage from "./hero-image.svg";
 
@@ -16,22 +14,22 @@ export class Hero extends React.PureComponent<Props, State> {
         <Container>
           <div className={styles.canvas}>
             <div className={styles.leftPane}>
-              <Heading color={"#f9f9f9"} size={900} marginBottom={"1em"}>
+              <h1>
                 <em>{"Where Is My Mind?"}</em>
-              </Heading>
-              <TextInput
-                display={"block"}
-                border={"none"}
-                height={45}
-                width={400}
-                placeholder={"Where Is My Mind?"}
-              />
-              <Paragraph marginTop={"1em"}>
-                {"Alpha bravo charlie delta echo foxtrot golf"}
-              </Paragraph>
-              <Paragraph>
-                {"Hotel india juliet kilo lima mike november oscar papa."}
-              </Paragraph>
+              </h1>
+              <div className={styles.fluff}>
+                <p>{"Where is myyyy mind"}</p>
+                <br />
+                <p>{"Alpha bravo charlie delta echo foxtrot golf"}</p>
+                <br />
+                <p>{"Hotel india juliet kilo lima mike november oscar papa"}</p>
+                <br />
+                <p>
+                  {
+                    "Quebec romeo sierra tango unicorn victor whiskey x-ray yankee zulu"
+                  }
+                </p>
+              </div>
             </div>
             <div className={styles.rightPane}>
               <img src={heroImage} alt={"hero image"} />
