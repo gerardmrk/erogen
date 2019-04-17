@@ -11,6 +11,7 @@ const CleanBuildPlugin = require("clean-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const ExtractCssChunksPlugin = require("extract-css-chunks-webpack-plugin");
+const DeepScopeAnalysisPlugin = require("webpack-deep-scope-plugin").default;
 // const FaviconsPlugin = require("favicons-webpack-plugin")
 const HtmlIncludeAssetsPlugin = require("html-webpack-include-assets-plugin");
 const HtmlPlugin = require("html-webpack-plugin");
@@ -78,8 +79,8 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                                     useBuiltIns: "usage",
                                     targets: buildForClient ? { browsers: ["last 2 versions", "not ie < 11"] } : { node: "current" }
                                 }],
+                                "@babel/preset-typescript",
                                 "@babel/preset-react",
-                                "@babel/preset-typescript"
                             ],
                             plugins: [
                                 "@babel/plugin-syntax-typescript",
@@ -219,6 +220,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
             ]
         },
         plugins: [
+            !devMode && new DeepScopeAnalysisPlugin(),
             new webpack.DefinePlugin({
                 DEV_MODE: devMode,
                 INJECTED_SETTINGS: JSON.stringify({}), // TODO: inject settings

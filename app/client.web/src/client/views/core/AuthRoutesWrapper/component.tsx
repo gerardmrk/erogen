@@ -1,6 +1,6 @@
 import * as React from "react";
 import styles from "./styles.scss";
-import { Card } from "evergreen-ui";
+import { Card } from "evergreen-ui/esm/layers";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import AuthNavs from "./AuthNavs";
 import Container from "@client/views/components/Container";

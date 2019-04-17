@@ -1,6 +1,7 @@
 import * as React from "react";
 import styles from "./styles.scss";
-import { Heading, Text, TextInput, Paragraph } from "evergreen-ui";
+import { Heading, Text, Paragraph } from "evergreen-ui/esm/typography";
+import { TextInput } from "evergreen-ui/esm/text-input";
 import Container from "@client/views/components/Container";
 import heroImage from "./hero-image.svg";
 

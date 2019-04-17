@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Pane, Spinner } from "evergreen-ui";
+import { Pane } from "evergreen-ui/esm/layers";
+import { Spinner } from "evergreen-ui/esm/spinner";
 import styles from "./styles.scss";
 
 type Props = {};

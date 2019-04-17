@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Pane, Text } from "evergreen-ui";
+import { Pane } from "evergreen-ui/esm/layers";
+import { Text } from "evergreen-ui/esm/typography";
 import styles from "./styles.scss";
 import Container from "@client/views/components/Container";
 

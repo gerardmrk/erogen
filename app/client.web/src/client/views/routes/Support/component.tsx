@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Heading } from "evergreen-ui";
+import { Heading } from "evergreen-ui/esm/typography";
 import styles from "./styles.scss";
 import Container from "@client/views/components/Container";
 
