@@ -13,7 +13,6 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "declaration": false,
-    "isolatedModules": true,
     "noImplicitAny": false,
     "importHelpers": true,
     "noEmitHelpers": true,

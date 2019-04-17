@@ -60,6 +60,7 @@ Desktop.ini
 # Caches
 .cache/*
 !.cache/.gitkeep
+*.awcache
 
 # generated logs
 *.log
