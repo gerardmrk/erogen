@@ -15,24 +15,22 @@ const devMode = true;
 const services = new Services();
 const createStore = storeCreator(services, devMode);
 
-(async () => {
-  const initialState = window._INITIAL_STATE_;
+const initialState = window._INITIAL_STATE_;
 
-  const store = createStore(initialState as State);
+const store = createStore(initialState as State);
 
-  ReactDOM.render(
-    <StoreProvider store={store}>
-      <Router>
-        <App />
-      </Router>
-    </StoreProvider>,
-    document.getElementById(MOUNT_POINT_ID),
-  );
+ReactDOM.render(
+  <StoreProvider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </StoreProvider>,
+  document.getElementById(MOUNT_POINT_ID),
+);
 
-  configureServiceWorker((error: Error | null) => {
-    if (error) {
-      services.errorReporter.logError(error);
-      throw error;
-    }
-  });
-})();
+configureServiceWorker((error: Error | null) => {
+  if (error) {
+    services.errorReporter.logError(error);
+    throw error;
+  }
+});

@@ -1,6 +1,6 @@
 import * as React from "react";
 import styles from "./styles.scss";
-import { Pane } from "evergreen-ui/esm/layers";
+import { Pane } from "evergreen-ui";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import Container from "@client/views/components/Container";
 import Logo from "./Logo";

@@ -22,6 +22,10 @@ const RemoveServiceWorkerPlugin = require("webpack-remove-serviceworker-plugin")
 const SubresourceIntegrityPlugin = require("webpack-subresource-integrity");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const {
+  CheckerPlugin,
+  TsConfigPathsPlugin,
+} = require("awesome-typescript-loader");
 
 // prettier-ignore
 module.exports = async ({ mode = "development", source = "client" }) => {
@@ -47,10 +51,14 @@ module.exports = async ({ mode = "development", source = "client" }) => {
             mainFields: ["browser", "module", "main"],
             extensions: [".ts", ".tsx", ".js", ".jsx", ".json", ".css", "scss"],
             alias: {
-                // project aliases
                 "@client": path.resolve(__dirname, "src/client"),
                 "@renderer": path.resolve(__dirname, "src/renderer")
-            }
+            },
+            plugins: [
+              new TsConfigPathsPlugin({
+                configFileName: path.resolve(__dirname, 'tsconfig.json')
+              }),
+            ]
         },
         devtool: devMode ? "cheap-module-eval-source-map" : false,
         devServer: {
@@ -60,7 +68,8 @@ module.exports = async ({ mode = "development", source = "client" }) => {
             publicPath: "/",
             contentBase: "/assets/",
             historyApiFallback: true,
-            watchOptions: { poll: true }
+            watchOptions: { poll: true },
+            stats: "errors-only",
         },
         stats: { modules: false, children: false },
         module: {
@@ -69,28 +78,37 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                     test: /\.tsx?$/,
                     exclude: [/node_modules/],
                     use: [{
-                        loader: "babel-loader",
+                        loader: "awesome-typescript-loader",
                         options: {
-                            babelrc: false,
-                            presets: [
-                                ["@babel/preset-env", {
-                                    modules: false,
-                                    loose: true,
-                                    useBuiltIns: "usage",
-                                    targets: buildForClient ? { browsers: ["last 2 versions", "not ie < 11"] } : { node: "current" }
-                                }],
-                                "@babel/preset-typescript",
-                                "@babel/preset-react",
-                            ],
-                            plugins: [
-                                "@babel/plugin-syntax-typescript",
-                                "@babel/plugin-syntax-dynamic-import",
-                                ["@babel/plugin-proposal-class-properties", { loose: true }],
-                                ["@babel/plugin-transform-runtime", { regenerator: false }],
-                                ["lodash", { id: "lodash-compat" }],
-                                ["transform-imports", { lodash: { transform: "lodash/${member}", preventFullImport: true } }],
-                                "react-hot-loader/babel"
-                            ]
+                            useCache: true,
+                            useBabel: true,
+                            errorsAsWarnings: true,
+                            useTranspileModule: true,
+                            forceIsolatedModules: true,
+                            configFileName: path.resolve(__dirname, 'tsconfig.json'),
+                            reportFiles: ["src/**/*.{ts,tsx}"],
+                            babelCore: "@babel/core",
+                            babelOptions: {
+                              babelrc: false,
+                              presets: [
+                                  ["@babel/preset-env", {
+                                      modules: false,
+                                      loose: true,
+                                      useBuiltIns: "usage",
+                                      corejs: { version: 3, proposals: true },
+                                      targets: buildForClient ? { browsers: ["last 2 versions", "not ie < 11"] } : { node: "current" }
+                                  }],
+                                  "@babel/preset-react",
+                              ],
+                              plugins: [
+                                  "@babel/plugin-syntax-dynamic-import",
+                                  ["@babel/plugin-proposal-class-properties", { loose: true }],
+                                  ["@babel/plugin-transform-runtime", { regenerator: false }],
+                                  ["lodash", { id: "lodash-compat" }],
+                                  ["transform-imports", { lodash: { transform: "lodash/${member}", preventFullImport: true } }],
+                                  "react-hot-loader/babel"
+                              ]
+                           }
                         }
                     }]
                 },
@@ -220,6 +238,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
             ]
         },
         plugins: [
+            new CheckerPlugin(),
             !devMode && new DeepScopeAnalysisPlugin(),
             new webpack.DefinePlugin({
                 DEV_MODE: devMode,

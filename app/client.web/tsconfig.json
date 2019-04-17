@@ -2,12 +2,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "moduleResolution": "node",
+    "module": "esnext",
     "target": "esnext",
     "lib": ["dom", "scripthost", "es6", "es2017", "es2017.object"],
     "jsx": "react",
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "suppressImplicitAnyIndexErrors": true,
@@ -19,6 +19,7 @@
     "noEmitHelpers": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "strict": true,
     "removeComments": true,
     "paths": {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text } from "evergreen-ui/esm/typography";
+import { Text } from "evergreen-ui";
 import { NavLink as BaseNavLink } from "react-router-dom";
 import styles from "./styles.scss";
 

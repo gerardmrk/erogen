@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Heading } from "evergreen-ui/esm/typography";
+import { Heading } from "evergreen-ui";
 import styles from "./styles.scss";
 import AuthRoutesWrapper from "@client/views/core/AuthRoutesWrapper";
 
