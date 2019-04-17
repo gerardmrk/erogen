@@ -1,3 +1,5 @@
+/* global process, __dirname, module, require */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 
 const Fiber = require("fibers");
@@ -325,7 +327,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
             }),
             !devMode && buildForClient && new BundleAnalyzerPlugin({
                 analyzerMode: "static",
-                openAnalyzer: !!!process.env.CI,
+                openAnalyzer: !process.env.CI,
                 generateStatsFile: true,
                 statsFilename: path.resolve(__dirname, "dist/client/bundle-stats.json"),
                 reportFilename: path.resolve(__dirname, "dist/client/bundle-stats.html"),

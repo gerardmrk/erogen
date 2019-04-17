@@ -13,7 +13,12 @@ export type State = {};
 export class AppHeader extends React.PureComponent<Props, State> {
   public render() {
     return (
-      <Pane is={"header"} border={"muted"} background={"blueTint"}>
+      <Pane
+        borderColor={"x"}
+        is={"header"}
+        border={"muted"}
+        background={"blueTint"}
+      >
         <Container className={styles.container}>
           <div className={styles.logo}>
             <Logo />

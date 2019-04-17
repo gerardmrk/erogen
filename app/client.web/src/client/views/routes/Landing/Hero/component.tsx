@@ -26,14 +26,10 @@ export class Hero extends React.PureComponent<Props, State> {
                 placeholder={"Where Is My Mind?"}
               />
               <Paragraph marginTop={"1em"}>
-                {
-                  "Welcome to the AAA Club - The ADHD, Anxiety, and Autism Club."
-                }
+                {"Alpha bravo charlie delta echo foxtrot golf"}
               </Paragraph>
               <Paragraph>
-                {
-                  "Congrats on losing the genetic lottery. Please take a seat, and put on your seatbelt."
-                }
+                {"Hotel india juliet kilo lima mike november oscar papa."}
               </Paragraph>
             </div>
             <div className={styles.rightPane}>
