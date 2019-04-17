@@ -9,7 +9,6 @@ const webpackNodeExternals = require("webpack-node-externals");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const CleanBuildPlugin = require("clean-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
 const ExtractCssChunksPlugin = require("extract-css-chunks-webpack-plugin");
 const DeepScopeAnalysisPlugin = require("webpack-deep-scope-plugin").default;
 // const FaviconsPlugin = require("favicons-webpack-plugin")

@@ -1,3 +1,23 @@
+@import "~@client/views/styles.mixins.scss";
+
 .main {
-  background-color: #fff;
+  background-color: inherit;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  h1 {
+    @include fp(font-size, 50, 100);
+    @include fp(padding-top, 50, 100);
+    margin-bottom: 90px;
+  }
+
+  p {
+    @include fp(font-size, 20, 40);
+    font-weight: 400;
+  }
 }

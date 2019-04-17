@@ -160,7 +160,7 @@ export const maintenancePage = {
 
 export const profilePage = {
   title: "Profile",
-  path: "/:user",
+  path: "/user/:user",
   exact: true,
   guarded: false,
   component: React.lazy(() => import("@client/views/routes/Profile")),
