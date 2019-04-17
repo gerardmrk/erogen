@@ -356,7 +356,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                         name: "vendors",
                         chunks: "all",
                         // maxSize: devMode ? undefined : 80000,
-                        maxSize: 80000
+                        // maxSize: 80000
                     }
                 }
             },
