@@ -2,8 +2,9 @@ import * as React from "react";
 import styles from "./styles.scss";
 import Hero from "./Hero";
 import NameDropper from "./NameDropper";
+import { LocalProps } from ".";
 
-type Props = {};
+type Props = LocalProps;
 
 type State = {};
 

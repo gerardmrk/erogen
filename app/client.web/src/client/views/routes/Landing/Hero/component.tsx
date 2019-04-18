@@ -2,20 +2,23 @@ import * as React from "react";
 import styles from "./styles.scss";
 import Container from "@client/views/components/Container";
 import heroImage from "./hero-image.svg";
+import { LocalProps } from ".";
 
-type Props = {};
+type Props = LocalProps;
 
 type State = {};
 
 export class Hero extends React.PureComponent<Props, State> {
   public render() {
+    const { t } = this.props;
+
     return (
       <div className={styles.main}>
         <Container>
           <div className={styles.canvas}>
             <div className={styles.leftPane}>
               <h1>
-                <em>{"Where Is My Mind?"}</em>
+                <em>{t("routes.landing.header")}</em>
               </h1>
               <div className={styles.fluff}>
                 <p>{"Where is myyyy mind"}</p>

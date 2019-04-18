@@ -53,9 +53,15 @@ module.exports = async ({ mode = "development", source = "client" }) => {
     // base config
     const config = {
         context: ROOT_APP_DIR,
+
         mode: mode,
+
         target: buildForClient ? "web" : "node",
-        entry: {},
+
+        entry: {
+          // resolved below
+        },
+
         resolve: {
             enforceExtension: false,
             mainFields: ["browser", "module", "main"],
@@ -70,7 +76,9 @@ module.exports = async ({ mode = "development", source = "client" }) => {
               }),
             ]
         },
+
         devtool: devMode ? "cheap-module-eval-source-map" : false,
+
         devServer: {
             hot: true,
             port: 4200,
@@ -81,7 +89,14 @@ module.exports = async ({ mode = "development", source = "client" }) => {
             watchOptions: { poll: true },
             stats: "errors-only",
         },
-        stats: { modules: false, children: false },
+
+        stats: {
+          modules: false,
+          children: false,
+          assetsSort: 'name',
+          excludeAssets: /LICENSE$/
+        },
+
         module: {
             rules: [
                 {

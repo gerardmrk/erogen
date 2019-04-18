@@ -1,0 +1,40 @@
+{
+  "components/Container": {},
+  "components/EnhancedNavLink": {},
+  "components/EnhancedRoute": {},
+  "components/LanguageSelector": {},
+  "components/NavLink": {},
+
+  "core/App": {},
+  "core/AppContent": {},
+  "core/AppFooter": {},
+  "core/AppHeader": {},
+  "core/AuthRoutesWrapper": {},
+  "core/GlobalLoader": {},
+  "core/GlobalMessage": {},
+
+  "routes/Auth": {},
+  "routes/Blog": {},
+  "routes/Dashboard": {},
+  "routes/Documentation": {},
+  "routes/ForgotPassword": {},
+  "routes/Landing": {},
+  "routes/Landing/Hero": {},
+  "routes/Landing/NameDropper": {},
+  "routes/Login": {},
+  "routes/Maintenance": {},
+  "routes/NotFound": {
+    "head_title": "404 Not Found",
+    "head_description": "The requested page does not exist."
+  },
+  "routes/Product": {},
+  "routes/Profile": {},
+  "routes/Register": {},
+  "routes/ResetPassword": {},
+  "routes/ServerError": {},
+  "routes/Settings": {},
+  "routes/Settings/AccountSettings": {},
+  "routes/Settings/BillingSettings": {},
+  "routes/Settings/ProfileSettings": {},
+  "routes/Support": {}
+}

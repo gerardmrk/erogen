@@ -6,7 +6,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Services } from "@client/services";
 import { storeCreator, State } from "@client/store";
 import App from "@client/views/core/App";
-import { configureServiceWorker } from "./offline";
+import { initI18N } from "./main.i18n";
+import { initServiceWorker } from "./main.offline";
 import { AppConfigProvider } from "./views/contexts/app-config";
 
 type AppParams = {
@@ -21,6 +22,9 @@ type AppParams = {
   const createStore = storeCreator(services, devMode);
   const store = createStore(initialState as State);
 
+  const defaultLang = "en";
+  initI18N(defaultLang);
+
   ReactDOM.render(
     <AppConfigProvider config={config}>
       <StoreProvider store={store}>
@@ -32,7 +36,7 @@ type AppParams = {
     document.getElementById("app-mount-point"),
   );
 
-  configureServiceWorker((error: Error | null) => {
+  initServiceWorker((error: Error | null) => {
     if (error) {
       services.errorReporter.logError(error);
       throw error;
