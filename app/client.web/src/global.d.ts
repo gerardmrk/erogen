@@ -1,3 +1,7 @@
+type AppConfig = {
+  appName: string;
+};
+
 type TranslationKey = string;
 
 interface Window {

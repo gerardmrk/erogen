@@ -7,30 +7,39 @@ import { Services } from "@client/services";
 import { storeCreator, State } from "@client/store";
 import App from "@client/views/core/App";
 import { configureServiceWorker } from "./offline";
+import { AppConfigProvider } from "./views/contexts/app-config";
 
-const MOUNT_POINT_ID = "app-mount-point";
+type AppParams = {
+  devMode: boolean;
+  config: AppConfig;
+  initialState: Partial<State>;
+};
 
-const devMode = true;
+(async ({ config, devMode, initialState }: AppParams) => {
+  const services = new Services();
 
-const services = new Services();
-const createStore = storeCreator(services, devMode);
+  const createStore = storeCreator(services, devMode);
+  const store = createStore(initialState as State);
 
-const initialState = window._INITIAL_STATE_;
+  ReactDOM.render(
+    <AppConfigProvider config={config}>
+      <StoreProvider store={store}>
+        <Router>
+          <App />
+        </Router>
+      </StoreProvider>
+    </AppConfigProvider>,
+    document.getElementById("app-mount-point"),
+  );
 
-const store = createStore(initialState as State);
-
-ReactDOM.render(
-  <StoreProvider store={store}>
-    <Router>
-      <App />
-    </Router>
-  </StoreProvider>,
-  document.getElementById(MOUNT_POINT_ID),
-);
-
-configureServiceWorker((error: Error | null) => {
-  if (error) {
-    services.errorReporter.logError(error);
-    throw error;
-  }
+  configureServiceWorker((error: Error | null) => {
+    if (error) {
+      services.errorReporter.logError(error);
+      throw error;
+    }
+  });
+})({
+  devMode: true,
+  config: { appName: "" },
+  initialState: window._INITIAL_STATE_,
 });

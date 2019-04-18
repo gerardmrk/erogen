@@ -240,8 +240,8 @@ module.exports = async ({ mode = "development", source = "client" }) => {
             new CheckerPlugin(),
             !devMode && new DeepScopeAnalysisPlugin(),
             new webpack.DefinePlugin({
-                DEV_MODE: devMode,
-                INJECTED_SETTINGS: JSON.stringify({}), // TODO: inject settings
+                INJECTED_DEV_MODE: devMode,
+                INJECTED_APP_CONFIG: JSON.stringify({}), // TODO: inject settings
             }),
             new webpack.EnvironmentPlugin({
                 NODE_ENV: mode,
