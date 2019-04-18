@@ -147,7 +147,13 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                     test: /\.scss$/,
                     exclude: [/node_modules/],
                     use: [
-                        !devMode && buildForClient && ExtractCssChunksPlugin.loader,
+                        !devMode && { 
+                            loader: ExtractCssChunksPlugin.loader,
+                            options: {
+                              hot: false,
+                              reloadAll: false,
+                            },
+                        },
                         devMode && buildForClient && {
                             loader: "style-loader",
                             options: {
@@ -269,35 +275,45 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                 INJECTED_APP_STAGE: appRuntimeStage,
                 INJECTED_APP_CONFIG: appConfig,
             }),
+
             new webpack.EnvironmentPlugin({
                 NODE_ENV: mode,
             }),
+
             new CheckerPlugin(),
+
             !buildForClient && new webpack.optimize.LimitChunkCountPlugin({
-              maxChunks: 1
+                maxChunks: 1
             }),
+
             !devMode && new DeepScopeAnalysisPlugin(),
+
             !devMode && new CommonJSTreeShakePlugin(),
+
             devMode && buildForClient && new webpack.HotModuleReplacementPlugin(),
+            
             !devMode && buildForClient && new CleanBuildPlugin({
-              verbose: true,
-              cleanStaleWebpackAssets: true,
-              cleanOnceBeforeBuildPatterns:[
-                '!index.html',
-                '!sw.js',
-                '!report.html',
-                `${CLIENT_DST}/scripts/*`,
-                `${CLIENT_DST}/styles/*`,
-                `${CLIENT_DST}/images/*`,
-                `${CLIENT_DST}/fonts/*`,
-              ]
+                verbose: true,
+                cleanStaleWebpackAssets: true,
+                cleanOnceBeforeBuildPatterns:[
+                    '!index.html',
+                    '!sw.js',
+                    '!report.html',
+                    `${CLIENT_DST}/scripts/*`,
+                    `${CLIENT_DST}/styles/*`,
+                    `${CLIENT_DST}/images/*`,
+                    `${CLIENT_DST}/fonts/*`,
+                ]
             }),
+
             !devMode && !buildForClient && new webpack.BannerPlugin({
                 raw: true,
                 entryOnly: false,
                 banner: "require('source-map-support').install();",
             }),
+
             new CaseSensitivePathsPlugin(),
+
             new LodashPlugin({
                 exotics: true,
                 deburring: true,
@@ -308,11 +324,14 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                 collections: true,
                 placeholders: true,
             }),
+
             !devMode && new webpack.HashedModuleIdsPlugin(),
+
             !devMode && buildForClient && new ExtractCssChunksPlugin({
                 filename: "styles/[name].[chunkhash].css",
                 chunkFilename: "styles/[id].[chunkhash].css",
             }),
+
             buildForClient && new HtmlPlugin({
                 filename: "index.html",
                 template: `${CLIENT_SRC}/index.html`,
@@ -323,9 +342,11 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                     initialStatePlaceholder: devMode ? "undefined" : "{{.InitialState}}",
                 },
             }),
+
             buildForClient && new HtmlScriptExtPlugin({
               defaultAttribute: "defer"
             }),
+
             // !devMode && buildForClient && new FaviconsPlugin({
             //     logo: path.resolve(__dirname, "src/client/logo.png"),
             //     prefix: `icons-[hash]/`,
@@ -347,18 +368,26 @@ module.exports = async ({ mode = "development", source = "client" }) => {
             //         windows: false,
             //     },
             // }),
-            buildForClient && new HtmlIncludeAssetsPlugin({ append: false, assets: [] }),
+
+            buildForClient && new HtmlIncludeAssetsPlugin({
+              append: false,
+              assets: []
+            }),
+
             new SubresourceIntegrityPlugin({
                 enabled: !devMode && buildForClient,
                 hashFuncNames: ["sha256", "sha512"],
             }),
+
             !devMode && buildForClient && new CompressionPlugin({
                 filename: "[path].gz[query]",
                 algorithm: "gzip",
                 test: new RegExp("\\.(js|css)$"),
                 minRatio: 0.8,
             }),
+
             buildForClient && new RemoveServiceWorkerPlugin(),
+
             buildForClient && new OfflinePlugin({
                 caches: "all",
                 appShell: "/",
@@ -372,6 +401,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                     navigateFallbackURL: "/",
                 },
             }),
+
             !devMode && buildForClient && new BundleAnalyzerPlugin({
                 analyzerMode: "static",
                 openAnalyzer: !process.env.CI,
