@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
+    "outDir": "./dist",
     "moduleResolution": "node",
     "module": "esnext",
     "target": "esnext",
@@ -18,6 +19,8 @@
     "noEmitHelpers": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "strict": true,
     "removeComments": true,
@@ -37,6 +40,14 @@
         "src/renderer/*/index.js",
         "src/renderer/*/index.jsx",
         "src/renderer/*/index.json"
+      ],
+      "@server/*": [
+        "src/server/*",
+        "src/server/*/index.ts",
+        "src/server/*/index.tsx",
+        "src/server/*/index.js",
+        "src/server/*/index.jsx",
+        "src/server/*/index.json"
       ]
     }
   },
