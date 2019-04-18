@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./styles.scss";
+import styles from "./component.styles.scss";
 import { Switch } from "react-router-dom";
 import { LocalProps } from ".";
 import EnhancedRoute from "@client/views/components/EnhancedRoute";

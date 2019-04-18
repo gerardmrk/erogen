@@ -273,6 +273,9 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                 NODE_ENV: mode,
             }),
             new CheckerPlugin(),
+            !buildForClient && new webpack.optimize.LimitChunkCountPlugin({
+              maxChunks: 1
+            }),
             !devMode && new DeepScopeAnalysisPlugin(),
             !devMode && new CommonJSTreeShakePlugin(),
             devMode && buildForClient && new webpack.HotModuleReplacementPlugin(),

@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./styles.scss";
+import styles from "./component.styles.scss";
 import Hero from "./Hero";
 import NameDropper from "./NameDropper";
 import { LocalProps } from ".";

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { NavLink as BaseNavLink } from "react-router-dom";
-import styles from "./styles.scss";
+import styles from "./component.styles.scss";
 
 type Props = {
   path: string;

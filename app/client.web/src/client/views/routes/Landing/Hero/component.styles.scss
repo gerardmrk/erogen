@@ -1,6 +1,6 @@
 @import "~@client/views/styles.dimens.scss";
 @import "~@client/views/styles.colors.scss";
-@import "~@client/views/routes/Landing/styles.scss";
+@import "~@client/views/routes/Landing/component.styles.scss";
 
 .main {
   height: calc(100vh - #{$name-dropper-height} - #{$app-header-height});

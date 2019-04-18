@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./styles.scss";
+import styles from "./component.styles.scss";
 import AuthRoutesWrapper from "@client/views/core/AuthRoutesWrapper";
 
 type Props = {};
