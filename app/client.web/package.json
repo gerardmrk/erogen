@@ -4,8 +4,8 @@
   "description": "web app",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env APP_STAGE=local NODE_ENV=development ./node_modules/.bin/webpack-dev-server --env.mode=development --env.source=client",
-    "build": "cross-env APP_STAGE=local NODE_ENV=production ./node_modules/.bin/webpack --env.mode=production --env.source=client",
+    "start": "cross-env APP_STAGE=local NODE_ENV=development ./node_modules/.bin/webpack-dev-server --config=config/webpack.config.js --env.mode=development --env.source=client",
+    "build": "cross-env APP_STAGE=local NODE_ENV=production ./node_modules/.bin/webpack --config=config/webpack.config.js --env.mode=production --env.source=client",
     "test": "cross-env NODE_ENV=test jest --config=./config/jest.config.js --logHeapUsage --forceExit --detectOpenHandles"
   },
   "license": "MIT",

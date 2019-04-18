@@ -21,27 +21,37 @@ const RemoveServiceWorkerPlugin = require("webpack-remove-serviceworker-plugin")
 const SubresourceIntegrityPlugin = require("webpack-subresource-integrity");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
-const {
-  CheckerPlugin,
-  TsConfigPathsPlugin,
-} = require("awesome-typescript-loader");
+const { CheckerPlugin, TsConfigPathsPlugin } = require("awesome-typescript-loader"); // prettier-ignore
+
+const ROOT_APP_DIR = path.resolve(__dirname, "..");
+const DST_DIR = `${ROOT_APP_DIR}/dist`;
+const SRC_DIR = `${ROOT_APP_DIR}/src`;
+
+const CLIENT_SRC = `${SRC_DIR}/client`;
+const RENDERER_SRC = `${SRC_DIR}/renderer`;
+
+const CLIENT_DST = `${DST_DIR}/client`;
+const RENDERER_DST = `${DST_DIR}/renderer`;
 
 // prettier-ignore
 module.exports = async ({ mode = "development", source = "client" }) => {
     if (mode !== "development" && mode !== "production") {
-        throw new Error("'mode' option must be 'development' or 'production'")
+        throw new Error("'mode' option must be 'development' or 'production'");
     }
 
     if (source !== "client" && source !== "renderer") {
-        throw new Error("'source' option must be 'client' or 'renderer'")
+        throw new Error("'source' option must be 'client' or 'renderer'");
     }
 
-    const devMode = mode === "development"
-    const buildForClient = source === "client"
+    const appConfig = { appName: 'erogen' } // TODO: dynamic
+    const appRuntimeStage = 'local'; // TODO: dynamic
+
+    const devMode = mode === "development";
+    const buildForClient = source === "client";
 
     // base config
     const config = {
-        context: process.cwd(),
+        context: ROOT_APP_DIR,
         mode: mode,
         target: buildForClient ? "web" : "node",
         entry: {},
@@ -50,12 +60,12 @@ module.exports = async ({ mode = "development", source = "client" }) => {
             mainFields: ["browser", "module", "main"],
             extensions: [".ts", ".tsx", ".js", ".jsx", ".json", ".css", "scss"],
             alias: {
-                "@client": path.resolve(__dirname, "src/client"),
-                "@renderer": path.resolve(__dirname, "src/renderer")
+                "@client": CLIENT_SRC,
+                "@renderer": RENDERER_SRC
             },
             plugins: [
               new TsConfigPathsPlugin({
-                configFileName: path.resolve(__dirname, 'tsconfig.json')
+                configFileName: `${ROOT_APP_DIR}/tsconfig.json`
               }),
             ]
         },
@@ -84,7 +94,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                             errorsAsWarnings: true,
                             useTranspileModule: true,
                             forceIsolatedModules: true,
-                            configFileName: path.resolve(__dirname, 'tsconfig.json'),
+                            configFileName: `${ROOT_APP_DIR}/tsconfig.json`,
                             reportFiles: ["src/**/*.{ts,tsx}"],
                             babelCore: "@babel/core",
                             babelOptions: {
@@ -241,24 +251,24 @@ module.exports = async ({ mode = "development", source = "client" }) => {
             !devMode && new DeepScopeAnalysisPlugin(),
             new webpack.DefinePlugin({
                 INJECTED_DEV_MODE: devMode,
-                INJECTED_APP_CONFIG: JSON.stringify({}), // TODO: inject settings
+                INJECTED_APP_STAGE: appRuntimeStage,
+                INJECTED_APP_CONFIG: appConfig,
             }),
             new webpack.EnvironmentPlugin({
                 NODE_ENV: mode,
-                APP_STAGE: "local",
             }),
             devMode && buildForClient && new webpack.HotModuleReplacementPlugin(),
-            !devMode && new CleanBuildPlugin({
+            !devMode && buildForClient && new CleanBuildPlugin({
               verbose: true,
               cleanStaleWebpackAssets: true,
               cleanOnceBeforeBuildPatterns:[
                 '!index.html',
                 '!sw.js',
                 '!report.html',
-                path.resolve(__dirname, "dist/client/scripts/*"),
-                path.resolve(__dirname, "dist/client/styles/*"),
-                path.resolve(__dirname, "dist/client/images/*"),
-                path.resolve(__dirname, "dist/client/fonts/*"),
+                `${CLIENT_DST}/scripts/*`,
+                `${CLIENT_DST}/styles/*`,
+                `${CLIENT_DST}/images/*`,
+                `${CLIENT_DST}/fonts/*`,
               ]
             }),
             !devMode && !buildForClient && new webpack.BannerPlugin({
@@ -284,7 +294,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
             }),
             buildForClient && new HtmlPlugin({
                 filename: "index.html",
-                template: path.resolve(__dirname, "src/client/index.html"),
+                template: `${CLIENT_SRC}/index.html`,
                 vars: {
                     seosPlaceholder: devMode ? "" : "{{.SeoElements}}",
                     criticalCSSPlaceholder: devMode ? "" : "{{.CriticalCSS}}",
@@ -345,8 +355,8 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                 analyzerMode: "static",
                 openAnalyzer: !process.env.CI,
                 generateStatsFile: true,
-                statsFilename: path.resolve(__dirname, "dist/client/bundle-stats.json"),
-                reportFilename: path.resolve(__dirname, "dist/client/bundle-stats.html"),
+                statsFilename: `${DST_DIR}/stats.${source}.json`,
+                reportFilename: `${DST_DIR}/stats.${source}.html`,
             }),
         ].filter(t => !!t)
     }
@@ -354,10 +364,10 @@ module.exports = async ({ mode = "development", source = "client" }) => {
     if (buildForClient) {
         // Client-specific build options
 
-        config.entry.app = [`${path.resolve(__dirname, "src/client/main.tsx")}`]
+        config.entry.app = ["src/client/main.tsx"]
 
         config.output = {
-            path: `${path.resolve(__dirname, "dist/client")}`,
+            path: CLIENT_DST,
             filename: devMode ? "scripts/[name].js" : "scripts/[name].[chunkhash].js",
             publicPath: devMode ? "/" : "/assets/",
             crossOriginLoading: "anonymous"
@@ -387,10 +397,10 @@ module.exports = async ({ mode = "development", source = "client" }) => {
     } else {
         // Renderer-specific build options
 
-        config.entry.renderer = [`${path.resolve(__dirname, "src/renderer/index.ts")}`]
+        config.entry.renderer = ["src/renderer/index.tsx"]
 
         config.output = {
-            path: `${path.resolve(__dirname, "dist/renderer")}`,
+            path: RENDERER_DST,
             filename: "[name].js",
             libraryTarget: "commonjs"
         }
