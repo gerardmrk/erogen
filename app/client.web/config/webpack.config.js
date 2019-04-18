@@ -1,5 +1,5 @@
 /* global process, __dirname, module, require */
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-var-requires, @typescript-eslint/camelcase */
 const path = require("path");
 
 const Fiber = require("fibers");
@@ -11,6 +11,7 @@ const CleanBuildPlugin = require("clean-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const ExtractCssChunksPlugin = require("extract-css-chunks-webpack-plugin");
 const DeepScopeAnalysisPlugin = require("webpack-deep-scope-plugin").default;
+const CommonJSTreeShakePlugin = require("webpack-common-shake").Plugin;
 // const FaviconsPlugin = require("favicons-webpack-plugin")
 const HtmlIncludeAssetsPlugin = require("html-webpack-include-assets-plugin");
 const HtmlPlugin = require("html-webpack-plugin");
@@ -104,12 +105,13 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                                       modules: false,
                                       loose: true,
                                       useBuiltIns: "usage",
-                                      corejs: { version: 3, proposals: true },
+                                      corejs: { version: 3 },
                                       targets: buildForClient ? { browsers: ["last 2 versions", "not ie < 11"] } : { node: "current" }
                                   }],
                                   "@babel/preset-react",
                               ],
                               plugins: [
+                                  "@loadable/babel-plugin",
                                   "@babel/plugin-syntax-dynamic-import",
                                   ["@babel/plugin-proposal-class-properties", { loose: true }],
                                   ["@babel/plugin-transform-runtime", { regenerator: false }],
@@ -191,7 +193,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                                     loader: "url-loader",
                                     options: {
                                         name: "images/[name].[ext]?[hash]",
-                                        limit: 5000,
+                                        limit: 3000,
                                         emitFile: buildForClient
                                     }
                                 }
@@ -214,7 +216,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                             loader: "url-loader",
                             options: {
                                 name: "fonts/[name].[ext]",
-                                limit: 5000,
+                                limit: 3000,
                                 mimetype: "application/font-woff",
                                 emitFile: buildForClient
                             }
@@ -247,8 +249,6 @@ module.exports = async ({ mode = "development", source = "client" }) => {
             ]
         },
         plugins: [
-            new CheckerPlugin(),
-            !devMode && new DeepScopeAnalysisPlugin(),
             new webpack.DefinePlugin({
                 INJECTED_DEV_MODE: devMode,
                 INJECTED_APP_STAGE: appRuntimeStage,
@@ -257,6 +257,9 @@ module.exports = async ({ mode = "development", source = "client" }) => {
             new webpack.EnvironmentPlugin({
                 NODE_ENV: mode,
             }),
+            new CheckerPlugin(),
+            !devMode && new DeepScopeAnalysisPlugin(),
+            !devMode && new CommonJSTreeShakePlugin(),
             devMode && buildForClient && new webpack.HotModuleReplacementPlugin(),
             !devMode && buildForClient && new CleanBuildPlugin({
               verbose: true,
@@ -382,7 +385,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                         name: "vendors",
                         chunks: "all",
                         // maxSize: devMode ? undefined : 80000,
-                        maxSize: 80000
+                        // maxSize: 80000
                     }
                 }
             },
@@ -390,7 +393,18 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                 new UglifyJsPlugin({
                     parallel: true,
                     exclude: [/dist/],
-                    sourceMap: devMode
+                    extractComments: "all",
+                    uglifyOptions: {
+                      output: null,
+                      ie8: false,
+                      keep_fnames: true,
+                      mangle: {
+                        keep_fnames: true,
+                        properties: {
+                          keep_quoted: true
+                        }
+                      }
+                    }
                 })
             ]
         }

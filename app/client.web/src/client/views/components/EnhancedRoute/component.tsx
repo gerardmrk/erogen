@@ -1,5 +1,4 @@
 import * as React from "react";
-import { LocationDescriptorObject } from "history";
 import { Route as BaseRoute, RouteComponentProps, Redirect } from "react-router-dom"; // prettier-ignore
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import { LOGIN_PATH, DEFAULT_PRIVATE_PATH } from "@client/views/conf.routes"; // prettier-ignore
@@ -9,7 +8,7 @@ export type Props = LocalProps & StoreProps & DispatchProps;
 export type State = {};
 
 export class EnhancedRoute extends React.Component<Props, State> {
-  private redirectTo: LocationDescriptorObject = {
+  private redirectTo = {
     pathname: LOGIN_PATH,
     search: "",
     state: { from: "" },

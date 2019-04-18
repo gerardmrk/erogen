@@ -1,4 +1,5 @@
 import * as React from "react";
+import loadable from "@loadable/component";
 import { shallow } from "enzyme";
 import { EnhancedRoute, Props } from "./component";
 
@@ -10,7 +11,7 @@ describe("<Container/>", () => {
       isAuthenticated: false,
       title: "obelix",
       guarded: false,
-      component: React.lazy(() => import("@client/views/routes/Landing")),
+      component: loadable(() => import("@client/views/routes/Landing")),
     };
   });
 
