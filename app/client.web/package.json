@@ -46,7 +46,8 @@
     "redux-thunk": "^2.3.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^2.6.3",
-    "rxjs": "^6.4.0"
+    "rxjs": "^6.4.0",
+    "semantic-ui-react": "^0.86.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
