@@ -1,6 +1,8 @@
 type AppConfig = {
   appUrl: string;
   appName: string;
+  appDescription: string;
+  appImagePath: string;
 };
 
 type TranslationKey = string;

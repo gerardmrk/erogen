@@ -33,7 +33,7 @@ type AppParams = {
         </Router>
       </StoreProvider>
     </ConfigProvider>,
-    document.getElementById("app-mount-point"),
+    document.getElementById("app-mount-point")
   );
 
   initServiceWorker((error: Error | null) => {
@@ -43,7 +43,7 @@ type AppParams = {
     }
   });
 })({
-  devMode: true,
-  config: { appName: "", appUrl: "" },
-  initialState: window._INITIAL_STATE_,
+  devMode: INJECTED_DEV_MODE,
+  config: INJECTED_APP_CONFIG,
+  initialState: window._INITIAL_STATE_
 });

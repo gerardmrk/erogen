@@ -1,18 +1,17 @@
-/* global process, __dirname, module, require */
+/* eslint-env node */
 /* eslint-disable @typescript-eslint/no-var-requires, @typescript-eslint/camelcase */
 const path = require("path");
 
 const Fiber = require("fibers");
 const webpack = require("webpack");
 const webpackNodeExternals = require("webpack-node-externals");
-
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const CleanBuildPlugin = require("clean-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const ExtractCssChunksPlugin = require("extract-css-chunks-webpack-plugin");
 const DeepScopeAnalysisPlugin = require("webpack-deep-scope-plugin").default;
 const CommonJSTreeShakePlugin = require("webpack-common-shake").Plugin;
-// const FaviconsPlugin = require("favicons-webpack-plugin")
+// const FaviconsPlugin = require("favicons-webpack-plugin");
 const HtmlIncludeAssetsPlugin = require("html-webpack-include-assets-plugin");
 const HtmlPlugin = require("html-webpack-plugin");
 const HtmlScriptExtPlugin = require("script-ext-html-webpack-plugin");
@@ -23,8 +22,13 @@ const SubresourceIntegrityPlugin = require("webpack-subresource-integrity");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CheckerPlugin, TsConfigPathsPlugin } = require("awesome-typescript-loader"); // prettier-ignore
+const settingsBuilder = require("./webpack.settings");
+
+const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
+// const ROOT_CONFIG_DIR = `${ROOT_DIR}/config`;
 
 const ROOT_APP_DIR = path.resolve(__dirname, "..");
+// const ROOT_APP_CONFIG_DIR = `${ROOT_APP_DIR}/config`;
 const DST_DIR = `${ROOT_APP_DIR}/dist`;
 const SRC_DIR = `${ROOT_APP_DIR}/src`;
 
@@ -34,21 +38,22 @@ const RENDERER_SRC = `${SRC_DIR}/renderer`;
 const CLIENT_DST = `${DST_DIR}/client`;
 const RENDERER_DST = `${DST_DIR}/renderer`;
 
+const getSettings = settingsBuilder(ROOT_APP_DIR);
+
 // prettier-ignore
-module.exports = async ({ mode = "development", source = "client" }) => {
-    if (mode !== "development" && mode !== "production") {
-        throw new Error("'mode' option must be 'development' or 'production'");
-    }
-
-    if (source !== "client" && source !== "renderer") {
-        throw new Error("'source' option must be 'client' or 'renderer'");
-    }
-
-    const appConfig = { appName: 'erogen' } // TODO: dynamic
-    const appRuntimeStage = 'local'; // TODO: dynamic
-
-    const devMode = mode === "development";
-    const buildForClient = source === "client";
+module.exports = async (args) => {
+    const {
+      // user provided
+      mode,
+      source,
+      // convenience flags
+      devMode,
+      prodMode,
+      clientBuild,
+      rendererBuild,
+      // derived
+      appConfig,
+    } = getSettings(args);
 
     // base config
     const config = {
@@ -56,7 +61,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
 
         mode: mode,
 
-        target: buildForClient ? "web" : "node",
+        target: clientBuild ? "web" : "node",
 
         entry: {
           // resolved below
@@ -121,7 +126,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                                       loose: true,
                                       useBuiltIns: "usage",
                                       corejs: { version: 3 },
-                                      targets: buildForClient ? { browsers: ["last 2 versions", "not ie < 11"] } : { node: "current" }
+                                      targets: clientBuild ? { browsers: ["last 2 versions", "not ie < 11"] } : { node: "current" }
                                   }],
                                   "@babel/preset-react",
                               ],
@@ -147,14 +152,14 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                     test: /\.scss$/,
                     exclude: [/node_modules/],
                     use: [
-                        !devMode && { 
+                        prodMode && { 
                             loader: ExtractCssChunksPlugin.loader,
                             options: {
                               hot: false,
                               reloadAll: false,
                             },
                         },
-                        devMode && buildForClient && {
+                        devMode && clientBuild && {
                             loader: "style-loader",
                             options: {
                                 sourceMap: devMode,
@@ -197,7 +202,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                         {
                             loader: "file-loader",
                             options: {
-                                emitFile: buildForClient,
+                                emitFile: clientBuild,
                                 name: devMode ? "images/[name].[ext]" : "images/[name].[ext]?[hash]"
                             }
                         },
@@ -207,15 +212,15 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                                     loader: "file-loader",
                                     options: {
                                         name: "images/[name].[ext]",
-                                        emitFile: buildForClient
+                                        emitFile: clientBuild
                                     }
                                 },
-                                !devMode && {
+                                prodMode && {
                                     loader: "url-loader",
                                     options: {
                                         name: "images/[name].[ext]?[hash]",
                                         limit: 3000,
-                                        emitFile: buildForClient
+                                        emitFile: clientBuild
                                     }
                                 }
                             ].filter(t => !!t)
@@ -230,16 +235,16 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                             loader: "file-loader",
                             options: {
                                 name: "fonts/[name].[ext]",
-                                emitFile: buildForClient
+                                emitFile: clientBuild
                             }
                         },
-                        !devMode && {
+                        prodMode && {
                             loader: "url-loader",
                             options: {
                                 name: "fonts/[name].[ext]",
                                 limit: 3000,
                                 mimetype: "application/font-woff",
-                                emitFile: buildForClient
+                                emitFile: clientBuild
                             }
                         }
                     ].filter(t => !!t)
@@ -251,7 +256,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                         loader: "file-loader",
                         options: {
                             name: "fonts/[name].[ext]",
-                            emitFile: buildForClient,
+                            emitFile: clientBuild,
                         },
                     }]
                 },
@@ -263,7 +268,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                         options: {
                             name: "fonts/[name].[ext]",
                             mimetype: "application/font-otf",
-                            emitFile: buildForClient,
+                            emitFile: clientBuild,
                         },
                     }]
                 }
@@ -272,8 +277,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
         plugins: [
             new webpack.DefinePlugin({
                 INJECTED_DEV_MODE: devMode,
-                INJECTED_APP_STAGE: appRuntimeStage,
-                INJECTED_APP_CONFIG: appConfig,
+                INJECTED_APP_CONFIG: JSON.stringify(appConfig),
             }),
 
             new webpack.EnvironmentPlugin({
@@ -282,17 +286,17 @@ module.exports = async ({ mode = "development", source = "client" }) => {
 
             new CheckerPlugin(),
 
-            !buildForClient && new webpack.optimize.LimitChunkCountPlugin({
+            rendererBuild && new webpack.optimize.LimitChunkCountPlugin({
                 maxChunks: 1
             }),
 
-            !devMode && new DeepScopeAnalysisPlugin(),
+            prodMode && new DeepScopeAnalysisPlugin(),
 
-            !devMode && new CommonJSTreeShakePlugin(),
+            prodMode && new CommonJSTreeShakePlugin(),
 
-            devMode && buildForClient && new webpack.HotModuleReplacementPlugin(),
+            devMode && clientBuild && new webpack.HotModuleReplacementPlugin(),
             
-            !devMode && buildForClient && new CleanBuildPlugin({
+            prodMode && clientBuild && new CleanBuildPlugin({
                 verbose: true,
                 cleanStaleWebpackAssets: true,
                 cleanOnceBeforeBuildPatterns:[
@@ -306,7 +310,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                 ]
             }),
 
-            !devMode && !buildForClient && new webpack.BannerPlugin({
+            prodMode && rendererBuild && new webpack.BannerPlugin({
                 raw: true,
                 entryOnly: false,
                 banner: "require('source-map-support').install();",
@@ -325,14 +329,14 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                 placeholders: true,
             }),
 
-            !devMode && new webpack.HashedModuleIdsPlugin(),
+            prodMode && new webpack.HashedModuleIdsPlugin(),
 
-            !devMode && buildForClient && new ExtractCssChunksPlugin({
+            prodMode && clientBuild && new ExtractCssChunksPlugin({
                 filename: "styles/[name].[chunkhash].css",
                 chunkFilename: "styles/[id].[chunkhash].css",
             }),
 
-            buildForClient && new HtmlPlugin({
+            clientBuild && new HtmlPlugin({
                 filename: "index.html",
                 template: `${CLIENT_SRC}/index.html`,
                 vars: {
@@ -343,19 +347,19 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                 },
             }),
 
-            buildForClient && new HtmlScriptExtPlugin({
+            clientBuild && new HtmlScriptExtPlugin({
               defaultAttribute: "defer"
             }),
 
-            // !devMode && buildForClient && new FaviconsPlugin({
-            //     logo: path.resolve(__dirname, "src/client/logo.png"),
+            // prodMode && clientBuild && new FaviconsPlugin({
+            //     logo: `${ROOT_CONFIG_DIR}/logo/logo.png`,
             //     prefix: `icons-[hash]/`,
             //     emitStats: true,
             //     statsFilename: `iconstats-[hash].json`,
             //     persistentCache: true,
             //     inject: true,
             //     background: "#fff",
-            //     title: "x", // TODO: un-hardcode this
+            //     title: appConfig.appName,
             //     icons: {
             //         android: true,
             //         appleIcon: true,
@@ -369,26 +373,26 @@ module.exports = async ({ mode = "development", source = "client" }) => {
             //     },
             // }),
 
-            buildForClient && new HtmlIncludeAssetsPlugin({
+            clientBuild && new HtmlIncludeAssetsPlugin({
               append: false,
               assets: []
             }),
 
             new SubresourceIntegrityPlugin({
-                enabled: !devMode && buildForClient,
+                enabled: prodMode && clientBuild,
                 hashFuncNames: ["sha256", "sha512"],
             }),
 
-            !devMode && buildForClient && new CompressionPlugin({
+            prodMode && clientBuild && new CompressionPlugin({
                 filename: "[path].gz[query]",
                 algorithm: "gzip",
                 test: new RegExp("\\.(js|css)$"),
                 minRatio: 0.8,
             }),
 
-            buildForClient && new RemoveServiceWorkerPlugin(),
+            clientBuild && new RemoveServiceWorkerPlugin(),
 
-            buildForClient && new OfflinePlugin({
+            clientBuild && new OfflinePlugin({
                 caches: "all",
                 appShell: "/",
                 responseStrategy: devMode ? "network-first" : "cache-first",
@@ -402,7 +406,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
                 },
             }),
 
-            !devMode && buildForClient && new BundleAnalyzerPlugin({
+            prodMode && clientBuild && new BundleAnalyzerPlugin({
                 analyzerMode: "static",
                 openAnalyzer: !process.env.CI,
                 generateStatsFile: true,
@@ -412,7 +416,7 @@ module.exports = async ({ mode = "development", source = "client" }) => {
         ].filter(t => !!t)
     }
 
-    if (buildForClient) {
+    if (clientBuild) {
         // Client-specific build options
 
         config.entry.app = ["src/client/main.tsx"]

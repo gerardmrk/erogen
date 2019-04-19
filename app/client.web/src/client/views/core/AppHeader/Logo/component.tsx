@@ -1,15 +1,26 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
-import logoSVG from "@client/logo.svg";
 import { Link } from "react-router-dom";
+import logo from "@client/logo.svg";
 import { DEFAULT_PUBLIC_PATH } from "@client/views/conf.routes";
+import { LocalProps } from ".";
 
-export class Logo extends React.PureComponent {
+export type Props = LocalProps & {};
+
+export type State = {};
+
+export class Logo extends React.PureComponent<Props, State> {
+  public constructor(props) {
+    super(props);
+  }
+
+  public async componentWillMount() {}
+
   public render() {
     return (
       <div className={styles.main}>
         <Link to={DEFAULT_PUBLIC_PATH}>
-          <img src={logoSVG} alt={"brand logo"} />
+          <img src={logo} alt={"brand logo"} />
         </Link>
       </div>
     );

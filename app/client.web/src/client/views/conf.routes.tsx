@@ -8,7 +8,7 @@ export type RouteConf<P = any> = {
   // route's designated OpenGraph type (og:type); used in the og:type meta tag.
   metaType?: string;
   // route's primary image; used in various image-related meta tags.
-  metaImgURL?: string;
+  metaImgPath?: string;
   // route's primary image alt; used in various image-alt-related meta tags.
   metaImgAlt?: string;
   // route's twitter card type; used in the twitter:card meta tag.
@@ -35,7 +35,6 @@ export const LOGIN_PATH = "/login";
 export const REGISTER_PATH = "/register";
 
 export const landingPage = {
-  title: "Landing",
   path: DEFAULT_PUBLIC_PATH,
   exact: true,
   guarded: false,
