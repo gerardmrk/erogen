@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires, @typescript-eslint/camelcase */
 const path = require("path");
 
+const glob = require("glob");
 const Fiber = require("fibers");
 const webpack = require("webpack");
 const webpackNodeExternals = require("webpack-node-externals");
@@ -11,6 +12,8 @@ const CompressionPlugin = require("compression-webpack-plugin");
 const ExtractCssChunksPlugin = require("extract-css-chunks-webpack-plugin");
 const DeepScopeAnalysisPlugin = require("webpack-deep-scope-plugin").default;
 const CommonJSTreeShakePlugin = require("webpack-common-shake").Plugin;
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const PurgeCSSPlugin = require("purgecss-webpack-plugin");
 // const FaviconsPlugin = require("favicons-webpack-plugin");
 const HtmlIncludeAssetsPlugin = require("html-webpack-include-assets-plugin");
 const HtmlPlugin = require("html-webpack-plugin");
@@ -351,7 +354,7 @@ module.exports = async (args) => {
             devMode && clientBuild && new webpack.HotModuleReplacementPlugin(),
             
             prodMode && clientBuild && new CleanBuildPlugin({
-                verbose: true,
+                verbose: false,
                 cleanStaleWebpackAssets: true,
                 cleanOnceBeforeBuildPatterns:[
                     '!index.html',
@@ -388,6 +391,21 @@ module.exports = async (args) => {
             prodMode && clientBuild && new ExtractCssChunksPlugin({
                 filename: "styles/[name].[chunkhash].css",
                 chunkFilename: "styles/[id].[chunkhash].css",
+            }),
+
+            prodMode && clientBuild && new PurgeCSSPlugin({
+                paths: glob.sync(`${CLIENT_SRC}/**/*`, { nodir: true }),
+                only: ["bundle", "vendor"],
+            }),
+
+            prodMode && clientBuild && new OptimizeCssAssetsPlugin({
+                canPrint: true,
+                assetNameRegExp: /\.css$/g,
+                cssProcessorPluginOptions: {
+                  preset: ["default", {
+                    discardComments: { removeAll: true },
+                  }],
+                }
             }),
 
             clientBuild && new HtmlPlugin({
@@ -500,7 +518,7 @@ module.exports = async (args) => {
                 new UglifyJsPlugin({
                     parallel: true,
                     exclude: [/dist/],
-                    extractComments: "all",
+                    extractComments: true,
                     uglifyOptions: {
                       output: null,
                       ie8: false,
