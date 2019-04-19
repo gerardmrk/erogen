@@ -1,3 +1,4 @@
+import "../../ui-theme/semantic.less";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import StoreProvider from "react-redux/es/components/Provider";

@@ -25,18 +25,20 @@ const { CheckerPlugin, TsConfigPathsPlugin } = require("awesome-typescript-loade
 const settingsBuilder = require("./webpack.settings");
 
 const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
-// const ROOT_CONFIG_DIR = `${ROOT_DIR}/config`;
+const ROOT_CONFIG_DIR = `${ROOT_DIR}/config`;
 
 const ROOT_APP_DIR = path.resolve(__dirname, "..");
-// const ROOT_APP_CONFIG_DIR = `${ROOT_APP_DIR}/config`;
+const ROOT_APP_CONFIG_DIR = `${ROOT_APP_DIR}/config`;
 const DST_DIR = `${ROOT_APP_DIR}/dist`;
 const SRC_DIR = `${ROOT_APP_DIR}/src`;
 
 const CLIENT_SRC = `${SRC_DIR}/client`;
 const RENDERER_SRC = `${SRC_DIR}/renderer`;
+const SERVER_SRC = `${SRC_DIR}/server`;
 
 const CLIENT_DST = `${DST_DIR}/client`;
 const RENDERER_DST = `${DST_DIR}/renderer`;
+const SERVER_DST = `${DST_DIR}/server`;
 
 const getSettings = settingsBuilder(ROOT_APP_DIR);
 
@@ -72,8 +74,12 @@ module.exports = async (args) => {
             mainFields: ["browser", "module", "main"],
             extensions: [".ts", ".tsx", ".js", ".jsx", ".json", ".css", "scss"],
             alias: {
+                // custom aliases
                 "@client": CLIENT_SRC,
-                "@renderer": RENDERER_SRC
+                "@renderer": RENDERER_SRC,
+                "@server": SERVER_SRC,
+                // semantic ui theming path resolution
+                "../../theme.config$": `${ROOT_APP_DIR}/ui-theme/theme.config`,
             },
             plugins: [
               new TsConfigPathsPlugin({
@@ -196,8 +202,55 @@ module.exports = async (args) => {
                     ].filter(t => !!t)
                 },
                 {
-                    test: /\.jpe?g$|\.gif$|\.ico$|\.png$|\.svg$/,
+                    test: /\.less$/,
                     exclude: [/node_modules/],
+                    use: [
+                        prodMode && { 
+                            loader: ExtractCssChunksPlugin.loader,
+                            options: {
+                              hot: false,
+                              reloadAll: false,
+                            },
+                        },
+                        devMode && clientBuild && {
+                            loader: "style-loader",
+                            options: {
+                                sourceMap: devMode,
+                                hmr: true,
+                                insertInto: "head",
+                                insertAt: "bottom"
+                            }
+                        },
+                        {
+                            loader: "css-loader",
+                            options: {
+                                sourceMap: devMode,
+                                modules: true,
+                                importLoaders: 1,
+                                camelCase: true,
+                                localIdentName: devMode ? "[name]_[local]_[hash:base64:7]" : "[hash:base64:7]"
+                            }
+                        },
+                        {
+                            loader: "postcss-loader",
+                            options: {
+                                sourceMap: devMode,
+                                plugins: () => [require("autoprefixer")()]
+                            }
+                        },
+                        {
+                            loader: "less-loader",
+                            options: {
+                                sourceMap: devMode,
+                                strictMath: false,
+                                noIeCompat: true
+                            }
+                        }
+                    ].filter(t => !!t)
+                },
+                {
+                    test: /\.jpe?g$|\.gif$|\.ico$|\.png$|\.svg$/,
+                    exclude: [/node_modules\/(?!(semantic-ui-less\/themes)\/).*/],
                     oneOf: [
                         {
                             loader: "file-loader",
@@ -229,7 +282,7 @@ module.exports = async (args) => {
                 },
                 {
                     test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                    exclude: [/node_modules/],
+                    exclude: [/node_modules\/(?!(semantic-ui-less\/themes)\/).*/],
                     use: [
                         devMode && {
                             loader: "file-loader",
@@ -251,7 +304,7 @@ module.exports = async (args) => {
                 },
                 {
                     test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                    exclude: [/node_modules/],
+                    exclude: [/node_modules\/(?!(semantic-ui-less\/themes)\/).*/],
                     use: [{
                         loader: "file-loader",
                         options: {
@@ -262,7 +315,7 @@ module.exports = async (args) => {
                 },
                 {
                     test: /\.otf(\?.*)?$/,
-                    exclude: [/node_modules/],
+                    exclude: [/node_modules\/(?!(semantic-ui-less\/themes)\/).*/],
                     use: [{
                         loader: "file-loader",
                         options: {
@@ -475,7 +528,7 @@ module.exports = async (args) => {
 
         config.externals = [
             webpackNodeExternals({
-                whitelist: ["is-webpack-bundle", "webpack-require-weak"]
+                whitelist: ["is-webpack-bundle", "webpack-require-weak", "semantic-ui-less/themes"]
             })
         ]
     }
