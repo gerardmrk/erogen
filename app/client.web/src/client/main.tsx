@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { Provider as StoreProvider } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
+import StoreProvider from "react-redux/es/components/Provider";
+import Router from "react-router-dom/BrowserRouter";
 
 import { Services } from "@client/services";
 import { storeCreator, State } from "@client/store";

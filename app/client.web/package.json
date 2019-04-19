@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run app:start",
+    "build": "npm run app:build",
     "app:start": "cross-env APP_STAGE=local NODE_ENV=development ./node_modules/.bin/webpack-dev-server --config=config/webpack.config.js --env.mode=development --env.source=client",
     "app:build": "cross-env APP_STAGE=local NODE_ENV=production ./node_modules/.bin/webpack --config=config/webpack.config.js --env.mode=production --env.source=client",
     "app:test": "cross-env NODE_ENV=test jest --config=./config/jest.config.js --logHeapUsage --forceExit --detectOpenHandles",

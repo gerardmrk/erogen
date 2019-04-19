@@ -276,8 +276,9 @@ module.exports = async (args) => {
         },
         plugins: [
             new webpack.DefinePlugin({
-                INJECTED_DEV_MODE: devMode,
+                INJECTED_DEV_MODE: JSON.stringify(devMode),
                 INJECTED_APP_CONFIG: JSON.stringify(appConfig),
+                'process.env.NODE_ENV': JSON.stringify(mode)
             }),
 
             new webpack.EnvironmentPlugin({

@@ -1,13 +1,10 @@
 import * as React from "react";
 import { Subtract } from "utility-types";
 import { ConfigContext } from "./context";
-
-export type InjectedConfig = {
-  config: AppConfig;
-};
+import { InjectedConfig } from ".";
 
 export const withConfig = <WrappedComponentProps extends InjectedConfig>(
-  WrappedComponent: React.ComponentType<WrappedComponentProps>,
+  WrappedComponent: React.ComponentType<WrappedComponentProps>
 ) => {
   type Props = Subtract<WrappedComponentProps, InjectedConfig>;
   type State = {};

@@ -1,5 +1,5 @@
 import { State, Dispatcher } from "@client/store";
-import { connect } from "react-redux";
+import connect from "react-redux/es/connect/connect";
 import HeaderNavBar from "./component";
 
 export type LocalProps = {};
@@ -11,15 +11,15 @@ export type StoreProps = {
 export type DispatchProps = {};
 
 const mapStateToProps = (state: State, localProps: LocalProps): StoreProps => ({
-  isAuthenticated: state.auth.isAuthenticated,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 const mapDispatchToProps = (
   dispatch: Dispatcher,
-  localProps: LocalProps,
+  localProps: LocalProps
 ): DispatchProps => ({});
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(HeaderNavBar);
