@@ -1,5 +1,11 @@
+@import "~@client/views/styles.dimens.scss";
+
+.main {
+  height: $app-footer-height;
+}
+
 .container {
-  height: 100%;
+  // height: 100%;
   display: flex !important;
   align-items: center;
   justify-content: space-between;

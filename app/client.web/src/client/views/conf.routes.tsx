@@ -1,13 +1,31 @@
 import loadable, { LoadableComponent } from "@loadable/component";
 
 export type RouteConf<P = any> = {
-  status?: number;
-  title: TranslationKey;
-  path?: string;
-  guarded: boolean;
+  // route's title; used in the <title> tag and other title-related meta tags.
+  title?: TranslationKey;
+  // route's description; used in the <description> tag and other desc-related meta tags.
+  description?: TranslationKey;
+  // route's designated OpenGraph type (og:type); used in the og:type meta tag.
+  metaType?: string;
+  // route's primary image; used in various image-related meta tags.
+  metaImgURL?: string;
+  // route's primary image alt; used in various image-alt-related meta tags.
+  metaImgAlt?: string;
+  // route's twitter card type; used in the twitter:card meta tag.
+  metaTwitterCardType?: "summary" | "summary_large_image" | "app" | "player";
+  // [React Router] whether the path must be an exact match.
   exact?: boolean;
+  // [React Router] whether to account for the paths trailing slash.
   strict?: boolean;
+  // default HTTP status code for the route.
+  status?: number;
+  // relative route path.
+  path?: string;
+  // whether this route requires authentication to be accessed.
+  guarded: boolean;
+  // the lazy-loaded route component.
   component: LoadableComponent<P>;
+  // nested children routes.
   routes?: RouteConf[];
 };
 

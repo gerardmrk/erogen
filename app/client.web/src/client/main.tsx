@@ -8,7 +8,7 @@ import { storeCreator, State } from "@client/store";
 import App from "@client/views/core/App";
 import { initI18N } from "./main.i18n";
 import { initServiceWorker } from "./main.offline";
-import { AppConfigProvider } from "./views/contexts/app-config";
+import { ConfigProvider } from "./views/contexts/config";
 
 type AppParams = {
   devMode: boolean;
@@ -26,13 +26,13 @@ type AppParams = {
   initI18N(defaultLang);
 
   ReactDOM.render(
-    <AppConfigProvider config={config}>
+    <ConfigProvider config={config}>
       <StoreProvider store={store}>
         <Router>
           <App />
         </Router>
       </StoreProvider>
-    </AppConfigProvider>,
+    </ConfigProvider>,
     document.getElementById("app-mount-point"),
   );
 
@@ -44,6 +44,6 @@ type AppParams = {
   });
 })({
   devMode: true,
-  config: { appName: "" },
+  config: { appName: "", appUrl: "" },
   initialState: window._INITIAL_STATE_,
 });

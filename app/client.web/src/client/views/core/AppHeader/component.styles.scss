@@ -1,6 +1,8 @@
+@import "~@client/views/styles.dimens.scss";
 @import "~@client/views/styles.devices.scss";
 
 .main {
+  height: $app-header-height;
   border-bottom: 1px solid rgb(237, 240, 242);
 }
 

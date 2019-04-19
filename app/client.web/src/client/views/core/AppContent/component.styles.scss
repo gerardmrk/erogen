@@ -1,28 +1,26 @@
+@import "~@client/views/styles.dimens.scss";
+
 .main {
-  min-height: 100%;
-
-  & > div {
-    height: 100%;
-
-    & > div {
-      height: 100%;
-
-      & > div {
-        height: 100%;
-      }
-    }
-  }
+  height: 100%;
 }
 
 .transitionWrapper {
+  height: 100%;
   position: relative;
 }
 
-.routeContainer {
-  position: absolute;
-  width: 100%;
-  top: 0;
-  left: 0;
+.routeAppear {
+  // ...
+}
+
+.routeAppear.routeAppearActive {
+  .routeContainer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 }
 
 .routeEnter {
@@ -32,6 +30,14 @@
 .routeEnter.routeEnterActive {
   opacity: 1;
   transition: opacity 310ms ease-in;
+
+  .routeContainer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 }
 
 .routeExit {
@@ -41,4 +47,20 @@
 .routeExit.routeExitActive {
   opacity: 0.01;
   transition: opacity 310ms ease-in;
+
+  .routeContainer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+.routeContainer {
+  height: 100%;
+
+  & > div {
+    height: 100%;
+  }
 }

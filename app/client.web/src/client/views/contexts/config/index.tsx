@@ -7,7 +7,7 @@ export type Props = {
 
 export type State = {} & AppConfig;
 
-export class AppConfigProvider extends React.PureComponent<Props, State> {
+export class ConfigProvider extends React.PureComponent<Props, State> {
   public constructor(props) {
     super(props);
     this.state = { ...props };

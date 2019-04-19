@@ -1,4 +1,5 @@
 type AppConfig = {
+  appUrl: string;
   appName: string;
 };
 

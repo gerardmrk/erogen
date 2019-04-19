@@ -1,6 +1,6 @@
 module.exports = {
   preset: "ts-jest",
-  notify: !!!process.env.CI,
+  notify: !process.env.CI,
   verbose: true,
   rootDir: "./../",
   roots: ["<rootDir>/src"],
