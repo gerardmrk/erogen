@@ -1,6 +1,8 @@
 export { default } from "./component";
 
-export type LocalProps = {};
+export type LocalProps = {
+  title: TranslationKey;
+};
 
 export type StoreProps = {};
 

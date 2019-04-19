@@ -9,10 +9,8 @@ type State = {};
 export class Register extends React.PureComponent<Props, State> {
   public render() {
     return (
-      <AuthRoutesWrapper>
-        <div className={styles.main}>
-          <h1>{"Register"}</h1>
-        </div>
+      <AuthRoutesWrapper title={"Register"}>
+        <div className={styles.main}>{"x"}</div>
       </AuthRoutesWrapper>
     );
   }

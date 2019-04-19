@@ -8,11 +8,7 @@ type State = {};
 
 export class AuthNavs extends React.PureComponent<Props, State> {
   public render() {
-    return (
-      <div className={styles.main}>
-        <div className={styles.container}>{"AuthNavs"}</div>
-      </div>
-    );
+    return <div className={styles.main}>{"Navs"}</div>;
   }
 }
 

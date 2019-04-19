@@ -1,8 +1,8 @@
 import * as React from "react";
+import { Card } from "semantic-ui-react";
 import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import AuthNavs from "./AuthNavs";
-import Container from "@client/views/components/Container";
 
 type Props = LocalProps & StoreProps & DispatchProps;
 
@@ -12,12 +12,20 @@ export class AuthRoutesWrapper extends React.PureComponent<Props, State> {
   public render() {
     return (
       <div className={styles.main}>
-        <Container className={styles.container}>
-          <div className={styles.modal}>
-            <div className={styles.formBox}>{this.props.children}</div>
-            <AuthNavs />
-          </div>
-        </Container>
+        <div className={styles.container}>
+          <Card fluid={true}>
+            <Card.Content className={styles.header}>
+              <Card.Header>
+                <h1>{this.props.title}</h1>
+              </Card.Header>
+            </Card.Content>
+
+            <Card.Content className={styles.content}>
+              {this.props.children}
+              <AuthNavs />
+            </Card.Content>
+          </Card>
+        </div>
       </div>
     );
   }

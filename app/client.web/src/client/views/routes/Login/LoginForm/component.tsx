@@ -1,0 +1,35 @@
+import * as React from "react";
+import { Form } from "semantic-ui-react";
+import styles from "./component.styles.scss";
+
+type Props = {};
+
+type State = {};
+
+export class LoginForm extends React.PureComponent<Props, State> {
+  public render() {
+    return (
+      <Form className={styles.main}>
+        <Form.Group widths={"equal"}>
+          <Form.Input
+            type={"text"}
+            label={"Username/email"}
+            autoComplete={"username"}
+            fluid={true}
+          />
+        </Form.Group>
+
+        <Form.Group widths={"equal"}>
+          <Form.Input
+            type={"password"}
+            label={"Password"}
+            autoComplete={"current-password"}
+            fluid={true}
+          />
+        </Form.Group>
+      </Form>
+    );
+  }
+}
+
+export default LoginForm;
