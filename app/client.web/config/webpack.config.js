@@ -126,7 +126,7 @@ module.exports = async (args) => {
                                       loose: true,
                                       useBuiltIns: "usage",
                                       corejs: { version: 3 },
-                                      targets: clientBuild ? { browsers: ["last 2 versions", "not ie < 11"] } : { node: "current" }
+                                      targets: clientBuild ? { browsers: ["last 2 versions", "not dead", "> 0.5%", "not ie < 11"] } : { node: "current" }
                                   }],
                                   "@babel/preset-react",
                               ],
@@ -430,6 +430,7 @@ module.exports = async (args) => {
         }
 
         config.optimization = {
+            sideEffects: true,
             runtimeChunk: "single",
             splitChunks: {
                 cacheGroups: {

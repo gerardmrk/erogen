@@ -14,8 +14,6 @@ export class Logo extends React.PureComponent<Props, State> {
     super(props);
   }
 
-  public async componentWillMount() {}
-
   public render() {
     return (
       <div className={styles.main}>

@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import StoreProvider from "react-redux/es/components/Provider";
-import Router from "react-router-dom/BrowserRouter";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import { Services } from "@client/services";
 import { storeCreator, State } from "@client/store";
@@ -16,7 +16,7 @@ type AppParams = {
   initialState: Partial<State>;
 };
 
-(async ({ config, devMode, initialState }: AppParams) => {
+(({ config, devMode, initialState }: AppParams) => {
   const services = new Services();
 
   const createStore = storeCreator(services, devMode);

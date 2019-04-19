@@ -3,8 +3,8 @@ import { shallow } from "enzyme";
 import { Register } from "./component";
 
 describe("<Register/>", () => {
-  it("renders ok", async () => {
-    const wrapper = await shallow(<Register />);
+  it("renders ok", () => {
+    const wrapper = shallow(<Register />);
     expect(wrapper).toExist();
   });
 });

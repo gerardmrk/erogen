@@ -3,8 +3,8 @@ import { shallow } from "enzyme";
 import { NotFound } from "./component";
 
 describe("<NotFound/>", () => {
-  it("renders ok", async () => {
-    const wrapper = await shallow(<NotFound />);
+  it("renders ok", () => {
+    const wrapper = shallow(<NotFound />);
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });

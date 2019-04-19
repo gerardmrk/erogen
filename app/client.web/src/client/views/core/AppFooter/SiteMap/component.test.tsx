@@ -3,8 +3,8 @@ import { shallow } from "enzyme";
 import { SiteMap } from "./component";
 
 describe("<SiteMap/>", () => {
-  it("renders ok", async () => {
-    const wrapper = await shallow(<SiteMap />);
+  it("renders ok", () => {
+    const wrapper = shallow(<SiteMap />);
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });

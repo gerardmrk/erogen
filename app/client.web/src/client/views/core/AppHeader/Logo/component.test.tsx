@@ -1,5 +1,5 @@
 describe("<Logo/>", () => {
-  it("renders ok", async () => {
+  it("renders ok", () => {
     expect(true).toBe(true);
   });
 });

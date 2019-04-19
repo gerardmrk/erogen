@@ -9,8 +9,8 @@ describe("<AppHeader/>", () => {
       props = { isAuthenticated: true };
     });
 
-    it("renders ok", async () => {
-      const wrapper = await shallow(<AppHeader {...props} />);
+    it("renders ok", () => {
+      const wrapper = shallow(<AppHeader {...props} />);
       expect(wrapper).toExist();
     });
   });
@@ -21,8 +21,8 @@ describe("<AppHeader/>", () => {
       props = { isAuthenticated: false };
     });
 
-    it("renders ok", async () => {
-      const wrapper = await shallow(<AppHeader {...props} />);
+    it("renders ok", () => {
+      const wrapper = shallow(<AppHeader {...props} />);
       expect(wrapper).toExist();
     });
   });

@@ -8,13 +8,13 @@ describe("<Blog/>", () => {
 
   beforeAll(() => {
     props = {
-      routes: [],
+      routes: []
     };
 
     wrapper = shallow(<Blog {...props} />);
   });
 
-  it("renders ok", async () => {
+  it("renders ok", () => {
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });

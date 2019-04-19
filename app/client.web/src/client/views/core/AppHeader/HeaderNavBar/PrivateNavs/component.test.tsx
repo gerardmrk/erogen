@@ -3,8 +3,8 @@ import { shallow } from "enzyme";
 import { PrivateNavs } from "./component";
 
 describe("<PrivateNavs/>", () => {
-  it("renders ok", async () => {
-    const wrapper = await shallow(<PrivateNavs />);
+  it("renders ok", () => {
+    const wrapper = shallow(<PrivateNavs />);
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });

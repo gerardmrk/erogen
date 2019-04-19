@@ -3,8 +3,8 @@ import { shallow } from "enzyme";
 import { ServerError } from "./component";
 
 describe("<ServerError/>", () => {
-  it("renders ok", async () => {
-    const wrapper = await shallow(<ServerError />);
+  it("renders ok", () => {
+    const wrapper = shallow(<ServerError />);
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });

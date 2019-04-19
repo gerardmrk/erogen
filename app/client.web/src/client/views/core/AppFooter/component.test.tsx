@@ -3,8 +3,8 @@ import { shallow } from "enzyme";
 import { AppFooter } from "./component";
 
 describe("<AppFooter/>", () => {
-  it("renders ok", async () => {
-    const wrapper = await shallow(<AppFooter />);
+  it("renders ok", () => {
+    const wrapper = shallow(<AppFooter />);
     expect(wrapper).toExist();
   });
 });

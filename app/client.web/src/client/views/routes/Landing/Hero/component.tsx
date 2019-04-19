@@ -1,7 +1,6 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
 import Container from "@client/views/components/Container";
-import heroImage from "./hero-image.svg";
 import { LocalProps } from ".";
 
 type Props = LocalProps;
@@ -35,7 +34,7 @@ export class Hero extends React.PureComponent<Props, State> {
               </div>
             </div>
             <div className={styles.rightPane}>
-              <img src={heroImage} alt={"hero image"} />
+              <div>{"Nothing to see here"}</div>
             </div>
           </div>
         </Container>

@@ -3,8 +3,8 @@ import { shallow } from "enzyme";
 import { GlobalLoader } from "./component";
 
 describe("<GlobalLoader/>", () => {
-  it("renders ok", async () => {
-    const wrapper = await shallow(<GlobalLoader />);
+  it("renders ok", () => {
+    const wrapper = shallow(<GlobalLoader />);
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });

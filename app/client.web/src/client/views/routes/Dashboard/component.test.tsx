@@ -3,8 +3,8 @@ import { shallow } from "enzyme";
 import { Dashboard } from "./component";
 
 describe("<Dashboard/>", () => {
-  it("renders ok", async () => {
-    const wrapper = await shallow(<Dashboard />);
+  it("renders ok", () => {
+    const wrapper = shallow(<Dashboard />);
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });
