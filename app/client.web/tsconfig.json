@@ -25,6 +25,7 @@
     "strict": true,
     "removeComments": true,
     "paths": {
+      "@themeStyles": ["ui-theme/semantic.less"],
       "@client/*": [
         "src/client/*",
         "src/client/*/index.ts",

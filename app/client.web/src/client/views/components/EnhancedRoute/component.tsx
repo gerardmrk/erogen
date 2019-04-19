@@ -12,7 +12,7 @@ export class EnhancedRoute extends React.Component<Props, State> {
   private redirectTo = {
     pathname: LOGIN_PATH,
     search: "",
-    state: { from: "" },
+    state: { from: "" }
   };
 
   public constructor(props) {
@@ -27,9 +27,11 @@ export class EnhancedRoute extends React.Component<Props, State> {
     this.redirectTo.search = `?from=${encodeURIComponent(fromRoute)}`;
   }
 
-  private renderRoute = (rcprops: RouteComponentProps) => {
-    const Component = this.props.component;
-    return <Component {...rcprops} routes={this.props.routes} />;
+  private renderRoute = (routeComponentProps: RouteComponentProps) => {
+    const RouteComponent = this.props.component;
+    return (
+      <RouteComponent {...routeComponentProps} routes={this.props.routes} />
+    );
   };
 
   public render() {

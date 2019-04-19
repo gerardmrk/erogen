@@ -82,6 +82,7 @@ module.exports = async (args) => {
                 "@renderer": RENDERER_SRC,
                 "@server": SERVER_SRC,
                 // semantic ui theming path resolution
+                "@themeStyles": `${ROOT_APP_DIR}/ui-theme/semantic.less`,
                 "../../theme.config$": `${ROOT_APP_DIR}/ui-theme/theme.config`,
             },
             plugins: [
@@ -228,17 +229,6 @@ module.exports = async (args) => {
                             loader: "css-loader",
                             options: {
                                 sourceMap: devMode,
-                                modules: true,
-                                importLoaders: 1,
-                                camelCase: true,
-                                localIdentName: devMode ? "[name]_[local]_[hash:base64:7]" : "[hash:base64:7]"
-                            }
-                        },
-                        {
-                            loader: "postcss-loader",
-                            options: {
-                                sourceMap: devMode,
-                                plugins: () => [require("autoprefixer")()]
                             }
                         },
                         {
