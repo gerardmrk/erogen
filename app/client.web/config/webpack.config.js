@@ -7,6 +7,7 @@ const Fiber = require("fibers");
 const webpack = require("webpack");
 const webpackNodeExternals = require("webpack-node-externals");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
+const HardSourcePlugin = require("hard-source-webpack-plugin");
 const CleanBuildPlugin = require("clean-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const ExtractCssChunksPlugin = require("extract-css-chunks-webpack-plugin");
@@ -37,11 +38,9 @@ const SRC_DIR = `${ROOT_APP_DIR}/src`;
 
 const CLIENT_SRC = `${SRC_DIR}/client`;
 const RENDERER_SRC = `${SRC_DIR}/renderer`;
-const SERVER_SRC = `${SRC_DIR}/server`;
 
 const CLIENT_DST = `${DST_DIR}/client`;
 const RENDERER_DST = `${DST_DIR}/renderer`;
-const SERVER_DST = `${DST_DIR}/server`;
 
 const getSettings = settingsBuilder(ROOT_APP_DIR);
 
@@ -80,7 +79,6 @@ module.exports = async (args) => {
                 // custom aliases
                 "@client": CLIENT_SRC,
                 "@renderer": RENDERER_SRC,
-                "@server": SERVER_SRC,
                 // semantic ui theming path resolution
                 "@themeStyles": `${ROOT_APP_DIR}/ui-theme/semantic.less`,
                 "../../theme.config$": `${ROOT_APP_DIR}/ui-theme/theme.config`,
@@ -116,7 +114,7 @@ module.exports = async (args) => {
             rules: [
                 {
                     test: /\.tsx?$/,
-                    exclude: [/node_modules/],
+                    exclude: [/dist/, /node_modules/],
                     use: [{
                         loader: "awesome-typescript-loader",
                         options: {
@@ -149,7 +147,7 @@ module.exports = async (args) => {
                                   ["transform-imports", { lodash: { transform: "lodash/${member}", preventFullImport: true } }],
                                   rendererBuild && ["css-modules-transform", { extensions: [".css", ".scss"], generateScopedName: "[hash:base64:7]" }],
                                   "react-hot-loader/babel"
-                              ]
+                              ].filter(x => !!x),
                            }
                         }
                     }]
@@ -157,11 +155,12 @@ module.exports = async (args) => {
                 {
                     test: /\.js$/,
                     enforce: "pre",
+                    exclude: [/dist/, /node_modules/],
                     use: ["source-map-loader"]
                 },
                 {
                     test: /\.scss$/,
-                    exclude: [/node_modules/],
+                    exclude: [/dist/, /node_modules/],
                     use: [
                         prodMode && { 
                             loader: ExtractCssChunksPlugin.loader,
@@ -208,7 +207,7 @@ module.exports = async (args) => {
                 },
                 {
                     test: /\.less$/,
-                    exclude: [/node_modules/],
+                    exclude: [/dist/, /node_modules/],
                     use: [
                         prodMode && { 
                             loader: ExtractCssChunksPlugin.loader,
@@ -244,7 +243,7 @@ module.exports = async (args) => {
                 },
                 {
                     test: /\.jpe?g$|\.gif$|\.ico$|\.png$|\.svg$/,
-                    exclude: [/node_modules\/(?!(semantic-ui-less\/themes)\/).*/],
+                    exclude: [/dist/, /node_modules\/(?!(semantic-ui-less\/themes)\/).*/],
                     oneOf: [
                         {
                             loader: "file-loader",
@@ -276,7 +275,7 @@ module.exports = async (args) => {
                 },
                 {
                     test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                    exclude: [/node_modules\/(?!(semantic-ui-less\/themes)\/).*/],
+                    exclude: [/dist/, /node_modules\/(?!(semantic-ui-less\/themes)\/).*/],
                     use: [
                         devMode && {
                             loader: "file-loader",
@@ -298,7 +297,7 @@ module.exports = async (args) => {
                 },
                 {
                     test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                    exclude: [/node_modules\/(?!(semantic-ui-less\/themes)\/).*/],
+                    exclude: [/dist/, /node_modules\/(?!(semantic-ui-less\/themes)\/).*/],
                     use: [{
                         loader: "file-loader",
                         options: {
@@ -309,7 +308,7 @@ module.exports = async (args) => {
                 },
                 {
                     test: /\.otf(\?.*)?$/,
-                    exclude: [/node_modules\/(?!(semantic-ui-less\/themes)\/).*/],
+                    exclude: [/dist/, /node_modules\/(?!(semantic-ui-less\/themes)\/).*/],
                     use: [{
                         loader: "file-loader",
                         options: {
@@ -331,6 +330,8 @@ module.exports = async (args) => {
             new webpack.EnvironmentPlugin({
                 NODE_ENV: mode,
             }),
+
+            new HardSourcePlugin(),
 
             new CheckerPlugin(),
 
@@ -411,7 +412,7 @@ module.exports = async (args) => {
             }),
 
             clientBuild && new HtmlScriptExtPlugin({
-              defaultAttribute: "defer"
+                defaultAttribute: "defer"
             }),
 
             // prodMode && clientBuild && new FaviconsPlugin({
@@ -437,8 +438,8 @@ module.exports = async (args) => {
             // }),
 
             clientBuild && new HtmlIncludeAssetsPlugin({
-              append: false,
-              assets: []
+                append: false,
+                assets: []
             }),
 
             new SubresourceIntegrityPlugin({
@@ -531,7 +532,8 @@ module.exports = async (args) => {
 
         config.output = {
             path: RENDERER_DST,
-            filename: "[name].js",
+            filename: "index.js",
+            libraryExport: "default",
             libraryTarget: "commonjs"
         }
 
