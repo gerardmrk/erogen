@@ -12,7 +12,7 @@ export class Hero extends React.PureComponent<Props, State> {
     const { t } = this.props;
 
     return (
-      <div className={styles.main}>
+      <section className={styles.main}>
         <Container>
           <div className={styles.canvas}>
             <div className={styles.leftPane}>
@@ -38,7 +38,7 @@ export class Hero extends React.PureComponent<Props, State> {
             </div>
           </div>
         </Container>
-      </div>
+      </section>
     );
   }
 }

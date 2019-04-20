@@ -241,7 +241,7 @@ Background Colors
    Neutral Text
 --------------------*/
 
-@darkTextColor               : rgba(0, 0, 0, 0.85);
+@darkTextColor               : rgba(66, 90, 112, 0.85);
 @lightTextColor              : rgba(0, 0, 0, 0.4);
 
 @unselectedTextColor         : rgba(0, 0, 0, 0.4);

@@ -9,10 +9,8 @@ type State = {};
 export class ResetPassword extends React.PureComponent<Props, State> {
   public render() {
     return (
-      <AuthRoutesWrapper>
-        <div className={styles.main}>
-          <h1>{"ResetPassword"}</h1>
-        </div>
+      <AuthRoutesWrapper title={"Reset Your Password"}>
+        <div className={styles.main}>{"Form"}</div>
       </AuthRoutesWrapper>
     );
   }

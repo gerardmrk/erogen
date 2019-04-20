@@ -20,9 +20,11 @@ export class AuthRoutesWrapper extends React.PureComponent<Props, State> {
               </Card.Header>
             </Card.Content>
 
-            <Card.Content className={styles.content}>
-              {this.props.children}
-              <AuthNavs />
+            <Card.Content>
+              <div className={styles.content}>
+                {this.props.children}
+                <AuthNavs />
+              </div>
             </Card.Content>
           </Card>
         </div>

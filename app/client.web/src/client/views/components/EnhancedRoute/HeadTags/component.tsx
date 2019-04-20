@@ -12,6 +12,7 @@ export class HeadTags extends React.PureComponent<Props, State> {
   private url: string;
   private title: string;
   private description: string;
+  private keywords: string;
   private metaType: string;
   private metaImageUrl: string;
   private metaImageAlt: string;
@@ -30,19 +31,22 @@ export class HeadTags extends React.PureComponent<Props, State> {
     this.url = props.path ? `${config.appUrl}${props.path}` : config.appUrl;
     this.title = props.title || config.appName;
     this.description = props.description || config.appDescription;
+    this.keywords = props.keywords || config.appKeywords || config.appName;
     this.metaType = props.metaType || "website";
     this.metaImageUrl = props.metaImgPath ? `${this.url}${props.metaImgPath}` : `${this.url}${config.appImagePath}`; // prettier-ignore
     this.metaImageAlt = props.metaImgAlt || config.appName;
-    this.metaTwitterCardType = props.metaTwitterCardType || "summary";
+    this.metaTwitterCardType = props.metaTwitterCardType || config.appTwitterCardType || "summary_large_image"; // prettier-ignore
   }
 
   public render() {
+    const { config } = this.props;
     return (
       <Helmet titleTemplate={this.titleTemplate}>
         {/* HTML5 */}
         <link href={this.url} rel="canonical" />
         <title>{this.title}</title>
         <meta name="description" content={this.description} />
+        <meta name="keywords" content={this.keywords} />
 
         {/* Schema.org */}
         <meta itemProp="url" content={this.url} />
@@ -60,6 +64,9 @@ export class HeadTags extends React.PureComponent<Props, State> {
         <meta name="og:image:alt" content={this.metaImageAlt} />
 
         {/* Twitter */}
+        <meta name="twitter:domain" content={config.appUrl} />
+        <meta name="twitter:site" content={config.appTwitterHandle} />
+        <meta name="twitter:creator" content={config.appTwitterHandle} />
         <meta name="twitter:url" content={this.url} />
         <meta name="twitter:title" content={this.title} />
         <meta name="twitter:description" content={this.description} />

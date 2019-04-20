@@ -4,6 +4,7 @@ import { HeadTags } from "./component";
 export type LocalProps = InjectedConfig & {
   title?: string;
   description?: string;
+  keywords?: string;
   metaType?: string;
   metaImgPath?: string;
   metaImgAlt?: string;

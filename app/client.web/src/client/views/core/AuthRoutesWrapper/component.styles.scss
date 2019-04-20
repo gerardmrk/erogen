@@ -10,8 +10,8 @@
 }
 
 .container {
-  @include fp(width, 300, 450);
-  @include fp(min-height, 300, 450);
+  @include fp(width, 300, 420);
+  @include fp(min-height, 300, 420);
 }
 
 .header {
@@ -19,5 +19,5 @@
 }
 
 .content {
-  padding: 1.7em !important;
+  @include fp(padding, 8, 14);
 }

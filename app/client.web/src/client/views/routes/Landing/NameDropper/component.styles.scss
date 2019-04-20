@@ -6,8 +6,16 @@
   background-color: #f9f9f9;
 }
 
+.container {
+  height: 100%;
+  display: flex !important;
+  align-items: center;
+  justify-content: stretch;
+}
+
 .brandCarousel {
   height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;

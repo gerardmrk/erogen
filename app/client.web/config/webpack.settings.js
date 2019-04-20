@@ -26,6 +26,8 @@ module.exports = rootAppDir => ({
     appDescription:
       "Next generation, state of the art, distributed satellite infrastructure",
     appImagePath: `/assets/images/logo.svg`,
+    appTwitterHandle: `@404`,
+    appTwitterCardType: "summary_large_image",
   };
 
   const settings = {
