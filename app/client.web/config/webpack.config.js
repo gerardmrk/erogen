@@ -147,6 +147,7 @@ module.exports = async (args) => {
                                   ["@babel/plugin-transform-runtime", { regenerator: false }],
                                   ["lodash", { id: "lodash-compat" }],
                                   ["transform-imports", { lodash: { transform: "lodash/${member}", preventFullImport: true } }],
+                                  rendererBuild && ["css-modules-transform", { extensions: [".css", ".scss"], generateScopedName: "[hash:base64:7]" }],
                                   "react-hot-loader/babel"
                               ]
                            }
@@ -526,7 +527,7 @@ module.exports = async (args) => {
     } else {
         // Renderer-specific build options
 
-        config.entry.renderer = ["src/renderer/index.tsx"]
+        config.entry.renderer = ["src/renderer/main.tsx"]
 
         config.output = {
             path: RENDERER_DST,

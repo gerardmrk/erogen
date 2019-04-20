@@ -6,14 +6,11 @@ import AppContent from "./AppContent";
 import AppHeader from "./AppHeader";
 import AppFooter from "./AppFooter";
 
-type Props = {};
+type Props = {} & RouteComponentProps;
 
 type State = {};
 
-export class App extends React.Component<
-  Props & RouteComponentProps<{}>,
-  State
-> {
+export class App extends React.Component<Props, State> {
   public render() {
     return (
       <div className={styles.main}>
