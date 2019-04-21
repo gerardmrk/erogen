@@ -13,15 +13,17 @@ type State = {};
 export class AppContent extends React.PureComponent<Props, State> {
   private transitionTimeout = {
     enter: 310,
-    exit: 310,
+    exit: 310
   };
 
   private transitionClassNames = {
     enter: styles.routeEnter,
     enterActive: styles.routeEnterActive,
     exit: styles.routeExit,
-    exitActive: styles.routeExitActive,
+    exitActive: styles.routeExitActive
   };
+
+  private renderRoute = (r, i) => <EnhancedRoute key={i} {...r} />;
 
   public render() {
     return (
@@ -34,9 +36,7 @@ export class AppContent extends React.PureComponent<Props, State> {
           >
             <div className={styles.routeContainer}>
               <Switch location={this.props.location}>
-                {routeConfs.map((r, i) => (
-                  <EnhancedRoute key={i} {...r} />
-                ))}
+                {routeConfs.map(this.renderRoute)}
               </Switch>
             </div>
           </CSSTransition>

@@ -195,7 +195,6 @@ module.exports = async (args) => {
                               plugins: [
                                   "@loadable/babel-plugin",
                                   "@babel/plugin-syntax-dynamic-import",
-                                  rendererBuild && "dynamic-import-node",
                                   ["@babel/plugin-proposal-class-properties", { loose: true }],
                                   ["@babel/plugin-transform-runtime", { regenerator: false }],
                                   ["lodash", { id: "lodash-compat" }],

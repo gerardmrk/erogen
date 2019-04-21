@@ -23,7 +23,10 @@ export type Response = Overwrite<IRendererResponse, {
 }>;
 
 export const renderEngine = (stats: AsyncModuleStats) => {
-  const extractor = new ChunkExtractor({ stats });
+  const extractor = new ChunkExtractor({
+    stats,
+    entrypoints: ["app"]
+  });
 
   return async (request: Request): Promise<Response> => {
     const response: Response = {
@@ -44,6 +47,8 @@ export const renderEngine = (stats: AsyncModuleStats) => {
       const services = new Services();
       const createStore = storeCreator(services);
       const routerContext: StaticRouterContext = {};
+
+      console.log(routerContext);
 
       const app = extractor.collectChunks(
         <ConfigProvider config={INJECTED_APP_CONFIG}>
@@ -66,6 +71,7 @@ export const renderEngine = (stats: AsyncModuleStats) => {
         response.htmlScripts = extractor.getScriptTags();
       }
     } catch (err) {
+      response.statusCode = 500;
       response.error = err.message;
     }
 

@@ -38,7 +38,7 @@ export const landingPage = {
   path: DEFAULT_PUBLIC_PATH,
   exact: true,
   guarded: false,
-  component: loadable(() => import("@client/views/routes/Landing")),
+  component: loadable(() => import("@client/views/routes/Landing"))
 };
 
 export const productPage = {
@@ -46,7 +46,7 @@ export const productPage = {
   path: "/about/product",
   exact: true,
   guarded: false,
-  component: loadable(() => import("@client/views/routes/Product")),
+  component: loadable(() => import("@client/views/routes/Product"))
 };
 
 export const blogPostPage = {
@@ -54,7 +54,7 @@ export const blogPostPage = {
   path: "/blog/:post",
   exact: true,
   guarded: false,
-  component: loadable(() => import("@client/views/routes/Blog/BlogPost")),
+  component: loadable(() => import("@client/views/routes/Blog/BlogPost"))
 };
 
 export const blogPage = {
@@ -63,7 +63,7 @@ export const blogPage = {
   exact: false,
   guarded: false,
   component: loadable(() => import("@client/views/routes/Blog")),
-  routes: [blogPostPage],
+  routes: [blogPostPage]
 };
 
 export const documentationPage = {
@@ -71,7 +71,7 @@ export const documentationPage = {
   path: "/documentation",
   exact: true,
   guarded: false,
-  component: loadable(() => import("@client/views/routes/Documentation")),
+  component: loadable(() => import("@client/views/routes/Documentation"))
 };
 
 export const supportPage = {
@@ -79,7 +79,7 @@ export const supportPage = {
   path: "/support",
   exact: true,
   guarded: false,
-  component: loadable(() => import("@client/views/routes/Support")),
+  component: loadable(() => import("@client/views/routes/Support"))
 };
 
 export const loginPage = {
@@ -87,7 +87,7 @@ export const loginPage = {
   path: LOGIN_PATH,
   exact: true,
   guarded: false,
-  component: loadable(() => import("@client/views/routes/Login")),
+  component: loadable(() => import("@client/views/routes/Login"))
 };
 
 export const registerPage = {
@@ -95,7 +95,7 @@ export const registerPage = {
   path: REGISTER_PATH,
   exact: true,
   guarded: false,
-  component: loadable(() => import("@client/views/routes/Register")),
+  component: loadable(() => import("@client/views/routes/Register"))
 };
 
 export const forgotPasswordPage = {
@@ -103,7 +103,7 @@ export const forgotPasswordPage = {
   path: "/forgot-password",
   exact: true,
   guarded: false,
-  component: loadable(() => import("@client/views/routes/ForgotPassword")),
+  component: loadable(() => import("@client/views/routes/ForgotPassword"))
 };
 
 export const resetPasswordPage = {
@@ -111,7 +111,7 @@ export const resetPasswordPage = {
   path: "/reset-password",
   exact: true,
   guarded: false,
-  component: loadable(() => import("@client/views/routes/ResetPassword")),
+  component: loadable(() => import("@client/views/routes/ResetPassword"))
 };
 
 export const authPage = {
@@ -119,7 +119,7 @@ export const authPage = {
   path: "/auth",
   exact: true,
   guarded: false,
-  component: loadable(() => import("@client/views/routes/Auth")),
+  component: loadable(() => import("@client/views/routes/Auth"))
 };
 
 export const homeFeedPage = {
@@ -127,7 +127,7 @@ export const homeFeedPage = {
   path: "/feed",
   exact: true,
   guarded: true,
-  component: loadable(() => import("@client/views/routes/HomeFeed")),
+  component: loadable(() => import("@client/views/routes/HomeFeed"))
 };
 
 export const dashboardPage = {
@@ -135,7 +135,7 @@ export const dashboardPage = {
   path: DEFAULT_PRIVATE_PATH,
   exact: true,
   guarded: true,
-  component: loadable(() => import("@client/views/routes/Dashboard")),
+  component: loadable(() => import("@client/views/routes/Dashboard"))
 };
 
 export const accountSettingsPage = {
@@ -144,8 +144,8 @@ export const accountSettingsPage = {
   exact: true,
   guarded: true,
   component: loadable(() =>
-    import("@client/views/routes/Settings/AccountSettings"),
-  ),
+    import("@client/views/routes/Settings/AccountSettings")
+  )
 };
 
 export const profileSettingsPage = {
@@ -154,8 +154,8 @@ export const profileSettingsPage = {
   exact: true,
   guarded: true,
   component: loadable(() =>
-    import("@client/views/routes/Settings/ProfileSettings"),
-  ),
+    import("@client/views/routes/Settings/ProfileSettings")
+  )
 };
 
 export const settingsPage = {
@@ -164,7 +164,7 @@ export const settingsPage = {
   exact: false,
   guarded: true,
   component: loadable(() => import("@client/views/routes/Settings")),
-  routes: [profileSettingsPage, accountSettingsPage],
+  routes: [profileSettingsPage, accountSettingsPage]
 };
 
 export const maintenancePage = {
@@ -172,7 +172,7 @@ export const maintenancePage = {
   path: "/maintenance",
   exact: true,
   guarded: false,
-  component: loadable(() => import("@client/views/routes/Maintenance")),
+  component: loadable(() => import("@client/views/routes/Maintenance"))
 };
 
 export const profilePage = {
@@ -180,7 +180,7 @@ export const profilePage = {
   path: "/user/:user",
   exact: true,
   guarded: false,
-  component: loadable(() => import("@client/views/routes/Profile")),
+  component: loadable(() => import("@client/views/routes/Profile"))
 };
 
 export const serverErrorPage = {
@@ -189,7 +189,7 @@ export const serverErrorPage = {
   path: "/500",
   exact: true,
   guarded: false,
-  component: loadable(() => import("@client/views/routes/ServerError")),
+  component: loadable(() => import("@client/views/routes/ServerError"))
 };
 
 export const notFoundPage = {
@@ -197,16 +197,16 @@ export const notFoundPage = {
   title: "404 Not Found",
   exact: false,
   guarded: false,
-  component: loadable(() => import("@client/views/routes/NotFound")),
+  component: loadable(() => import("@client/views/routes/NotFound"))
 };
 
 export const routeConfs: RouteConf[] = [
+  loginPage,
   landingPage,
   productPage,
   blogPage,
   documentationPage,
   supportPage,
-  loginPage,
   registerPage,
   forgotPasswordPage,
   resetPasswordPage,
@@ -216,6 +216,6 @@ export const routeConfs: RouteConf[] = [
   settingsPage,
   profilePage,
   serverErrorPage,
-  notFoundPage,
+  notFoundPage
 ];
 export default routeConfs;
