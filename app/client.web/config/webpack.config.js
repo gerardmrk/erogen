@@ -33,7 +33,9 @@ const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
 const ROOT_CONFIG_DIR = `${ROOT_DIR}/config`;
 
 const ROOT_APP_DIR = path.resolve(__dirname, "..");
-const ROOT_APP_CONFIG_DIR = `${ROOT_APP_DIR}/config`;
+const APP_CONFIG_DIR = `${ROOT_APP_DIR}/config`;
+const APP_CACHE_DIR = `${ROOT_APP_DIR}/.cache`;
+
 const DST_DIR = `${ROOT_APP_DIR}/dist`;
 const SRC_DIR = `${ROOT_APP_DIR}/src`;
 
@@ -77,11 +79,12 @@ module.exports = async (args) => {
             mainFields: ["browser", "module", "main"],
             extensions: [".ts", ".tsx", ".js", ".jsx", ".json", ".css", "scss"],
             alias: {
-                // custom aliases
+                // source code
                 "@client": CLIENT_SRC,
                 "@renderer": RENDERER_SRC,
-                // semantic ui theming path resolution
+                // configs
                 "@themeStyles": `${ROOT_APP_DIR}/ui-theme/semantic.less`,
+                // semantic ui theming path resolution
                 "../../theme.config$": `${ROOT_APP_DIR}/ui-theme/theme.config`,
             },
             plugins: [
@@ -111,6 +114,56 @@ module.exports = async (args) => {
           excludeAssets: /LICENSE$/
         },
 
+        optimization: {
+            sideEffects: true,
+            runtimeChunk: "single",
+            splitChunks: {
+                cacheGroups: {
+                    styles: {
+                        name: "styles",
+                        test: /\.css$/,
+                        chunks: "all",
+                        enforce: true,
+                    },
+                    vendors: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: "vendors",
+                        chunks: "all",
+                        // maxSize: devMode ? undefined : 80000,
+                        // maxSize: 80000,
+                    }
+                }
+            },
+            minimizer: [
+                new TerserPlugin({
+                    cache: `${APP_CACHE_DIR}/terser.${source}`,
+                    parallel: true,
+                    exclude: [/dist/],
+                    extractComments: true,
+                    terserOptions: {
+                      output: null,
+                      ie8: false,
+                      keep_fnames: true,
+                      mangle: {
+                        keep_fnames: true,
+                        properties: {
+                          keep_quoted: true
+                        }
+                      }
+                    }
+                }),
+                new OptimizeCssAssetsPlugin({
+                  canPrint: true,
+                  assetNameRegExp: /\.css$/g,
+                  cssProcessorPluginOptions: {
+                    preset: ["default", {
+                      discardComments: { removeAll: true },
+                    }],
+                  }
+              }),
+            ].filter(x => !!x)
+        },
+
         module: {
             rules: [
                 {
@@ -121,6 +174,7 @@ module.exports = async (args) => {
                         options: {
                             useCache: true,
                             useBabel: true,
+                            cacheDirectory: `${APP_CACHE_DIR}/atl.${source}`,
                             errorsAsWarnings: true,
                             useTranspileModule: true,
                             forceIsolatedModules: true,
@@ -298,7 +352,9 @@ module.exports = async (args) => {
             ]
         },
         plugins: [
-            new HardSourcePlugin(),
+            new HardSourcePlugin({
+                cacheDirectory: `${APP_CACHE_DIR}/hard-source.${source}`
+            }),
 
             new webpack.DefinePlugin({
                 INJECTED_DEV_MODE: JSON.stringify(devMode),
@@ -362,8 +418,8 @@ module.exports = async (args) => {
             prodMode && new webpack.HashedModuleIdsPlugin(),
 
             new ExtractCssChunksPlugin({
-                filename: devMode ? "styles/[name].css" : "styles/[name].[contenthash].css",
-                chunkFilename: devMode ? "styles/[id].css" : "styles/[id].[contenthash].css",
+                filename: devMode ? "styles/[name].css" : "styles/[name].[hash].css",
+                chunkFilename: devMode ? "styles/[id].css" : "styles/[id].[hash].css",
             }),
 
             prodMode && clientBuild && new PurgeCSSPlugin({
@@ -462,56 +518,6 @@ module.exports = async (args) => {
             publicPath: devMode ? "/" : "/assets/",
             crossOriginLoading: "anonymous"
         }
-
-        config.optimization = {
-            sideEffects: true,
-            runtimeChunk: "single",
-            splitChunks: {
-                cacheGroups: {
-                    styles: {
-                        name: "styles",
-                        test: /\.css$/,
-                        chunks: "all",
-                        enforce: true,
-                    },
-                    vendors: {
-                        test: /[\\/]node_modules[\\/]/,
-                        name: "vendors",
-                        chunks: "all",
-                        // maxSize: devMode ? undefined : 80000,
-                        // maxSize: 80000,
-                    }
-                }
-            },
-            minimizer: [
-                new TerserPlugin({
-                    cache: true,
-                    parallel: true,
-                    exclude: [/dist/],
-                    extractComments: true,
-                    terserOptions: {
-                      output: null,
-                      ie8: false,
-                      keep_fnames: true,
-                      mangle: {
-                        keep_fnames: true,
-                        properties: {
-                          keep_quoted: true
-                        }
-                      }
-                    }
-                }),
-                new OptimizeCssAssetsPlugin({
-                  canPrint: true,
-                  assetNameRegExp: /\.css$/g,
-                  cssProcessorPluginOptions: {
-                    preset: ["default", {
-                      discardComments: { removeAll: true },
-                    }],
-                  }
-              }),
-            ].filter(x => !!x)
-        }
     } else {
         // Renderer-specific build options
 
@@ -522,14 +528,14 @@ module.exports = async (args) => {
         config.output = {
             path: RENDERER_DST,
             filename: "index.js",
-            libraryTarget: "commonjs",
+            // libraryTarget: "commonjs",
         };
 
-        // config.externals = [
-        //     webpackNodeExternals({
-        //         whitelist: ["is-webpack-bundle", "webpack-require-weak", "semantic-ui-less/themes"]
-        //     })
-        // ]
+        config.externals = [
+            webpackNodeExternals({
+                whitelist: ["is-webpack-bundle", "webpack-require-weak", "semantic-ui-less/themes"]
+            })
+        ]
     }
 
     return config

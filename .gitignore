@@ -58,9 +58,7 @@ Desktop.ini
 !**/build/.gitkeep
 
 # Caches
-.cache/*
-!.cache/.gitkeep
-*.awcache
+.cache
 
 # generated logs
 *.log

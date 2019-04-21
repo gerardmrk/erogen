@@ -6,7 +6,6 @@ import uuidv4 from "uuid/v4";
 import debug from "debug";
 import { renderJSON } from "..";
 import { Request } from "@renderer/engine";
-import statsFile from "../../../dist/client/async-modules.json";
 
 const dsrv = debug("srv");
 const dcon = debug("srv:conn");
@@ -18,15 +17,20 @@ type ConnectionsCache = {
   [connID: string]: net.Socket;
 };
 
-export const server = async ({ socketFile }: { [k: string]: string }) => {
+type ServerParams = {
+  socketFile: string;
+  asyncModuleStats: AsyncModuleStats;
+};
+
+export const server = async ({
+  socketFile,
+  asyncModuleStats
+}: ServerParams) => {
   try {
     await tryRemovePrevSocketFile(socketFile);
 
     const connsCache: ConnectionsCache = {};
-    const socketSrv = await createServer(
-      <AsyncModuleStats>statsFile,
-      connsCache
-    );
+    const socketSrv = await createServer(asyncModuleStats, connsCache);
 
     process.on("SIGINT", () => {
       closeConnections(socketSrv, connsCache);

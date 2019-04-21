@@ -26,6 +26,7 @@
     "removeComments": true,
     "paths": {
       "@themeStyles": ["ui-theme/semantic.less"],
+      "@asyncModuleStats": ["dist/async-modules.json"],
       "@client/*": [
         "src/client/*",
         "src/client/*/index.ts",
