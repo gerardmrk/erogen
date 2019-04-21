@@ -23,12 +23,12 @@ export type Response = Overwrite<IRendererResponse, {
 }>;
 
 export const renderEngine = (stats: AsyncModuleStats) => {
-  const extractor = new ChunkExtractor({
-    stats,
-    entrypoints: ["app"]
-  });
-
   return async (request: Request): Promise<Response> => {
+    const extractor = new ChunkExtractor({
+      stats,
+      entrypoints: ["app"]
+    });
+
     const response: Response = {
       statusCode: 200,
       redirectTo: "",
@@ -47,8 +47,6 @@ export const renderEngine = (stats: AsyncModuleStats) => {
       const services = new Services();
       const createStore = storeCreator(services);
       const routerContext: StaticRouterContext = {};
-
-      console.log(routerContext);
 
       const app = extractor.collectChunks(
         <ConfigProvider config={INJECTED_APP_CONFIG}>

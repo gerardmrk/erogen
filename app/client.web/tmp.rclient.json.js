@@ -10,9 +10,9 @@ client.on("connect", () => {
   console.info("[CLIENT] connected");
   client.write(
     JSON.stringify({
-      url: "/settings",
-      lang: "en",
-    }),
+      url: "/documentation",
+      lang: "en"
+    })
   );
 });
 

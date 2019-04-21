@@ -9,7 +9,7 @@ export type StoreProps = {
 
 export type DispatchProps = {};
 
-export type LocalProps = {} & RouteConf;
+export type LocalProps = { staticContext?: object } & RouteConf;
 
 const mapStateToProps = (state: State, ownProps: LocalProps): StoreProps => ({
   isAuthenticated: state.auth.isAuthenticated

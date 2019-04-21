@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route as BaseRoute, RouteComponentProps, Redirect } from "react-router-dom"; // prettier-ignore
+import { Route as BaseRoute, Redirect } from "react-router-dom"; // prettier-ignore
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import { LOGIN_PATH, DEFAULT_PRIVATE_PATH } from "@client/views/conf.routes"; // prettier-ignore
 import HeadTags from "./HeadTags";
@@ -9,6 +9,10 @@ export type Props = LocalProps & StoreProps & DispatchProps;
 export type State = {};
 
 export class EnhancedRoute extends React.Component<Props, State> {
+  public static defaultProps = {
+    status: 200
+  };
+
   private redirectTo = {
     pathname: LOGIN_PATH,
     search: "",
@@ -27,19 +31,25 @@ export class EnhancedRoute extends React.Component<Props, State> {
     this.redirectTo.search = `?from=${encodeURIComponent(fromRoute)}`;
   }
 
-  private renderRoute = (routeComponentProps: RouteComponentProps) => {
+  private renderRoute = props => {
+    if (this.props.guarded && !this.props.isAuthenticated) {
+      if (this.props.staticContext) {
+        this.props.staticContext["status"] = 302;
+        this.props.staticContext["url"] = this.redirectTo.pathname;
+      }
+      return props.action === "REPLACE" ? null : (
+        <Redirect from={this.props.path} to={this.redirectTo} />
+      );
+    }
+    if (this.props.staticContext) {
+      this.props.staticContext["status"] = this.props.status || 200;
+    }
     const RouteComponent = this.props.component;
-    return (
-      <RouteComponent {...routeComponentProps} routes={this.props.routes} />
-    );
+    return <RouteComponent {...props} routes={this.props.routes} />;
   };
 
   public render() {
     const { guarded, isAuthenticated, ...routeProps } = this.props;
-
-    if (guarded && !isAuthenticated) {
-      return <Redirect to={this.redirectTo} />;
-    }
 
     return (
       <React.Fragment>
