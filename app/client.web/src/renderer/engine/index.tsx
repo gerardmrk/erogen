@@ -2,61 +2,81 @@ import * as React from "react";
 import * as ReactDOMServer from "react-dom/server";
 import { StaticRouter as Router } from "react-router";
 import { Provider as StoreProvider } from "react-redux";
-import { IRendererRequest, IRendererResponse } from "../proto";
+import { Overwrite } from "utility-types";
+import { ChunkExtractor } from "@loadable/server";
+import { IRendererRequest, IRendererResponse } from "@renderer/proto";
 import { storeCreator } from "@client/store";
 import { Services } from "@client/services";
 import { StaticRouterContext } from "react-router";
 import { ConfigProvider } from "@client/views/contexts/config";
 import App from "@client/views/core/App";
-import { Overwrite } from "utility-types";
+import Helmet, { HelmetData } from "react-helmet";
 
 export type Request = IRendererRequest;
-export type Response = Overwrite<
-  IRendererResponse,
-  {
-    renderedHtmlHead: string | undefined;
-    renderedHtmlBody: string | undefined;
-    renderedHtmlStyles: string | undefined;
-    renderedHtmlScripts: string | undefined;
-  }
->;
+// prettier-ignore
+export type Response = Overwrite<IRendererResponse, {
+    htmlHead: string | undefined;
+    htmlBody: string | undefined;
+    htmlLinks: string | undefined;
+    htmlStyles: string | undefined;
+    htmlScripts: string | undefined;
+}>;
 
-export const render = async (request: Request): Promise<Response> => {
-  const response: Response = {
-    statusCode: 200,
-    redirectTo: "",
-    error: null,
-    ttr: 0,
-    renderedHtmlHead: undefined,
-    renderedHtmlBody: undefined,
-    renderedHtmlStyles: undefined,
-    renderedHtmlScripts: undefined
-  };
+export const renderEngine = (stats: AsyncModuleStats) => {
+  const extractor = new ChunkExtractor({ stats });
 
-  try {
-    const requestUrl = request.url || "/";
+  return async (request: Request): Promise<Response> => {
+    const response: Response = {
+      statusCode: 200,
+      redirectTo: "",
+      error: null,
+      ttr: 0,
+      htmlHead: undefined,
+      htmlBody: undefined,
+      htmlLinks: undefined,
+      htmlStyles: undefined,
+      htmlScripts: undefined
+    };
 
-    const services = new Services();
-    const createStore = storeCreator(services);
-    const routerContext: StaticRouterContext = {};
+    try {
+      const requestUrl = request.url || "/";
 
-    response.renderedHtmlBody = ReactDOMServer.renderToString(
-      <ConfigProvider config={INJECTED_APP_CONFIG}>
-        <StoreProvider store={createStore(undefined)}>
-          <Router location={requestUrl} context={routerContext}>
-            <App />
-          </Router>
-        </StoreProvider>
-      </ConfigProvider>
-    );
+      const services = new Services();
+      const createStore = storeCreator(services);
+      const routerContext: StaticRouterContext = {};
 
-    if (routerContext.url) {
-      response.statusCode = 302;
-      response.redirectTo = routerContext.url;
+      const app = extractor.collectChunks(
+        <ConfigProvider config={INJECTED_APP_CONFIG}>
+          <StoreProvider store={createStore(undefined)}>
+            <Router location={requestUrl} context={routerContext}>
+              <App />
+            </Router>
+          </StoreProvider>
+        </ConfigProvider>
+      );
+
+      if (routerContext.url) {
+        response.statusCode = 302;
+        response.redirectTo = routerContext.url;
+      } else {
+        response.htmlHead = getMetaTags(Helmet.renderStatic());
+        response.htmlBody = ReactDOMServer.renderToString(app);
+        response.htmlLinks = extractor.getLinkTags();
+        response.htmlStyles = extractor.getStyleTags();
+        response.htmlScripts = extractor.getScriptTags();
+      }
+    } catch (err) {
+      response.error = err.message;
     }
-  } catch (err) {
-    response.error = err.message;
-  }
 
-  return response;
+    return response;
+  };
 };
+
+function getMetaTags(data: HelmetData): string {
+  let result = "";
+  for (let dd = Object.values(data), i = 0, l = dd.length; i < l; i++) {
+    result += dd[i].toString();
+  }
+  return result;
+}

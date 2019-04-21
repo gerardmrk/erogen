@@ -1,54 +1,93 @@
 import * as fs from "fs";
+import * as net from "net";
 import * as util from "util";
 import * as process from "process";
-
+import uuidv4 from "uuid/v4";
 import debug from "debug";
+import { renderJSON } from "..";
+import { Request } from "@renderer/engine";
+import statsFile from "../../../dist/client/async-modules.json";
 
-import { createServer, ConnectionsCache } from "./create-server";
+const dsrv = debug("srv");
+const dcon = debug("srv:conn");
 
 const statAsync = util.promisify(fs.stat);
 const unlinkAsync = util.promisify(fs.unlink);
 
-const debugSrv = debug("server");
+type ConnectionsCache = {
+  [connID: string]: net.Socket;
+};
 
-export const server = async ({ socketfile }: { [k: string]: string }) => {
-  const connections: ConnectionsCache = {};
-
+export const server = async ({ socketFile }: { [k: string]: string }) => {
   try {
-    try {
-      debugSrv("checking for pre-existing socket file..");
-      await statAsync(socketfile);
+    await tryRemovePrevSocketFile(socketFile);
 
-      debugSrv("unlinking previous socket file..", socketfile);
-      await unlinkAsync(socketfile);
-    } catch (error) {
-      if ((<NodeJS.ErrnoException>error).code !== "ENOENT") throw error;
-
-      debugSrv("socket file does not exist, will be created by server");
-    }
-
-    const socketServer = await createServer(connections);
-
-    socketServer.listen(socketfile);
-
-    debugSrv("server listening on %s", socketfile);
+    const connsCache: ConnectionsCache = {};
+    const socketSrv = await createServer(
+      <AsyncModuleStats>statsFile,
+      connsCache
+    );
 
     process.on("SIGINT", () => {
-      debugSrv("performing cleanup..");
+      closeConnections(socketSrv, connsCache);
+    });
 
-      for (const [id, conn] of Object.entries(connections)) {
-        debugSrv("draining connection for %s", id); // well not really.. will implement soon
-        conn.end();
-      }
-
-      socketServer.close();
-
-      debugSrv("server closed");
-      process.exit(0);
+    socketSrv.listen(socketFile, () => {
+      dsrv("server listening on %s", socketFile);
     });
   } catch (error) {
     throw error;
   }
 };
+
+async function tryRemovePrevSocketFile(socketFile) {
+  try {
+    await statAsync(socketFile);
+    dsrv("unlinking previous socket file..", socketFile);
+    await unlinkAsync(socketFile);
+  } catch (error) {
+    if ((<NodeJS.ErrnoException>error).code !== "ENOENT") throw error;
+    dsrv("socket file does not exist, will be created by server");
+  }
+}
+
+async function createServer(
+  stats: AsyncModuleStats,
+  connsCache: ConnectionsCache
+) {
+  const render = renderJSON(stats);
+
+  return net.createServer((conn: net.Socket) => {
+    const connID = uuidv4();
+    connsCache[connID] = conn;
+
+    dcon("[%s] conn est.", connID);
+
+    conn.on("data", async (data: Buffer) => {
+      dcon("[%s] DATA", connID);
+      const req: Request = JSON.parse(data.toString());
+      conn.write(JSON.stringify(await render(req)));
+    });
+
+    conn.on("error", error => {
+      dcon("[%s] ERROR", connID), conn.write(error.message);
+    });
+
+    conn.on("end", () => {
+      dcon("[%s] END", connID), delete connsCache[connID];
+    });
+  });
+}
+
+function closeConnections(sockSrv: net.Server, connsCache: ConnectionsCache) {
+  for (const [id, conn] of Object.entries(connsCache)) {
+    // TODO: will implement soon
+    dsrv("draining connection for %s", id);
+    conn.end();
+  }
+  sockSrv.close();
+  dsrv("server closed");
+  process.exit(0);
+}
 
 export default server;

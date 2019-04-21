@@ -107,17 +107,20 @@ export interface IRendererResponse {
     /** RendererResponse redirectTo */
     redirectTo?: (string|null);
 
-    /** RendererResponse renderedHtmlHead */
-    renderedHtmlHead?: (Uint8Array|null);
+    /** RendererResponse htmlHead */
+    htmlHead?: (Uint8Array|null);
 
-    /** RendererResponse renderedHtmlBody */
-    renderedHtmlBody?: (Uint8Array|null);
+    /** RendererResponse htmlBody */
+    htmlBody?: (Uint8Array|null);
 
-    /** RendererResponse renderedHtmlStyles */
-    renderedHtmlStyles?: (Uint8Array|null);
+    /** RendererResponse htmlLinks */
+    htmlLinks?: (Uint8Array|null);
 
-    /** RendererResponse renderedHtmlScripts */
-    renderedHtmlScripts?: (Uint8Array|null);
+    /** RendererResponse htmlStyles */
+    htmlStyles?: (Uint8Array|null);
+
+    /** RendererResponse htmlScripts */
+    htmlScripts?: (Uint8Array|null);
 
     /** RendererResponse ttr */
     ttr?: (number|null);
@@ -141,17 +144,20 @@ export class RendererResponse implements IRendererResponse {
     /** RendererResponse redirectTo. */
     public redirectTo: string;
 
-    /** RendererResponse renderedHtmlHead. */
-    public renderedHtmlHead: Uint8Array;
+    /** RendererResponse htmlHead. */
+    public htmlHead: Uint8Array;
 
-    /** RendererResponse renderedHtmlBody. */
-    public renderedHtmlBody: Uint8Array;
+    /** RendererResponse htmlBody. */
+    public htmlBody: Uint8Array;
 
-    /** RendererResponse renderedHtmlStyles. */
-    public renderedHtmlStyles: Uint8Array;
+    /** RendererResponse htmlLinks. */
+    public htmlLinks: Uint8Array;
 
-    /** RendererResponse renderedHtmlScripts. */
-    public renderedHtmlScripts: Uint8Array;
+    /** RendererResponse htmlStyles. */
+    public htmlStyles: Uint8Array;
+
+    /** RendererResponse htmlScripts. */
+    public htmlScripts: Uint8Array;
 
     /** RendererResponse ttr. */
     public ttr: number;

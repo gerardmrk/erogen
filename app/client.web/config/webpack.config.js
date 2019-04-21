@@ -24,6 +24,7 @@ const OfflinePlugin = require("offline-plugin");
 const RemoveServiceWorkerPlugin = require("webpack-remove-serviceworker-plugin");
 const SubresourceIntegrityPlugin = require("webpack-subresource-integrity");
 const TerserPlugin = require("terser-webpack-plugin");
+const LoadablePlugin = require("@loadable/webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CheckerPlugin, TsConfigPathsPlugin } = require("awesome-typescript-loader"); // prettier-ignore
 const settingsBuilder = require("./webpack.settings");
@@ -297,6 +298,8 @@ module.exports = async (args) => {
             ]
         },
         plugins: [
+            new HardSourcePlugin(),
+
             new webpack.DefinePlugin({
                 INJECTED_DEV_MODE: JSON.stringify(devMode),
                 INJECTED_APP_CONFIG: JSON.stringify(appConfig),
@@ -307,7 +310,9 @@ module.exports = async (args) => {
                 NODE_ENV: mode,
             }),
 
-            new HardSourcePlugin(),
+            clientBuild && new LoadablePlugin({
+              filename: "async-modules.json",
+            }),
 
             new CheckerPlugin(),
 
@@ -357,8 +362,8 @@ module.exports = async (args) => {
             prodMode && new webpack.HashedModuleIdsPlugin(),
 
             new ExtractCssChunksPlugin({
-                filename: devMode ? "styles/[name].css" : "styles/[name].[hash].css",
-                chunkFilename: devMode ? "styles/[id].css" : "styles/[id].[hash].css",
+                filename: devMode ? "styles/[name].css" : "styles/[name].[contenthash].css",
+                chunkFilename: devMode ? "styles/[id].css" : "styles/[id].[contenthash].css",
             }),
 
             prodMode && clientBuild && new PurgeCSSPlugin({
@@ -463,12 +468,18 @@ module.exports = async (args) => {
             runtimeChunk: "single",
             splitChunks: {
                 cacheGroups: {
+                    styles: {
+                        name: "styles",
+                        test: /\.css$/,
+                        chunks: "all",
+                        enforce: true,
+                    },
                     vendors: {
                         test: /[\\/]node_modules[\\/]/,
                         name: "vendors",
                         chunks: "all",
                         // maxSize: devMode ? undefined : 80000,
-                        // maxSize: 80000
+                        // maxSize: 80000,
                     }
                 }
             },
@@ -477,7 +488,7 @@ module.exports = async (args) => {
                     cache: true,
                     parallel: true,
                     exclude: [/dist/],
-                    extractComments: "all",
+                    extractComments: true,
                     terserOptions: {
                       output: null,
                       ie8: false,

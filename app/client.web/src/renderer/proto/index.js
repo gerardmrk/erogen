@@ -228,10 +228,11 @@ $root.RendererResponse = (function() {
      * @property {number|null} [statusCode] RendererResponse statusCode
      * @property {string|null} [error] RendererResponse error
      * @property {string|null} [redirectTo] RendererResponse redirectTo
-     * @property {Uint8Array|null} [renderedHtmlHead] RendererResponse renderedHtmlHead
-     * @property {Uint8Array|null} [renderedHtmlBody] RendererResponse renderedHtmlBody
-     * @property {Uint8Array|null} [renderedHtmlStyles] RendererResponse renderedHtmlStyles
-     * @property {Uint8Array|null} [renderedHtmlScripts] RendererResponse renderedHtmlScripts
+     * @property {Uint8Array|null} [htmlHead] RendererResponse htmlHead
+     * @property {Uint8Array|null} [htmlBody] RendererResponse htmlBody
+     * @property {Uint8Array|null} [htmlLinks] RendererResponse htmlLinks
+     * @property {Uint8Array|null} [htmlStyles] RendererResponse htmlStyles
+     * @property {Uint8Array|null} [htmlScripts] RendererResponse htmlScripts
      * @property {number|null} [ttr] RendererResponse ttr
      */
 
@@ -275,36 +276,44 @@ $root.RendererResponse = (function() {
     RendererResponse.prototype.redirectTo = "";
 
     /**
-     * RendererResponse renderedHtmlHead.
-     * @member {Uint8Array} renderedHtmlHead
+     * RendererResponse htmlHead.
+     * @member {Uint8Array} htmlHead
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.renderedHtmlHead = $util.newBuffer([]);
+    RendererResponse.prototype.htmlHead = $util.newBuffer([]);
 
     /**
-     * RendererResponse renderedHtmlBody.
-     * @member {Uint8Array} renderedHtmlBody
+     * RendererResponse htmlBody.
+     * @member {Uint8Array} htmlBody
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.renderedHtmlBody = $util.newBuffer([]);
+    RendererResponse.prototype.htmlBody = $util.newBuffer([]);
 
     /**
-     * RendererResponse renderedHtmlStyles.
-     * @member {Uint8Array} renderedHtmlStyles
+     * RendererResponse htmlLinks.
+     * @member {Uint8Array} htmlLinks
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.renderedHtmlStyles = $util.newBuffer([]);
+    RendererResponse.prototype.htmlLinks = $util.newBuffer([]);
 
     /**
-     * RendererResponse renderedHtmlScripts.
-     * @member {Uint8Array} renderedHtmlScripts
+     * RendererResponse htmlStyles.
+     * @member {Uint8Array} htmlStyles
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.renderedHtmlScripts = $util.newBuffer([]);
+    RendererResponse.prototype.htmlStyles = $util.newBuffer([]);
+
+    /**
+     * RendererResponse htmlScripts.
+     * @member {Uint8Array} htmlScripts
+     * @memberof RendererResponse
+     * @instance
+     */
+    RendererResponse.prototype.htmlScripts = $util.newBuffer([]);
 
     /**
      * RendererResponse ttr.
@@ -344,16 +353,18 @@ $root.RendererResponse = (function() {
             writer.uint32(/* id 2, wireType 2 =*/18).string(message.error);
         if (message.redirectTo != null && message.hasOwnProperty("redirectTo"))
             writer.uint32(/* id 3, wireType 2 =*/26).string(message.redirectTo);
-        if (message.renderedHtmlHead != null && message.hasOwnProperty("renderedHtmlHead"))
-            writer.uint32(/* id 4, wireType 2 =*/34).bytes(message.renderedHtmlHead);
-        if (message.renderedHtmlBody != null && message.hasOwnProperty("renderedHtmlBody"))
-            writer.uint32(/* id 5, wireType 2 =*/42).bytes(message.renderedHtmlBody);
-        if (message.renderedHtmlStyles != null && message.hasOwnProperty("renderedHtmlStyles"))
-            writer.uint32(/* id 6, wireType 2 =*/50).bytes(message.renderedHtmlStyles);
-        if (message.renderedHtmlScripts != null && message.hasOwnProperty("renderedHtmlScripts"))
-            writer.uint32(/* id 7, wireType 2 =*/58).bytes(message.renderedHtmlScripts);
+        if (message.htmlHead != null && message.hasOwnProperty("htmlHead"))
+            writer.uint32(/* id 4, wireType 2 =*/34).bytes(message.htmlHead);
+        if (message.htmlBody != null && message.hasOwnProperty("htmlBody"))
+            writer.uint32(/* id 5, wireType 2 =*/42).bytes(message.htmlBody);
+        if (message.htmlLinks != null && message.hasOwnProperty("htmlLinks"))
+            writer.uint32(/* id 6, wireType 2 =*/50).bytes(message.htmlLinks);
+        if (message.htmlStyles != null && message.hasOwnProperty("htmlStyles"))
+            writer.uint32(/* id 7, wireType 2 =*/58).bytes(message.htmlStyles);
+        if (message.htmlScripts != null && message.hasOwnProperty("htmlScripts"))
+            writer.uint32(/* id 8, wireType 2 =*/66).bytes(message.htmlScripts);
         if (message.ttr != null && message.hasOwnProperty("ttr"))
-            writer.uint32(/* id 8, wireType 0 =*/64).int32(message.ttr);
+            writer.uint32(/* id 9, wireType 0 =*/72).int32(message.ttr);
         return writer;
     };
 
@@ -398,18 +409,21 @@ $root.RendererResponse = (function() {
                 message.redirectTo = reader.string();
                 break;
             case 4:
-                message.renderedHtmlHead = reader.bytes();
+                message.htmlHead = reader.bytes();
                 break;
             case 5:
-                message.renderedHtmlBody = reader.bytes();
+                message.htmlBody = reader.bytes();
                 break;
             case 6:
-                message.renderedHtmlStyles = reader.bytes();
+                message.htmlLinks = reader.bytes();
                 break;
             case 7:
-                message.renderedHtmlScripts = reader.bytes();
+                message.htmlStyles = reader.bytes();
                 break;
             case 8:
+                message.htmlScripts = reader.bytes();
+                break;
+            case 9:
                 message.ttr = reader.int32();
                 break;
             default:
@@ -456,18 +470,21 @@ $root.RendererResponse = (function() {
         if (message.redirectTo != null && message.hasOwnProperty("redirectTo"))
             if (!$util.isString(message.redirectTo))
                 return "redirectTo: string expected";
-        if (message.renderedHtmlHead != null && message.hasOwnProperty("renderedHtmlHead"))
-            if (!(message.renderedHtmlHead && typeof message.renderedHtmlHead.length === "number" || $util.isString(message.renderedHtmlHead)))
-                return "renderedHtmlHead: buffer expected";
-        if (message.renderedHtmlBody != null && message.hasOwnProperty("renderedHtmlBody"))
-            if (!(message.renderedHtmlBody && typeof message.renderedHtmlBody.length === "number" || $util.isString(message.renderedHtmlBody)))
-                return "renderedHtmlBody: buffer expected";
-        if (message.renderedHtmlStyles != null && message.hasOwnProperty("renderedHtmlStyles"))
-            if (!(message.renderedHtmlStyles && typeof message.renderedHtmlStyles.length === "number" || $util.isString(message.renderedHtmlStyles)))
-                return "renderedHtmlStyles: buffer expected";
-        if (message.renderedHtmlScripts != null && message.hasOwnProperty("renderedHtmlScripts"))
-            if (!(message.renderedHtmlScripts && typeof message.renderedHtmlScripts.length === "number" || $util.isString(message.renderedHtmlScripts)))
-                return "renderedHtmlScripts: buffer expected";
+        if (message.htmlHead != null && message.hasOwnProperty("htmlHead"))
+            if (!(message.htmlHead && typeof message.htmlHead.length === "number" || $util.isString(message.htmlHead)))
+                return "htmlHead: buffer expected";
+        if (message.htmlBody != null && message.hasOwnProperty("htmlBody"))
+            if (!(message.htmlBody && typeof message.htmlBody.length === "number" || $util.isString(message.htmlBody)))
+                return "htmlBody: buffer expected";
+        if (message.htmlLinks != null && message.hasOwnProperty("htmlLinks"))
+            if (!(message.htmlLinks && typeof message.htmlLinks.length === "number" || $util.isString(message.htmlLinks)))
+                return "htmlLinks: buffer expected";
+        if (message.htmlStyles != null && message.hasOwnProperty("htmlStyles"))
+            if (!(message.htmlStyles && typeof message.htmlStyles.length === "number" || $util.isString(message.htmlStyles)))
+                return "htmlStyles: buffer expected";
+        if (message.htmlScripts != null && message.hasOwnProperty("htmlScripts"))
+            if (!(message.htmlScripts && typeof message.htmlScripts.length === "number" || $util.isString(message.htmlScripts)))
+                return "htmlScripts: buffer expected";
         if (message.ttr != null && message.hasOwnProperty("ttr"))
             if (!$util.isInteger(message.ttr))
                 return "ttr: integer expected";
@@ -492,26 +509,31 @@ $root.RendererResponse = (function() {
             message.error = String(object.error);
         if (object.redirectTo != null)
             message.redirectTo = String(object.redirectTo);
-        if (object.renderedHtmlHead != null)
-            if (typeof object.renderedHtmlHead === "string")
-                $util.base64.decode(object.renderedHtmlHead, message.renderedHtmlHead = $util.newBuffer($util.base64.length(object.renderedHtmlHead)), 0);
-            else if (object.renderedHtmlHead.length)
-                message.renderedHtmlHead = object.renderedHtmlHead;
-        if (object.renderedHtmlBody != null)
-            if (typeof object.renderedHtmlBody === "string")
-                $util.base64.decode(object.renderedHtmlBody, message.renderedHtmlBody = $util.newBuffer($util.base64.length(object.renderedHtmlBody)), 0);
-            else if (object.renderedHtmlBody.length)
-                message.renderedHtmlBody = object.renderedHtmlBody;
-        if (object.renderedHtmlStyles != null)
-            if (typeof object.renderedHtmlStyles === "string")
-                $util.base64.decode(object.renderedHtmlStyles, message.renderedHtmlStyles = $util.newBuffer($util.base64.length(object.renderedHtmlStyles)), 0);
-            else if (object.renderedHtmlStyles.length)
-                message.renderedHtmlStyles = object.renderedHtmlStyles;
-        if (object.renderedHtmlScripts != null)
-            if (typeof object.renderedHtmlScripts === "string")
-                $util.base64.decode(object.renderedHtmlScripts, message.renderedHtmlScripts = $util.newBuffer($util.base64.length(object.renderedHtmlScripts)), 0);
-            else if (object.renderedHtmlScripts.length)
-                message.renderedHtmlScripts = object.renderedHtmlScripts;
+        if (object.htmlHead != null)
+            if (typeof object.htmlHead === "string")
+                $util.base64.decode(object.htmlHead, message.htmlHead = $util.newBuffer($util.base64.length(object.htmlHead)), 0);
+            else if (object.htmlHead.length)
+                message.htmlHead = object.htmlHead;
+        if (object.htmlBody != null)
+            if (typeof object.htmlBody === "string")
+                $util.base64.decode(object.htmlBody, message.htmlBody = $util.newBuffer($util.base64.length(object.htmlBody)), 0);
+            else if (object.htmlBody.length)
+                message.htmlBody = object.htmlBody;
+        if (object.htmlLinks != null)
+            if (typeof object.htmlLinks === "string")
+                $util.base64.decode(object.htmlLinks, message.htmlLinks = $util.newBuffer($util.base64.length(object.htmlLinks)), 0);
+            else if (object.htmlLinks.length)
+                message.htmlLinks = object.htmlLinks;
+        if (object.htmlStyles != null)
+            if (typeof object.htmlStyles === "string")
+                $util.base64.decode(object.htmlStyles, message.htmlStyles = $util.newBuffer($util.base64.length(object.htmlStyles)), 0);
+            else if (object.htmlStyles.length)
+                message.htmlStyles = object.htmlStyles;
+        if (object.htmlScripts != null)
+            if (typeof object.htmlScripts === "string")
+                $util.base64.decode(object.htmlScripts, message.htmlScripts = $util.newBuffer($util.base64.length(object.htmlScripts)), 0);
+            else if (object.htmlScripts.length)
+                message.htmlScripts = object.htmlScripts;
         if (object.ttr != null)
             message.ttr = object.ttr | 0;
         return message;
@@ -535,32 +557,39 @@ $root.RendererResponse = (function() {
             object.error = "";
             object.redirectTo = "";
             if (options.bytes === String)
-                object.renderedHtmlHead = "";
+                object.htmlHead = "";
             else {
-                object.renderedHtmlHead = [];
+                object.htmlHead = [];
                 if (options.bytes !== Array)
-                    object.renderedHtmlHead = $util.newBuffer(object.renderedHtmlHead);
+                    object.htmlHead = $util.newBuffer(object.htmlHead);
             }
             if (options.bytes === String)
-                object.renderedHtmlBody = "";
+                object.htmlBody = "";
             else {
-                object.renderedHtmlBody = [];
+                object.htmlBody = [];
                 if (options.bytes !== Array)
-                    object.renderedHtmlBody = $util.newBuffer(object.renderedHtmlBody);
+                    object.htmlBody = $util.newBuffer(object.htmlBody);
             }
             if (options.bytes === String)
-                object.renderedHtmlStyles = "";
+                object.htmlLinks = "";
             else {
-                object.renderedHtmlStyles = [];
+                object.htmlLinks = [];
                 if (options.bytes !== Array)
-                    object.renderedHtmlStyles = $util.newBuffer(object.renderedHtmlStyles);
+                    object.htmlLinks = $util.newBuffer(object.htmlLinks);
             }
             if (options.bytes === String)
-                object.renderedHtmlScripts = "";
+                object.htmlStyles = "";
             else {
-                object.renderedHtmlScripts = [];
+                object.htmlStyles = [];
                 if (options.bytes !== Array)
-                    object.renderedHtmlScripts = $util.newBuffer(object.renderedHtmlScripts);
+                    object.htmlStyles = $util.newBuffer(object.htmlStyles);
+            }
+            if (options.bytes === String)
+                object.htmlScripts = "";
+            else {
+                object.htmlScripts = [];
+                if (options.bytes !== Array)
+                    object.htmlScripts = $util.newBuffer(object.htmlScripts);
             }
             object.ttr = 0;
         }
@@ -570,14 +599,16 @@ $root.RendererResponse = (function() {
             object.error = message.error;
         if (message.redirectTo != null && message.hasOwnProperty("redirectTo"))
             object.redirectTo = message.redirectTo;
-        if (message.renderedHtmlHead != null && message.hasOwnProperty("renderedHtmlHead"))
-            object.renderedHtmlHead = options.bytes === String ? $util.base64.encode(message.renderedHtmlHead, 0, message.renderedHtmlHead.length) : options.bytes === Array ? Array.prototype.slice.call(message.renderedHtmlHead) : message.renderedHtmlHead;
-        if (message.renderedHtmlBody != null && message.hasOwnProperty("renderedHtmlBody"))
-            object.renderedHtmlBody = options.bytes === String ? $util.base64.encode(message.renderedHtmlBody, 0, message.renderedHtmlBody.length) : options.bytes === Array ? Array.prototype.slice.call(message.renderedHtmlBody) : message.renderedHtmlBody;
-        if (message.renderedHtmlStyles != null && message.hasOwnProperty("renderedHtmlStyles"))
-            object.renderedHtmlStyles = options.bytes === String ? $util.base64.encode(message.renderedHtmlStyles, 0, message.renderedHtmlStyles.length) : options.bytes === Array ? Array.prototype.slice.call(message.renderedHtmlStyles) : message.renderedHtmlStyles;
-        if (message.renderedHtmlScripts != null && message.hasOwnProperty("renderedHtmlScripts"))
-            object.renderedHtmlScripts = options.bytes === String ? $util.base64.encode(message.renderedHtmlScripts, 0, message.renderedHtmlScripts.length) : options.bytes === Array ? Array.prototype.slice.call(message.renderedHtmlScripts) : message.renderedHtmlScripts;
+        if (message.htmlHead != null && message.hasOwnProperty("htmlHead"))
+            object.htmlHead = options.bytes === String ? $util.base64.encode(message.htmlHead, 0, message.htmlHead.length) : options.bytes === Array ? Array.prototype.slice.call(message.htmlHead) : message.htmlHead;
+        if (message.htmlBody != null && message.hasOwnProperty("htmlBody"))
+            object.htmlBody = options.bytes === String ? $util.base64.encode(message.htmlBody, 0, message.htmlBody.length) : options.bytes === Array ? Array.prototype.slice.call(message.htmlBody) : message.htmlBody;
+        if (message.htmlLinks != null && message.hasOwnProperty("htmlLinks"))
+            object.htmlLinks = options.bytes === String ? $util.base64.encode(message.htmlLinks, 0, message.htmlLinks.length) : options.bytes === Array ? Array.prototype.slice.call(message.htmlLinks) : message.htmlLinks;
+        if (message.htmlStyles != null && message.hasOwnProperty("htmlStyles"))
+            object.htmlStyles = options.bytes === String ? $util.base64.encode(message.htmlStyles, 0, message.htmlStyles.length) : options.bytes === Array ? Array.prototype.slice.call(message.htmlStyles) : message.htmlStyles;
+        if (message.htmlScripts != null && message.hasOwnProperty("htmlScripts"))
+            object.htmlScripts = options.bytes === String ? $util.base64.encode(message.htmlScripts, 0, message.htmlScripts.length) : options.bytes === Array ? Array.prototype.slice.call(message.htmlScripts) : message.htmlScripts;
         if (message.ttr != null && message.hasOwnProperty("ttr"))
             object.ttr = message.ttr;
         return object;
