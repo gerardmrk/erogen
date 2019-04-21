@@ -10,7 +10,7 @@ const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const HardSourcePlugin = require("hard-source-webpack-plugin");
 const CleanBuildPlugin = require("clean-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
-const ExtractCssChunksPlugin = require("extract-css-chunks-webpack-plugin");
+const ExtractCssChunksPlugin = require("mini-css-extract-plugin");
 const DeepScopeAnalysisPlugin = require("webpack-deep-scope-plugin").default;
 const CommonJSTreeShakePlugin = require("webpack-common-shake").Plugin;
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -23,7 +23,7 @@ const LodashPlugin = require("lodash-webpack-plugin");
 const OfflinePlugin = require("offline-plugin");
 const RemoveServiceWorkerPlugin = require("webpack-remove-serviceworker-plugin");
 const SubresourceIntegrityPlugin = require("webpack-subresource-integrity");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CheckerPlugin, TsConfigPathsPlugin } = require("awesome-typescript-loader"); // prettier-ignore
 const settingsBuilder = require("./webpack.settings");
@@ -85,7 +85,7 @@ module.exports = async (args) => {
             },
             plugins: [
               new TsConfigPathsPlugin({
-                configFileName: `${ROOT_APP_DIR}/tsconfig.json`
+                configFileName: `${ROOT_APP_DIR}/tsconfig.${source}.json`
               }),
             ]
         },
@@ -123,7 +123,7 @@ module.exports = async (args) => {
                             errorsAsWarnings: true,
                             useTranspileModule: true,
                             forceIsolatedModules: true,
-                            configFileName: `${ROOT_APP_DIR}/tsconfig.json`,
+                            configFileName: `${ROOT_APP_DIR}/tsconfig.${source}.json`,
                             reportFiles: ["src/**/*.{ts,tsx}"],
                             babelCore: "@babel/core",
                             babelOptions: {
@@ -141,6 +141,7 @@ module.exports = async (args) => {
                               plugins: [
                                   "@loadable/babel-plugin",
                                   "@babel/plugin-syntax-dynamic-import",
+                                  rendererBuild && "dynamic-import-node",
                                   ["@babel/plugin-proposal-class-properties", { loose: true }],
                                   ["@babel/plugin-transform-runtime", { regenerator: false }],
                                   ["lodash", { id: "lodash-compat" }],
@@ -153,30 +154,15 @@ module.exports = async (args) => {
                     }]
                 },
                 {
-                    test: /\.js$/,
-                    enforce: "pre",
-                    exclude: [/dist/, /node_modules/],
-                    use: ["source-map-loader"]
-                },
-                {
-                    test: /\.scss$/,
+                    test:  /\.(sa|sc|c)ss$/,
                     exclude: [/dist/, /node_modules/],
                     use: [
-                        prodMode && { 
+                        { 
                             loader: ExtractCssChunksPlugin.loader,
                             options: {
-                              hot: false,
-                              reloadAll: false,
+                              hmr: devMode,
+                              reloadAll: devMode,
                             },
-                        },
-                        devMode && clientBuild && {
-                            loader: "style-loader",
-                            options: {
-                                sourceMap: devMode,
-                                hmr: true,
-                                insertInto: "head",
-                                insertAt: "bottom"
-                            }
                         },
                         {
                             loader: "css-loader",
@@ -209,21 +195,11 @@ module.exports = async (args) => {
                     test: /\.less$/,
                     exclude: [/dist/, /node_modules/],
                     use: [
-                        prodMode && { 
+                        { 
                             loader: ExtractCssChunksPlugin.loader,
                             options: {
-                              hot: false,
-                              reloadAll: false,
+                              hmr: devMode,
                             },
-                        },
-                        devMode && clientBuild && {
-                            loader: "style-loader",
-                            options: {
-                                sourceMap: devMode,
-                                hmr: true,
-                                insertInto: "head",
-                                insertAt: "bottom"
-                            }
                         },
                         {
                             loader: "css-loader",
@@ -380,24 +356,14 @@ module.exports = async (args) => {
 
             prodMode && new webpack.HashedModuleIdsPlugin(),
 
-            prodMode && clientBuild && new ExtractCssChunksPlugin({
-                filename: "styles/[name].[chunkhash].css",
-                chunkFilename: "styles/[id].[chunkhash].css",
+            new ExtractCssChunksPlugin({
+                filename: devMode ? "styles/[name].css" : "styles/[name].[hash].css",
+                chunkFilename: devMode ? "styles/[id].css" : "styles/[id].[hash].css",
             }),
 
             prodMode && clientBuild && new PurgeCSSPlugin({
                 paths: glob.sync(`${CLIENT_SRC}/**/*`, { nodir: true }),
                 only: ["bundle", "vendor"],
-            }),
-
-            prodMode && clientBuild && new OptimizeCssAssetsPlugin({
-                canPrint: true,
-                assetNameRegExp: /\.css$/g,
-                cssProcessorPluginOptions: {
-                  preset: ["default", {
-                    discardComments: { removeAll: true },
-                  }],
-                }
             }),
 
             clientBuild && new HtmlPlugin({
@@ -507,11 +473,12 @@ module.exports = async (args) => {
                 }
             },
             minimizer: [
-                new UglifyJsPlugin({
+                new TerserPlugin({
+                    cache: true,
                     parallel: true,
                     exclude: [/dist/],
-                    extractComments: true,
-                    uglifyOptions: {
+                    extractComments: "all",
+                    terserOptions: {
                       output: null,
                       ie8: false,
                       keep_fnames: true,
@@ -522,26 +489,36 @@ module.exports = async (args) => {
                         }
                       }
                     }
-                })
-            ]
+                }),
+                new OptimizeCssAssetsPlugin({
+                  canPrint: true,
+                  assetNameRegExp: /\.css$/g,
+                  cssProcessorPluginOptions: {
+                    preset: ["default", {
+                      discardComments: { removeAll: true },
+                    }],
+                  }
+              }),
+            ].filter(x => !!x)
         }
     } else {
         // Renderer-specific build options
 
-        config.entry.renderer = ["src/renderer/main.tsx"]
+        config.entry = {
+          renderer: ["src/renderer/uds-server/index.ts"],
+        };
 
         config.output = {
             path: RENDERER_DST,
             filename: "index.js",
-            libraryExport: "default",
-            libraryTarget: "commonjs"
-        }
+            libraryTarget: "commonjs",
+        };
 
-        config.externals = [
-            webpackNodeExternals({
-                whitelist: ["is-webpack-bundle", "webpack-require-weak", "semantic-ui-less/themes"]
-            })
-        ]
+        // config.externals = [
+        //     webpackNodeExternals({
+        //         whitelist: ["is-webpack-bundle", "webpack-require-weak", "semantic-ui-less/themes"]
+        //     })
+        // ]
     }
 
     return config

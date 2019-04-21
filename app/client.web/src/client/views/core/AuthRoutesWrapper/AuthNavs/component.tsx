@@ -8,7 +8,7 @@ type State = {};
 
 export class AuthNavs extends React.PureComponent<Props, State> {
   public render() {
-    return <nav className={styles.main}>{"x"}</nav>;
+    return <nav className={styles.main}>{"nav1 nav2 nav3"}</nav>;
   }
 }
 

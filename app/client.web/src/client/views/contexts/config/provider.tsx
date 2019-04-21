@@ -21,3 +21,5 @@ export class ConfigProvider extends React.PureComponent<Props, State> {
     );
   }
 }
+
+export default ConfigProvider;

@@ -3,6 +3,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import StoreProvider from "react-redux/es/components/Provider";
 import { BrowserRouter as Router } from "react-router-dom";
+import { loadableReady } from "@loadable/component";
 
 import { Services } from "@client/services";
 import { storeCreator, State } from "@client/store";
@@ -17,7 +18,9 @@ type AppParams = {
   initialState: Partial<State>;
 };
 
-(({ config, devMode, initialState }: AppParams) => {
+(async ({ config, devMode, initialState }: AppParams) => {
+  const render = devMode ? ReactDOM.render : ReactDOM.hydrate;
+
   const services = new Services();
 
   const createStore = storeCreator(services, devMode);
@@ -26,7 +29,11 @@ type AppParams = {
   const defaultLang = "en";
   initI18N(defaultLang);
 
-  ReactDOM.render(
+  if (!devMode) {
+    await loadableReady();
+  }
+
+  render(
     <ConfigProvider config={config}>
       <StoreProvider store={store}>
         <Router>
