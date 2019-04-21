@@ -137,7 +137,7 @@ module.exports = async (args) => {
                     cache: `${APP_CACHE_DIR}/terser.${source}`,
                     parallel: true,
                     exclude: [/dist/],
-                    // extractComments: true,
+                    extractComments: true,
                     terserOptions: {
                         output: null,
                         ie8: false,
@@ -187,7 +187,7 @@ module.exports = async (args) => {
                                       modules: false,
                                       loose: true,
                                       useBuiltIns: "usage",
-                                      corejs: { version: 3 },
+                                      // corejs: { version: 3 },
                                       targets: clientBuild ? { browsers: ["last 2 versions", "not dead", "> 0.5%", "not ie < 11"] } : { node: "current" }
                                   }],
                                   "@babel/preset-react",
@@ -530,11 +530,11 @@ module.exports = async (args) => {
             libraryTarget: "commonjs",
         };
 
-        config.externals = [
-            webpackNodeExternals({
-                whitelist: ["is-webpack-bundle", "webpack-require-weak", "semantic-ui-less/themes"]
-            })
-        ]
+        // config.externals = [
+        //     webpackNodeExternals({
+        //         whitelist: ["is-webpack-bundle", "webpack-require-weak", "semantic-ui-less/themes"]
+        //     })
+        // ]
     }
 
     return config
