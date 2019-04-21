@@ -1,25 +1,26 @@
-import { readFile } from "fs";
-import { promisify } from "util";
+// import { readFile } from "fs";
+// import { promisify } from "util";
 import parseargs from "minimist";
 import udsServer from "./server";
+import asyncModuleStats from "dist/client/async-modules.json";
 
-const readFileAsync = promisify(readFile);
+// const readFileAsync = promisify(readFile);
 
 const main = async (settings: parseargs.ParsedArgs) => {
   try {
     validateSettings(settings);
 
     const socketFile = settings["addr"];
-    const asyncModuleStats = JSON.parse(
-      await readFileAsync(settings["statsfile"], "utf8")
-    );
+    // const asyncModuleStats = JSON.parse(
+    //   await readFileAsync(settings["statsfile"], "utf8")
+    // );
 
     switch (<string>settings.mode) {
       case "uds":
-        await udsServer({ socketFile, asyncModuleStats });
-      case "http":
-        // TODO: implement interim tcp server
-        await udsServer({ socketFile, asyncModuleStats });
+        await udsServer({
+          socketFile,
+          asyncModuleStats: <any>asyncModuleStats
+        });
       default:
         return;
     }
@@ -36,10 +37,6 @@ function validateSettings(settings: object) {
 
   if (!settings["addr"]) {
     throw new Error("'addr' must be specified");
-  }
-
-  if (!settings["statsfile"]) {
-    throw new Error("'statsfile' must be specified");
   }
 }
 

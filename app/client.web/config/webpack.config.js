@@ -82,9 +82,8 @@ module.exports = async (args) => {
                 // source code
                 "@client": CLIENT_SRC,
                 "@renderer": RENDERER_SRC,
-                // configs
-                "@themeStyles": `${ROOT_APP_DIR}/ui-theme/semantic.less`,
                 // semantic ui theming path resolution
+                "@themeStyles": `${ROOT_APP_DIR}/ui-theme/semantic.less`,
                 "../../theme.config$": `${ROOT_APP_DIR}/ui-theme/theme.config`,
             },
             plugins: [
@@ -94,7 +93,7 @@ module.exports = async (args) => {
             ]
         },
 
-        devtool: devMode ? "cheap-module-eval-source-map" : false,
+        devtool: devMode ? "cheap-module-eval-source-map" : rendererBuild ? "source-map" : false,
 
         devServer: {
             hot: true,
@@ -115,8 +114,7 @@ module.exports = async (args) => {
         },
 
         optimization: {
-            sideEffects: true,
-            runtimeChunk: "single",
+            runtimeChunk: rendererBuild ? undefined : "single",
             splitChunks: {
                 cacheGroups: {
                     styles: {
@@ -135,30 +133,31 @@ module.exports = async (args) => {
                 }
             },
             minimizer: [
-                new TerserPlugin({
+                clientBuild && new TerserPlugin({
                     cache: `${APP_CACHE_DIR}/terser.${source}`,
                     parallel: true,
                     exclude: [/dist/],
-                    extractComments: true,
+                    // extractComments: true,
                     terserOptions: {
-                      output: null,
-                      ie8: false,
-                      keep_fnames: true,
-                      mangle: {
+                        output: null,
+                        ie8: false,
                         keep_fnames: true,
-                        properties: {
-                          keep_quoted: true
+                        sourceMap: rendererBuild,
+                        mangle: {
+                          keep_fnames: true,
+                          properties: {
+                              keep_quoted: true
+                          }
                         }
-                      }
                     }
                 }),
-                new OptimizeCssAssetsPlugin({
+                clientBuild && new OptimizeCssAssetsPlugin({
                   canPrint: true,
                   assetNameRegExp: /\.css$/g,
                   cssProcessorPluginOptions: {
-                    preset: ["default", {
-                      discardComments: { removeAll: true },
-                    }],
+                      preset: ["default", {
+                          discardComments: { removeAll: true },
+                      }],
                   }
               }),
             ].filter(x => !!x)
@@ -222,7 +221,7 @@ module.exports = async (args) => {
                         {
                             loader: "css-loader",
                             options: {
-                                sourceMap: devMode,
+                                sourceMap: devMode || rendererBuild,
                                 modules: true,
                                 importLoaders: 1,
                                 camelCase: true,
@@ -232,14 +231,14 @@ module.exports = async (args) => {
                         {
                             loader: "postcss-loader",
                             options: {
-                                sourceMap: devMode,
+                                sourceMap: devMode || rendererBuild,
                                 plugins: () => [require("autoprefixer")()]
                             }
                         },
                         {
                             loader: "sass-loader",
                             options: {
-                                sourceMap: devMode,
+                                sourceMap: devMode || rendererBuild,
                                 fiber: Fiber,
                                 implementation: require("sass")
                             }
@@ -259,13 +258,13 @@ module.exports = async (args) => {
                         {
                             loader: "css-loader",
                             options: {
-                                sourceMap: devMode,
+                                sourceMap: devMode || rendererBuild,
                             }
                         },
                         {
                             loader: "less-loader",
                             options: {
-                                sourceMap: devMode,
+                                sourceMap: devMode || rendererBuild,
                                 strictMath: false,
                                 noIeCompat: true
                             }
@@ -528,7 +527,7 @@ module.exports = async (args) => {
         config.output = {
             path: RENDERER_DST,
             filename: "index.js",
-            // libraryTarget: "commonjs",
+            libraryTarget: "commonjs",
         };
 
         config.externals = [
