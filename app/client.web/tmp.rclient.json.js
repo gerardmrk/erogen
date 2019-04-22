@@ -2,7 +2,6 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-var-requires, @typescript-eslint/camelcase */
 const net = require("net");
-const util = require("util");
 
 const client = net.createConnection("/tmp/server.sock");
 
@@ -10,7 +9,7 @@ client.on("connect", () => {
   console.info("[CLIENT] connected");
   client.write(
     JSON.stringify({
-      url: "/documentation",
+      url: "/dashboard",
       lang: "en",
     }),
   );

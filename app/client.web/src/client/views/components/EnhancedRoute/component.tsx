@@ -33,7 +33,7 @@ export class EnhancedRoute extends React.Component<Props, State> {
 
   private renderRoute = props => {
     if (this.props.staticContext) {
-      this.props.staticContext["status"] = this.props.status || 200;
+      this.props.staticContext["statusCode"] = this.props.status || 200;
     }
 
     if (this.props.guarded && !this.props.isAuthenticated) {

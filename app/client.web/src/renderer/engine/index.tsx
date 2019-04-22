@@ -3,7 +3,7 @@ import * as ReactDOMServer from "react-dom/server";
 import { StaticRouter as Router } from "react-router";
 import { Provider as StoreProvider } from "react-redux";
 import { Overwrite } from "utility-types";
-import { ChunkExtractor } from "@loadable/server";
+import { ChunkExtractor, ChunkExtractorManager } from "@loadable/server";
 import { IRendererRequest, IRendererResponse } from "@renderer/proto";
 import { storeCreator } from "@client/store";
 import { Services } from "@client/services";
@@ -33,7 +33,7 @@ export const renderEngine = (stats: AsyncModuleStats) => {
       statusCode: 200,
       redirectTo: "",
       error: null,
-      ttr: 0,
+      ttr: "",
       htmlHead: undefined,
       htmlBody: undefined,
       htmlLinks: undefined,
@@ -48,25 +48,28 @@ export const renderEngine = (stats: AsyncModuleStats) => {
       const createStore = storeCreator(services);
       const routerContext: StaticRouterContext = {};
 
-      const app = extractor.collectChunks(
+      response.htmlBody = ReactDOMServer.renderToString(
         <ConfigProvider config={INJECTED_APP_CONFIG}>
           <StoreProvider store={createStore(undefined)}>
             <Router location={requestUrl} context={routerContext}>
-              <App />
+              <ChunkExtractorManager extractor={extractor}>
+                <App />
+              </ChunkExtractorManager>
             </Router>
           </StoreProvider>
         </ConfigProvider>
       );
-      response.htmlBody = ReactDOMServer.renderToString(app);
       response.htmlHead = getMetaTags(Helmet.renderStatic());
+      response.htmlLinks = extractor.getLinkTags();
+      response.htmlStyles = extractor.getStyleTags();
+      response.htmlScripts = extractor.getScriptTags();
 
       if (routerContext.url) {
         response.statusCode = 302;
         response.redirectTo = routerContext.url;
       } else {
-        response.htmlLinks = extractor.getLinkTags();
-        response.htmlStyles = extractor.getStyleTags();
-        response.htmlScripts = extractor.getScriptTags();
+        response.statusCode = routerContext.statusCode || 200;
+        response.redirectTo = routerContext.url || "";
       }
     } catch (err) {
       response.statusCode = 500;

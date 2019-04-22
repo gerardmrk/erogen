@@ -123,7 +123,7 @@ export interface IRendererResponse {
     htmlScripts?: (Uint8Array|null);
 
     /** RendererResponse ttr */
-    ttr?: (number|null);
+    ttr?: (string|null);
 }
 
 /** Represents a RendererResponse. */
@@ -160,7 +160,7 @@ export class RendererResponse implements IRendererResponse {
     public htmlScripts: Uint8Array;
 
     /** RendererResponse ttr. */
-    public ttr: number;
+    public ttr: string;
 
     /**
      * Creates a new RendererResponse instance using the specified properties.

@@ -233,7 +233,7 @@ $root.RendererResponse = (function() {
      * @property {Uint8Array|null} [htmlLinks] RendererResponse htmlLinks
      * @property {Uint8Array|null} [htmlStyles] RendererResponse htmlStyles
      * @property {Uint8Array|null} [htmlScripts] RendererResponse htmlScripts
-     * @property {number|null} [ttr] RendererResponse ttr
+     * @property {string|null} [ttr] RendererResponse ttr
      */
 
     /**
@@ -317,11 +317,11 @@ $root.RendererResponse = (function() {
 
     /**
      * RendererResponse ttr.
-     * @member {number} ttr
+     * @member {string} ttr
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.ttr = 0;
+    RendererResponse.prototype.ttr = "";
 
     /**
      * Creates a new RendererResponse instance using the specified properties.
@@ -364,7 +364,7 @@ $root.RendererResponse = (function() {
         if (message.htmlScripts != null && message.hasOwnProperty("htmlScripts"))
             writer.uint32(/* id 8, wireType 2 =*/66).bytes(message.htmlScripts);
         if (message.ttr != null && message.hasOwnProperty("ttr"))
-            writer.uint32(/* id 9, wireType 0 =*/72).int32(message.ttr);
+            writer.uint32(/* id 9, wireType 2 =*/74).string(message.ttr);
         return writer;
     };
 
@@ -424,7 +424,7 @@ $root.RendererResponse = (function() {
                 message.htmlScripts = reader.bytes();
                 break;
             case 9:
-                message.ttr = reader.int32();
+                message.ttr = reader.string();
                 break;
             default:
                 reader.skipType(tag & 7);
@@ -486,8 +486,8 @@ $root.RendererResponse = (function() {
             if (!(message.htmlScripts && typeof message.htmlScripts.length === "number" || $util.isString(message.htmlScripts)))
                 return "htmlScripts: buffer expected";
         if (message.ttr != null && message.hasOwnProperty("ttr"))
-            if (!$util.isInteger(message.ttr))
-                return "ttr: integer expected";
+            if (!$util.isString(message.ttr))
+                return "ttr: string expected";
         return null;
     };
 
@@ -535,7 +535,7 @@ $root.RendererResponse = (function() {
             else if (object.htmlScripts.length)
                 message.htmlScripts = object.htmlScripts;
         if (object.ttr != null)
-            message.ttr = object.ttr | 0;
+            message.ttr = String(object.ttr);
         return message;
     };
 
@@ -591,7 +591,7 @@ $root.RendererResponse = (function() {
                 if (options.bytes !== Array)
                     object.htmlScripts = $util.newBuffer(object.htmlScripts);
             }
-            object.ttr = 0;
+            object.ttr = "";
         }
         if (message.statusCode != null && message.hasOwnProperty("statusCode"))
             object.statusCode = message.statusCode;

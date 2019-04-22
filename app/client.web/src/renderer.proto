@@ -14,5 +14,5 @@ message RendererResponse {
     bytes html_links = 6;
     bytes html_styles = 7;
     bytes html_scripts = 8;
-    int32 ttr = 9;
+    string ttr = 9; // TODO: revert back to uint64 when protobufjs supports Node v10's bigint type
 }

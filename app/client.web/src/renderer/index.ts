@@ -5,10 +5,10 @@ export const renderJSON = (stats: AsyncModuleStats) => {
   const render = renderEngine(stats);
 
   return async (input: Request): Promise<Response> => {
-    const timer = process.hrtime();
+    const timerStart = process.hrtime.bigint();
 
     const resp = await render(input);
-    resp.ttr = process.hrtime(timer)[1] / (1000 * 1000);
+    resp.ttr = `${process.hrtime.bigint() - timerStart}ns`; // TODO: change when protobufjs sets bigint for uint64
     return resp;
   };
 };
@@ -18,7 +18,7 @@ export const renderProto = (stats: AsyncModuleStats) => {
   const textEncoder = new TextEncoder();
 
   return async (input: Uint8Array): Promise<Uint8Array> => {
-    const timer = process.hrtime();
+    const timerStart = process.hrtime.bigint();
 
     const resp = await render(RendererRequest.decode(input));
     const response = RendererResponse.create({
@@ -32,7 +32,7 @@ export const renderProto = (stats: AsyncModuleStats) => {
       htmlScripts: textEncoder.encode(resp.htmlScripts)
     });
 
-    response.ttr = process.hrtime(timer)[1] / (1000 * 1000);
+    response.ttr = `${process.hrtime.bigint() - timerStart}ns`; // TODO: change when protobufjs sets bigint for uint64
     return RendererResponse.encode(response).finish();
   };
 };
