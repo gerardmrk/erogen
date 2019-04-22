@@ -26,7 +26,7 @@ export class HeadTags extends React.PureComponent<Props, State> {
     super(props);
     const { config } = props;
 
-    this.titleTemplate = props.title ? `${config.appName} | %s` : undefined;
+    this.titleTemplate = props.title ? `${config.appName} | %s` : "%s";
     this.appName = config.appName;
     this.url = props.path ? `${config.appUrl}${props.path}` : config.appUrl;
     this.title = props.title || config.appName;

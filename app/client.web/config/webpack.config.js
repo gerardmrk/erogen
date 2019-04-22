@@ -1,5 +1,5 @@
 /* eslint-env node */
-/* eslint-disable @typescript-eslint/no-var-requires, @typescript-eslint/camelcase */
+/* eslint-disable no-console, @typescript-eslint/no-var-requires, @typescript-eslint/camelcase */
 const path = require("path");
 
 const glob = require("glob");
@@ -49,6 +49,13 @@ const getSettings = settingsBuilder(ROOT_APP_DIR);
 
 // prettier-ignore
 module.exports = async (args) => {
+    const settings = getSettings(args);
+
+    console.info("BUILD SETTINGS:");
+    for (const [k, v] of Object.entries(settings)) {
+      console.info(`[${k}] ${v}`);
+    }
+
     const {
       // user provided
       mode,
@@ -60,7 +67,8 @@ module.exports = async (args) => {
       rendererBuild,
       // derived
       appConfig,
-    } = getSettings(args);
+      enableSourceMap
+    } = settings;
 
     // base config
     const config = {
@@ -93,7 +101,7 @@ module.exports = async (args) => {
             ]
         },
 
-        devtool: devMode ? "cheap-module-eval-source-map" : rendererBuild ? "source-map" : false,
+        devtool: devMode ? "cheap-module-eval-source-map" : enableSourceMap ? "source-map" : false,
 
         devServer: {
             hot: true,
@@ -142,18 +150,21 @@ module.exports = async (args) => {
                     terserOptions: {
                         output: null,
                         ie8: false,
-                        sourceMap: rendererBuild,
+                        sourceMap: enableSourceMap,
                         // compress: {
                         //   passes: 1,
                         //   evaluate: false,
-                        //   keep_fnames: false,
-                        //   keep_classnames: false,
-                        //   keep_fargs: false,
+                        //   keep_fnames: true,
+                        //   keep_classnames: true,
+                        //   keep_fargs: true,
+                        //   typeofs: false,
                         //   unsafe_undefined: false
                         // },
+                        compress: false,
+                        mangle: false,
                         // mangle: {
-                        //   keep_fnames: false,
-                        //   keep_classnames: false
+                        //   keep_fnames: true,
+                        //   keep_classnames: true
                         // }
                     }
                 }),
@@ -188,7 +199,7 @@ module.exports = async (args) => {
                             babelCore: "@babel/core",
                             babelOptions: {
                               babelrc: false,
-                              sourceMap: rendererBuild,
+                              sourceMap: enableSourceMap,
                               presets: [
                                   ["@babel/preset-env", {
                                       modules: false,
@@ -241,7 +252,7 @@ module.exports = async (args) => {
                         {
                             loader: "css-loader",
                             options: {
-                                sourceMap: devMode || rendererBuild,
+                                sourceMap: enableSourceMap,
                                 modules: true,
                                 importLoaders: 1,
                                 camelCase: true,
@@ -251,14 +262,14 @@ module.exports = async (args) => {
                         {
                             loader: "postcss-loader",
                             options: {
-                                sourceMap: devMode || rendererBuild,
+                                sourceMap: enableSourceMap,
                                 plugins: () => [require("autoprefixer")()]
                             }
                         },
                         {
                             loader: "sass-loader",
                             options: {
-                                sourceMap: devMode || rendererBuild,
+                                sourceMap: enableSourceMap,
                                 fiber: Fiber,
                                 implementation: require("sass")
                             }
@@ -278,13 +289,13 @@ module.exports = async (args) => {
                         {
                             loader: "css-loader",
                             options: {
-                                sourceMap: devMode || rendererBuild,
+                                sourceMap: enableSourceMap,
                             }
                         },
                         {
                             loader: "less-loader",
                             options: {
-                                sourceMap: devMode || rendererBuild,
+                                sourceMap: enableSourceMap,
                                 strictMath: false,
                                 noIeCompat: true
                             }
@@ -527,7 +538,7 @@ module.exports = async (args) => {
 
             prodMode && clientBuild && new BundleAnalyzerPlugin({
                 analyzerMode: "static",
-                openAnalyzer: !process.env.CI,
+                openAnalyzer: false,
                 generateStatsFile: true,
                 statsFilename: `${DST_DIR}/stats.${source}.json`,
                 reportFilename: `${DST_DIR}/stats.${source}.html`,

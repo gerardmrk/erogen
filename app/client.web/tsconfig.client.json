@@ -3,6 +3,8 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "module": "esnext",
-    "target": "esnext"
+    "target": "esnext",
+    "allowJs": false,
+    "sourceMap": true
   }
 }
