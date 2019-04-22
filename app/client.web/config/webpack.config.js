@@ -222,6 +222,11 @@ module.exports = async (args) => {
                     }]
                 },
                 {
+                    test: /\.js$/,
+                    enforce: 'pre',
+                    use: ["source-map-loader"],
+                },
+                {
                     test:  /\.(sa|sc|c)ss$/,
                     exclude: [/dist/, /node_modules/],
                     use: [
@@ -535,7 +540,7 @@ module.exports = async (args) => {
         // Renderer-specific build options
 
         config.entry = {
-          renderer: ["src/renderer/uds-server/index.ts"],
+          renderer: ["src/renderer/index.ts"],
         };
 
         config.output = {

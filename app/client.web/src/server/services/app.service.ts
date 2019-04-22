@@ -6,5 +6,7 @@ import { Injectable, Scope } from "@nestjs/common";
 export class AppService {
   public constructor() {}
 
-  renderPage() {}
+  renderPage() {
+    return "x";
+  }
 }

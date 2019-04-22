@@ -73,7 +73,10 @@ export const renderEngine = (stats: AsyncModuleStats) => {
       }
     } catch (err) {
       response.statusCode = 500;
-      response.error = err.message;
+      response.error = {
+        message: err.message,
+        stackTrace: err.stack.split(/\n\s\s\s\s/)
+      };
     }
 
     return response;

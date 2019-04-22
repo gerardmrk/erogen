@@ -1,3 +1,4 @@
+import "source-map-support/register";
 import { renderEngine, Request, Response } from "./engine";
 import { RendererRequest, RendererResponse } from "./proto";
 

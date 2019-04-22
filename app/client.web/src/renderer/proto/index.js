@@ -226,7 +226,7 @@ $root.RendererResponse = (function() {
      * @exports IRendererResponse
      * @interface IRendererResponse
      * @property {number|null} [statusCode] RendererResponse statusCode
-     * @property {string|null} [error] RendererResponse error
+     * @property {RendererResponse.IRenderError|null} [error] RendererResponse error
      * @property {string|null} [redirectTo] RendererResponse redirectTo
      * @property {Uint8Array|null} [htmlHead] RendererResponse htmlHead
      * @property {Uint8Array|null} [htmlBody] RendererResponse htmlBody
@@ -261,11 +261,11 @@ $root.RendererResponse = (function() {
 
     /**
      * RendererResponse error.
-     * @member {string} error
+     * @member {RendererResponse.IRenderError|null|undefined} error
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.error = "";
+    RendererResponse.prototype.error = null;
 
     /**
      * RendererResponse redirectTo.
@@ -350,7 +350,7 @@ $root.RendererResponse = (function() {
         if (message.statusCode != null && message.hasOwnProperty("statusCode"))
             writer.uint32(/* id 1, wireType 0 =*/8).int32(message.statusCode);
         if (message.error != null && message.hasOwnProperty("error"))
-            writer.uint32(/* id 2, wireType 2 =*/18).string(message.error);
+            $root.RendererResponse.RenderError.encode(message.error, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
         if (message.redirectTo != null && message.hasOwnProperty("redirectTo"))
             writer.uint32(/* id 3, wireType 2 =*/26).string(message.redirectTo);
         if (message.htmlHead != null && message.hasOwnProperty("htmlHead"))
@@ -403,7 +403,7 @@ $root.RendererResponse = (function() {
                 message.statusCode = reader.int32();
                 break;
             case 2:
-                message.error = reader.string();
+                message.error = $root.RendererResponse.RenderError.decode(reader, reader.uint32());
                 break;
             case 3:
                 message.redirectTo = reader.string();
@@ -464,9 +464,11 @@ $root.RendererResponse = (function() {
         if (message.statusCode != null && message.hasOwnProperty("statusCode"))
             if (!$util.isInteger(message.statusCode))
                 return "statusCode: integer expected";
-        if (message.error != null && message.hasOwnProperty("error"))
-            if (!$util.isString(message.error))
-                return "error: string expected";
+        if (message.error != null && message.hasOwnProperty("error")) {
+            var error = $root.RendererResponse.RenderError.verify(message.error);
+            if (error)
+                return "error." + error;
+        }
         if (message.redirectTo != null && message.hasOwnProperty("redirectTo"))
             if (!$util.isString(message.redirectTo))
                 return "redirectTo: string expected";
@@ -505,8 +507,11 @@ $root.RendererResponse = (function() {
         var message = new $root.RendererResponse();
         if (object.statusCode != null)
             message.statusCode = object.statusCode | 0;
-        if (object.error != null)
-            message.error = String(object.error);
+        if (object.error != null) {
+            if (typeof object.error !== "object")
+                throw TypeError(".RendererResponse.error: object expected");
+            message.error = $root.RendererResponse.RenderError.fromObject(object.error);
+        }
         if (object.redirectTo != null)
             message.redirectTo = String(object.redirectTo);
         if (object.htmlHead != null)
@@ -554,7 +559,7 @@ $root.RendererResponse = (function() {
         var object = {};
         if (options.defaults) {
             object.statusCode = 0;
-            object.error = "";
+            object.error = null;
             object.redirectTo = "";
             if (options.bytes === String)
                 object.htmlHead = "";
@@ -596,7 +601,7 @@ $root.RendererResponse = (function() {
         if (message.statusCode != null && message.hasOwnProperty("statusCode"))
             object.statusCode = message.statusCode;
         if (message.error != null && message.hasOwnProperty("error"))
-            object.error = message.error;
+            object.error = $root.RendererResponse.RenderError.toObject(message.error, options);
         if (message.redirectTo != null && message.hasOwnProperty("redirectTo"))
             object.redirectTo = message.redirectTo;
         if (message.htmlHead != null && message.hasOwnProperty("htmlHead"))
@@ -624,6 +629,232 @@ $root.RendererResponse = (function() {
     RendererResponse.prototype.toJSON = function toJSON() {
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
+
+    RendererResponse.RenderError = (function() {
+
+        /**
+         * Properties of a RenderError.
+         * @memberof RendererResponse
+         * @interface IRenderError
+         * @property {string|null} [message] RenderError message
+         * @property {Array.<string>|null} [stackTrace] RenderError stackTrace
+         */
+
+        /**
+         * Constructs a new RenderError.
+         * @memberof RendererResponse
+         * @classdesc Represents a RenderError.
+         * @implements IRenderError
+         * @constructor
+         * @param {RendererResponse.IRenderError=} [properties] Properties to set
+         */
+        function RenderError(properties) {
+            this.stackTrace = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RenderError message.
+         * @member {string} message
+         * @memberof RendererResponse.RenderError
+         * @instance
+         */
+        RenderError.prototype.message = "";
+
+        /**
+         * RenderError stackTrace.
+         * @member {Array.<string>} stackTrace
+         * @memberof RendererResponse.RenderError
+         * @instance
+         */
+        RenderError.prototype.stackTrace = $util.emptyArray;
+
+        /**
+         * Creates a new RenderError instance using the specified properties.
+         * @function create
+         * @memberof RendererResponse.RenderError
+         * @static
+         * @param {RendererResponse.IRenderError=} [properties] Properties to set
+         * @returns {RendererResponse.RenderError} RenderError instance
+         */
+        RenderError.create = function create(properties) {
+            return new RenderError(properties);
+        };
+
+        /**
+         * Encodes the specified RenderError message. Does not implicitly {@link RendererResponse.RenderError.verify|verify} messages.
+         * @function encode
+         * @memberof RendererResponse.RenderError
+         * @static
+         * @param {RendererResponse.IRenderError} message RenderError message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RenderError.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.message != null && message.hasOwnProperty("message"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.message);
+            if (message.stackTrace != null && message.stackTrace.length)
+                for (var i = 0; i < message.stackTrace.length; ++i)
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.stackTrace[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RenderError message, length delimited. Does not implicitly {@link RendererResponse.RenderError.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof RendererResponse.RenderError
+         * @static
+         * @param {RendererResponse.IRenderError} message RenderError message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RenderError.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RenderError message from the specified reader or buffer.
+         * @function decode
+         * @memberof RendererResponse.RenderError
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {RendererResponse.RenderError} RenderError
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RenderError.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.RendererResponse.RenderError();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.message = reader.string();
+                    break;
+                case 2:
+                    if (!(message.stackTrace && message.stackTrace.length))
+                        message.stackTrace = [];
+                    message.stackTrace.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RenderError message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof RendererResponse.RenderError
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {RendererResponse.RenderError} RenderError
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RenderError.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RenderError message.
+         * @function verify
+         * @memberof RendererResponse.RenderError
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RenderError.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.message != null && message.hasOwnProperty("message"))
+                if (!$util.isString(message.message))
+                    return "message: string expected";
+            if (message.stackTrace != null && message.hasOwnProperty("stackTrace")) {
+                if (!Array.isArray(message.stackTrace))
+                    return "stackTrace: array expected";
+                for (var i = 0; i < message.stackTrace.length; ++i)
+                    if (!$util.isString(message.stackTrace[i]))
+                        return "stackTrace: string[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a RenderError message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof RendererResponse.RenderError
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {RendererResponse.RenderError} RenderError
+         */
+        RenderError.fromObject = function fromObject(object) {
+            if (object instanceof $root.RendererResponse.RenderError)
+                return object;
+            var message = new $root.RendererResponse.RenderError();
+            if (object.message != null)
+                message.message = String(object.message);
+            if (object.stackTrace) {
+                if (!Array.isArray(object.stackTrace))
+                    throw TypeError(".RendererResponse.RenderError.stackTrace: array expected");
+                message.stackTrace = [];
+                for (var i = 0; i < object.stackTrace.length; ++i)
+                    message.stackTrace[i] = String(object.stackTrace[i]);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RenderError message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof RendererResponse.RenderError
+         * @static
+         * @param {RendererResponse.RenderError} message RenderError
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RenderError.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.stackTrace = [];
+            if (options.defaults)
+                object.message = "";
+            if (message.message != null && message.hasOwnProperty("message"))
+                object.message = message.message;
+            if (message.stackTrace && message.stackTrace.length) {
+                object.stackTrace = [];
+                for (var j = 0; j < message.stackTrace.length; ++j)
+                    object.stackTrace[j] = message.stackTrace[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this RenderError to JSON.
+         * @function toJSON
+         * @memberof RendererResponse.RenderError
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RenderError.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return RenderError;
+    })();
 
     return RendererResponse;
 })();

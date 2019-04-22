@@ -1,9 +1,7 @@
-import "source-map-support/register";
 import { readFile } from "fs";
 import { promisify } from "util";
 import parseargs from "minimist";
 import udsServer from "./server";
-// import asyncModuleStats from "dist/client/async-modules.json";
 
 const readFileAsync = promisify(readFile);
 
