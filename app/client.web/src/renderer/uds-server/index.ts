@@ -1,19 +1,28 @@
-// import { readFile } from "fs";
-// import { promisify } from "util";
+import "source-map-support/register";
+import { readFile } from "fs";
+import { promisify } from "util";
 import parseargs from "minimist";
 import udsServer from "./server";
-import asyncModuleStats from "dist/client/async-modules.json";
+// import asyncModuleStats from "dist/client/async-modules.json";
 
-// const readFileAsync = promisify(readFile);
+const readFileAsync = promisify(readFile);
 
 const main = async (settings: parseargs.ParsedArgs) => {
   try {
     validateSettings(settings);
 
+    let asyncModuleStats: AsyncModuleStats;
+    if (!settings["statsfile"]) {
+      asyncModuleStats = <AsyncModuleStats>(
+        await import("dist/client/async-modules.json")
+      );
+    } else {
+      asyncModuleStats = JSON.parse(
+        await readFileAsync(settings["statsfile"], "utf8")
+      );
+    }
+
     const socketFile = settings["addr"];
-    // const asyncModuleStats = JSON.parse(
-    //   await readFileAsync(settings["statsfile"], "utf8")
-    // );
 
     switch (<string>settings.mode) {
       case "uds":
@@ -25,8 +34,17 @@ const main = async (settings: parseargs.ParsedArgs) => {
         return;
     }
   } catch (error) {
-    console.error(error);
-    throw error;
+    if (
+      error.code === "ENOENT" &&
+      error.syscall === "open" &&
+      error.path === settings["statsfile"]
+    ) {
+      console.error("Stats file not found at specified path");
+      return;
+    } else {
+      console.error(error);
+      return;
+    }
   }
 };
 

@@ -23,12 +23,12 @@ export type Response = Overwrite<IRendererResponse, {
 }>;
 
 export const renderEngine = (stats: AsyncModuleStats) => {
-  return async (request: Request): Promise<Response> => {
-    const extractor = new ChunkExtractor({
-      stats,
-      entrypoints: ["app"]
-    });
+  const extractor = new ChunkExtractor({
+    stats,
+    entrypoints: ["app"]
+  });
 
+  return async (request: Request): Promise<Response> => {
     const response: Response = {
       statusCode: 200,
       redirectTo: "",

@@ -13,6 +13,10 @@ export const withConfig = <WrappedComponentProps extends InjectedConfig>(
     public static displayName = `withConfig(${WrappedComponent.name})`;
     public static readonly WrappedComponent = WrappedComponent;
 
+    public constructor(props) {
+      super(props);
+    }
+
     public renderWrappedComponent = (config: AppConfig) => (
       <WrappedComponent {...this.props as any} config={config} />
     );

@@ -25,7 +25,7 @@
     "srv:test:cov": "jest --coverage",
     "srv:test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "srv:test:e2e": "jest --config ./test/jest-e2e.json",
-    "tmp:rserver": "cross-env DEBUG=* node ./dist/renderer/index.js --mode uds --addr /tmp/server.sock",
+    "tmp:rserver": "cross-env DEBUG=* node ./dist/renderer/index.js --mode uds --addr /tmp/server.sock --statsfile",
     "tmp:rclient": "node ./tmp.rclient.json.js"
   },
   "license": "MIT",
@@ -95,6 +95,7 @@
     "babel-plugin-dynamic-import-node": "^2.2.0",
     "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-transform-imports": "^1.5.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-plugin-universal-import": "^4.0.0",
     "browserslist": "^4.5.4",
     "case-sensitive-paths-webpack-plugin": "^2.2.0",

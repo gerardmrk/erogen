@@ -114,6 +114,7 @@ module.exports = async (args) => {
         },
 
         optimization: {
+            sideEffects: true,
             runtimeChunk: rendererBuild ? undefined : "single",
             splitChunks: {
                 cacheGroups: {
@@ -133,7 +134,7 @@ module.exports = async (args) => {
                 }
             },
             minimizer: [
-                clientBuild && new TerserPlugin({
+                new TerserPlugin({
                     cache: `${APP_CACHE_DIR}/terser.${source}`,
                     parallel: true,
                     exclude: [/dist/],
@@ -141,13 +142,17 @@ module.exports = async (args) => {
                     terserOptions: {
                         output: null,
                         ie8: false,
-                        keep_fnames: true,
                         sourceMap: rendererBuild,
+                        compress: {
+                          passes: 2,
+                          evaluate: false,
+                          keep_fnames: false,
+                          keep_classnames: false,
+                          keep_fargs: false,
+                        },
                         mangle: {
-                          keep_fnames: true,
-                          properties: {
-                              keep_quoted: true
-                          }
+                          keep_fnames: false,
+                          keep_classnames: false
                         }
                     }
                 }),
@@ -182,6 +187,7 @@ module.exports = async (args) => {
                             babelCore: "@babel/core",
                             babelOptions: {
                               babelrc: false,
+                              sourceMap: rendererBuild,
                               presets: [
                                   ["@babel/preset-env", {
                                       modules: false,
@@ -204,6 +210,7 @@ module.exports = async (args) => {
                                       lodash: { transform: "lodash/${member}",
                                       preventFullImport: true }
                                   }],
+                                  prodMode && "transform-react-remove-prop-types",
                                   rendererBuild && ["css-modules-transform", {
                                       extensions: [".css", ".scss"],
                                       generateScopedName: "[hash:base64:7]"
@@ -402,11 +409,11 @@ module.exports = async (args) => {
                 ]
             }),
 
-            prodMode && rendererBuild && new webpack.BannerPlugin({
-                raw: true,
-                entryOnly: false,
-                banner: "require('source-map-support').install();",
-            }),
+            // prodMode && rendererBuild && new webpack.BannerPlugin({
+            //     raw: true,
+            //     entryOnly: false,
+            //     banner: "require('source-map-support').install();",
+            // }),
 
             new CaseSensitivePathsPlugin(),
 
