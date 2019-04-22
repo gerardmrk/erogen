@@ -8,7 +8,7 @@ import { FastifyRequest } from "fastify";
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get("/")
+  @Get("*")
   @Render("index.hbs")
   public async indexHTML(@Req() req: FastifyRequest<Request>) {
     const {

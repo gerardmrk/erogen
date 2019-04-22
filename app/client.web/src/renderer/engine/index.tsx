@@ -11,8 +11,8 @@ import { StaticRouterContext } from "react-router";
 import { ConfigProvider } from "@client/views/contexts/config";
 import App from "@client/views/core/App";
 import Helmet, { HelmetData } from "react-helmet";
-import i18n from "i18next";
-import { I18nextProvider as I18nProvider } from "react-i18next";
+// import i18n from "i18next";
+// import { I18nextProvider as I18nProvider } from "react-i18next";
 
 export type Request = IRendererRequest;
 // prettier-ignore
@@ -49,20 +49,19 @@ export const renderEngine = (stats: AsyncModuleStats) => {
       const requestUrl = request.url || "/";
 
       const services = new Services();
-      const store = storeCreator(services)(undefined);
+      const createStore = storeCreator(services);
+      const store = await createStore();
       const routerContext: StaticRouterContext = {};
 
       response.app = ReactDOMServer.renderToString(
         <ConfigProvider config={INJECTED_APP_CONFIG}>
-          <I18nProvider i18n={i18n}>
-            <StoreProvider store={store}>
-              <Router location={requestUrl} context={routerContext}>
-                <ChunkExtractorManager extractor={extractor}>
-                  <App />
-                </ChunkExtractorManager>
-              </Router>
-            </StoreProvider>
-          </I18nProvider>
+          <StoreProvider store={store}>
+            <Router location={requestUrl} context={routerContext}>
+              <ChunkExtractorManager extractor={extractor}>
+                <App />
+              </ChunkExtractorManager>
+            </Router>
+          </StoreProvider>
         </ConfigProvider>
       );
       response.metas = getMetaTags(Helmet.renderStatic());

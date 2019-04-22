@@ -22,15 +22,15 @@ type _State = {
 const reducer: Reducer<_State, Action> = combineReducers({
   auth: auth.reducer,
   globalUILoader: globalUILoader.reducer,
-  globalUIMessage: globalUIMessage.reducer,
+  globalUIMessage: globalUIMessage.reducer
 });
 
 export const storeCreator = (services: IServices, devMode: boolean = false) => (
-  preloadedState: State | undefined,
+  preloadedState?: State
 ): Store => {
   return createStore(
     reducer,
     preloadedState,
-    composeMiddleware(services, devMode),
+    composeMiddleware(services, devMode)
   );
 };
