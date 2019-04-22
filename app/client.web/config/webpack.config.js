@@ -414,12 +414,6 @@ module.exports = async (args) => {
                 ]
             }),
 
-            // prodMode && rendererBuild && new webpack.BannerPlugin({
-            //     raw: true,
-            //     entryOnly: false,
-            //     banner: "require('source-map-support').install();",
-            // }),
-
             new CaseSensitivePathsPlugin(),
 
             new LodashPlugin({
@@ -445,14 +439,29 @@ module.exports = async (args) => {
                 only: ["bundle", "vendor"],
             }),
 
+            prodMode && clientBuild && new HtmlPlugin({
+                filename: "index.gohtml",
+                template: `${CLIENT_SRC}/index.gohtml`,
+                vars: {
+                    metas: devMode ? "" : "{{.Metas}}",
+                    links: devMode ? "" : "{{.Links}}",
+                    styles: devMode ? "" : "{{.Styles}}",
+                    app: devMode ? "" : "{{.App}}",
+                    initialState: devMode ? "undefined" : "{{.InitialState}}",
+                    scripts: devMode ? "" : "{{.Scripts}}"
+                },
+            }),
+
             clientBuild && new HtmlPlugin({
                 filename: "index.html",
-                template: `${CLIENT_SRC}/index.html`,
+                template: `${CLIENT_SRC}/index.${devMode ? "html" : "hbs"}`,
                 vars: {
-                    seosPlaceholder: devMode ? "" : "{{.SeoElements}}",
-                    criticalCSSPlaceholder: devMode ? "" : "{{.CriticalCSS}}",
-                    appPlaceholder: devMode ? "" : "{{.App}}",
-                    initialStatePlaceholder: devMode ? "undefined" : "{{.InitialState}}",
+                    metas: devMode ? "" : "{{{metas}}}",
+                    links: devMode ? "" : "{{{links}}}",
+                    styles: devMode ? "" : "{{{styles}}}",
+                    app: devMode ? "" : "{{{app}}}",
+                    initialState: devMode ? "undefined" : "{{{initialState}}}",
+                    scripts: devMode ? "" : "{{{scripts}}}"
                 },
             }),
 

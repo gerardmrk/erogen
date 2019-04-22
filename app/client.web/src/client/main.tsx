@@ -1,9 +1,10 @@
 import "@themeStyles";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import StoreProvider from "react-redux/es/components/Provider";
-import { BrowserRouter as Router } from "react-router-dom";
 import { loadableReady } from "@loadable/component";
+import { Provider as StoreProvider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
+import { I18nextProvider as I18nProvider } from "react-i18next";
 
 import { Services } from "@client/services";
 import { storeCreator, State } from "@client/store";
@@ -27,7 +28,7 @@ type AppParams = {
   const store = createStore(initialState as State);
 
   const defaultLang = "en";
-  initI18N(defaultLang);
+  const i18n = initI18N(defaultLang);
 
   if (!devMode) {
     await loadableReady();
@@ -35,11 +36,13 @@ type AppParams = {
 
   render(
     <ConfigProvider config={config}>
-      <StoreProvider store={store}>
-        <Router>
-          <App />
-        </Router>
-      </StoreProvider>
+      <I18nProvider i18n={i18n}>
+        <StoreProvider store={store}>
+          <Router>
+            <App />
+          </Router>
+        </StoreProvider>
+      </I18nProvider>
     </ConfigProvider>,
     document.getElementById("app-mount-point")
   );

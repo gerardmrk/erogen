@@ -10,7 +10,7 @@ const resources = {
   }
 };
 
-export const initI18N = (defaultLang: string) =>
+export const initI18N = (defaultLang: string) => {
   i18n
     .use(initReactI18next) // passes i18n down to react-i18next
     .init({
@@ -21,3 +21,6 @@ export const initI18N = (defaultLang: string) =>
         escapeValue: false // react already safes from xss
       }
     });
+
+  return i18n;
+};
