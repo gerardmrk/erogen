@@ -57,13 +57,13 @@ export const renderEngine = (stats: AsyncModuleStats) => {
           </StoreProvider>
         </ConfigProvider>
       );
+      response.htmlBody = ReactDOMServer.renderToString(app);
+      response.htmlHead = getMetaTags(Helmet.renderStatic());
 
       if (routerContext.url) {
         response.statusCode = 302;
         response.redirectTo = routerContext.url;
       } else {
-        response.htmlHead = getMetaTags(Helmet.renderStatic());
-        response.htmlBody = ReactDOMServer.renderToString(app);
         response.htmlLinks = extractor.getLinkTags();
         response.htmlStyles = extractor.getStyleTags();
         response.htmlScripts = extractor.getScriptTags();

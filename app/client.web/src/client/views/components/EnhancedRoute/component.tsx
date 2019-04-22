@@ -32,17 +32,13 @@ export class EnhancedRoute extends React.Component<Props, State> {
   }
 
   private renderRoute = props => {
+    if (this.props.staticContext) {
+      this.props.staticContext["status"] = this.props.status || 200;
+    }
     if (this.props.guarded && !this.props.isAuthenticated) {
-      if (this.props.staticContext) {
-        this.props.staticContext["status"] = 302;
-        this.props.staticContext["url"] = this.redirectTo.pathname;
-      }
       return props.action === "REPLACE" ? null : (
         <Redirect from={this.props.path} to={this.redirectTo} />
       );
-    }
-    if (this.props.staticContext) {
-      this.props.staticContext["status"] = this.props.status || 200;
     }
     const RouteComponent = this.props.component;
     return <RouteComponent {...props} routes={this.props.routes} />;

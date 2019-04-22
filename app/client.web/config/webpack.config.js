@@ -187,8 +187,10 @@ module.exports = async (args) => {
                                       modules: false,
                                       loose: true,
                                       useBuiltIns: "usage",
-                                      // corejs: { version: 3 },
-                                      targets: clientBuild ? { browsers: ["last 2 versions", "not dead", "> 0.5%", "not ie < 11"] } : { node: "current" }
+                                      corejs: { version: 3 },
+                                      targets: clientBuild
+                                          ? { browsers: ["last 2 versions", "not dead", "> 0.5%", "not ie < 11"] }
+                                          : { node: "current" }
                                   }],
                                   "@babel/preset-react",
                               ],
@@ -198,8 +200,14 @@ module.exports = async (args) => {
                                   ["@babel/plugin-proposal-class-properties", { loose: true }],
                                   ["@babel/plugin-transform-runtime", { regenerator: false }],
                                   ["lodash", { id: "lodash-compat" }],
-                                  ["transform-imports", { lodash: { transform: "lodash/${member}", preventFullImport: true } }],
-                                  rendererBuild && ["css-modules-transform", { extensions: [".css", ".scss"], generateScopedName: "[hash:base64:7]" }],
+                                  ["transform-imports", {
+                                      lodash: { transform: "lodash/${member}",
+                                      preventFullImport: true }
+                                  }],
+                                  rendererBuild && ["css-modules-transform", {
+                                      extensions: [".css", ".scss"],
+                                      generateScopedName: "[hash:base64:7]"
+                                  }],
                                   "react-hot-loader/babel"
                               ].filter(x => !!x),
                            }
