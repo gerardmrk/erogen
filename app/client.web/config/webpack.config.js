@@ -441,7 +441,7 @@ module.exports = async (args) => {
 
             prodMode && clientBuild && new HtmlPlugin({
                 filename: "index.gohtml",
-                template: `${CLIENT_SRC}/index.gohtml`,
+                template: `${CLIENT_SRC}/index.html`,
                 vars: {
                     metas: devMode ? "" : "{{.Metas}}",
                     links: devMode ? "" : "{{.Links}}",
@@ -453,8 +453,8 @@ module.exports = async (args) => {
             }),
 
             clientBuild && new HtmlPlugin({
-                filename: "index.html",
-                template: `${CLIENT_SRC}/index.${devMode ? "html" : "hbs"}`,
+                filename: `index.${devMode ? "html" : "hbs"}`,
+                template: `${CLIENT_SRC}/index.html`,
                 vars: {
                     metas: devMode ? "" : "{{{metas}}}",
                     links: devMode ? "" : "{{{links}}}",
