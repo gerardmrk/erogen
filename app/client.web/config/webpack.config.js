@@ -298,7 +298,7 @@ module.exports = async (args) => {
                             loader: "file-loader",
                             options: {
                                 emitFile: clientBuild,
-                                name: devMode ? "images/[name].[ext]" : "images/[name].[ext]?[hash]"
+                                name: devMode ? "images/[name].[ext]" : "images/[name].[hash].[ext]"
                             }
                         },
                         {
@@ -313,7 +313,7 @@ module.exports = async (args) => {
                                 prodMode && {
                                     loader: "url-loader",
                                     options: {
-                                        name: "images/[name].[ext]?[hash]",
+                                        name: "images/[name].[hash].[ext]",
                                         limit: 3000,
                                         emitFile: clientBuild
                                     }
@@ -549,7 +549,7 @@ module.exports = async (args) => {
         // Renderer-specific build options
 
         config.entry = {
-          renderer: ["src/renderer/index.ts"],
+            renderer: ["src/renderer/index.ts"],
         };
 
         config.output = {

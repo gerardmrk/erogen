@@ -26,11 +26,12 @@ export const renderProto = (stats: AsyncModuleStats) => {
       statusCode: resp.statusCode,
       redirectTo: resp.redirectTo,
       error: resp.error,
-      htmlHead: textEncoder.encode(resp.htmlHead),
-      htmlBody: textEncoder.encode(resp.htmlBody),
-      htmlLinks: textEncoder.encode(resp.htmlLinks),
-      htmlStyles: textEncoder.encode(resp.htmlStyles),
-      htmlScripts: textEncoder.encode(resp.htmlScripts)
+      metas: textEncoder.encode(resp.metas),
+      app: textEncoder.encode(resp.app),
+      links: textEncoder.encode(resp.links),
+      styles: textEncoder.encode(resp.styles),
+      scripts: textEncoder.encode(resp.scripts),
+      initialState: textEncoder.encode(resp.initialState)
     });
 
     response.ttr = `${process.hrtime.bigint() - timerStart}ns`; // TODO: change when protobufjs sets bigint for uint64

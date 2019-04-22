@@ -228,11 +228,12 @@ $root.RendererResponse = (function() {
      * @property {number|null} [statusCode] RendererResponse statusCode
      * @property {RendererResponse.IRenderError|null} [error] RendererResponse error
      * @property {string|null} [redirectTo] RendererResponse redirectTo
-     * @property {Uint8Array|null} [htmlHead] RendererResponse htmlHead
-     * @property {Uint8Array|null} [htmlBody] RendererResponse htmlBody
-     * @property {Uint8Array|null} [htmlLinks] RendererResponse htmlLinks
-     * @property {Uint8Array|null} [htmlStyles] RendererResponse htmlStyles
-     * @property {Uint8Array|null} [htmlScripts] RendererResponse htmlScripts
+     * @property {Uint8Array|null} [metas] RendererResponse metas
+     * @property {Uint8Array|null} [app] RendererResponse app
+     * @property {Uint8Array|null} [links] RendererResponse links
+     * @property {Uint8Array|null} [styles] RendererResponse styles
+     * @property {Uint8Array|null} [scripts] RendererResponse scripts
+     * @property {Uint8Array|null} [initialState] RendererResponse initialState
      * @property {string|null} [ttr] RendererResponse ttr
      */
 
@@ -276,44 +277,52 @@ $root.RendererResponse = (function() {
     RendererResponse.prototype.redirectTo = "";
 
     /**
-     * RendererResponse htmlHead.
-     * @member {Uint8Array} htmlHead
+     * RendererResponse metas.
+     * @member {Uint8Array} metas
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.htmlHead = $util.newBuffer([]);
+    RendererResponse.prototype.metas = $util.newBuffer([]);
 
     /**
-     * RendererResponse htmlBody.
-     * @member {Uint8Array} htmlBody
+     * RendererResponse app.
+     * @member {Uint8Array} app
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.htmlBody = $util.newBuffer([]);
+    RendererResponse.prototype.app = $util.newBuffer([]);
 
     /**
-     * RendererResponse htmlLinks.
-     * @member {Uint8Array} htmlLinks
+     * RendererResponse links.
+     * @member {Uint8Array} links
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.htmlLinks = $util.newBuffer([]);
+    RendererResponse.prototype.links = $util.newBuffer([]);
 
     /**
-     * RendererResponse htmlStyles.
-     * @member {Uint8Array} htmlStyles
+     * RendererResponse styles.
+     * @member {Uint8Array} styles
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.htmlStyles = $util.newBuffer([]);
+    RendererResponse.prototype.styles = $util.newBuffer([]);
 
     /**
-     * RendererResponse htmlScripts.
-     * @member {Uint8Array} htmlScripts
+     * RendererResponse scripts.
+     * @member {Uint8Array} scripts
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.htmlScripts = $util.newBuffer([]);
+    RendererResponse.prototype.scripts = $util.newBuffer([]);
+
+    /**
+     * RendererResponse initialState.
+     * @member {Uint8Array} initialState
+     * @memberof RendererResponse
+     * @instance
+     */
+    RendererResponse.prototype.initialState = $util.newBuffer([]);
 
     /**
      * RendererResponse ttr.
@@ -353,18 +362,20 @@ $root.RendererResponse = (function() {
             $root.RendererResponse.RenderError.encode(message.error, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
         if (message.redirectTo != null && message.hasOwnProperty("redirectTo"))
             writer.uint32(/* id 3, wireType 2 =*/26).string(message.redirectTo);
-        if (message.htmlHead != null && message.hasOwnProperty("htmlHead"))
-            writer.uint32(/* id 4, wireType 2 =*/34).bytes(message.htmlHead);
-        if (message.htmlBody != null && message.hasOwnProperty("htmlBody"))
-            writer.uint32(/* id 5, wireType 2 =*/42).bytes(message.htmlBody);
-        if (message.htmlLinks != null && message.hasOwnProperty("htmlLinks"))
-            writer.uint32(/* id 6, wireType 2 =*/50).bytes(message.htmlLinks);
-        if (message.htmlStyles != null && message.hasOwnProperty("htmlStyles"))
-            writer.uint32(/* id 7, wireType 2 =*/58).bytes(message.htmlStyles);
-        if (message.htmlScripts != null && message.hasOwnProperty("htmlScripts"))
-            writer.uint32(/* id 8, wireType 2 =*/66).bytes(message.htmlScripts);
+        if (message.metas != null && message.hasOwnProperty("metas"))
+            writer.uint32(/* id 4, wireType 2 =*/34).bytes(message.metas);
+        if (message.app != null && message.hasOwnProperty("app"))
+            writer.uint32(/* id 5, wireType 2 =*/42).bytes(message.app);
+        if (message.links != null && message.hasOwnProperty("links"))
+            writer.uint32(/* id 6, wireType 2 =*/50).bytes(message.links);
+        if (message.styles != null && message.hasOwnProperty("styles"))
+            writer.uint32(/* id 7, wireType 2 =*/58).bytes(message.styles);
+        if (message.scripts != null && message.hasOwnProperty("scripts"))
+            writer.uint32(/* id 8, wireType 2 =*/66).bytes(message.scripts);
+        if (message.initialState != null && message.hasOwnProperty("initialState"))
+            writer.uint32(/* id 9, wireType 2 =*/74).bytes(message.initialState);
         if (message.ttr != null && message.hasOwnProperty("ttr"))
-            writer.uint32(/* id 9, wireType 2 =*/74).string(message.ttr);
+            writer.uint32(/* id 10, wireType 2 =*/82).string(message.ttr);
         return writer;
     };
 
@@ -409,21 +420,24 @@ $root.RendererResponse = (function() {
                 message.redirectTo = reader.string();
                 break;
             case 4:
-                message.htmlHead = reader.bytes();
+                message.metas = reader.bytes();
                 break;
             case 5:
-                message.htmlBody = reader.bytes();
+                message.app = reader.bytes();
                 break;
             case 6:
-                message.htmlLinks = reader.bytes();
+                message.links = reader.bytes();
                 break;
             case 7:
-                message.htmlStyles = reader.bytes();
+                message.styles = reader.bytes();
                 break;
             case 8:
-                message.htmlScripts = reader.bytes();
+                message.scripts = reader.bytes();
                 break;
             case 9:
+                message.initialState = reader.bytes();
+                break;
+            case 10:
                 message.ttr = reader.string();
                 break;
             default:
@@ -472,21 +486,24 @@ $root.RendererResponse = (function() {
         if (message.redirectTo != null && message.hasOwnProperty("redirectTo"))
             if (!$util.isString(message.redirectTo))
                 return "redirectTo: string expected";
-        if (message.htmlHead != null && message.hasOwnProperty("htmlHead"))
-            if (!(message.htmlHead && typeof message.htmlHead.length === "number" || $util.isString(message.htmlHead)))
-                return "htmlHead: buffer expected";
-        if (message.htmlBody != null && message.hasOwnProperty("htmlBody"))
-            if (!(message.htmlBody && typeof message.htmlBody.length === "number" || $util.isString(message.htmlBody)))
-                return "htmlBody: buffer expected";
-        if (message.htmlLinks != null && message.hasOwnProperty("htmlLinks"))
-            if (!(message.htmlLinks && typeof message.htmlLinks.length === "number" || $util.isString(message.htmlLinks)))
-                return "htmlLinks: buffer expected";
-        if (message.htmlStyles != null && message.hasOwnProperty("htmlStyles"))
-            if (!(message.htmlStyles && typeof message.htmlStyles.length === "number" || $util.isString(message.htmlStyles)))
-                return "htmlStyles: buffer expected";
-        if (message.htmlScripts != null && message.hasOwnProperty("htmlScripts"))
-            if (!(message.htmlScripts && typeof message.htmlScripts.length === "number" || $util.isString(message.htmlScripts)))
-                return "htmlScripts: buffer expected";
+        if (message.metas != null && message.hasOwnProperty("metas"))
+            if (!(message.metas && typeof message.metas.length === "number" || $util.isString(message.metas)))
+                return "metas: buffer expected";
+        if (message.app != null && message.hasOwnProperty("app"))
+            if (!(message.app && typeof message.app.length === "number" || $util.isString(message.app)))
+                return "app: buffer expected";
+        if (message.links != null && message.hasOwnProperty("links"))
+            if (!(message.links && typeof message.links.length === "number" || $util.isString(message.links)))
+                return "links: buffer expected";
+        if (message.styles != null && message.hasOwnProperty("styles"))
+            if (!(message.styles && typeof message.styles.length === "number" || $util.isString(message.styles)))
+                return "styles: buffer expected";
+        if (message.scripts != null && message.hasOwnProperty("scripts"))
+            if (!(message.scripts && typeof message.scripts.length === "number" || $util.isString(message.scripts)))
+                return "scripts: buffer expected";
+        if (message.initialState != null && message.hasOwnProperty("initialState"))
+            if (!(message.initialState && typeof message.initialState.length === "number" || $util.isString(message.initialState)))
+                return "initialState: buffer expected";
         if (message.ttr != null && message.hasOwnProperty("ttr"))
             if (!$util.isString(message.ttr))
                 return "ttr: string expected";
@@ -514,31 +531,36 @@ $root.RendererResponse = (function() {
         }
         if (object.redirectTo != null)
             message.redirectTo = String(object.redirectTo);
-        if (object.htmlHead != null)
-            if (typeof object.htmlHead === "string")
-                $util.base64.decode(object.htmlHead, message.htmlHead = $util.newBuffer($util.base64.length(object.htmlHead)), 0);
-            else if (object.htmlHead.length)
-                message.htmlHead = object.htmlHead;
-        if (object.htmlBody != null)
-            if (typeof object.htmlBody === "string")
-                $util.base64.decode(object.htmlBody, message.htmlBody = $util.newBuffer($util.base64.length(object.htmlBody)), 0);
-            else if (object.htmlBody.length)
-                message.htmlBody = object.htmlBody;
-        if (object.htmlLinks != null)
-            if (typeof object.htmlLinks === "string")
-                $util.base64.decode(object.htmlLinks, message.htmlLinks = $util.newBuffer($util.base64.length(object.htmlLinks)), 0);
-            else if (object.htmlLinks.length)
-                message.htmlLinks = object.htmlLinks;
-        if (object.htmlStyles != null)
-            if (typeof object.htmlStyles === "string")
-                $util.base64.decode(object.htmlStyles, message.htmlStyles = $util.newBuffer($util.base64.length(object.htmlStyles)), 0);
-            else if (object.htmlStyles.length)
-                message.htmlStyles = object.htmlStyles;
-        if (object.htmlScripts != null)
-            if (typeof object.htmlScripts === "string")
-                $util.base64.decode(object.htmlScripts, message.htmlScripts = $util.newBuffer($util.base64.length(object.htmlScripts)), 0);
-            else if (object.htmlScripts.length)
-                message.htmlScripts = object.htmlScripts;
+        if (object.metas != null)
+            if (typeof object.metas === "string")
+                $util.base64.decode(object.metas, message.metas = $util.newBuffer($util.base64.length(object.metas)), 0);
+            else if (object.metas.length)
+                message.metas = object.metas;
+        if (object.app != null)
+            if (typeof object.app === "string")
+                $util.base64.decode(object.app, message.app = $util.newBuffer($util.base64.length(object.app)), 0);
+            else if (object.app.length)
+                message.app = object.app;
+        if (object.links != null)
+            if (typeof object.links === "string")
+                $util.base64.decode(object.links, message.links = $util.newBuffer($util.base64.length(object.links)), 0);
+            else if (object.links.length)
+                message.links = object.links;
+        if (object.styles != null)
+            if (typeof object.styles === "string")
+                $util.base64.decode(object.styles, message.styles = $util.newBuffer($util.base64.length(object.styles)), 0);
+            else if (object.styles.length)
+                message.styles = object.styles;
+        if (object.scripts != null)
+            if (typeof object.scripts === "string")
+                $util.base64.decode(object.scripts, message.scripts = $util.newBuffer($util.base64.length(object.scripts)), 0);
+            else if (object.scripts.length)
+                message.scripts = object.scripts;
+        if (object.initialState != null)
+            if (typeof object.initialState === "string")
+                $util.base64.decode(object.initialState, message.initialState = $util.newBuffer($util.base64.length(object.initialState)), 0);
+            else if (object.initialState.length)
+                message.initialState = object.initialState;
         if (object.ttr != null)
             message.ttr = String(object.ttr);
         return message;
@@ -562,39 +584,46 @@ $root.RendererResponse = (function() {
             object.error = null;
             object.redirectTo = "";
             if (options.bytes === String)
-                object.htmlHead = "";
+                object.metas = "";
             else {
-                object.htmlHead = [];
+                object.metas = [];
                 if (options.bytes !== Array)
-                    object.htmlHead = $util.newBuffer(object.htmlHead);
+                    object.metas = $util.newBuffer(object.metas);
             }
             if (options.bytes === String)
-                object.htmlBody = "";
+                object.app = "";
             else {
-                object.htmlBody = [];
+                object.app = [];
                 if (options.bytes !== Array)
-                    object.htmlBody = $util.newBuffer(object.htmlBody);
+                    object.app = $util.newBuffer(object.app);
             }
             if (options.bytes === String)
-                object.htmlLinks = "";
+                object.links = "";
             else {
-                object.htmlLinks = [];
+                object.links = [];
                 if (options.bytes !== Array)
-                    object.htmlLinks = $util.newBuffer(object.htmlLinks);
+                    object.links = $util.newBuffer(object.links);
             }
             if (options.bytes === String)
-                object.htmlStyles = "";
+                object.styles = "";
             else {
-                object.htmlStyles = [];
+                object.styles = [];
                 if (options.bytes !== Array)
-                    object.htmlStyles = $util.newBuffer(object.htmlStyles);
+                    object.styles = $util.newBuffer(object.styles);
             }
             if (options.bytes === String)
-                object.htmlScripts = "";
+                object.scripts = "";
             else {
-                object.htmlScripts = [];
+                object.scripts = [];
                 if (options.bytes !== Array)
-                    object.htmlScripts = $util.newBuffer(object.htmlScripts);
+                    object.scripts = $util.newBuffer(object.scripts);
+            }
+            if (options.bytes === String)
+                object.initialState = "";
+            else {
+                object.initialState = [];
+                if (options.bytes !== Array)
+                    object.initialState = $util.newBuffer(object.initialState);
             }
             object.ttr = "";
         }
@@ -604,16 +633,18 @@ $root.RendererResponse = (function() {
             object.error = $root.RendererResponse.RenderError.toObject(message.error, options);
         if (message.redirectTo != null && message.hasOwnProperty("redirectTo"))
             object.redirectTo = message.redirectTo;
-        if (message.htmlHead != null && message.hasOwnProperty("htmlHead"))
-            object.htmlHead = options.bytes === String ? $util.base64.encode(message.htmlHead, 0, message.htmlHead.length) : options.bytes === Array ? Array.prototype.slice.call(message.htmlHead) : message.htmlHead;
-        if (message.htmlBody != null && message.hasOwnProperty("htmlBody"))
-            object.htmlBody = options.bytes === String ? $util.base64.encode(message.htmlBody, 0, message.htmlBody.length) : options.bytes === Array ? Array.prototype.slice.call(message.htmlBody) : message.htmlBody;
-        if (message.htmlLinks != null && message.hasOwnProperty("htmlLinks"))
-            object.htmlLinks = options.bytes === String ? $util.base64.encode(message.htmlLinks, 0, message.htmlLinks.length) : options.bytes === Array ? Array.prototype.slice.call(message.htmlLinks) : message.htmlLinks;
-        if (message.htmlStyles != null && message.hasOwnProperty("htmlStyles"))
-            object.htmlStyles = options.bytes === String ? $util.base64.encode(message.htmlStyles, 0, message.htmlStyles.length) : options.bytes === Array ? Array.prototype.slice.call(message.htmlStyles) : message.htmlStyles;
-        if (message.htmlScripts != null && message.hasOwnProperty("htmlScripts"))
-            object.htmlScripts = options.bytes === String ? $util.base64.encode(message.htmlScripts, 0, message.htmlScripts.length) : options.bytes === Array ? Array.prototype.slice.call(message.htmlScripts) : message.htmlScripts;
+        if (message.metas != null && message.hasOwnProperty("metas"))
+            object.metas = options.bytes === String ? $util.base64.encode(message.metas, 0, message.metas.length) : options.bytes === Array ? Array.prototype.slice.call(message.metas) : message.metas;
+        if (message.app != null && message.hasOwnProperty("app"))
+            object.app = options.bytes === String ? $util.base64.encode(message.app, 0, message.app.length) : options.bytes === Array ? Array.prototype.slice.call(message.app) : message.app;
+        if (message.links != null && message.hasOwnProperty("links"))
+            object.links = options.bytes === String ? $util.base64.encode(message.links, 0, message.links.length) : options.bytes === Array ? Array.prototype.slice.call(message.links) : message.links;
+        if (message.styles != null && message.hasOwnProperty("styles"))
+            object.styles = options.bytes === String ? $util.base64.encode(message.styles, 0, message.styles.length) : options.bytes === Array ? Array.prototype.slice.call(message.styles) : message.styles;
+        if (message.scripts != null && message.hasOwnProperty("scripts"))
+            object.scripts = options.bytes === String ? $util.base64.encode(message.scripts, 0, message.scripts.length) : options.bytes === Array ? Array.prototype.slice.call(message.scripts) : message.scripts;
+        if (message.initialState != null && message.hasOwnProperty("initialState"))
+            object.initialState = options.bytes === String ? $util.base64.encode(message.initialState, 0, message.initialState.length) : options.bytes === Array ? Array.prototype.slice.call(message.initialState) : message.initialState;
         if (message.ttr != null && message.hasOwnProperty("ttr"))
             object.ttr = message.ttr;
         return object;
@@ -637,7 +668,7 @@ $root.RendererResponse = (function() {
          * @memberof RendererResponse
          * @interface IRenderError
          * @property {string|null} [message] RenderError message
-         * @property {Array.<string>|null} [stackTrace] RenderError stackTrace
+         * @property {string|null} [stackTrace] RenderError stackTrace
          */
 
         /**
@@ -649,7 +680,6 @@ $root.RendererResponse = (function() {
          * @param {RendererResponse.IRenderError=} [properties] Properties to set
          */
         function RenderError(properties) {
-            this.stackTrace = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -666,11 +696,11 @@ $root.RendererResponse = (function() {
 
         /**
          * RenderError stackTrace.
-         * @member {Array.<string>} stackTrace
+         * @member {string} stackTrace
          * @memberof RendererResponse.RenderError
          * @instance
          */
-        RenderError.prototype.stackTrace = $util.emptyArray;
+        RenderError.prototype.stackTrace = "";
 
         /**
          * Creates a new RenderError instance using the specified properties.
@@ -698,9 +728,8 @@ $root.RendererResponse = (function() {
                 writer = $Writer.create();
             if (message.message != null && message.hasOwnProperty("message"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.message);
-            if (message.stackTrace != null && message.stackTrace.length)
-                for (var i = 0; i < message.stackTrace.length; ++i)
-                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.stackTrace[i]);
+            if (message.stackTrace != null && message.hasOwnProperty("stackTrace"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.stackTrace);
             return writer;
         };
 
@@ -739,9 +768,7 @@ $root.RendererResponse = (function() {
                     message.message = reader.string();
                     break;
                 case 2:
-                    if (!(message.stackTrace && message.stackTrace.length))
-                        message.stackTrace = [];
-                    message.stackTrace.push(reader.string());
+                    message.stackTrace = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -781,13 +808,9 @@ $root.RendererResponse = (function() {
             if (message.message != null && message.hasOwnProperty("message"))
                 if (!$util.isString(message.message))
                     return "message: string expected";
-            if (message.stackTrace != null && message.hasOwnProperty("stackTrace")) {
-                if (!Array.isArray(message.stackTrace))
-                    return "stackTrace: array expected";
-                for (var i = 0; i < message.stackTrace.length; ++i)
-                    if (!$util.isString(message.stackTrace[i]))
-                        return "stackTrace: string[] expected";
-            }
+            if (message.stackTrace != null && message.hasOwnProperty("stackTrace"))
+                if (!$util.isString(message.stackTrace))
+                    return "stackTrace: string expected";
             return null;
         };
 
@@ -805,13 +828,8 @@ $root.RendererResponse = (function() {
             var message = new $root.RendererResponse.RenderError();
             if (object.message != null)
                 message.message = String(object.message);
-            if (object.stackTrace) {
-                if (!Array.isArray(object.stackTrace))
-                    throw TypeError(".RendererResponse.RenderError.stackTrace: array expected");
-                message.stackTrace = [];
-                for (var i = 0; i < object.stackTrace.length; ++i)
-                    message.stackTrace[i] = String(object.stackTrace[i]);
-            }
+            if (object.stackTrace != null)
+                message.stackTrace = String(object.stackTrace);
             return message;
         };
 
@@ -828,17 +846,14 @@ $root.RendererResponse = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
-                object.stackTrace = [];
-            if (options.defaults)
+            if (options.defaults) {
                 object.message = "";
+                object.stackTrace = "";
+            }
             if (message.message != null && message.hasOwnProperty("message"))
                 object.message = message.message;
-            if (message.stackTrace && message.stackTrace.length) {
-                object.stackTrace = [];
-                for (var j = 0; j < message.stackTrace.length; ++j)
-                    object.stackTrace[j] = message.stackTrace[j];
-            }
+            if (message.stackTrace != null && message.hasOwnProperty("stackTrace"))
+                object.stackTrace = message.stackTrace;
             return object;
         };
 

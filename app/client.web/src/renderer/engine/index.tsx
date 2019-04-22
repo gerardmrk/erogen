@@ -11,15 +11,18 @@ import { StaticRouterContext } from "react-router";
 import { ConfigProvider } from "@client/views/contexts/config";
 import App from "@client/views/core/App";
 import Helmet, { HelmetData } from "react-helmet";
+import i18n from "i18next";
+import { I18nextProvider as I18nProvider } from "react-i18next";
 
 export type Request = IRendererRequest;
 // prettier-ignore
 export type Response = Overwrite<IRendererResponse, {
-    htmlHead: string | undefined;
-    htmlBody: string | undefined;
-    htmlLinks: string | undefined;
-    htmlStyles: string | undefined;
-    htmlScripts: string | undefined;
+    metas: string | undefined;
+    app: string | undefined;
+    links: string | undefined;
+    styles: string | undefined;
+    scripts: string | undefined;
+    initialState: string | undefined;
 }>;
 
 export const renderEngine = (stats: AsyncModuleStats) => {
@@ -34,35 +37,39 @@ export const renderEngine = (stats: AsyncModuleStats) => {
       redirectTo: "",
       error: null,
       ttr: "",
-      htmlHead: undefined,
-      htmlBody: undefined,
-      htmlLinks: undefined,
-      htmlStyles: undefined,
-      htmlScripts: undefined
+      metas: undefined,
+      app: undefined,
+      links: undefined,
+      styles: undefined,
+      scripts: undefined,
+      initialState: undefined
     };
 
     try {
       const requestUrl = request.url || "/";
 
       const services = new Services();
-      const createStore = storeCreator(services);
+      const store = storeCreator(services)(undefined);
       const routerContext: StaticRouterContext = {};
 
-      response.htmlBody = ReactDOMServer.renderToString(
+      response.app = ReactDOMServer.renderToString(
         <ConfigProvider config={INJECTED_APP_CONFIG}>
-          <StoreProvider store={createStore(undefined)}>
-            <Router location={requestUrl} context={routerContext}>
-              <ChunkExtractorManager extractor={extractor}>
-                <App />
-              </ChunkExtractorManager>
-            </Router>
-          </StoreProvider>
+          <I18nProvider i18n={i18n}>
+            <StoreProvider store={store}>
+              <Router location={requestUrl} context={routerContext}>
+                <ChunkExtractorManager extractor={extractor}>
+                  <App />
+                </ChunkExtractorManager>
+              </Router>
+            </StoreProvider>
+          </I18nProvider>
         </ConfigProvider>
       );
-      response.htmlHead = getMetaTags(Helmet.renderStatic());
-      response.htmlLinks = extractor.getLinkTags();
-      response.htmlStyles = extractor.getStyleTags();
-      response.htmlScripts = extractor.getScriptTags();
+      response.metas = getMetaTags(Helmet.renderStatic());
+      response.initialState = JSON.stringify(store.getState());
+      response.links = extractor.getLinkTags();
+      response.styles = extractor.getStyleTags();
+      response.scripts = extractor.getScriptTags();
 
       if (routerContext.url) {
         response.statusCode = 302;
@@ -75,7 +82,7 @@ export const renderEngine = (stats: AsyncModuleStats) => {
       response.statusCode = 500;
       response.error = {
         message: err.message,
-        stackTrace: err.stack.split(/\n\s\s\s\s/)
+        stackTrace: err.stack
       };
     }
 

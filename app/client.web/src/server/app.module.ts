@@ -1,5 +1,4 @@
-import { Module, MiddlewareConsumer } from "@nestjs/common";
-import { ServeStaticMiddleware } from "@nest-middlewares/serve-static";
+import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./services/app.service";
 
@@ -8,12 +7,4 @@ import { AppService } from "./services/app.service";
   controllers: [AppController],
   providers: [AppService]
 })
-export class ApplicationModule {
-  public configure(consumer: MiddlewareConsumer) {
-    ServeStaticMiddleware.configure("/assets/", {
-      dotfiles: "deny"
-    });
-
-    consumer.apply(ServeStaticMiddleware);
-  }
-}
+export class ApplicationModule {}

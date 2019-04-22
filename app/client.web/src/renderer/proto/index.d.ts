@@ -107,20 +107,23 @@ export interface IRendererResponse {
     /** RendererResponse redirectTo */
     redirectTo?: (string|null);
 
-    /** RendererResponse htmlHead */
-    htmlHead?: (Uint8Array|null);
+    /** RendererResponse metas */
+    metas?: (Uint8Array|null);
 
-    /** RendererResponse htmlBody */
-    htmlBody?: (Uint8Array|null);
+    /** RendererResponse app */
+    app?: (Uint8Array|null);
 
-    /** RendererResponse htmlLinks */
-    htmlLinks?: (Uint8Array|null);
+    /** RendererResponse links */
+    links?: (Uint8Array|null);
 
-    /** RendererResponse htmlStyles */
-    htmlStyles?: (Uint8Array|null);
+    /** RendererResponse styles */
+    styles?: (Uint8Array|null);
 
-    /** RendererResponse htmlScripts */
-    htmlScripts?: (Uint8Array|null);
+    /** RendererResponse scripts */
+    scripts?: (Uint8Array|null);
+
+    /** RendererResponse initialState */
+    initialState?: (Uint8Array|null);
 
     /** RendererResponse ttr */
     ttr?: (string|null);
@@ -144,20 +147,23 @@ export class RendererResponse implements IRendererResponse {
     /** RendererResponse redirectTo. */
     public redirectTo: string;
 
-    /** RendererResponse htmlHead. */
-    public htmlHead: Uint8Array;
+    /** RendererResponse metas. */
+    public metas: Uint8Array;
 
-    /** RendererResponse htmlBody. */
-    public htmlBody: Uint8Array;
+    /** RendererResponse app. */
+    public app: Uint8Array;
 
-    /** RendererResponse htmlLinks. */
-    public htmlLinks: Uint8Array;
+    /** RendererResponse links. */
+    public links: Uint8Array;
 
-    /** RendererResponse htmlStyles. */
-    public htmlStyles: Uint8Array;
+    /** RendererResponse styles. */
+    public styles: Uint8Array;
 
-    /** RendererResponse htmlScripts. */
-    public htmlScripts: Uint8Array;
+    /** RendererResponse scripts. */
+    public scripts: Uint8Array;
+
+    /** RendererResponse initialState. */
+    public initialState: Uint8Array;
 
     /** RendererResponse ttr. */
     public ttr: string;
@@ -242,7 +248,7 @@ export namespace RendererResponse {
         message?: (string|null);
 
         /** RenderError stackTrace */
-        stackTrace?: (string[]|null);
+        stackTrace?: (string|null);
     }
 
     /** Represents a RenderError. */
@@ -258,7 +264,7 @@ export namespace RendererResponse {
         public message: string;
 
         /** RenderError stackTrace. */
-        public stackTrace: string[];
+        public stackTrace: string;
 
         /**
          * Creates a new RenderError instance using the specified properties.
