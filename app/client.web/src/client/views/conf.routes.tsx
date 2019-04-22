@@ -31,8 +31,6 @@ export type RouteConf<P = any> = {
 
 export const DEFAULT_PUBLIC_PATH = "/";
 export const DEFAULT_PRIVATE_PATH = "/dashboard";
-export const LOGIN_PATH = "/login";
-export const REGISTER_PATH = "/register";
 
 export const landingPage = {
   path: DEFAULT_PUBLIC_PATH,
@@ -84,7 +82,8 @@ export const supportPage = {
 
 export const loginPage = {
   title: "Login",
-  path: LOGIN_PATH,
+  description: "Login to the app",
+  path: "/login",
   exact: true,
   guarded: false,
   component: loadable(() => import("@client/views/routes/Login"))
@@ -92,7 +91,7 @@ export const loginPage = {
 
 export const registerPage = {
   title: "Register",
-  path: REGISTER_PATH,
+  path: "/register",
   exact: true,
   guarded: false,
   component: loadable(() => import("@client/views/routes/Register"))

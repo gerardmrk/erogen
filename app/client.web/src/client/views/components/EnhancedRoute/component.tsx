@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Route as BaseRoute, Redirect } from "react-router-dom"; // prettier-ignore
 import { LocalProps, StoreProps, DispatchProps } from ".";
-import { LOGIN_PATH, DEFAULT_PRIVATE_PATH } from "@client/views/conf.routes"; // prettier-ignore
+import { DEFAULT_PRIVATE_PATH, loginPage } from "@client/views/conf.routes"; // prettier-ignore
 import HeadTags from "./HeadTags";
 
 export type Props = LocalProps & StoreProps & DispatchProps;
@@ -14,7 +14,7 @@ export class EnhancedRoute extends React.Component<Props, State> {
   };
 
   private redirectTo = {
-    pathname: LOGIN_PATH,
+    pathname: "/login",
     search: "",
     state: { from: "" }
   };
@@ -35,36 +35,45 @@ export class EnhancedRoute extends React.Component<Props, State> {
     if (this.props.staticContext) {
       this.props.staticContext["status"] = this.props.status || 200;
     }
+
     if (this.props.guarded && !this.props.isAuthenticated) {
       return props.action === "REPLACE" ? null : (
-        <Redirect from={this.props.path} to={this.redirectTo} />
+        <React.Fragment>
+          <HeadTags
+            path={loginPage.path}
+            title={loginPage.title}
+            description={loginPage.description}
+          />
+          <Redirect from={this.props.path} to={this.redirectTo} />
+        </React.Fragment>
       );
     }
+
     const RouteComponent = this.props.component;
-    return <RouteComponent {...props} routes={this.props.routes} />;
-  };
-
-  public render() {
-    const { guarded, isAuthenticated, ...routeProps } = this.props;
-
     return (
       <React.Fragment>
         <HeadTags
-          path={routeProps.path}
-          title={routeProps.title}
-          description={routeProps.description}
-          metaType={routeProps.metaType}
-          metaImgPath={routeProps.metaImgPath}
-          metaImgAlt={routeProps.metaImgAlt}
-          metaTwitterCardType={routeProps.metaTwitterCardType}
+          path={this.props.path}
+          title={this.props.title}
+          description={this.props.description}
+          metaType={this.props.metaType}
+          metaImgPath={this.props.metaImgPath}
+          metaImgAlt={this.props.metaImgAlt}
+          metaTwitterCardType={this.props.metaTwitterCardType}
         />
-        <BaseRoute
-          path={routeProps.path}
-          exact={routeProps.exact}
-          strict={routeProps.strict}
-          render={this.renderRoute}
-        />
+        <RouteComponent {...props} routes={this.props.routes} />
       </React.Fragment>
+    );
+  };
+
+  public render() {
+    return (
+      <BaseRoute
+        path={this.props.path}
+        exact={this.props.exact}
+        strict={this.props.strict}
+        render={this.renderRoute}
+      />
     );
   }
 }

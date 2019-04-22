@@ -2,7 +2,6 @@ import * as React from "react";
 import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import NavLink from "@client/views/components/NavLink";
-import { LOGIN_PATH, REGISTER_PATH } from "@client/views/conf.routes";
 import { headerNavsPublic } from "@client/views/conf.navs";
 
 type Props = LocalProps & StoreProps & DispatchProps;
@@ -23,13 +22,13 @@ export class PublicNavs extends React.PureComponent<Props, State> {
 
         <div className={styles.defaultNavsGroup}>
           <div className={styles.navBox}>
-            <NavLink path={LOGIN_PATH} label={"Login"} />
+            <NavLink path={"/login"} label={"Login"} />
           </div>
 
           <div className={styles.navBox}>{"/"}</div>
 
           <div className={styles.navBox}>
-            <NavLink path={REGISTER_PATH} label={"Register"} />
+            <NavLink path={"/register"} label={"Register"} />
           </div>
         </div>
       </nav>
