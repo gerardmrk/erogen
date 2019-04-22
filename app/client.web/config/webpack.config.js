@@ -143,17 +143,18 @@ module.exports = async (args) => {
                         output: null,
                         ie8: false,
                         sourceMap: rendererBuild,
-                        compress: {
-                          passes: 2,
-                          evaluate: false,
-                          keep_fnames: false,
-                          keep_classnames: false,
-                          keep_fargs: false,
-                        },
-                        mangle: {
-                          keep_fnames: false,
-                          keep_classnames: false
-                        }
+                        // compress: {
+                        //   passes: 1,
+                        //   evaluate: false,
+                        //   keep_fnames: false,
+                        //   keep_classnames: false,
+                        //   keep_fargs: false,
+                        //   unsafe_undefined: false
+                        // },
+                        // mangle: {
+                        //   keep_fnames: false,
+                        //   keep_classnames: false
+                        // }
                     }
                 }),
                 clientBuild && new OptimizeCssAssetsPlugin({
@@ -555,6 +556,7 @@ module.exports = async (args) => {
         config.output = {
             path: RENDERER_DST,
             filename: "index.js",
+            publicPath: "/assets/",
             libraryTarget: "commonjs",
         };
 
