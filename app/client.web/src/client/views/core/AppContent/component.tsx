@@ -30,7 +30,7 @@ export class AppContent extends React.PureComponent<Props, State> {
   public render() {
     return (
       <main className={styles.main}>
-        <TransitionGroup className={styles.transitionWrapper}>
+        <TransitionGroup component={null}>
           <CSSTransition
             key={this.props.location.key}
             timeout={this.transitionTimeout}

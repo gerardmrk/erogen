@@ -11,7 +11,6 @@ const HardSourcePlugin = require("hard-source-webpack-plugin");
 const CleanBuildPlugin = require("clean-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const ExtractCssChunksPlugin = require("mini-css-extract-plugin");
-const DeepScopeAnalysisPlugin = require("webpack-deep-scope-plugin").default;
 const CommonJSTreeShakePlugin = require("webpack-common-shake").Plugin;
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PurgeCSSPlugin = require("purgecss-webpack-plugin");
@@ -123,7 +122,6 @@ module.exports = async (args) => {
 
         optimization: {
             sideEffects: true,
-            usedExports: false,
             runtimeChunk: rendererBuild ? undefined : "single",
             splitChunks: {
                 cacheGroups: {
@@ -154,14 +152,14 @@ module.exports = async (args) => {
                         ie8: false,
                         sourceMap: enableSourceMap,
                         compress: {
-                          passes: 1,
-                          keep_fnames: false,
-                          keep_classnames: false,
-                          keep_fargs: false,
+                            passes: 1,
+                            keep_fnames: false,
+                            keep_classnames: false,
+                            keep_fargs: false,
                         },
                         mangle: {
-                          keep_fnames: false,
-                          keep_classnames: false
+                            keep_fnames: false,
+                            keep_classnames: false
                         }
                     }
                 }),
@@ -409,8 +407,6 @@ module.exports = async (args) => {
             rendererBuild && new webpack.optimize.LimitChunkCountPlugin({
                 maxChunks: 1
             }),
-
-            prodMode && new DeepScopeAnalysisPlugin(),
 
             prodMode && new CommonJSTreeShakePlugin(),
 

@@ -2,25 +2,7 @@
 
 .main {
   height: 100%;
-}
-
-.transitionWrapper {
-  height: 100%;
   position: relative;
-}
-
-.routeAppear {
-  // ...
-}
-
-.routeAppear.routeAppearActive {
-  .routeContainer {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
 }
 
 .routeEnter {
