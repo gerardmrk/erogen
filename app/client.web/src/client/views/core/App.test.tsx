@@ -1,10 +1,10 @@
 import * as React from "react";
 import App from "./App";
-import { shallowWithRouter } from "../__test_helpers__/wrappers";
+import { shallow } from "enzyme";
 
 describe("<App />", () => {
   it("renders ok", () => {
-    const wrapper = shallowWithRouter(<App />);
+    const wrapper = shallow(<App />);
     expect(wrapper).toExist();
   });
 });

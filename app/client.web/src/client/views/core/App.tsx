@@ -1,12 +1,13 @@
 import * as React from "react";
 import { hot } from "react-hot-loader";
-import { withRouter, RouteComponentProps } from "react-router";
+import loadable from "@loadable/component";
 import styles from "./App.scss";
-import AppContent from "./AppContent";
-import AppHeader from "./AppHeader";
-import AppFooter from "./AppFooter";
 
-type Props = {} & RouteComponentProps;
+const AppHeader = loadable(() => import("@client/views/core/AppHeader"));
+const AppContent = loadable(() => import("@client/views/core/AppContent"));
+const AppFooter = loadable(() => import("@client/views/core/AppFooter"));
+
+type Props = {};
 
 type State = {};
 
@@ -22,4 +23,4 @@ export class App extends React.Component<Props, State> {
   }
 }
 
-export default hot(module)(withRouter(App));
+export default hot(module)(App);

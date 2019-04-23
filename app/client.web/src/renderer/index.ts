@@ -31,7 +31,7 @@ export const renderProto = (stats: AsyncModuleStats) => {
       links: textEncoder.encode(resp.links),
       styles: textEncoder.encode(resp.styles),
       scripts: textEncoder.encode(resp.scripts),
-      initialState: textEncoder.encode(resp.initialState)
+      initialState: textEncoder.encode(resp.initialState),
     });
 
     response.ttr = `${process.hrtime.bigint() - timerStart}ns`; // TODO: change when protobufjs sets bigint for uint64

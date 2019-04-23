@@ -10,6 +10,7 @@ export type Props = LocalProps & StoreProps & DispatchProps;
 export type State = {};
 
 export class AppHeader extends React.PureComponent<Props, State> {
+  public componentDidUpdate() {}
   public render() {
     return (
       <header className={styles.main}>

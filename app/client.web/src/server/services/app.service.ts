@@ -11,6 +11,15 @@ export class AppService {
   private render: ReturnType<typeof renderJSON>;
 
   public constructor() {
+    // TODO: add cache store - publ routes
+    // TODO: add cache store - priv routes
+
+    // TODO: intercept or prevent egress API calls from renderer
+    // ----> find and replace with regex: fetch?? renderer build phase only
+
+    // TODO: test proto
+    // TODO: renderer.readJSON()
+    // TODO: renderer.readProto()
     this.render = renderJSON(asyncModuleStats);
   }
 

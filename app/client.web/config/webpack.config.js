@@ -94,9 +94,9 @@ module.exports = async (args) => {
                 "../../theme.config$": `${ROOT_APP_DIR}/ui-theme/theme.config`,
             },
             plugins: [
-              new TsConfigPathsPlugin({
-                configFileName: `${ROOT_APP_DIR}/tsconfig.${source}.json`
-              }),
+                new TsConfigPathsPlugin({
+                    configFileName: `${ROOT_APP_DIR}/tsconfig.${source}.json`
+                }),
             ]
         },
 
@@ -111,13 +111,6 @@ module.exports = async (args) => {
             historyApiFallback: true,
             watchOptions: { poll: true },
             stats: "errors-only",
-        },
-
-        stats: {
-          modules: false,
-          children: false,
-          assetsSort: 'name',
-          excludeAssets: /LICENSE$/
         },
 
         optimization: {
@@ -135,8 +128,7 @@ module.exports = async (args) => {
                         test: /[\\/]node_modules[\\/]/,
                         name: "vendors",
                         chunks: "all",
-                        // maxSize: devMode ? undefined : 80000,
-                        // maxSize: 80000,
+                        maxSize: 80000,
                     }
                 }
             },
@@ -159,7 +151,7 @@ module.exports = async (args) => {
                         },
                         mangle: {
                             keep_fnames: false,
-                            keep_classnames: false
+                            keep_classnames: false,
                         }
                     }
                 }),
