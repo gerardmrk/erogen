@@ -3,7 +3,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import { Switch, RouteComponentProps } from "react-router";
-import routeConfs from "@client/views/conf.routes";
+import { routeConfs, RouteConf } from "@client/views/conf.routes";
 import EnhancedRoute from "@client/views/components/EnhancedRoute";
 
 type Props = LocalProps & StoreProps & DispatchProps & RouteComponentProps;
@@ -23,7 +23,9 @@ export class AppContent extends React.PureComponent<Props, State> {
     exitActive: styles.routeExitActive,
   };
 
-  private renderRoute = (r, i) => <EnhancedRoute key={i} {...r} />;
+  private renderRoute = (r: RouteConf, i: number) => (
+    <EnhancedRoute key={i} {...r} />
+  );
 
   public render() {
     return (

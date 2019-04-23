@@ -1,15 +1,3 @@
-import {
-  productPage,
-  blogPage,
-  documentationPage,
-  supportPage,
-  dashboardPage,
-  homeFeedPage,
-  registerPage,
-  loginPage,
-  resetPasswordPage,
-} from "@client/views/conf.routes";
-
 export type NavConf = {
   label: string;
   to: string;
@@ -20,44 +8,44 @@ export type NavConf = {
 export const headerNavsPublic = [
   {
     label: "Product",
-    to: productPage.path,
+    to: "/about/product",
   },
   {
     label: "Blog",
-    to: blogPage.path,
+    to: "/blog",
   },
   {
     label: "Docs",
-    to: documentationPage.path,
+    to: "/documentation",
   },
   {
     label: "Support",
-    to: supportPage.path,
+    to: "/support",
   },
 ];
 
 export const headerNavsPrivate = [
   {
     label: "Home",
-    to: homeFeedPage.path,
+    to: "/feed",
   },
   {
     label: "Dashboard",
-    to: dashboardPage.path,
+    to: "/dashboard",
   },
 ];
 
 export const authNavs = [
   {
     label: "Login",
-    to: loginPage.path,
+    to: "/login",
   },
   {
     label: "Register",
-    to: registerPage.path,
+    to: "/register",
   },
   {
     label: "Reset Password",
-    to: resetPasswordPage.path,
+    to: "/reset-password",
   },
 ];

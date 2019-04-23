@@ -84,7 +84,7 @@ module.exports = async (args) => {
 
         resolve: {
             enforceExtension: false,
-            mainFields: ["browser", "module", "main"],
+            mainFields: ["module", "main", "browser"],
             extensions: [".ts", ".tsx", ".js", ".jsx", ".json", ".css", "scss"],
             alias: {
                 // source code
@@ -123,6 +123,7 @@ module.exports = async (args) => {
 
         optimization: {
             sideEffects: true,
+            usedExports: false,
             runtimeChunk: rendererBuild ? undefined : "single",
             splitChunks: {
                 cacheGroups: {
@@ -143,7 +144,7 @@ module.exports = async (args) => {
             },
             minimizer: [
                 new TerserPlugin({
-                    cache: `${APP_CACHE_DIR}/terser.${source}`,
+                    cache: `${APP_CACHE_DIR}/terser.${source}.${mode}`,
                     parallel: true,
                     exclude: [/dist/],
                     extractComments: true,
@@ -154,17 +155,13 @@ module.exports = async (args) => {
                         sourceMap: enableSourceMap,
                         compress: {
                           passes: 1,
-                          evaluate: false,
-                          keep_fnames: true,
-                          keep_classnames: true,
-                          keep_fargs: true,
-                          typeofs: false,
-                          unsafe_undefined: false,
-                          unused: false,
+                          keep_fnames: false,
+                          keep_classnames: false,
+                          keep_fargs: false,
                         },
                         mangle: {
-                          keep_fnames: true,
-                          keep_classnames: true
+                          keep_fnames: false,
+                          keep_classnames: false
                         }
                     }
                 }),
@@ -190,7 +187,7 @@ module.exports = async (args) => {
                         options: {
                             useCache: true,
                             useBabel: true,
-                            cacheDirectory: `${APP_CACHE_DIR}/atl.${source}`,
+                            cacheDirectory: `${APP_CACHE_DIR}/atl.${source}.${mode}`,
                             errorsAsWarnings: true,
                             useTranspileModule: true,
                             forceIsolatedModules: true,
@@ -216,7 +213,7 @@ module.exports = async (args) => {
                                   "@loadable/babel-plugin",
                                   "@babel/plugin-syntax-dynamic-import",
                                   ["@babel/plugin-proposal-class-properties", { loose: true }],
-                                  ["@babel/plugin-transform-runtime", { regenerator: false }],
+                                  ["@babel/plugin-transform-runtime"],
                                   ["lodash", { id: "lodash-compat" }],
                                   ["transform-imports", {
                                       lodash: { transform: "lodash/${member}",
@@ -383,8 +380,12 @@ module.exports = async (args) => {
         },
         plugins: [
             new HardSourcePlugin({
-                cacheDirectory: `${APP_CACHE_DIR}/hard-source.${source}`
+                cacheDirectory: `${APP_CACHE_DIR}/hard-source.${source}.${mode}`
             }),
+
+            new HardSourcePlugin.ExcludeModulePlugin([{
+                test: /mini-css-extract-plugin[\\/]dist[\\/]loader/,
+            }]),
 
             new webpack.DefinePlugin({
                 INJECTED_DEV_MODE: JSON.stringify(devMode),
@@ -402,6 +403,9 @@ module.exports = async (args) => {
 
             new CheckerPlugin(),
 
+            /**
+             * We only need to generate one bundle serverside
+             */
             rendererBuild && new webpack.optimize.LimitChunkCountPlugin({
                 maxChunks: 1
             }),

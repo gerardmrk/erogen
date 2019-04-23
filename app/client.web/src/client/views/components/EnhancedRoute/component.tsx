@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Route as BaseRoute, Redirect } from "react-router-dom"; // prettier-ignore
 import { LocalProps, StoreProps, DispatchProps } from ".";
-import { DEFAULT_PRIVATE_PATH, loginPage } from "@client/views/conf.routes"; // prettier-ignore
+import { DEFAULT_PRIVATE_PATH } from "@client/views/conf.routes"; // prettier-ignore
 import HeadTags from "./HeadTags";
 
 export type Props = LocalProps & StoreProps & DispatchProps;
@@ -10,13 +10,13 @@ export type State = {};
 
 export class EnhancedRoute extends React.Component<Props, State> {
   public static defaultProps = {
-    status: 200
+    status: 200,
   };
 
   private redirectTo = {
     pathname: "/login",
     search: "",
-    state: { from: "" }
+    state: { from: "" },
   };
 
   public constructor(props) {
@@ -39,11 +39,7 @@ export class EnhancedRoute extends React.Component<Props, State> {
     if (this.props.guarded && !this.props.isAuthenticated) {
       return props.action === "REPLACE" ? null : (
         <React.Fragment>
-          <HeadTags
-            path={loginPage.path}
-            title={loginPage.title}
-            description={loginPage.description}
-          />
+          <HeadTags path={"/login"} title={"Login"} description={"Login"} />
           <Redirect from={this.props.path} to={this.redirectTo} />
         </React.Fragment>
       );
