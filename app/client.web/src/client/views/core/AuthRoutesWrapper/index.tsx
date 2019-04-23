@@ -1,4 +1,4 @@
-export { default } from "./component";
+import { AuthRoutesWrapper } from "./component";
 
 export type LocalProps = {
   title: TranslationKey;
@@ -7,3 +7,5 @@ export type LocalProps = {
 export type StoreProps = {};
 
 export type DispatchProps = {};
+
+export default AuthRoutesWrapper;

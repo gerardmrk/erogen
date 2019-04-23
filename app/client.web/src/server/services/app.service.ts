@@ -5,7 +5,7 @@ import asyncModuleStats from "dist/client/async-modules.json";
 import { Response } from "@renderer/engine";
 
 @Injectable({
-  scope: Scope.DEFAULT
+  scope: Scope.DEFAULT,
 })
 export class AppService {
   private render: ReturnType<typeof renderJSON>;

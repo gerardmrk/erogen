@@ -25,5 +25,3 @@ export class NameDropper extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default NameDropper;

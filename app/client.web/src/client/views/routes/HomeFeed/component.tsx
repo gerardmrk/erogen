@@ -14,5 +14,3 @@ export class HomeFeed extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default HomeFeed;

@@ -25,5 +25,3 @@ export class LoginForm extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default LoginForm;

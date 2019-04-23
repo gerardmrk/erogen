@@ -14,5 +14,3 @@ export class Dashboard extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Dashboard;

@@ -1,1 +1,3 @@
-export { default } from "./component";
+import { Support } from "./component";
+
+export default Support;

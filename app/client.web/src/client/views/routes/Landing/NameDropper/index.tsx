@@ -1,1 +1,3 @@
-export { default } from "./component";
+import { NameDropper } from "./component";
+
+export default NameDropper;

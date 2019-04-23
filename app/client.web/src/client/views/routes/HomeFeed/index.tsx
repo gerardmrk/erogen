@@ -1,1 +1,3 @@
-export { default } from "./component";
+import { HomeFeed } from "./component";
+
+export default HomeFeed;

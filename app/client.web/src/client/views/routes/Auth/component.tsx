@@ -14,5 +14,3 @@ export class Auth extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Auth;

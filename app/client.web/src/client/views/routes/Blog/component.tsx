@@ -26,5 +26,3 @@ export class Blog extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Blog;

@@ -4,7 +4,6 @@
     "moduleResolution": "node",
     "module": "esnext",
     "target": "esnext",
-    "allowJs": false,
     "sourceMap": true
   }
 }

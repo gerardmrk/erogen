@@ -1,1 +1,3 @@
-export { default } from "./component";
+import { BlogPost } from "./component";
+
+export default BlogPost;

@@ -1,7 +1,8 @@
 import { RouteConf } from "@client/views/conf.routes";
-
-export { default } from "./component";
+import { Blog } from "./component";
 
 export type LocalProps = {
   routes: RouteConf[];
 };
+
+export default Blog;

@@ -15,5 +15,3 @@ export class ForgotPassword extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default ForgotPassword;

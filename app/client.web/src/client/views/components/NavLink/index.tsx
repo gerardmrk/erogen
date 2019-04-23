@@ -1,1 +1,3 @@
-export { default } from "./component";
+import { NavLink } from "./component";
+
+export default NavLink;

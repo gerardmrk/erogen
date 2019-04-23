@@ -142,32 +142,31 @@ module.exports = async (args) => {
                 }
             },
             minimizer: [
-                new TerserPlugin({
-                    cache: `${APP_CACHE_DIR}/terser.${source}`,
-                    parallel: true,
-                    exclude: [/dist/],
-                    extractComments: true,
-                    terserOptions: {
-                        output: null,
-                        ie8: false,
-                        sourceMap: enableSourceMap,
-                        // compress: {
-                        //   passes: 1,
-                        //   evaluate: false,
-                        //   keep_fnames: true,
-                        //   keep_classnames: true,
-                        //   keep_fargs: true,
-                        //   typeofs: false,
-                        //   unsafe_undefined: false
-                        // },
-                        compress: false,
-                        mangle: false,
-                        // mangle: {
-                        //   keep_fnames: true,
-                        //   keep_classnames: true
-                        // }
-                    }
-                }),
+                // new TerserPlugin({
+                //     cache: `${APP_CACHE_DIR}/terser.${source}`,
+                //     parallel: true,
+                //     exclude: [/dist/],
+                //     extractComments: true,
+                //     terserOptions: {
+                //         output: null,
+                //         ie8: false,
+                //         sourceMap: enableSourceMap,
+                //         compress: {
+                //           passes: 1,
+                //           evaluate: false,
+                //           keep_fnames: true,
+                //           keep_classnames: true,
+                //           keep_fargs: true,
+                //           typeofs: false,
+                //           unsafe_undefined: false,
+                //           unused: false,
+                //         },
+                //         mangle: {
+                //           keep_fnames: true,
+                //           keep_classnames: true
+                //         }
+                //     }
+                // }),
                 clientBuild && new OptimizeCssAssetsPlugin({
                   canPrint: true,
                   assetNameRegExp: /\.css$/g,

@@ -1,1 +1,3 @@
-export { default } from "./component";
+import { LoginForm } from "./component";
+
+export default LoginForm;

@@ -1,1 +1,3 @@
-export { default } from "./component";
+import { ResetPassword } from "./component";
+
+export default ResetPassword;

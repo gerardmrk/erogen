@@ -1,1 +1,3 @@
-export { default } from "./component";
+import { Auth } from "./component";
+
+export default Auth;

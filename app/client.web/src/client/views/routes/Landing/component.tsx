@@ -18,5 +18,3 @@ export class Landing extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Landing;

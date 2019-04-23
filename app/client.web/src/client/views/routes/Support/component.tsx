@@ -17,5 +17,3 @@ export class Support extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Support;

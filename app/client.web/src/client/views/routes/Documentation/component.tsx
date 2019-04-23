@@ -17,5 +17,3 @@ export class Documentation extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Documentation;

@@ -1,1 +1,3 @@
-export { default } from "./component";
+import { BillingSettings } from "./component";
+
+export default BillingSettings;

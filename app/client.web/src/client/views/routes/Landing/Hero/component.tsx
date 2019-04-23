@@ -42,5 +42,3 @@ export class Hero extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Hero;

@@ -1,1 +1,3 @@
-export { default } from "./component";
+import { Register } from "./component";
+
+export default Register;

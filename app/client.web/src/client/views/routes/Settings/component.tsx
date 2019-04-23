@@ -14,5 +14,3 @@ export class Settings extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Settings;

@@ -1,1 +1,3 @@
-export { default } from "./component";
+import { AccountSettings } from "./component";
+
+export default AccountSettings;

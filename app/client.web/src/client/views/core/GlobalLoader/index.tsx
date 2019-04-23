@@ -1,7 +1,9 @@
-export { default } from "./component";
+import { GlobalLoader } from "./component";
 
 export type LocalProps = {};
 
 export type StoreProps = {};
 
 export type DispatchProps = {};
+
+export default GlobalLoader;

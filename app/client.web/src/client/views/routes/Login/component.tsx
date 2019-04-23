@@ -18,5 +18,3 @@ export class Login extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Login;
