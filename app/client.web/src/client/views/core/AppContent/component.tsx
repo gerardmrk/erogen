@@ -2,7 +2,7 @@ import * as React from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
-import { Switch, withRouter, RouteComponentProps } from "react-router";
+import { Switch, RouteComponentProps } from "react-router";
 import routeConfs from "@client/views/conf.routes";
 import EnhancedRoute from "@client/views/components/EnhancedRoute";
 
@@ -13,14 +13,14 @@ type State = {};
 export class AppContent extends React.PureComponent<Props, State> {
   private transitionTimeout = {
     enter: 310,
-    exit: 310
+    exit: 310,
   };
 
   private transitionClassNames = {
     enter: styles.routeEnter,
     enterActive: styles.routeEnterActive,
     exit: styles.routeExit,
-    exitActive: styles.routeExitActive
+    exitActive: styles.routeExitActive,
   };
 
   private renderRoute = (r, i) => <EnhancedRoute key={i} {...r} />;
@@ -45,5 +45,3 @@ export class AppContent extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default withRouter(AppContent);

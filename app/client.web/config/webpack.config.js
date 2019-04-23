@@ -142,31 +142,32 @@ module.exports = async (args) => {
                 }
             },
             minimizer: [
-                // new TerserPlugin({
-                //     cache: `${APP_CACHE_DIR}/terser.${source}`,
-                //     parallel: true,
-                //     exclude: [/dist/],
-                //     extractComments: true,
-                //     terserOptions: {
-                //         output: null,
-                //         ie8: false,
-                //         sourceMap: enableSourceMap,
-                //         compress: {
-                //           passes: 1,
-                //           evaluate: false,
-                //           keep_fnames: true,
-                //           keep_classnames: true,
-                //           keep_fargs: true,
-                //           typeofs: false,
-                //           unsafe_undefined: false,
-                //           unused: false,
-                //         },
-                //         mangle: {
-                //           keep_fnames: true,
-                //           keep_classnames: true
-                //         }
-                //     }
-                // }),
+                new TerserPlugin({
+                    cache: `${APP_CACHE_DIR}/terser.${source}`,
+                    parallel: true,
+                    exclude: [/dist/],
+                    extractComments: true,
+                    sourceMap: enableSourceMap,
+                    terserOptions: {
+                        output: null,
+                        ie8: false,
+                        sourceMap: enableSourceMap,
+                        compress: {
+                          passes: 1,
+                          evaluate: false,
+                          keep_fnames: true,
+                          keep_classnames: true,
+                          keep_fargs: true,
+                          typeofs: false,
+                          unsafe_undefined: false,
+                          unused: false,
+                        },
+                        mangle: {
+                          keep_fnames: true,
+                          keep_classnames: true
+                        }
+                    }
+                }),
                 clientBuild && new OptimizeCssAssetsPlugin({
                   canPrint: true,
                   assetNameRegExp: /\.css$/g,
@@ -450,29 +451,75 @@ module.exports = async (args) => {
                 only: ["bundle", "vendor"],
             }),
 
+            // development
+            devMode && clientBuild && new HtmlPlugin({
+                filename: "index.html",
+                template: `${CLIENT_SRC}/index.html`,
+                vars: {
+                    metas: "",
+                    links: "",
+                    styles: "",
+                    app: "",
+                    initialState: "undefined",
+                    scripts: ""
+                },
+            }),
+
+            // golang templates
             prodMode && clientBuild && new HtmlPlugin({
                 filename: "index.gohtml",
                 template: `${CLIENT_SRC}/index.html`,
                 vars: {
-                    metas: devMode ? "" : "{{.Metas}}",
-                    links: devMode ? "" : "{{.Links}}",
-                    styles: devMode ? "" : "{{.Styles}}",
-                    app: devMode ? "" : "{{.App}}",
-                    initialState: devMode ? "undefined" : "{{.InitialState}}",
-                    scripts: devMode ? "" : "{{.Scripts}}"
+                    metas: "{{.Metas}}",
+                    links: "{{.Links}}",
+                    styles: "{{.Styles}}",
+                    app: "{{.App}}",
+                    initialState: "{{.InitialState}}",
+                    scripts: "{{.Scripts}}"
                 },
             }),
 
-            clientBuild && new HtmlPlugin({
-                filename: `index.${devMode ? "html" : "hbs"}`,
+            // golang templates; SSR
+            prodMode && clientBuild && new HtmlPlugin({
+              inject: false,
+              filename: "index.ssr.gohtml",
+              template: `${CLIENT_SRC}/index.html`,
+              vars: {
+                  metas: "{{.Metas}}",
+                  links: "{{.Links}}",
+                  styles: "{{.Styles}}",
+                  app: "{{.App}}",
+                  initialState: "{{.InitialState}}",
+                  scripts: "{{.Scripts}}"
+              },
+          }),
+
+            // handlebars templates
+            prodMode && clientBuild && new HtmlPlugin({
+                filename: "index.hbs",
                 template: `${CLIENT_SRC}/index.html`,
                 vars: {
-                    metas: devMode ? "" : "{{{metas}}}",
-                    links: devMode ? "" : "{{{links}}}",
-                    styles: devMode ? "" : "{{{styles}}}",
-                    app: devMode ? "" : "{{{app}}}",
-                    initialState: devMode ? "undefined" : "{{{initialState}}}",
-                    scripts: devMode ? "" : "{{{scripts}}}"
+                    metas: "{{{metas}}}",
+                    links: "{{{links}}}",
+                    styles: "{{{styles}}}",
+                    app: "{{{app}}}",
+                    initialState: "{{{initialState}}}",
+                    scripts: "{{{scripts}}}"
+                },
+            }),
+
+            // handlebars templates; SSR
+            prodMode && clientBuild && new HtmlPlugin({
+                inject: false,
+                filename: "index.ssr.hbs",
+                template: `${CLIENT_SRC}/index.html`,
+                vars: {
+                    metas: "{{{metas}}}",
+                    links: "{{{links}}}",
+                    styles: "{{{styles}}}",
+                    app: "{{{app}}}",
+                    initialState: "{{{initialState}}}",
+                    scripts: "{{{scripts}}}"
                 },
             }),
 

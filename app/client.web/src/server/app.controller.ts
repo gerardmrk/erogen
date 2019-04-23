@@ -9,19 +9,8 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get("*")
-  @Render("index.hbs")
+  @Render("index.ssr.hbs")
   public async indexHTML(@Req() req: FastifyRequest<Request>) {
-    const {
-      app,
-      metas,
-      styles,
-      initialState,
-    } = await this.appService.renderPage(req.req.url);
-    return {
-      app,
-      metas,
-      styles,
-      initialState,
-    };
+    return await this.appService.renderPage(req.req.url);
   }
 }

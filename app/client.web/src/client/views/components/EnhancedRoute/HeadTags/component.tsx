@@ -48,6 +48,12 @@ export class HeadTags extends React.PureComponent<Props, State> {
         <meta name="description" content={this.description} />
         <meta name="keywords" content={this.keywords} />
 
+        {/* **NON-SEO** */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+
         {/* Schema.org */}
         <meta itemProp="url" content={this.url} />
         <meta itemProp="name" content={this.title} />
