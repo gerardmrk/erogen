@@ -1,43 +1,96 @@
-// import * as ReactDOMServer from "react-dom/server";
-// import { IRendererRequest } from "@renderer/proto";
-// import { getChunkExtractor, getStore, getAppElement } from "./shared";
-// import { Store } from "@client/store";
-// import { StaticRouterContext } from "react-router";
+import * as ReactDOMServer from "react-dom/server";
+import { IRendererRequest, IRendererResponse } from "@renderer/proto";
+import {
+  getChunkExtractor,
+  getStore,
+  getAppElement,
+  getHTMLBits,
+  getMetaTags,
+} from "./shared";
+import { Store } from "@client/store";
+import { StaticRouterContext } from "react-router";
+import Helmet from "react-helmet";
 
-// export type StreamRequest = IRendererRequest;
+export type StreamRequest = IRendererRequest;
 
-// export type StreamResponse = "";
+export type StreamResponse = NodeJS.WritableStream;
 
-// export const streamEngine = (stats: AsyncModuleStats) => {
-//   const extractor = getChunkExtractor(stats);
+export type StreamMetaData = Pick<
+  IRendererResponse,
+  "statusCode" | "redirectTo" | "error" | "ttr"
+>;
 
-//   return (request: StreamRequest): StreamResponse => {
-//     try {
-//       const store: Store = getStore();
-//       const routerContext: StaticRouterContext = {};
+export const streamEngine = (stats: AsyncModuleStats) => {
+  const extractor = getChunkExtractor(stats);
 
-//       const stream = ReactDOMServer.renderToNodeStream(
-//         getAppElement({
-//           url: request.url || "/",
-//           config: INJECTED_APP_CONFIG,
-//           store,
-//           extractor,
-//           routerContext,
-//         }),
-//       );
-//     } catch (err) {
-//       throw err;
-//     }
-//   };
-// };
-// const SSR_STREAM_HTML_START = `<!DOCTYPE html>
-// <html>
-// <head><meta charset="utf-8"/></head>
-// <body><noscript>JavaScript must be enabled to run this app.</noscript><div id="#${INJECTED_APP_MOUNT_POINT_ID}">`;
+  return (
+    request: StreamRequest,
+    response: StreamResponse,
+    metaData: StreamMetaData,
+  ) => {
+    const timerStart = process.hrtime.bigint();
 
-// const SSR_STREAM_HTML_PRE_INITIAL_STATE =
-//   "</div><script>window._INITIAL_STATE_ = ";
+    try {
+      const htmlBits = getHTMLBits({
+        appMountPointID: INJECTED_APP_MOUNT_POINT_ID,
+      });
 
-// const SSR_STREAM_HTML_POST_INITIAL_STATE = ";</script>";
+      const store: Store = getStore();
+      const routerContext: StaticRouterContext = {};
 
-// const SSR_STREAM_HTML_END = "</body></html>";
+      response.write(htmlBits.docStart);
+
+      const appStream = ReactDOMServer.renderToNodeStream(
+        getAppElement({
+          url: request.url || "/",
+          config: INJECTED_APP_CONFIG,
+          store,
+          extractor,
+          routerContext,
+        }),
+      );
+
+      response.write(getMetaTags(Helmet.renderStatic()));
+      response.write(extractor.getLinkTags());
+      response.write(extractor.getStyleTags());
+      response.write(htmlBits.postHeadTags);
+
+      appStream.pipe(
+        response,
+        { end: false },
+      );
+      appStream.on("end", () => {
+        response.write(htmlBits.postApp);
+        response.write(JSON.stringify(store.getState()));
+        response.write(htmlBits.postInitialState);
+        response.write(extractor.getScriptTags());
+        response.write(htmlBits.docEnd);
+
+        if (routerContext.url) {
+          metaData.statusCode = 302;
+          metaData.redirectTo = routerContext.url;
+        } else {
+          metaData.statusCode = routerContext.statusCode || 200;
+        }
+        metaData.ttr = `${process.hrtime.bigint() - timerStart}ns`; // TODO: change when protobufjs sets bigint for uint64
+        response.end();
+      });
+
+      appStream.on("error", (err: Error) => {
+        metaData.statusCode = 500;
+        metaData.error = {
+          message: err.message,
+          stackTrace: err.stack,
+        };
+        response.end();
+      });
+    } catch (err) {
+      metaData.statusCode = 500;
+      metaData.error = {
+        message: err.message,
+        stackTrace: err.stack,
+      };
+      response.end();
+    }
+  };
+};

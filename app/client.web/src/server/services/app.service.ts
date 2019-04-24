@@ -1,14 +1,17 @@
 import { Injectable, Scope } from "@nestjs/common";
 // @ts-ignore
-import { renderJSON } from "dist/renderer";
+import { jsonRenderer, htmlStreamer } from "dist/renderer";
 import asyncModuleStats from "dist/client/async-modules.json";
 import { RenderResponse } from "@renderer/engine/render-engine";
+import { RenderJsonFn, StreamHtmlFn } from "@renderer/index";
+import { StreamMetaData } from "@renderer/engine/stream-engine";
 
 @Injectable({
   scope: Scope.DEFAULT,
 })
 export class AppService {
-  private render: ReturnType<typeof renderJSON>;
+  private renderJSON: RenderJsonFn;
+  private streamHTML: StreamHtmlFn;
 
   public constructor() {
     // TODO: add cache store - publ routes
@@ -20,19 +23,32 @@ export class AppService {
     // TODO: test proto
     // TODO: renderer.readJSON()
     // TODO: renderer.readProto()
-    this.render = renderJSON(asyncModuleStats);
+    this.renderJSON = jsonRenderer(asyncModuleStats);
+    this.streamHTML = htmlStreamer(asyncModuleStats);
   }
 
-  public async renderPage(
+  public async getHtmlData(
     url: string,
     lang: string = "en",
   ): Promise<RenderResponse> {
     try {
-      const data = await this.render({ url, lang });
-      if (!!data.error) {
-        throw data.error;
-      }
+      const data = await this.renderJSON({ url, lang });
+      if (!!data.error) throw data.error;
       return data;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }
+
+  public async streamHtmlPage(
+    resp: NodeJS.WritableStream,
+    url: string,
+    lang: string = "en",
+  ): Promise<void> {
+    try {
+      const metaData: StreamMetaData = {};
+      await this.streamHTML({ url, lang }, resp, metaData);
     } catch (err) {
       console.error(err);
       throw err;

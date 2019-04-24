@@ -4,7 +4,7 @@ import * as util from "util";
 import * as process from "process";
 import uuidv4 from "uuid/v4";
 import debug from "debug";
-import { renderJSON } from "..";
+import { jsonRenderer } from "..";
 import { RenderRequest } from "@renderer/engine/render-engine";
 
 const dsrv = debug("srv");
@@ -59,7 +59,7 @@ async function createServer(
   stats: AsyncModuleStats,
   connsCache: ConnectionsCache,
 ) {
-  const render = renderJSON(stats);
+  const render = jsonRenderer(stats);
 
   return net.createServer((conn: net.Socket) => {
     const connID = uuidv4();

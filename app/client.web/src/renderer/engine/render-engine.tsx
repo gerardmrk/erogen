@@ -2,8 +2,13 @@ import * as ReactDOMServer from "react-dom/server";
 import { Overwrite } from "utility-types";
 import { IRendererRequest, IRendererResponse } from "@renderer/proto";
 import { StaticRouterContext } from "react-router";
-import Helmet, { HelmetData } from "react-helmet";
-import { getChunkExtractor, getStore, getAppElement } from "./shared";
+import Helmet from "react-helmet";
+import {
+  getChunkExtractor,
+  getStore,
+  getAppElement,
+  getMetaTags,
+} from "./shared";
 import { Store } from "@client/store";
 
 export type RenderRequest = IRendererRequest;
@@ -46,7 +51,6 @@ export const renderEngine = (stats: AsyncModuleStats) => {
         response.redirectTo = routerContext.url;
       } else {
         response.statusCode = routerContext.statusCode || 200;
-        response.redirectTo = routerContext.url || "";
       }
     } catch (err) {
       response.statusCode = 500;
@@ -59,11 +63,3 @@ export const renderEngine = (stats: AsyncModuleStats) => {
     return response;
   };
 };
-
-function getMetaTags(data: HelmetData): string {
-  let result = "";
-  for (let dd = Object.values(data), i = 0, l = dd.length; i < l; i++) {
-    result += dd[i].toString();
-  }
-  return result;
-}
