@@ -17,9 +17,10 @@ type AppParams = {
   devMode: boolean;
   config: AppConfig;
   initialState: Partial<State>;
+  appMountPointID: string;
 };
 
-(async ({ config, devMode, initialState }: AppParams) => {
+(async ({ config, devMode, initialState, appMountPointID }: AppParams) => {
   const render = devMode ? ReactDOM.render : ReactDOM.hydrate;
 
   const services = new Services();
@@ -44,7 +45,7 @@ type AppParams = {
         </StoreProvider>
       </I18nProvider>
     </ConfigProvider>,
-    document.getElementById("app-mount-point")
+    document.getElementById(appMountPointID),
   );
 
   initServiceWorker((error: Error | null) => {
@@ -56,5 +57,6 @@ type AppParams = {
 })({
   devMode: INJECTED_DEV_MODE,
   config: INJECTED_APP_CONFIG,
-  initialState: window._INITIAL_STATE_
+  initialState: window._INITIAL_STATE_,
+  appMountPointID: INJECTED_APP_MOUNT_POINT_ID,
 });

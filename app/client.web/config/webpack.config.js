@@ -66,7 +66,8 @@ module.exports = async (args) => {
       rendererBuild,
       // derived
       appConfig,
-      enableSourceMap
+      enableSourceMap,
+      appMountPointID,
     } = settings;
 
     // base config
@@ -380,7 +381,13 @@ module.exports = async (args) => {
             new webpack.DefinePlugin({
                 INJECTED_DEV_MODE: JSON.stringify(devMode),
                 INJECTED_APP_CONFIG: JSON.stringify(appConfig),
-                'process.env.NODE_ENV': JSON.stringify(mode)
+                INJECTED_APP_MOUNT_POINT_ID: JSON.stringify(appMountPointID),
+                "process.env.NODE_ENV": JSON.stringify(mode)
+            }),
+
+            rendererBuild && new webpack.DefinePlugin({
+                SSR_STREAM_HTML_START: '',
+                SSR_STREAM_HTML_END: ''
             }),
 
             new webpack.EnvironmentPlugin({
@@ -453,7 +460,8 @@ module.exports = async (args) => {
                     styles: "",
                     app: "",
                     initialState: "undefined",
-                    scripts: ""
+                    scripts: "",
+                    mountPointID: appMountPointID,
                 },
             }),
 
@@ -467,7 +475,8 @@ module.exports = async (args) => {
                     styles: "{{.Styles}}",
                     app: "{{.App}}",
                     initialState: "{{.InitialState}}",
-                    scripts: "{{.Scripts}}"
+                    scripts: "{{.Scripts}}",
+                    mountPointID: appMountPointID,
                 },
             }),
 
@@ -482,7 +491,8 @@ module.exports = async (args) => {
                   styles: "{{.Styles}}",
                   app: "{{.App}}",
                   initialState: "{{.InitialState}}",
-                  scripts: "{{.Scripts}}"
+                  scripts: "{{.Scripts}}",
+                  mountPointID: appMountPointID,
               },
           }),
 
@@ -496,7 +506,8 @@ module.exports = async (args) => {
                     styles: "{{{styles}}}",
                     app: "{{{app}}}",
                     initialState: "{{{initialState}}}",
-                    scripts: "{{{scripts}}}"
+                    scripts: "{{{scripts}}}",
+                    mountPointID: appMountPointID,
                 },
             }),
 
@@ -511,7 +522,8 @@ module.exports = async (args) => {
                     styles: "{{{styles}}}",
                     app: "{{{app}}}",
                     initialState: "{{{initialState}}}",
-                    scripts: "{{{scripts}}}"
+                    scripts: "{{{scripts}}}",
+                    mountPointID: appMountPointID,
                 },
             }),
 

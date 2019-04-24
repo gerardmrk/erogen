@@ -1,16 +1,33 @@
 import "source-map-support/register";
-import { renderEngine, Request, Response } from "./engine";
+import {
+  renderEngine,
+  RenderRequest,
+  RenderResponse,
+} from "./engine/render-engine";
 import { RendererRequest, RendererResponse } from "./proto";
 
 export const renderJSON = (stats: AsyncModuleStats) => {
   const render = renderEngine(stats);
 
-  return async (input: Request): Promise<Response> => {
+  return async (request: RenderRequest): Promise<RenderResponse> => {
     const timerStart = process.hrtime.bigint();
 
-    const resp = await render(input);
-    resp.ttr = `${process.hrtime.bigint() - timerStart}ns`; // TODO: change when protobufjs sets bigint for uint64
-    return resp;
+    const response: RenderResponse = {
+      statusCode: 200,
+      redirectTo: "",
+      error: null,
+      ttr: "",
+      metas: undefined,
+      app: undefined,
+      links: undefined,
+      styles: undefined,
+      scripts: undefined,
+      initialState: undefined,
+    };
+
+    await render(request, response);
+    response.ttr = `${process.hrtime.bigint() - timerStart}ns`; // TODO: change when protobufjs sets bigint for uint64
+    return response;
   };
 };
 
@@ -21,17 +38,30 @@ export const renderProto = (stats: AsyncModuleStats) => {
   return async (input: Uint8Array): Promise<Uint8Array> => {
     const timerStart = process.hrtime.bigint();
 
-    const resp = await render(RendererRequest.decode(input));
+    const output: RenderResponse = {
+      statusCode: 200,
+      redirectTo: "",
+      error: null,
+      ttr: "",
+      metas: undefined,
+      app: undefined,
+      links: undefined,
+      styles: undefined,
+      scripts: undefined,
+      initialState: undefined,
+    };
+
+    await render(RendererRequest.decode(input), output);
     const response = RendererResponse.create({
-      statusCode: resp.statusCode,
-      redirectTo: resp.redirectTo,
-      error: resp.error,
-      metas: textEncoder.encode(resp.metas),
-      app: textEncoder.encode(resp.app),
-      links: textEncoder.encode(resp.links),
-      styles: textEncoder.encode(resp.styles),
-      scripts: textEncoder.encode(resp.scripts),
-      initialState: textEncoder.encode(resp.initialState),
+      statusCode: output.statusCode,
+      redirectTo: output.redirectTo,
+      error: output.error,
+      metas: textEncoder.encode(output.metas),
+      app: textEncoder.encode(output.app),
+      links: textEncoder.encode(output.links),
+      styles: textEncoder.encode(output.styles),
+      scripts: textEncoder.encode(output.scripts),
+      initialState: textEncoder.encode(output.initialState),
     });
 
     response.ttr = `${process.hrtime.bigint() - timerStart}ns`; // TODO: change when protobufjs sets bigint for uint64

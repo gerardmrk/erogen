@@ -9,12 +9,12 @@
 
     <%= htmlWebpackPlugin.options.vars.styles %>
 
-    <style>html,body,#app-mount-point{width:100%;height:100%;}</style>
+    <style>html,body,#<%= htmlWebpackPlugin.options.vars.mountPointID %>{width:100%;height:100%;}</style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
-    <div id="app-mount-point"><%= htmlWebpackPlugin.options.vars.app %></div>
+    <div id="<%= htmlWebpackPlugin.options.vars.mountPointID %>"><%= htmlWebpackPlugin.options.vars.app %></div>
 
     <script>window._INITIAL_STATE_ = <%= htmlWebpackPlugin.options.vars.initialState %>;</script>
 

@@ -2,7 +2,7 @@ import { Injectable, Scope } from "@nestjs/common";
 // @ts-ignore
 import { renderJSON } from "dist/renderer";
 import asyncModuleStats from "dist/client/async-modules.json";
-import { Response } from "@renderer/engine";
+import { RenderResponse } from "@renderer/engine/render-engine";
 
 @Injectable({
   scope: Scope.DEFAULT,
@@ -23,7 +23,10 @@ export class AppService {
     this.render = renderJSON(asyncModuleStats);
   }
 
-  public async renderPage(url: string, lang: string = "en"): Promise<Response> {
+  public async renderPage(
+    url: string,
+    lang: string = "en",
+  ): Promise<RenderResponse> {
     try {
       const data = await this.render({ url, lang });
       if (!!data.error) {

@@ -48,6 +48,7 @@ module.exports = rootAppDir => ({
   }
   enableSourceMap = mode === "development" || enableSourceMap;
 
+  // TODO: derive from stdin
   const appConfig = {
     appStage,
     appUrl: "http://localhost:4200",
@@ -58,6 +59,8 @@ module.exports = rootAppDir => ({
     appTwitterHandle: `@404`,
     appTwitterCardType: "summary_large_image",
   };
+
+  const appMountPointID = "app-mount-point";
 
   const settings = {
     mode,
@@ -70,6 +73,7 @@ module.exports = rootAppDir => ({
     // derived
     appConfig,
     enableSourceMap,
+    appMountPointID,
   };
 
   return settings;

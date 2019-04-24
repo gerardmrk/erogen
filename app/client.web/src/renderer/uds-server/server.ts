@@ -5,7 +5,7 @@ import * as process from "process";
 import uuidv4 from "uuid/v4";
 import debug from "debug";
 import { renderJSON } from "..";
-import { Request } from "@renderer/engine";
+import { RenderRequest } from "@renderer/engine/render-engine";
 
 const dsrv = debug("srv");
 const dcon = debug("srv:conn");
@@ -24,7 +24,7 @@ type ServerParams = {
 
 export const server = async ({
   socketFile,
-  asyncModuleStats
+  asyncModuleStats,
 }: ServerParams) => {
   try {
     await tryRemovePrevSocketFile(socketFile);
@@ -57,7 +57,7 @@ async function tryRemovePrevSocketFile(socketFile) {
 
 async function createServer(
   stats: AsyncModuleStats,
-  connsCache: ConnectionsCache
+  connsCache: ConnectionsCache,
 ) {
   const render = renderJSON(stats);
 
@@ -69,7 +69,7 @@ async function createServer(
 
     conn.on("data", async (data: Buffer) => {
       dcon("[%s] DATA", connID);
-      const req: Request = JSON.parse(data.toString());
+      const req: RenderRequest = JSON.parse(data.toString());
       conn.write(JSON.stringify(await render(req)));
     });
 

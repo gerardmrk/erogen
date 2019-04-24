@@ -1,6 +1,13 @@
 @import "~@client/views/styles.colors.scss";
 @import "~@client/views/styles.dimens.scss";
 
+.main {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: $app-header-height auto $app-footer-height;
+  grid-template-columns: 100%;
+}
+
 body {
   color: $text-color;
   line-height: 20px;
@@ -16,21 +23,8 @@ body {
     font-weight: 500;
   }
 
-  p {
-    margin-top: 1px;
-    margin-bottom: 1px;
-    letter-spacing: -0.05px;
-  }
-
   a {
     color: inherit;
     text-decoration: none;
   }
-}
-
-.main {
-  min-height: 100%;
-  display: grid;
-  grid-template-rows: $app-header-height auto $app-footer-height;
-  grid-template-columns: 100%;
 }
