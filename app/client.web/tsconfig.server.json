@@ -8,6 +8,8 @@
     "experimentalDecorators": true,
     "target": "es6",
     "sourceMap": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
   }
 }

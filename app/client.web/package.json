@@ -31,8 +31,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@loadable/component": "^5.7.0",
-    "@loadable/server": "^5.8.0",
+    "@loadable/component": "^5.9.0",
+    "@loadable/server": "^5.9.0",
     "@nest-middlewares/serve-static": "^6.0.0",
     "@nestjs/common": "^6.1.1",
     "@nestjs/core": "^6.1.1",

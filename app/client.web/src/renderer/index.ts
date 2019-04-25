@@ -25,9 +25,9 @@ const createInitialResponseObject = (): RenderResponse => ({
   initialState: undefined,
 });
 
-export type RenderJsonFn = (request: RenderRequest) => RenderResponse;
-export type RenderProtoFn = (input: Uint8Array) => Uint8Array;
-export type StreamHtmlFn = (request: StreamRequest, response: StreamResponse, metaData: StreamMetaData) => void; // prettier-ignore
+export type RenderJsonFn = (request: RenderRequest) => Promise<RenderResponse>;
+export type RenderProtoFn = (input: Uint8Array) => Promise<Uint8Array>;
+export type StreamHtmlFn = (request: StreamRequest, response: StreamResponse, metaData: StreamMetaData) => Promise<void>; // prettier-ignore
 
 export type RendererOrStreamer<FN> = (stats: AsyncModuleStats) => FN;
 
@@ -38,11 +38,11 @@ export type RendererOrStreamer<FN> = (stats: AsyncModuleStats) => FN;
 export const jsonRenderer: RendererOrStreamer<RenderJsonFn> = (stats: AsyncModuleStats) => {
   const render = renderEngine(stats);
 
-  return (request: RenderRequest): RenderResponse => {
+  return async (request: RenderRequest): Promise<RenderResponse> => {
     const timerStart = process.hrtime.bigint();
     const response: RenderResponse = createInitialResponseObject();
 
-    render(request, response);
+    await render(request, response);
     response.ttr = `${process.hrtime.bigint() - timerStart}ns`; // TODO: change when protobufjs sets bigint for uint64
     return response;
   };
@@ -57,11 +57,11 @@ export const protoRenderer: RendererOrStreamer<RenderProtoFn> = (stats: AsyncMod
   const render = renderEngine(stats);
   const textEncoder = new TextEncoder();
 
-  return (input: Uint8Array): Uint8Array => {
+  return async (input: Uint8Array): Promise<Uint8Array> => {
     const timerStart = process.hrtime.bigint();
     const output: RenderResponse = createInitialResponseObject();
 
-    render(RendererRequest.decode(input), output);
+    await render(RendererRequest.decode(input), output);
     const response = RendererResponse.create({
       statusCode: output.statusCode,
       redirectTo: output.redirectTo,
@@ -86,7 +86,7 @@ export const protoRenderer: RendererOrStreamer<RenderProtoFn> = (stats: AsyncMod
 export const htmlStreamer: RendererOrStreamer<StreamHtmlFn> = (stats: AsyncModuleStats) => {
   const stream = streamEngine(stats);
 
-  return (request: StreamRequest, response: StreamResponse, metaData: StreamMetaData) => {
-    stream(request, response, metaData);
+  return async (request: StreamRequest, response: StreamResponse, metaData: StreamMetaData) => {
+    await stream(request, response, metaData);
   };
 };

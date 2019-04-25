@@ -25,7 +25,7 @@ export type RenderResponse = Overwrite<IRendererResponse, {
 export const renderEngine = (stats: AsyncModuleStats) => {
   const extractor = getChunkExtractor(stats);
 
-  return (request: RenderRequest, response: RenderResponse) => {
+  return async (request: RenderRequest, response: RenderResponse) => {
     try {
       const store: Store = getStore();
       const routerContext: StaticRouterContext = {};
@@ -44,7 +44,7 @@ export const renderEngine = (stats: AsyncModuleStats) => {
       response.initialState = JSON.stringify(store.getState());
       response.links = extractor.getLinkTags();
       response.styles = extractor.getStyleTags();
-      response.scripts = extractor.getScriptTags();
+      response.scripts = extractor.getScriptTags({ defer: "" });
 
       if (routerContext.url) {
         response.statusCode = 302;

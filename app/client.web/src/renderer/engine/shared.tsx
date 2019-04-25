@@ -8,6 +8,18 @@ import { StaticRouterContext, StaticRouter as Router } from "react-router";
 import { App } from "@client/views/core/App";
 import { HelmetData } from "react-helmet";
 
+export type GetHTMLBitsParams = {
+  appMountPointID: string;
+};
+
+export type GetAppElementParams = {
+  url: string;
+  config: AppConfig;
+  store: Store;
+  extractor: ChunkExtractor;
+  routerContext: StaticRouterContext;
+};
+
 export const getChunkExtractor = (stats: AsyncModuleStats): ChunkExtractor => {
   return new ChunkExtractor({
     stats,
@@ -19,14 +31,6 @@ export const getStore = (): Store => {
   const services = new Services();
   const createStore = storeCreator(services);
   return createStore();
-};
-
-type GetAppElementParams = {
-  url: string;
-  config: AppConfig;
-  store: Store;
-  extractor: ChunkExtractor;
-  routerContext: StaticRouterContext;
 };
 
 export const getAppElement = ({
@@ -53,10 +57,6 @@ export const getMetaTags = (data: HelmetData): string => {
     result += dd[i].toString();
   }
   return result;
-};
-
-export type GetHTMLBitsParams = {
-  appMountPointID: string;
 };
 
 export const getHTMLBits = ({ appMountPointID }: GetHTMLBitsParams) => ({

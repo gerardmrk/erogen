@@ -5,3 +5,9 @@ declare global {
   const INJECTED_APP_CONFIG: AppConfig;
   const INJECTED_APP_MOUNT_POINT_ID: string;
 }
+
+declare module "@loadable/server" {
+  interface ChunkExtractor {
+    getCssString(): Promise<string>;
+  }
+}
