@@ -59,9 +59,12 @@ export const getMetaTags = (data: HelmetData): string => {
   return result;
 };
 
+// export const purifyCSS = (html: string, ) => {};
+
 export const getHTMLBits = ({ appMountPointID }: GetHTMLBitsParams) => ({
   docStart: '<!DOCTYPE html><html><head><meta charset="utf-8"/>',
-  postHeadTags: `<style>html,body,#app-mount-point{width:100%;height:100%;}</style></head><body><noscript>JavaScript must be enabled to run this app.</noscript><div id=${appMountPointID}>`,
+  postHeadTags: `<style>`,
+  postInlineStyles: `</style><style>html,body,#app-mount-point{width:100%;height:100%;}</style></head><body><div id=${appMountPointID}>`,
   postApp: `</div><script>window._INITIAL_STATE_ = `,
   postInitialState: ";</script>",
   docEnd: "</body></html>",

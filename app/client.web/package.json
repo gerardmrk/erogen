@@ -46,6 +46,7 @@
     "i18next-xhr-backend": "^2.0.1",
     "offline-plugin": "^5.0.6",
     "point-of-view": "^3.2.0",
+    "purify-css": "^1.2.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",

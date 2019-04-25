@@ -47,20 +47,19 @@ export const streamEngine = (stats: AsyncModuleStats) => {
         }),
       );
 
-      extractor.getCssString().then(console.log)
-
-
       response.write(getMetaTags(Helmet.renderStatic()));
       response.write(extractor.getLinkTags());
       response.write(extractor.getStyleTags());
       response.write(htmlBits.postHeadTags);
+      response.write(await extractor.getCssString());
+      response.write(htmlBits.postInlineStyles);
 
       appStream.pipe(response, { end: false });
       appStream.on("end", () => {
         response.write(htmlBits.postApp);
         response.write(JSON.stringify(store.getState()));
         response.write(htmlBits.postInitialState);
-        response.write(extractor.getScriptTags({ defer: true }));
+        response.write(extractor.getScriptTags({ defer: "" }));
         response.write(htmlBits.docEnd);
 
         if (routerContext.url) {

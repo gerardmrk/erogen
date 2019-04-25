@@ -42,8 +42,8 @@ export const renderEngine = (stats: AsyncModuleStats) => {
 
       response.metas = getMetaTags(Helmet.renderStatic());
       response.initialState = JSON.stringify(store.getState());
-      response.links = extractor.getLinkTags();
-      response.styles = extractor.getStyleTags();
+      response.links = extractor.getLinkTags() + extractor.getStyleTags();
+      response.styles = await extractor.getCssString();
       response.scripts = extractor.getScriptTags({ defer: "" });
 
       if (routerContext.url) {

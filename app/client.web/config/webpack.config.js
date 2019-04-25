@@ -266,7 +266,7 @@ module.exports = async (args) => {
                 },
                 {
                     test: /\.less$/,
-                    exclude: [/dist/, /node_modules/],
+                    exclude: [/dist/, /node_modules\/(?!(semantic-ui-less\/(themes|definitions))\/).*/],
                     use: [
                         { 
                             loader: ExtractCssChunksPlugin.loader,

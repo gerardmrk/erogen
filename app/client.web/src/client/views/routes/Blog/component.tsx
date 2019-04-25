@@ -3,7 +3,7 @@ import styles from "./component.styles.scss";
 import { Switch } from "react-router-dom";
 import { LocalProps } from ".";
 import EnhancedRoute from "@client/views/components/EnhancedRoute";
-import Container from "@client/views/components/Container";
+import Container from "@client/views/components/ui.elements/Container";
 
 export type Props = LocalProps;
 

@@ -3,6 +3,7 @@ syntax = "proto3";
 message RendererRequest {
     string url = 1;
     string lang = 2;
+    bool authenticated = 3;
 }
 
 message RendererResponse {
