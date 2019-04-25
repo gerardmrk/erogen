@@ -1,16 +1,7 @@
 import "source-map-support/register";
-import {
-  renderEngine,
-  RenderRequest,
-  RenderResponse,
-} from "./engine/render-engine";
 import { RendererRequest, RendererResponse } from "./proto";
-import {
-  streamEngine,
-  StreamRequest,
-  StreamResponse,
-  StreamMetaData,
-} from "./engine/stream-engine";
+import { renderEngine, RenderRequest, RenderResponse } from "./engine/render-engine"; // prettier-ignore
+import { streamEngine, StreamRequest, StreamResponse, StreamMetaData } from "./engine/stream-engine"; // prettier-ignore
 
 const createInitialResponseObject = (): RenderResponse => ({
   statusCode: 200,
@@ -34,8 +25,9 @@ export type RendererOrStreamer<FN> = (stats: AsyncModuleStats) => FN;
 // -------------------------------------------------------------------------------------------------
 // Render JSON
 // -------------------------------------------------------------------------------------------------
-// prettier-ignore
-export const jsonRenderer: RendererOrStreamer<RenderJsonFn> = (stats: AsyncModuleStats) => {
+export const jsonRenderer: RendererOrStreamer<RenderJsonFn> = (
+  stats: AsyncModuleStats,
+) => {
   const render = renderEngine(stats);
 
   return async (request: RenderRequest): Promise<RenderResponse> => {
@@ -51,9 +43,9 @@ export const jsonRenderer: RendererOrStreamer<RenderJsonFn> = (stats: AsyncModul
 // -------------------------------------------------------------------------------------------------
 // Render Protobuf
 // -------------------------------------------------------------------------------------------------
-
-// prettier-ignore
-export const protoRenderer: RendererOrStreamer<RenderProtoFn> = (stats: AsyncModuleStats) => {
+export const protoRenderer: RendererOrStreamer<RenderProtoFn> = (
+  stats: AsyncModuleStats,
+) => {
   const render = renderEngine(stats);
   const textEncoder = new TextEncoder();
 
@@ -81,12 +73,16 @@ export const protoRenderer: RendererOrStreamer<RenderProtoFn> = (stats: AsyncMod
 // -------------------------------------------------------------------------------------------------
 // Stream HTML
 // -------------------------------------------------------------------------------------------------
-
-// prettier-ignore
-export const htmlStreamer: RendererOrStreamer<StreamHtmlFn> = (stats: AsyncModuleStats) => {
+export const htmlStreamer: RendererOrStreamer<StreamHtmlFn> = (
+  stats: AsyncModuleStats,
+) => {
   const stream = streamEngine(stats);
 
-  return async (request: StreamRequest, response: StreamResponse, metaData: StreamMetaData) => {
+  return async (
+    request: StreamRequest,
+    response: StreamResponse,
+    metaData: StreamMetaData,
+  ) => {
     await stream(request, response, metaData);
   };
 };

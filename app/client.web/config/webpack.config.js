@@ -90,6 +90,8 @@ module.exports = async (args) => {
                 // source code
                 "@client": CLIENT_SRC,
                 "@renderer": RENDERER_SRC,
+                // route config
+                "@routeConfig": `${SRC_DIR}/route-config.json`,
                 // semantic ui theming path resolution
                 "@themeStyles": `${ROOT_APP_DIR}/ui-theme/semantic.less`,
                 "../../theme.config$": `${ROOT_APP_DIR}/ui-theme/theme.config`,
