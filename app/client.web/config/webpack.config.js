@@ -129,7 +129,7 @@ module.exports = async (args) => {
                         test: /[\\/]node_modules[\\/]/,
                         name: "vendors",
                         chunks: "all",
-                        maxSize: 80000,
+                        // maxSize: 80000,
                     }
                 }
             },

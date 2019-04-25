@@ -6,7 +6,7 @@
 @headerFont        : @pageFont;
 @fontSmoothing     : antialiased;
 
-@importGoogleFonts : true;
+@importGoogleFonts : false;
 @googleFontName    : 'Lato';
 @googleFontSizes   : '400,700,400italic,700italic';
 @googleFontFamily  : '@{googleFontName}:@{googleFontSizes}';

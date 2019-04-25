@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Form } from "semantic-ui-react";
+import Form from "@client/views/components/ui.collections/Form";
 import styles from "./component.styles.scss";
 
 type Props = {};
