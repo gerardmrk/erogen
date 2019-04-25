@@ -23,6 +23,8 @@ export type RouteConf<P = any> = {
   path?: string;
   // whether this route requires authentication to be accessed.
   guarded: boolean;
+  // whether to prerender this route.
+  prerender?: boolean;
   // the lazy-loaded route component.
   component: LoadableComponent<P>;
   // nested children routes.
@@ -41,12 +43,14 @@ export const routeConfs: RouteConf[] = [
     path: "/login",
     exact: true,
     guarded: false,
+    prerender: true,
     component: loadable(() => import("@client/views/routes/Login")),
   },
   {
     path: DEFAULT_PUBLIC_PATH,
     exact: true,
     guarded: false,
+    prerender: true,
     component: loadable(() => import("@client/views/routes/Landing")),
   },
   {
@@ -54,6 +58,7 @@ export const routeConfs: RouteConf[] = [
     path: "/about/product",
     exact: true,
     guarded: false,
+    prerender: true,
     component: loadable(() => import("@client/views/routes/Product")),
   },
   {
@@ -61,6 +66,7 @@ export const routeConfs: RouteConf[] = [
     path: "/blog",
     exact: false,
     guarded: false,
+    prerender: true,
     component: loadable(() => import("@client/views/routes/Blog")),
     routes: [
       {
@@ -68,6 +74,7 @@ export const routeConfs: RouteConf[] = [
         path: "/blog/:post",
         exact: true,
         guarded: false,
+        prerender: false,
         component: loadable(() => import("@client/views/routes/Blog/BlogPost")),
       },
     ],
@@ -77,6 +84,7 @@ export const routeConfs: RouteConf[] = [
     path: "/documentation",
     exact: true,
     guarded: false,
+    prerender: true,
     component: loadable(() => import("@client/views/routes/Documentation")),
   },
   {
@@ -84,6 +92,7 @@ export const routeConfs: RouteConf[] = [
     path: "/support",
     exact: true,
     guarded: false,
+    prerender: true,
     component: loadable(() => import("@client/views/routes/Support")),
   },
   {
@@ -91,6 +100,7 @@ export const routeConfs: RouteConf[] = [
     path: "/register",
     exact: true,
     guarded: false,
+    prerender: true,
     component: loadable(() => import("@client/views/routes/Register")),
   },
   {
@@ -98,6 +108,7 @@ export const routeConfs: RouteConf[] = [
     path: "/forgot-password",
     exact: true,
     guarded: false,
+    prerender: true,
     component: loadable(() => import("@client/views/routes/ForgotPassword")),
   },
   {
@@ -105,6 +116,7 @@ export const routeConfs: RouteConf[] = [
     path: "/reset-password",
     exact: true,
     guarded: false,
+    prerender: true,
     component: loadable(() => import("@client/views/routes/ResetPassword")),
   },
   {
@@ -112,6 +124,7 @@ export const routeConfs: RouteConf[] = [
     path: "/auth",
     exact: true,
     guarded: false,
+    prerender: true,
     component: loadable(() => import("@client/views/routes/Auth")),
   },
   {
@@ -119,6 +132,7 @@ export const routeConfs: RouteConf[] = [
     path: DEFAULT_PRIVATE_PATH,
     exact: true,
     guarded: true,
+    prerender: false,
     component: loadable(() => import("@client/views/routes/Dashboard")),
   },
   {
@@ -126,6 +140,7 @@ export const routeConfs: RouteConf[] = [
     path: "/feed",
     exact: true,
     guarded: true,
+    prerender: false,
     component: loadable(() => import("@client/views/routes/HomeFeed")),
   },
   {
@@ -133,6 +148,7 @@ export const routeConfs: RouteConf[] = [
     path: "/settings",
     exact: false,
     guarded: true,
+    prerender: false,
     component: loadable(() => import("@client/views/routes/Settings")),
     routes: [
       {
@@ -140,6 +156,7 @@ export const routeConfs: RouteConf[] = [
         path: "/settings/profile",
         exact: true,
         guarded: true,
+        prerender: false,
         component: loadable(() => import("@client/views/routes/Settings/ProfileSettings")),
       },
       {
@@ -147,6 +164,7 @@ export const routeConfs: RouteConf[] = [
         path: "/settings/account",
         exact: true,
         guarded: true,
+        prerender: false,
         component: loadable(() => import("@client/views/routes/Settings/AccountSettings")),
       },
     ],
@@ -156,6 +174,7 @@ export const routeConfs: RouteConf[] = [
     path: "/maintenance",
     exact: true,
     guarded: false,
+    prerender: true,
     component: loadable(() => import("@client/views/routes/Maintenance")),
   },
   {
@@ -163,6 +182,7 @@ export const routeConfs: RouteConf[] = [
     path: "/user/:user",
     exact: true,
     guarded: false,
+    prerender: true,
     component: loadable(() => import("@client/views/routes/Profile")),
   },
   {
@@ -171,6 +191,7 @@ export const routeConfs: RouteConf[] = [
     path: "/500",
     exact: true,
     guarded: false,
+    prerender: true,
     component: loadable(() => import("@client/views/routes/ServerError")),
   },
   {
@@ -178,6 +199,7 @@ export const routeConfs: RouteConf[] = [
     title: "404 Not Found",
     exact: false,
     guarded: false,
+    prerender: true,
     component: loadable(() => import("@client/views/routes/NotFound")),
   },
 ];

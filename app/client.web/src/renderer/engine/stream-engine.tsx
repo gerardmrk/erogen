@@ -42,12 +42,18 @@ export const streamEngine = (stats: AsyncModuleStats) => {
         extractor,
         headContext,
         routerContext,
-      })
+      });
+
+      // TODO: :(
+
+      // well... looks like this is not yet viable
+      // both react-helmet and react-helmet-async have race-conditions
+      // when using streaming...
 
       const appStream = ReactDOMServer.renderToNodeStream(app);
 
       response.write(htmlBits.docStart);
-      response.write(getMetaTags(headContext["helmet"].renderStatic()));
+      response.write(getMetaTags(headContext["helmet"]));
       response.write(extractor.getLinkTags());
       response.write(extractor.getStyleTags());
       response.write(htmlBits.postHeadTags);
@@ -55,6 +61,7 @@ export const streamEngine = (stats: AsyncModuleStats) => {
       response.write(htmlBits.postInlineStyles);
 
       appStream.pipe(response, { end: false });
+
       appStream.on("end", () => {
         response.write(htmlBits.postApp);
         response.write(JSON.stringify(store.getState()));

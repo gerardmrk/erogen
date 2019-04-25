@@ -570,6 +570,14 @@ module.exports = async (args) => {
                 minRatio: 0.8,
             }),
 
+            prodMode && clientBuild && new CompressionPlugin({
+                filename: "[path].br[query]",
+                algorithm: "brotliCompress",
+                test: new RegExp("\\.(js|css)$"),
+                minRatio: 0.8,
+                compressionOptions: { level: 11 },
+            }),
+
             clientBuild && new RemoveServiceWorkerPlugin(),
 
             clientBuild && new OfflinePlugin({

@@ -49,6 +49,7 @@ export class AppService {
     try {
       const metaData: StreamMetaData = {};
       await this.streamHTML({ url, lang }, resp, metaData);
+      // console.log(metaData);
     } catch (err) {
       console.error(err);
       throw err;

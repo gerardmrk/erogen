@@ -41,7 +41,7 @@ export const renderEngine = (stats: AsyncModuleStats) => {
 
       response.app = ReactDOMServer.renderToString(app);
 
-      response.metas = getMetaTags(headContext["helmet"].renderStatic());
+      response.metas = getMetaTags(headContext["helmet"]);
       response.initialState = JSON.stringify(store.getState());
       response.links = extractor.getLinkTags() + extractor.getStyleTags();
       response.styles = await extractor.getCssString();
