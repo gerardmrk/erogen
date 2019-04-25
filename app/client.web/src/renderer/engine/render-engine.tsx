@@ -2,7 +2,6 @@ import * as ReactDOMServer from "react-dom/server";
 import { Overwrite } from "utility-types";
 import { IRendererRequest, IRendererResponse } from "@renderer/proto";
 import { StaticRouterContext } from "react-router";
-import Helmet from "react-helmet";
 import {
   getChunkExtractor,
   getStore,
@@ -28,19 +27,21 @@ export const renderEngine = (stats: AsyncModuleStats) => {
   return async (request: RenderRequest, response: RenderResponse) => {
     try {
       const store: Store = getStore();
+      const headContext: object = {};
       const routerContext: StaticRouterContext = {};
 
-      response.app = ReactDOMServer.renderToString(
-        getAppElement({
-          url: request.url || "/",
-          config: INJECTED_APP_CONFIG,
-          store,
-          extractor,
-          routerContext,
-        }),
-      );
+      const app = getAppElement({
+        url: request.url || "/",
+        config: INJECTED_APP_CONFIG,
+        store,
+        extractor,
+        headContext,
+        routerContext,
+      });
 
-      response.metas = getMetaTags(Helmet.renderStatic());
+      response.app = ReactDOMServer.renderToString(app);
+
+      response.metas = getMetaTags(headContext["helmet"].renderStatic());
       response.initialState = JSON.stringify(store.getState());
       response.links = extractor.getLinkTags() + extractor.getStyleTags();
       response.styles = await extractor.getCssString();

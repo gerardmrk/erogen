@@ -9,7 +9,6 @@ import {
 } from "./shared";
 import { Store } from "@client/store";
 import { StaticRouterContext } from "react-router";
-import Helmet from "react-helmet";
 
 export type StreamRequest = IRendererRequest;
 
@@ -33,21 +32,22 @@ export const streamEngine = (stats: AsyncModuleStats) => {
       });
 
       const store: Store = getStore();
+      const headContext: object = {};
       const routerContext: StaticRouterContext = {};
 
+      const app = getAppElement({
+        url: request.url || "/",
+        config: INJECTED_APP_CONFIG,
+        store,
+        extractor,
+        headContext,
+        routerContext,
+      })
+
+      const appStream = ReactDOMServer.renderToNodeStream(app);
+
       response.write(htmlBits.docStart);
-
-      const appStream = ReactDOMServer.renderToNodeStream(
-        getAppElement({
-          url: request.url || "/",
-          config: INJECTED_APP_CONFIG,
-          store,
-          extractor,
-          routerContext,
-        }),
-      );
-
-      response.write(getMetaTags(Helmet.renderStatic()));
+      response.write(getMetaTags(headContext["helmet"].renderStatic()));
       response.write(extractor.getLinkTags());
       response.write(extractor.getStyleTags());
       response.write(htmlBits.postHeadTags);

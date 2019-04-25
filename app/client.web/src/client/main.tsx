@@ -5,6 +5,7 @@ import { loadableReady } from "@loadable/component";
 import { Provider as StoreProvider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { I18nextProvider as I18nProvider } from "react-i18next";
+import { HelmetProvider as HeadProvider } from "react-helmet-async";
 
 import { Services } from "@client/services";
 import { storeCreator, State } from "@client/store";
@@ -38,11 +39,13 @@ type AppParams = {
   render(
     <ConfigProvider config={config}>
       <I18nProvider i18n={i18n}>
-        <StoreProvider store={store}>
-          <Router>
-            <App />
-          </Router>
-        </StoreProvider>
+        <HeadProvider>
+          <StoreProvider store={store}>
+            <Router>
+              <App />
+            </Router>
+          </StoreProvider>
+        </HeadProvider>
       </I18nProvider>
     </ConfigProvider>,
     document.getElementById(appMountPointID),
