@@ -1,8 +1,8 @@
-import { promises } from "fs";
+// import { promises } from "fs";
 import { NestMiddleware, Req, Res, Injectable } from "@nestjs/common";
 import { SrvRequest, SrvResponse } from "..";
 
-const { access: fsAccess } = promises;
+// const { access: fsAccess } = promises;
 
 @Injectable()
 export class StaticAssetsMiddleware implements NestMiddleware {
@@ -12,7 +12,7 @@ export class StaticAssetsMiddleware implements NestMiddleware {
     next: () => void,
   ) {
     // if (!req.url.startsWith)
-    let ext = "";
+    // let ext = "";
     if (req.acceptedEncodings.includes) {
       if (req.acceptedEncodings.includes("br")) ext = "br";
       if (req.acceptedEncodings.includes("gzip")) ext = "gz";
