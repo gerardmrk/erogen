@@ -21,3 +21,7 @@ export default Button;
 ```
 
 This is so we can utilise **Webpack**'s tree-shaking feature for the library's styles; rather than importing the whole library's stylesheet (250kb) at the entrypoint, only styles for individual components are bundled when importing from the re-exported files.
+
+***NOTE:** do not use the sub-component APIs where the components themselves are top-level components. e.g. `Form.Input`, `Form.Checkbox`, `Dropdown.Divider` etc, since it means the bundler has no knowledge of their re-exported styles and your UI/layout will break.*
+
+*On top of that, the docs have stated buggy state support when using various sub-component APIs. Just avoid them like the plague and put in the additional minute hard work into manually importing them from the re-exported entrypoints.*
