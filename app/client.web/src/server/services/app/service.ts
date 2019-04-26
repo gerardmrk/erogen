@@ -5,13 +5,14 @@ import asyncModuleStats from "dist/client/async-modules.json";
 import { RenderResponse } from "@renderer/engine/render-engine";
 import { RenderJsonFn, StreamHtmlFn } from "@renderer/index";
 import { StreamMetaData } from "@renderer/engine/stream-engine";
+import { IAppService } from ".";
 
 @Injectable({
   scope: Scope.DEFAULT,
 })
-export class AppService {
-  private renderJSON: RenderJsonFn;
-  private streamHTML: StreamHtmlFn;
+export class AppService implements IAppService {
+  private getJSON: RenderJsonFn;
+  private getStream: StreamHtmlFn;
 
   public constructor() {
     // TODO: add cache store - publ routes
@@ -23,16 +24,16 @@ export class AppService {
     // TODO: test proto
     // TODO: renderer.readJSON()
     // TODO: renderer.readProto()
-    this.renderJSON = jsonRenderer(asyncModuleStats);
-    this.streamHTML = htmlStreamer(asyncModuleStats);
+    this.getJSON = jsonRenderer(asyncModuleStats);
+    this.getStream = htmlStreamer(asyncModuleStats);
   }
 
-  public async getHtmlData(
+  public async getHtmlJsonData(
     url: string,
     lang: string = "en",
   ): Promise<RenderResponse> {
     try {
-      const data = await this.renderJSON({ url, lang });
+      const data = await this.getJSON({ url, lang });
       if (!!data.error) throw data.error;
       return data;
     } catch (err) {
@@ -41,15 +42,22 @@ export class AppService {
     }
   }
 
-  public async streamHtmlPage(
+  public async getHtmlProtoData(
+    url: string,
+    lang: string = "en",
+  ): Promise<Uint8Array> {
+    throw new Error("NotImplemented");
+  }
+
+  public async streamHtml(
     resp: NodeJS.WritableStream,
     url: string,
     lang: string = "en",
-  ): Promise<void> {
+  ): Promise<StreamMetaData> {
     try {
       const metaData: StreamMetaData = {};
-      await this.streamHTML({ url, lang }, resp, metaData);
-      // console.log(metaData);
+      await this.getStream({ url, lang }, resp, metaData);
+      return metaData;
     } catch (err) {
       console.error(err);
       throw err;
