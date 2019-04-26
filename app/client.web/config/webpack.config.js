@@ -235,8 +235,8 @@ module.exports = async (args) => {
                         { 
                             loader: ExtractCssChunksPlugin.loader,
                             options: {
-                              hmr: devMode,
-                              reloadAll: devMode,
+                                hmr: devMode,
+                                reloadAll: devMode,
                             },
                         },
                         {
@@ -273,7 +273,8 @@ module.exports = async (args) => {
                         { 
                             loader: ExtractCssChunksPlugin.loader,
                             options: {
-                              hmr: devMode,
+                                hmr: devMode,
+                                reloadAll: true
                             },
                         },
                         {
