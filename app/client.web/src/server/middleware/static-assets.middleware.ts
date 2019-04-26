@@ -12,7 +12,8 @@ export class StaticAssetsMiddleware implements NestMiddleware {
     next: () => void,
   ) {
     // if (!req.url.startsWith)
-    // let ext = "";
+    // @ts-ignore
+    let ext = "";
     if (req.acceptedEncodings.includes) {
       if (req.acceptedEncodings.includes("br")) ext = "br";
       if (req.acceptedEncodings.includes("gzip")) ext = "gz";
