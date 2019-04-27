@@ -273,7 +273,7 @@ module.exports = async (args) => {
                             loader: ExtractCssChunksPlugin.loader,
                             options: {
                                 hmr: devMode,
-                                reloadAll: true
+                                reloadAll: devMode,
                             },
                         },
                         {

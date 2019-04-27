@@ -1,15 +1,13 @@
 /*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
-"use strict";
-
-var $protobuf = require("protobufjs/minimal");
+import * as $protobuf from "protobufjs/minimal";
 
 // Common aliases
-var $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
+const $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
 
 // Exported root namespace
-var $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
+const $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
 
-$root.RendererRequest = (function() {
+export const RendererRequest = $root.RendererRequest = (() => {
 
     /**
      * Properties of a RendererRequest.
@@ -30,7 +28,7 @@ $root.RendererRequest = (function() {
      */
     function RendererRequest(properties) {
         if (properties)
-            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                 if (properties[keys[i]] != null)
                     this[keys[i]] = properties[keys[i]];
     }
@@ -119,9 +117,9 @@ $root.RendererRequest = (function() {
     RendererRequest.decode = function decode(reader, length) {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
-        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.RendererRequest();
+        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.RendererRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            let tag = reader.uint32();
             switch (tag >>> 3) {
             case 1:
                 message.url = reader.string();
@@ -190,7 +188,7 @@ $root.RendererRequest = (function() {
     RendererRequest.fromObject = function fromObject(object) {
         if (object instanceof $root.RendererRequest)
             return object;
-        var message = new $root.RendererRequest();
+        let message = new $root.RendererRequest();
         if (object.url != null)
             message.url = String(object.url);
         if (object.lang != null)
@@ -212,7 +210,7 @@ $root.RendererRequest = (function() {
     RendererRequest.toObject = function toObject(message, options) {
         if (!options)
             options = {};
-        var object = {};
+        let object = {};
         if (options.defaults) {
             object.url = "";
             object.lang = "";
@@ -241,7 +239,7 @@ $root.RendererRequest = (function() {
     return RendererRequest;
 })();
 
-$root.RendererResponse = (function() {
+export const RendererResponse = $root.RendererResponse = (() => {
 
     /**
      * Properties of a RendererResponse.
@@ -270,7 +268,7 @@ $root.RendererResponse = (function() {
      */
     function RendererResponse(properties) {
         if (properties)
-            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                 if (properties[keys[i]] != null)
                     this[keys[i]] = properties[keys[i]];
     }
@@ -439,9 +437,9 @@ $root.RendererResponse = (function() {
     RendererResponse.decode = function decode(reader, length) {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
-        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.RendererResponse();
+        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.RendererResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            let tag = reader.uint32();
             switch (tag >>> 3) {
             case 1:
                 message.statusCode = reader.int32();
@@ -515,7 +513,7 @@ $root.RendererResponse = (function() {
             if (!$util.isInteger(message.statusCode))
                 return "statusCode: integer expected";
         if (message.error != null && message.hasOwnProperty("error")) {
-            var error = $root.RendererResponse.RenderError.verify(message.error);
+            let error = $root.RendererResponse.RenderError.verify(message.error);
             if (error)
                 return "error." + error;
         }
@@ -560,7 +558,7 @@ $root.RendererResponse = (function() {
     RendererResponse.fromObject = function fromObject(object) {
         if (object instanceof $root.RendererResponse)
             return object;
-        var message = new $root.RendererResponse();
+        let message = new $root.RendererResponse();
         if (object.statusCode != null)
             message.statusCode = object.statusCode | 0;
         if (object.error != null) {
@@ -619,7 +617,7 @@ $root.RendererResponse = (function() {
     RendererResponse.toObject = function toObject(message, options) {
         if (!options)
             options = {};
-        var object = {};
+        let object = {};
         if (options.defaults) {
             object.statusCode = 0;
             object.error = null;
@@ -725,7 +723,7 @@ $root.RendererResponse = (function() {
          */
         function RenderError(properties) {
             if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -804,9 +802,9 @@ $root.RendererResponse = (function() {
         RenderError.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.RendererResponse.RenderError();
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.RendererResponse.RenderError();
             while (reader.pos < end) {
-                var tag = reader.uint32();
+                let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.message = reader.string();
@@ -869,7 +867,7 @@ $root.RendererResponse = (function() {
         RenderError.fromObject = function fromObject(object) {
             if (object instanceof $root.RendererResponse.RenderError)
                 return object;
-            var message = new $root.RendererResponse.RenderError();
+            let message = new $root.RendererResponse.RenderError();
             if (object.message != null)
                 message.message = String(object.message);
             if (object.stackTrace != null)
@@ -889,7 +887,7 @@ $root.RendererResponse = (function() {
         RenderError.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            var object = {};
+            let object = {};
             if (options.defaults) {
                 object.message = "";
                 object.stackTrace = "";
@@ -918,4 +916,4 @@ $root.RendererResponse = (function() {
     return RendererResponse;
 })();
 
-module.exports = $root;
+export { $root as default };

@@ -10,7 +10,7 @@
     "app:test": "cross-env NODE_ENV=test jest --config=./config/jest.config.js --logHeapUsage --forceExit --detectOpenHandles",
     "rdr:start": "",
     "rdr:build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack --config=config/webpack.config.js --env.mode=production --env.source=renderer --env.sourceMap=true",
-    "rdr:proto:js": "./node_modules/.bin/pbjs -t static-module -w commonjs -o ./src/renderer/proto/index.js ./src/renderer.proto; ./node_modules/.bin/pbts -o ./src/renderer/proto/index.d.ts ./src/renderer/proto/index.js",
+    "rdr:proto:js": "./node_modules/.bin/pbjs -t static-module -w es6 -o ./src/renderer/proto/index.js ./src/renderer.proto; ./node_modules/.bin/pbts -o ./src/renderer/proto/index.d.ts ./src/renderer/proto/index.js",
     "rdr:proto:go": "protoc --go_out=./src/server/internal ./src/renderer.proto",
     "srv:build": "tsc -p tsconfig.build.json",
     "srv:format": "prettier --write \"src/**/*.ts\"",
