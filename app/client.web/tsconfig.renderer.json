@@ -4,6 +4,9 @@
     "moduleResolution": "node",
     "module": "esnext",
     "target": "esnext",
-    "sourceMap": true
+    "sourceMap": true,
+    "rootDir": "src/renderer",
+    "declaration": true,
+    "allowJs": false
   }
 }

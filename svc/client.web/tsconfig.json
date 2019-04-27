@@ -1,15 +1,16 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "target": "es6",
     "sourceMap": true,
     "outDir": "./dist",
-    "noUnusedLocals": false,
-    "noUnusedParameters": false
-  }
+    "baseUrl": "./"
+  },
+  "exclude": ["node_modules"]
 }
