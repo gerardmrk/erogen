@@ -562,11 +562,6 @@ module.exports = async (args) => {
                 },
             }),
 
-            clientBuild && new HtmlIncludeAssetsPlugin({
-                append: false,
-                assets: []
-            }),
-
             new SubresourceIntegrityPlugin({
                 enabled: prodMode && clientBuild,
                 hashFuncNames: ["sha256", "sha512"],
@@ -593,7 +588,7 @@ module.exports = async (args) => {
                 caches: "all",
                 appShell: "/",
                 responseStrategy: devMode ? "network-first" : "cache-first",
-                excludes: ["**/*.map", "index.gohtml"],
+                excludes: ["**/*.map", "index.html"],
                 autoUpdate: 1000 * 60 * 3,
                 AppCache: false,
                 ServiceWorker: {
