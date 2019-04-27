@@ -1,6 +1,6 @@
 import { Injectable, Scope } from '@nestjs/common';
 // @ts-ignore
-import { jsonRenderer, htmlStreamer, htmlRenderer } from '@local/renderer';
+import { jsonRenderer, htmlStreamer, htmlRenderer } from '@app/client.web';
 // import { RenderResponse } from '@renderer/engine/render-engine';
 // import { RenderJsonFn, StreamHtmlFn } from '@renderer/index';
 // import { StreamMetaData } from '@renderer/engine/stream-engine';

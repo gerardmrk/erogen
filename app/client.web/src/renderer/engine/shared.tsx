@@ -37,6 +37,18 @@ export const getStore = (): Store => {
   return createStore();
 };
 
+export const stripUnusedCSS = async (
+  html: string,
+  css: string,
+): Promise<string> => {
+  return css;
+  // return new Promise(resolve => {
+  //   purifyCSS(html, css, { minify: true }, (purified: string) => {
+  //     return resolve(purified);
+  //   });
+  // });
+};
+
 export const getAppElement = ({
   url,
   config,

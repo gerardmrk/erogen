@@ -1,5 +1,5 @@
 {
-  "name": "client.web",
+  "name": "@svc/client.web",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -23,7 +23,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@local/renderer": "../../app/client.web",
+    "@app/client.web": "../../app/client.web",
     "@nestjs/common": "^6.1.1",
     "@nestjs/core": "^6.1.1",
     "@nestjs/platform-fastify": "^6.1.1",

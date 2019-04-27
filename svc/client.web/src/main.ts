@@ -7,7 +7,7 @@ import { ApplicationModule } from './app.module';
 const assetsDir = resolve(
   __dirname,
   '..',
-  'node_modules/@local/renderer/dist/client',
+  'node_modules/@app/client.web/dist/client',
 );
 
 (async function bootstrap() {

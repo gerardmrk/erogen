@@ -7,6 +7,7 @@ import {
   getStore,
   getAppElement,
   getMetaTags,
+  stripUnusedCSS,
 } from "./shared";
 import { Store } from "@client/store";
 
@@ -42,11 +43,20 @@ export const renderEngine = () => {
       });
 
       response.app = ReactDOMServer.renderToString(app);
+
       response.lang = request.lang;
+
       response.metas = getMetaTags(headContext["helmet"]);
+
       response.initialState = JSON.stringify(store.getState());
+
       response.links = extractor.getLinkTags() + extractor.getStyleTags();
-      response.styles = await extractor.getCssString();
+
+      response.styles = await stripUnusedCSS(
+        response.app,
+        await extractor.getCssString(),
+      );
+
       response.scripts = extractor.getScriptTags({ defer: "" });
 
       if (routerContext.url) {
