@@ -11,18 +11,20 @@ import {
 import { Store } from "@client/store";
 
 export type RenderRequest = IRendererRequest;
-// prettier-ignore
-export type RenderResponse = Overwrite<IRendererResponse, {
+export type RenderResponse = Overwrite<
+  IRendererResponse,
+  {
     metas: string | undefined;
     app: string | undefined;
     links: string | undefined;
     styles: string | undefined;
     scripts: string | undefined;
     initialState: string | undefined;
-}>;
+  }
+>;
 
-export const renderEngine = (stats: AsyncModuleStats) => {
-  const extractor = getChunkExtractor(stats);
+export const renderEngine = () => {
+  const extractor = getChunkExtractor();
 
   return async (request: RenderRequest, response: RenderResponse) => {
     try {

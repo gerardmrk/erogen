@@ -1,18 +1,17 @@
-import { Injectable, Scope } from "@nestjs/common";
+import { Injectable, Scope } from '@nestjs/common';
 // @ts-ignore
-import { jsonRenderer, htmlStreamer } from "dist/renderer";
-import asyncModuleStats from "dist/client/async-modules.json";
-import { RenderResponse } from "@renderer/engine/render-engine";
-import { RenderJsonFn, StreamHtmlFn } from "@renderer/index";
-import { StreamMetaData } from "@renderer/engine/stream-engine";
-import { IAppService } from ".";
+import { jsonRenderer, htmlStreamer } from '@local/renderer';
+// import { RenderResponse } from '@renderer/engine/render-engine';
+// import { RenderJsonFn, StreamHtmlFn } from '@renderer/index';
+// import { StreamMetaData } from '@renderer/engine/stream-engine';
+import { IAppService } from '.';
 
 @Injectable({
   scope: Scope.DEFAULT,
 })
 export class AppService implements IAppService {
-  private getJSON: RenderJsonFn;
-  private getStream: StreamHtmlFn;
+  private getJSON;
+  private getStream;
 
   public constructor() {
     // TODO: add cache store - publ routes
@@ -20,46 +19,41 @@ export class AppService implements IAppService {
 
     // TODO: intercept or prevent egress API calls from renderer
     // ----> find and replace with regex: fetch?? renderer build phase only
-
-    // TODO: test proto
-    // TODO: renderer.readJSON()
-    // TODO: renderer.readProto()
-    this.getJSON = jsonRenderer(asyncModuleStats);
-    this.getStream = htmlStreamer(asyncModuleStats);
+    this.getJSON = jsonRenderer();
+    this.getStream = htmlStreamer();
   }
 
-  public async getHtmlJsonData(
-    url: string,
-    lang: string = "en",
-  ): Promise<RenderResponse> {
+  public async getHtmlJsonData(url: string, lang: string = 'en'): Promise<any> {
     try {
       const data = await this.getJSON({ url, lang });
-      if (!!data.error) throw data.error;
+      if (!!data.error) {
+        throw data.error;
+      }
       return data;
     } catch (err) {
-      console.error(err);
+      console.error(err); // tslint:disable-line
       throw err;
     }
   }
 
   public async getHtmlProtoData(
     url: string,
-    lang: string = "en",
+    lang: string = 'en',
   ): Promise<Uint8Array> {
-    throw new Error("NotImplemented");
+    throw new Error('NotImplemented');
   }
 
   public async streamHtml(
     resp: NodeJS.WritableStream,
     url: string,
-    lang: string = "en",
-  ): Promise<StreamMetaData> {
+    lang: string = 'en',
+  ): Promise<any> {
     try {
-      const metaData: StreamMetaData = {};
+      const metaData = {};
       await this.getStream({ url, lang }, resp, metaData);
       return metaData;
     } catch (err) {
-      console.error(err);
+      console.error(err); // tslint:disable-line
       throw err;
     }
   }

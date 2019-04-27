@@ -20,8 +20,8 @@ export type StreamMetaData = Pick<
 >;
 
 // prettier-ignore
-export const streamEngine = (stats: AsyncModuleStats) => {
-  const extractor = getChunkExtractor(stats);
+export const streamEngine = () => {
+  const extractor = getChunkExtractor();
 
   return async (request: StreamRequest, response: StreamResponse, metaData: StreamMetaData) => {
     const timerStart = process.hrtime.bigint();

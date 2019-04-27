@@ -4,11 +4,11 @@ import { routeConfs, RouteConf } from "@client/views/conf.routes";
 // -------------------------------------------------------------------------------------------------
 // Prerender
 // -------------------------------------------------------------------------------------------------
-export const prerenderRoutes = (stats: AsyncModuleStats) => {
+export const prerenderRoutes = () => {
   const prerenderables: RouteConf[] = [];
   extractPrerenderableRoutes(prerenderables, routeConfs);
 
-  const renderJSON = jsonRenderer(stats);
+  const renderJSON = jsonRenderer();
 
   return async () => {
     return await Promise.all(

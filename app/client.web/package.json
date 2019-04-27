@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "web app",
   "main": "dist/renderer/index.js",
+  "engines": {
+    "node": ">=0.11.4"
+  },
   "scripts": {
     "start": "npm run app:start",
     "build": "npm run app:build",

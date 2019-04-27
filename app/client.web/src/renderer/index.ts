@@ -21,15 +21,13 @@ export type RenderJsonFn = (request: RenderRequest) => Promise<RenderResponse>;
 export type RenderProtoFn = (input: Uint8Array) => Promise<Uint8Array>;
 export type StreamHtmlFn = (request: StreamRequest, response: StreamResponse, metaData: StreamMetaData) => Promise<void>; // prettier-ignore
 
-export type RendererOrStreamer<FN> = (stats: AsyncModuleStats) => FN;
+export type RendererOrStreamer<FN> = () => FN;
 
 // -------------------------------------------------------------------------------------------------
 // Render JSON
 // -------------------------------------------------------------------------------------------------
-export const jsonRenderer: RendererOrStreamer<RenderJsonFn> = (
-  stats: AsyncModuleStats,
-) => {
-  const render = renderEngine(stats);
+export const jsonRenderer: RendererOrStreamer<RenderJsonFn> = () => {
+  const render = renderEngine();
 
   return async (request: RenderRequest): Promise<RenderResponse> => {
     const timerStart = process.hrtime.bigint();
@@ -44,10 +42,8 @@ export const jsonRenderer: RendererOrStreamer<RenderJsonFn> = (
 // -------------------------------------------------------------------------------------------------
 // Render Protobuf
 // -------------------------------------------------------------------------------------------------
-export const protoRenderer: RendererOrStreamer<RenderProtoFn> = (
-  stats: AsyncModuleStats,
-) => {
-  const render = renderEngine(stats);
+export const protoRenderer: RendererOrStreamer<RenderProtoFn> = () => {
+  const render = renderEngine();
   const textEncoder = new TextEncoder();
 
   return async (input: Uint8Array): Promise<Uint8Array> => {
@@ -75,10 +71,8 @@ export const protoRenderer: RendererOrStreamer<RenderProtoFn> = (
 // -------------------------------------------------------------------------------------------------
 // Stream HTML
 // -------------------------------------------------------------------------------------------------
-export const htmlStreamer: RendererOrStreamer<StreamHtmlFn> = (
-  stats: AsyncModuleStats,
-) => {
-  const stream = streamEngine(stats);
+export const htmlStreamer: RendererOrStreamer<StreamHtmlFn> = () => {
+  const stream = streamEngine();
 
   return async (
     request: StreamRequest,

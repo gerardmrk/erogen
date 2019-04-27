@@ -19,18 +19,14 @@ type ConnectionsCache = {
 
 type ServerParams = {
   socketFile: string;
-  asyncModuleStats: AsyncModuleStats;
 };
 
-export const server = async ({
-  socketFile,
-  asyncModuleStats,
-}: ServerParams) => {
+export const server = async ({ socketFile }: ServerParams) => {
   try {
     await tryRemovePrevSocketFile(socketFile);
 
     const connsCache: ConnectionsCache = {};
-    const socketSrv = await createServer(asyncModuleStats, connsCache);
+    const socketSrv = await createServer(connsCache);
 
     process.on("SIGINT", () => {
       closeConnections(socketSrv, connsCache);
@@ -55,11 +51,8 @@ async function tryRemovePrevSocketFile(socketFile) {
   }
 }
 
-async function createServer(
-  stats: AsyncModuleStats,
-  connsCache: ConnectionsCache,
-) {
-  const render = jsonRenderer(stats);
+async function createServer(connsCache: ConnectionsCache) {
+  const render = jsonRenderer();
 
   return net.createServer((conn: net.Socket) => {
     const connID = uuidv4();

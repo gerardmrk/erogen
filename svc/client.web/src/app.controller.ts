@@ -1,6 +1,6 @@
 import { Controller, Get, Req, Render, Inject } from '@nestjs/common';
-import { SrvRequest } from '../../../app/client.web/src/server';
 import { IAppService, APP_SERVICE } from './services/app';
+import { SrvRequest } from 'src';
 // import { FastifyRequest, FastifyReply } from "fastify";
 // import { IncomingMessage, ServerResponse } from "http";
 
@@ -11,7 +11,7 @@ export class AppController {
   @Get('*')
   @Render('index.ssr.hbs')
   public async indexHTML(@Req() req: SrvRequest) {
-    return await this.appService.getHtmlJsonData(<string>req.url, 'en');
+    return await this.appService.getHtmlJsonData(req.url as string, 'en');
   }
 
   // @Get("*")

@@ -7,6 +7,8 @@ import { Provider as StoreProvider } from "react-redux";
 import { StaticRouterContext, StaticRouter as Router } from "react-router";
 import { App } from "@client/views/core/App";
 import { HelmetProvider as HeadProvider } from "react-helmet-async";
+// @ts-ignore
+import stats from "dist/client/async-modules.json";
 
 export type GetHTMLBitsParams = {
   lang: string;
@@ -22,7 +24,7 @@ export type GetAppElementParams = {
   routerContext: StaticRouterContext;
 };
 
-export const getChunkExtractor = (stats: AsyncModuleStats): ChunkExtractor => {
+export const getChunkExtractor = (): ChunkExtractor => {
   return new ChunkExtractor({
     stats,
     entrypoints: ["app"],

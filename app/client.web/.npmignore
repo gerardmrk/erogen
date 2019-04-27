@@ -1,0 +1,4 @@
+.cache/
+config/
+src/
+node_modules/

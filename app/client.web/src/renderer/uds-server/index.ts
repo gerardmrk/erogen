@@ -1,33 +1,15 @@
-import { readFile } from "fs";
-import { promisify } from "util";
 import parseargs from "minimist";
 import udsServer from "./server";
-
-const readFileAsync = promisify(readFile);
 
 const main = async (settings: parseargs.ParsedArgs) => {
   try {
     validateSettings(settings);
 
-    let asyncModuleStats: AsyncModuleStats;
-    if (!settings["statsfile"]) {
-      asyncModuleStats = <AsyncModuleStats>(
-        await import("dist/client/async-modules.json")
-      );
-    } else {
-      asyncModuleStats = JSON.parse(
-        await readFileAsync(settings["statsfile"], "utf8")
-      );
-    }
-
     const socketFile = settings["addr"];
 
     switch (<string>settings.mode) {
       case "uds":
-        await udsServer({
-          socketFile,
-          asyncModuleStats: <any>asyncModuleStats
-        });
+        await udsServer({ socketFile });
       default:
         return;
     }

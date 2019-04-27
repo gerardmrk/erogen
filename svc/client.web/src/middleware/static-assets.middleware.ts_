@@ -1,6 +1,6 @@
 // import { promises } from "fs";
-import { NestMiddleware, Req, Res, Injectable } from "@nestjs/common";
-import { SrvRequest, SrvResponse } from "..";
+import { NestMiddleware, Req, Res, Injectable } from '@nestjs/common';
+import { SrvRequest, SrvResponse } from '..';
 
 // const { access: fsAccess } = promises;
 
@@ -13,10 +13,10 @@ export class StaticAssetsMiddleware implements NestMiddleware {
   ) {
     // if (!req.url.startsWith)
     // @ts-ignore
-    let ext = "";
+    let ext = '';
     if (req.acceptedEncodings.includes) {
-      if (req.acceptedEncodings.includes("br")) ext = "br";
-      if (req.acceptedEncodings.includes("gzip")) ext = "gz";
+      if (req.acceptedEncodings.includes('br')) ext = 'br';
+      if (req.acceptedEncodings.includes('gzip')) ext = 'gz';
     }
 
     next();
