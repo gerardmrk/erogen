@@ -14,7 +14,7 @@ const ExtractCssChunksPlugin = require("mini-css-extract-plugin");
 const CommonJSTreeShakePlugin = require("webpack-common-shake").Plugin;
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PurgeCSSPlugin = require("purgecss-webpack-plugin");
-// const FaviconsPlugin = require("favicons-webpack-plugin");
+const FaviconsPlugin = require("webapp-webpack-plugin");
 const HtmlIncludeAssetsPlugin = require("html-webpack-include-assets-plugin");
 const HtmlPlugin = require("html-webpack-plugin");
 const HtmlScriptExtPlugin = require("script-ext-html-webpack-plugin");
@@ -530,31 +530,33 @@ module.exports = async (args) => {
                 },
             }),
 
-            clientBuild && new HtmlScriptExtPlugin({
+            prodMode && clientBuild && new HtmlScriptExtPlugin({
                 defaultAttribute: "defer"
             }),
 
-            // prodMode && clientBuild && new FaviconsPlugin({
-            //     logo: `${ROOT_CONFIG_DIR}/logo/logo.png`,
-            //     prefix: `icons-[hash]/`,
-            //     emitStats: true,
-            //     statsFilename: `iconstats-[hash].json`,
-            //     persistentCache: true,
-            //     inject: true,
-            //     background: "#fff",
-            //     title: appConfig.appName,
-            //     icons: {
-            //         android: true,
-            //         appleIcon: true,
-            //         appleStartup: true,
-            //         coast: false,
-            //         favicons: true,
-            //         firefox: false,
-            //         opengraph: true,
-            //         twitter: false,
-            //         windows: false,
-            //     },
-            // }),
+            prodMode && clientBuild && new FaviconsPlugin({
+                logo: `${ROOT_CONFIG_DIR}/logo/logo.png`,
+                cache: true,
+                prefix: "icons/",
+                inject: "force",
+                favicons: {
+                    background: "#ddd",
+                    theme_color: "#333",
+                    appName: appConfig.appName,
+                    appDescription: appConfig.appDescription,
+                    icons: {
+                        android: true,
+                        appleIcon: true,
+                        appleStartup: true,
+                        coast: false,
+                        favicons: true,
+                        firefox: true,
+                        opengraph: true,
+                        twitter: true,
+                        windows: true,
+                    },
+                },
+            }),
 
             clientBuild && new HtmlIncludeAssetsPlugin({
                 append: false,
