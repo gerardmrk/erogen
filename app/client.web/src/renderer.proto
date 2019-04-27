@@ -10,13 +10,14 @@ message RendererResponse {
     int32 status_code = 1;
     RenderError error = 2;
     string redirect_to = 3;
-    bytes metas = 4;
-    bytes app = 5;
-    bytes links = 6;
-    bytes styles = 7;
-    bytes scripts = 8;
-    bytes initial_state = 9;
-    string ttr = 10; // TODO: revert back to uint64 when protobufjs supports Node v10's bigint type
+    string lang = 4;
+    bytes metas = 5;
+    bytes app = 6;
+    bytes links = 7;
+    bytes styles = 8;
+    bytes scripts = 9;
+    bytes initial_state = 10;
+    string ttr = 11; // TODO: revert back to uint64 when protobufjs supports Node v10's bigint type
 
     message RenderError {
         string message = 1;

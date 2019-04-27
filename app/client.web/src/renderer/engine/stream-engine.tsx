@@ -28,6 +28,7 @@ export const streamEngine = (stats: AsyncModuleStats) => {
 
     try {
       const htmlBits = getHTMLBits({
+        lang: request.lang || "en",
         appMountPointID: INJECTED_APP_MOUNT_POINT_ID,
       });
 

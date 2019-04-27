@@ -9,6 +9,7 @@ import { App } from "@client/views/core/App";
 import { HelmetProvider as HeadProvider } from "react-helmet-async";
 
 export type GetHTMLBitsParams = {
+  lang: string;
   appMountPointID: string;
 };
 
@@ -65,8 +66,8 @@ export const getMetaTags = (data: object): string => {
 
 // export const purifyCSS = (html: string, ) => {};
 
-export const getHTMLBits = ({ appMountPointID }: GetHTMLBitsParams) => ({
-  docStart: '<!DOCTYPE html><html><head><meta charset="utf-8"/>',
+export const getHTMLBits = ({ lang, appMountPointID }: GetHTMLBitsParams) => ({
+  docStart: `<!DOCTYPE html lang="${lang}"><html><head><meta charset="utf-8"/>`,
   postHeadTags: `<style>`,
   postInlineStyles: `</style><style>html,body,#app-mount-point{width:100%;height:100%;}</style></head><body><div id=${appMountPointID}>`,
   postApp: `</div><script>window._INITIAL_STATE_ = `,

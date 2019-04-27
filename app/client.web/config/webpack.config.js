@@ -458,6 +458,7 @@ module.exports = async (args) => {
                 filename: "index.html",
                 template: `${CLIENT_SRC}/index.html`,
                 vars: {
+                    lang: "en",
                     metas: "",
                     links: "",
                     styles: "",
@@ -473,6 +474,7 @@ module.exports = async (args) => {
                 filename: "index.gohtml",
                 template: `${CLIENT_SRC}/index.html`,
                 vars: {
+                    lang: "{{.Lang}}",
                     metas: "{{.Metas}}",
                     links: "{{.Links}}",
                     styles: "{{.Styles}}",
@@ -485,18 +487,19 @@ module.exports = async (args) => {
 
             // golang templates; SSR
             prodMode && clientBuild && new HtmlPlugin({
-              inject: false,
-              filename: "index.ssr.gohtml",
-              template: `${CLIENT_SRC}/index.html`,
-              vars: {
-                  metas: "{{.Metas}}",
-                  links: "{{.Links}}",
-                  styles: "{{.Styles}}",
-                  app: "{{.App}}",
-                  initialState: "{{.InitialState}}",
-                  scripts: "{{.Scripts}}",
-                  mountPointID: appMountPointID,
-              },
+                inject: false,
+                filename: "index.ssr.gohtml",
+                template: `${CLIENT_SRC}/index.html`,
+                vars: {
+                    lang: "{{.Lang}}",
+                    metas: "{{.Metas}}",
+                    links: "{{.Links}}",
+                    styles: "{{.Styles}}",
+                    app: "{{.App}}",
+                    initialState: "{{.InitialState}}",
+                    scripts: "{{.Scripts}}",
+                    mountPointID: appMountPointID,
+                },
           }),
 
             // handlebars templates
@@ -504,6 +507,7 @@ module.exports = async (args) => {
                 filename: "index.hbs",
                 template: `${CLIENT_SRC}/index.html`,
                 vars: {
+                    lang: "{{{lang}}}",
                     metas: "{{{metas}}}",
                     links: "{{{links}}}",
                     styles: "{{{styles}}}",
@@ -520,6 +524,7 @@ module.exports = async (args) => {
                 filename: "index.ssr.hbs",
                 template: `${CLIENT_SRC}/index.html`,
                 vars: {
+                    lang: "{{{lang}}}",
                     metas: "{{{metas}}}",
                     links: "{{{links}}}",
                     styles: "{{{styles}}}",

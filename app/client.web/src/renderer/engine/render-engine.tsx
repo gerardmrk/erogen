@@ -40,7 +40,7 @@ export const renderEngine = (stats: AsyncModuleStats) => {
       });
 
       response.app = ReactDOMServer.renderToString(app);
-
+      response.lang = request.lang;
       response.metas = getMetaTags(headContext["helmet"]);
       response.initialState = JSON.stringify(store.getState());
       response.links = extractor.getLinkTags() + extractor.getStyleTags();

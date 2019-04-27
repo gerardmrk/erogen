@@ -17,6 +17,7 @@ $root.RendererRequest = (function() {
      * @interface IRendererRequest
      * @property {string|null} [url] RendererRequest url
      * @property {string|null} [lang] RendererRequest lang
+     * @property {boolean|null} [authenticated] RendererRequest authenticated
      */
 
     /**
@@ -51,6 +52,14 @@ $root.RendererRequest = (function() {
     RendererRequest.prototype.lang = "";
 
     /**
+     * RendererRequest authenticated.
+     * @member {boolean} authenticated
+     * @memberof RendererRequest
+     * @instance
+     */
+    RendererRequest.prototype.authenticated = false;
+
+    /**
      * Creates a new RendererRequest instance using the specified properties.
      * @function create
      * @memberof RendererRequest
@@ -78,6 +87,8 @@ $root.RendererRequest = (function() {
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.url);
         if (message.lang != null && message.hasOwnProperty("lang"))
             writer.uint32(/* id 2, wireType 2 =*/18).string(message.lang);
+        if (message.authenticated != null && message.hasOwnProperty("authenticated"))
+            writer.uint32(/* id 3, wireType 0 =*/24).bool(message.authenticated);
         return writer;
     };
 
@@ -117,6 +128,9 @@ $root.RendererRequest = (function() {
                 break;
             case 2:
                 message.lang = reader.string();
+                break;
+            case 3:
+                message.authenticated = reader.bool();
                 break;
             default:
                 reader.skipType(tag & 7);
@@ -159,6 +173,9 @@ $root.RendererRequest = (function() {
         if (message.lang != null && message.hasOwnProperty("lang"))
             if (!$util.isString(message.lang))
                 return "lang: string expected";
+        if (message.authenticated != null && message.hasOwnProperty("authenticated"))
+            if (typeof message.authenticated !== "boolean")
+                return "authenticated: boolean expected";
         return null;
     };
 
@@ -178,6 +195,8 @@ $root.RendererRequest = (function() {
             message.url = String(object.url);
         if (object.lang != null)
             message.lang = String(object.lang);
+        if (object.authenticated != null)
+            message.authenticated = Boolean(object.authenticated);
         return message;
     };
 
@@ -197,11 +216,14 @@ $root.RendererRequest = (function() {
         if (options.defaults) {
             object.url = "";
             object.lang = "";
+            object.authenticated = false;
         }
         if (message.url != null && message.hasOwnProperty("url"))
             object.url = message.url;
         if (message.lang != null && message.hasOwnProperty("lang"))
             object.lang = message.lang;
+        if (message.authenticated != null && message.hasOwnProperty("authenticated"))
+            object.authenticated = message.authenticated;
         return object;
     };
 
@@ -228,6 +250,7 @@ $root.RendererResponse = (function() {
      * @property {number|null} [statusCode] RendererResponse statusCode
      * @property {RendererResponse.IRenderError|null} [error] RendererResponse error
      * @property {string|null} [redirectTo] RendererResponse redirectTo
+     * @property {string|null} [lang] RendererResponse lang
      * @property {Uint8Array|null} [metas] RendererResponse metas
      * @property {Uint8Array|null} [app] RendererResponse app
      * @property {Uint8Array|null} [links] RendererResponse links
@@ -275,6 +298,14 @@ $root.RendererResponse = (function() {
      * @instance
      */
     RendererResponse.prototype.redirectTo = "";
+
+    /**
+     * RendererResponse lang.
+     * @member {string} lang
+     * @memberof RendererResponse
+     * @instance
+     */
+    RendererResponse.prototype.lang = "";
 
     /**
      * RendererResponse metas.
@@ -362,20 +393,22 @@ $root.RendererResponse = (function() {
             $root.RendererResponse.RenderError.encode(message.error, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
         if (message.redirectTo != null && message.hasOwnProperty("redirectTo"))
             writer.uint32(/* id 3, wireType 2 =*/26).string(message.redirectTo);
+        if (message.lang != null && message.hasOwnProperty("lang"))
+            writer.uint32(/* id 4, wireType 2 =*/34).string(message.lang);
         if (message.metas != null && message.hasOwnProperty("metas"))
-            writer.uint32(/* id 4, wireType 2 =*/34).bytes(message.metas);
+            writer.uint32(/* id 5, wireType 2 =*/42).bytes(message.metas);
         if (message.app != null && message.hasOwnProperty("app"))
-            writer.uint32(/* id 5, wireType 2 =*/42).bytes(message.app);
+            writer.uint32(/* id 6, wireType 2 =*/50).bytes(message.app);
         if (message.links != null && message.hasOwnProperty("links"))
-            writer.uint32(/* id 6, wireType 2 =*/50).bytes(message.links);
+            writer.uint32(/* id 7, wireType 2 =*/58).bytes(message.links);
         if (message.styles != null && message.hasOwnProperty("styles"))
-            writer.uint32(/* id 7, wireType 2 =*/58).bytes(message.styles);
+            writer.uint32(/* id 8, wireType 2 =*/66).bytes(message.styles);
         if (message.scripts != null && message.hasOwnProperty("scripts"))
-            writer.uint32(/* id 8, wireType 2 =*/66).bytes(message.scripts);
+            writer.uint32(/* id 9, wireType 2 =*/74).bytes(message.scripts);
         if (message.initialState != null && message.hasOwnProperty("initialState"))
-            writer.uint32(/* id 9, wireType 2 =*/74).bytes(message.initialState);
+            writer.uint32(/* id 10, wireType 2 =*/82).bytes(message.initialState);
         if (message.ttr != null && message.hasOwnProperty("ttr"))
-            writer.uint32(/* id 10, wireType 2 =*/82).string(message.ttr);
+            writer.uint32(/* id 11, wireType 2 =*/90).string(message.ttr);
         return writer;
     };
 
@@ -420,24 +453,27 @@ $root.RendererResponse = (function() {
                 message.redirectTo = reader.string();
                 break;
             case 4:
-                message.metas = reader.bytes();
+                message.lang = reader.string();
                 break;
             case 5:
-                message.app = reader.bytes();
+                message.metas = reader.bytes();
                 break;
             case 6:
-                message.links = reader.bytes();
+                message.app = reader.bytes();
                 break;
             case 7:
-                message.styles = reader.bytes();
+                message.links = reader.bytes();
                 break;
             case 8:
-                message.scripts = reader.bytes();
+                message.styles = reader.bytes();
                 break;
             case 9:
-                message.initialState = reader.bytes();
+                message.scripts = reader.bytes();
                 break;
             case 10:
+                message.initialState = reader.bytes();
+                break;
+            case 11:
                 message.ttr = reader.string();
                 break;
             default:
@@ -486,6 +522,9 @@ $root.RendererResponse = (function() {
         if (message.redirectTo != null && message.hasOwnProperty("redirectTo"))
             if (!$util.isString(message.redirectTo))
                 return "redirectTo: string expected";
+        if (message.lang != null && message.hasOwnProperty("lang"))
+            if (!$util.isString(message.lang))
+                return "lang: string expected";
         if (message.metas != null && message.hasOwnProperty("metas"))
             if (!(message.metas && typeof message.metas.length === "number" || $util.isString(message.metas)))
                 return "metas: buffer expected";
@@ -531,6 +570,8 @@ $root.RendererResponse = (function() {
         }
         if (object.redirectTo != null)
             message.redirectTo = String(object.redirectTo);
+        if (object.lang != null)
+            message.lang = String(object.lang);
         if (object.metas != null)
             if (typeof object.metas === "string")
                 $util.base64.decode(object.metas, message.metas = $util.newBuffer($util.base64.length(object.metas)), 0);
@@ -583,6 +624,7 @@ $root.RendererResponse = (function() {
             object.statusCode = 0;
             object.error = null;
             object.redirectTo = "";
+            object.lang = "";
             if (options.bytes === String)
                 object.metas = "";
             else {
@@ -633,6 +675,8 @@ $root.RendererResponse = (function() {
             object.error = $root.RendererResponse.RenderError.toObject(message.error, options);
         if (message.redirectTo != null && message.hasOwnProperty("redirectTo"))
             object.redirectTo = message.redirectTo;
+        if (message.lang != null && message.hasOwnProperty("lang"))
+            object.lang = message.lang;
         if (message.metas != null && message.hasOwnProperty("metas"))
             object.metas = options.bytes === String ? $util.base64.encode(message.metas, 0, message.metas.length) : options.bytes === Array ? Array.prototype.slice.call(message.metas) : message.metas;
         if (message.app != null && message.hasOwnProperty("app"))

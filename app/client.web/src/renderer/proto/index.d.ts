@@ -7,6 +7,9 @@ export interface IRendererRequest {
 
     /** RendererRequest lang */
     lang?: (string|null);
+
+    /** RendererRequest authenticated */
+    authenticated?: (boolean|null);
 }
 
 /** Represents a RendererRequest. */
@@ -23,6 +26,9 @@ export class RendererRequest implements IRendererRequest {
 
     /** RendererRequest lang. */
     public lang: string;
+
+    /** RendererRequest authenticated. */
+    public authenticated: boolean;
 
     /**
      * Creates a new RendererRequest instance using the specified properties.
@@ -107,6 +113,9 @@ export interface IRendererResponse {
     /** RendererResponse redirectTo */
     redirectTo?: (string|null);
 
+    /** RendererResponse lang */
+    lang?: (string|null);
+
     /** RendererResponse metas */
     metas?: (Uint8Array|null);
 
@@ -146,6 +155,9 @@ export class RendererResponse implements IRendererResponse {
 
     /** RendererResponse redirectTo. */
     public redirectTo: string;
+
+    /** RendererResponse lang. */
+    public lang: string;
 
     /** RendererResponse metas. */
     public metas: Uint8Array;
