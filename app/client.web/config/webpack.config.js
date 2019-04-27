@@ -26,7 +26,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const LoadablePlugin = require("@loadable/webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CheckerPlugin, TsConfigPathsPlugin } = require("awesome-typescript-loader"); // prettier-ignore
-const { settingsBuilder } = require("./webpack.settings");
+const settingsBuilder = require("./webpack.settings");
 const { getAsyncModuleStats, getGeneratedHTML } = require("./webpack.helpers");
 
 const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
@@ -397,7 +397,7 @@ module.exports = async (args) => {
 
             rendererBuild && new webpack.DefinePlugin({
                 INJECTED_GENERATED_HTML: JSON.stringify(generatedHTML),
-                INJECTED_ASYNC_MODULE_STATS: JSON.stringify(asyncModuleStats),
+                INJECTED_ASYNC_MODULE_STATS: JSON.stringify(JSON.parse(asyncModuleStats)),
             }),
 
             new webpack.EnvironmentPlugin({

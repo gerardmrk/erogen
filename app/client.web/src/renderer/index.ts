@@ -82,3 +82,23 @@ export const htmlStreamer: RendererOrStreamer<StreamHtmlFn> = () => {
     await stream(request, response, metaData);
   };
 };
+
+export const htmlRenderer = () => {
+  const render = renderEngine();
+
+  return async (request: RenderRequest): Promise<string> => {
+    const response: RenderResponse = createInitialResponseObject();
+
+    await render(request, response);
+
+    let html = INJECTED_GENERATED_HTML;
+    html = html.replace(
+      /(.*){{{lang}}}(.*){{{metas}}}(.*){{{links}}}(.*){{{styles}}}(.*){{{app}}}(.*){{{initialState}}}(.*){{{scripts}}}(.*)/g,
+      `$1${response.lang}$2${response.metas}$3${response.links}$4${
+        response.styles
+      }$5${response.app}$6${response.initialState}$7${response.scripts}$8`,
+    );
+
+    return html;
+  };
+};

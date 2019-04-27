@@ -11,9 +11,9 @@ const {
 exports.compact = (...args) => args.filter(val => !!val);
 
 exports.getAsyncModuleStats = async clientDest => {
-  return await readFile(`${clientDest}/async-modules.json`);
+  return await readFile(`${clientDest}/async-modules.json`, "utf-8");
 };
 
 exports.getGeneratedHTML = async clientDest => {
-  return await readFile(`${clientDest}/index.ssr.hbs`);
+  return await readFile(`${clientDest}/index.ssr.hbs`, "utf-8");
 };

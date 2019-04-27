@@ -28,7 +28,7 @@ export class HeadTags extends React.PureComponent<Props, State> {
 
     this.titleTemplate = props.title ? `${config.appName} | %s` : "%s";
     this.appName = config.appName;
-    this.url = props.path ? `${config.appUrl}${props.path}` : config.appUrl;
+    this.url = !props.path || props.path === "/" ? config.appUrl : `${config.appUrl}${props.path}`; // prettier-ignore
     this.title = props.title || config.appName;
     this.description = props.description || config.appDescription;
     this.keywords = props.keywords || config.appKeywords || config.appName;

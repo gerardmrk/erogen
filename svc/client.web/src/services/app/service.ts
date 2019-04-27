@@ -1,6 +1,6 @@
 import { Injectable, Scope } from '@nestjs/common';
 // @ts-ignore
-import { jsonRenderer, htmlStreamer } from '@local/renderer';
+import { jsonRenderer, htmlStreamer, htmlRenderer } from '@local/renderer';
 // import { RenderResponse } from '@renderer/engine/render-engine';
 // import { RenderJsonFn, StreamHtmlFn } from '@renderer/index';
 // import { StreamMetaData } from '@renderer/engine/stream-engine';
@@ -12,15 +12,14 @@ import { IAppService } from '.';
 export class AppService implements IAppService {
   private getJSON;
   private getStream;
+  private getHTML;
 
   public constructor() {
-    // TODO: add cache store - publ routes
-    // TODO: add cache store - priv routes
-
     // TODO: intercept or prevent egress API calls from renderer
     // ----> find and replace with regex: fetch?? renderer build phase only
     this.getJSON = jsonRenderer();
     this.getStream = htmlStreamer();
+    this.getHTML = htmlRenderer();
   }
 
   public async getHtmlJsonData(url: string, lang: string = 'en'): Promise<any> {
@@ -41,6 +40,16 @@ export class AppService implements IAppService {
     lang: string = 'en',
   ): Promise<Uint8Array> {
     throw new Error('NotImplemented');
+  }
+
+  public async renderHTML(url: string, lang: string = 'en'): Promise<string> {
+    try {
+      const html = await this.getHTML({ url, lang });
+      return html;
+    } catch (err) {
+      console.error(err); // tslint:disable-line
+      throw err;
+    }
   }
 
   public async streamHtml(

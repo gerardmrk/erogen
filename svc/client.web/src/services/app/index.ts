@@ -13,4 +13,6 @@ export interface IAppService {
   getHtmlJsonData(url: string, lang: string): Promise<any>;
 
   getHtmlProtoData(url: string, lang: string): Promise<Uint8Array>;
+
+  renderHTML(url: string, lang: string): Promise<string>;
 }

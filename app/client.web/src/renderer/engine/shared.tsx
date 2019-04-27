@@ -22,12 +22,8 @@ export type GetAppElementParams = {
   routerContext: StaticRouterContext;
 };
 
-export const getGeneratedHTML = (): string => {
-  return INJECTED_GENERATED_HTML;
-};
-
 export const getChunkExtractor = (): ChunkExtractor => {
-  const stats = JSON.parse(INJECTED_ASYNC_MODULE_STATS);
+  const stats = INJECTED_ASYNC_MODULE_STATS;
 
   return new ChunkExtractor({
     stats,

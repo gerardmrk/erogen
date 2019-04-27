@@ -1,17 +1,15 @@
-import { Controller, Get, Req, Render, Inject } from '@nestjs/common';
+import { Controller, Get, Req, Inject, Res } from '@nestjs/common';
 import { IAppService, APP_SERVICE } from './services/app';
-import { SrvRequest } from 'src';
-// import { FastifyRequest, FastifyReply } from "fastify";
-// import { IncomingMessage, ServerResponse } from "http";
+import { SrvRequest, SrvResponse } from 'src';
 
 @Controller()
 export class AppController {
   constructor(@Inject(APP_SERVICE) private appService: IAppService) {}
 
   @Get('*')
-  @Render('index.ssr.hbs')
-  public async indexHTML(@Req() req: SrvRequest) {
-    return await this.appService.getHtmlJsonData(req.url as string, 'en');
+  public async indexHTML(@Req() req: SrvRequest, @Res() res: SrvResponse) {
+    const html = await this.appService.renderHTML(req.req.url, 'en');
+    return res.headers({ 'Content-Type': 'text/html' }).send(html);
   }
 
   // @Get("*")
