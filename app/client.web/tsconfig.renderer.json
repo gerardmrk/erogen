@@ -5,7 +5,6 @@
     "module": "esnext",
     "target": "esnext",
     "sourceMap": true,
-    "rootDir": "src/renderer",
     "declaration": true,
     "allowJs": false
   }

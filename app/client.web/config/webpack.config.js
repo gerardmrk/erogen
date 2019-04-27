@@ -26,7 +26,8 @@ const TerserPlugin = require("terser-webpack-plugin");
 const LoadablePlugin = require("@loadable/webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CheckerPlugin, TsConfigPathsPlugin } = require("awesome-typescript-loader"); // prettier-ignore
-const settingsBuilder = require("./webpack.settings");
+const { settingsBuilder } = require("./webpack.settings");
+const { getAsyncModuleStats, getGeneratedHTML } = require("./webpack.helpers");
 
 const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
 const ROOT_CONFIG_DIR = `${ROOT_DIR}/config`;
@@ -69,6 +70,13 @@ module.exports = async (args) => {
       enableSourceMap,
       appMountPointID,
     } = settings;
+
+    let generatedHTML;
+    let asyncModuleStats;
+    if (rendererBuild) {
+      generatedHTML = await getGeneratedHTML(CLIENT_DST);
+      asyncModuleStats = await getAsyncModuleStats(CLIENT_DST);
+    }
 
     // base config
     const config = {
@@ -231,7 +239,7 @@ module.exports = async (args) => {
                     test:  /\.(sa|sc|c)ss$/,
                     exclude: [/dist/, /node_modules/],
                     use: [
-                        { 
+                        clientBuild && { 
                             loader: ExtractCssChunksPlugin.loader,
                             options: {
                                 hmr: devMode,
@@ -269,7 +277,7 @@ module.exports = async (args) => {
                     test: /\.less$/,
                     exclude: [/dist/, /node_modules\/(?!(semantic-ui-less\/(themes|definitions))\/).*/],
                     use: [
-                        { 
+                        clientBuild && { 
                             loader: ExtractCssChunksPlugin.loader,
                             options: {
                                 hmr: devMode,
@@ -384,12 +392,12 @@ module.exports = async (args) => {
                 INJECTED_DEV_MODE: JSON.stringify(devMode),
                 INJECTED_APP_CONFIG: JSON.stringify(appConfig),
                 INJECTED_APP_MOUNT_POINT_ID: JSON.stringify(appMountPointID),
-                "process.env.NODE_ENV": JSON.stringify(mode)
+                "process.env.NODE_ENV": JSON.stringify(mode),
             }),
 
             rendererBuild && new webpack.DefinePlugin({
-                SSR_STREAM_HTML_START: '',
-                SSR_STREAM_HTML_END: ''
+                INJECTED_GENERATED_HTML: JSON.stringify(generatedHTML),
+                INJECTED_ASYNC_MODULE_STATS: JSON.stringify(asyncModuleStats),
             }),
 
             new webpack.EnvironmentPlugin({
@@ -472,6 +480,7 @@ module.exports = async (args) => {
             prodMode && clientBuild && new HtmlPlugin({
                 filename: "index.gohtml",
                 template: `${CLIENT_SRC}/index.html`,
+                minify: true,
                 vars: {
                     lang: "{{.Lang}}",
                     metas: "{{.Metas}}",
@@ -489,6 +498,7 @@ module.exports = async (args) => {
                 inject: false,
                 filename: "index.ssr.gohtml",
                 template: `${CLIENT_SRC}/index.html`,
+                minify: true,
                 vars: {
                     lang: "{{.Lang}}",
                     metas: "{{.Metas}}",
@@ -505,6 +515,7 @@ module.exports = async (args) => {
             prodMode && clientBuild && new HtmlPlugin({
                 filename: "index.hbs",
                 template: `${CLIENT_SRC}/index.html`,
+                minify: true,
                 vars: {
                     lang: "{{{lang}}}",
                     metas: "{{{metas}}}",
@@ -522,6 +533,7 @@ module.exports = async (args) => {
                 inject: false,
                 filename: "index.ssr.hbs",
                 template: `${CLIENT_SRC}/index.html`,
+                minify: true,
                 vars: {
                     lang: "{{{lang}}}",
                     metas: "{{{metas}}}",
