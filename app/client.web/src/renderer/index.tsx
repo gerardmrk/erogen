@@ -1,7 +1,9 @@
+import { TextEncoder } from "util";
+import { promises as fsPromises } from "fs";
+
+import PurgeCSS from "purgecss";
 import * as React from "react";
 import * as ReactDOMServer from "react-dom/server";
-import { TextEncoder } from "util";
-import PurgeCSS from "purgecss";
 import { Provider as StoreProvider } from "react-redux";
 import { FilledContext as HeadContext } from "react-helmet-async";
 import { HelmetProvider as HeadProvider } from "react-helmet-async";
@@ -13,6 +15,50 @@ import { Services } from "@client/services";
 import { storeCreator, Store } from "@client/store";
 import { ConfigProvider } from "@client/views/contexts/config";
 import { RendererResponse, RendererRequest } from "./proto";
+import { RouteConf, routeConfs } from "@client/views/conf.routes";
+
+const writeFileAsync = fsPromises.writeFile;
+
+export type RendererCache = Map<string, Uint8Array>;
+
+export type PrerenderRoutesParams = {
+  // the language in locale code to prerender the route with.
+  lang: string;
+  // if provided, will attempt to write the prerendered HTML to disk
+  // at the given directory path, with the name format: `[routeName].html`.
+  // otherwise the prerendered HTML will be cached instead.
+  writeToDisk?: string;
+};
+
+export type RenderParams = {
+  // url of the route.
+  url: string;
+  // the preferred/requested language.
+  lang: string;
+};
+
+export type RenderResponse = {
+  // primary
+  lang: string;
+  app: string;
+  metas: string;
+  links: string;
+  styles: string;
+  scripts: string;
+  initialState: string;
+  // metadata
+  statusCode: number;
+  ttr: string;
+  redirectTo?: string;
+  error?: { message: string; stackTrace?: string };
+};
+
+export type RendererConfig = {
+  // enable debugging
+  debug?: boolean;
+  // enable caching if true. The provided cache is used if one is provided.
+  cache?: boolean | { html: RendererCache; data: RendererCache };
+};
 
 /**
  * App Serverside Renderer
@@ -21,15 +67,25 @@ import { RendererResponse, RendererRequest } from "./proto";
  * for reasons why.
  */
 export class Renderer {
+  // flags
+  private debugEnabled: boolean = false;
+  private cacheEnabled: boolean = false;
+
+  // injected
   private appConfig: AppConfig;
   private moduleStats: AsyncModuleStats;
   private htmlBits: HTMLBits;
   private appEntrypointID: string;
 
+  // helpers
   private textEncoder: TextEncoder;
   private chunkExtractor: ChunkExtractor;
 
-  public constructor() {
+  // caches
+  private htmlCache: Map<string, Uint8Array> = new Map<string, Uint8Array>();
+  private dataCache: Map<string, Uint8Array> = new Map<string, Uint8Array>();
+
+  public constructor({ debug, cache }: RendererConfig) {
     // Variables on the global object doesn't get garbage-collect, and these
     // ones need to cos they're huge, so create local copies here and delete the
     // original values from global right after. The local copies should now reside
@@ -64,6 +120,22 @@ export class Renderer {
       stats: this.moduleStats,
       entrypoints: [this.appEntrypointID],
     });
+
+    if (!!debug) {
+      this.debugEnabled = true;
+      console.warn("Renderer.debugEnabled", this.debugEnabled);
+    }
+
+    if (!!cache) {
+      this.cacheEnabled = true;
+      if (typeof cache === "object") {
+        this.htmlCache = !!cache.html ? cache.html : new Map<string, Uint8Array>(); // prettier-ignore
+        this.dataCache = !!cache.data ? cache.data : new Map<string, Uint8Array>(); // prettier-ignore
+      } else {
+        this.htmlCache = new Map<string, Uint8Array>();
+        this.dataCache = new Map<string, Uint8Array>();
+      }
+    }
   }
 
   private _getStore = async () => {
@@ -74,6 +146,7 @@ export class Renderer {
   };
 
   private _extractMetaTags = async (data: HeadContext["helmet"]) => {
+    if (!data) return Promise.resolve("");
     let result = "";
     for (let dd = Object.values(data), i = 0, l = dd.length; i < l; i++) {
       result += dd[i].toString();
@@ -82,10 +155,12 @@ export class Renderer {
   };
 
   private _replaceScriptAsyncToDefer = async (scriptTags: string) => {
+    if (!scriptTags) return Promise.resolve("");
     return Promise.resolve(scriptTags.replace(/\sasync\s/g, " defer "));
   };
 
   private _stripUnusedCssFromHtml = async (html: string, css: string) => {
+    if (!css && !html) return Promise.resolve("");
     const result = new PurgeCSS({
       css: [{ raw: css, extension: "css" }],
       content: [{ raw: html, extension: "html" }],
@@ -133,6 +208,38 @@ export class Renderer {
    *    PUBLIC METHODS
    * ---------------------------------------------------------------------------
    */
+
+  /**
+   * Prerender all prerender-able routes.
+   * @param params the prerender params
+   */
+  public async prerenderRoutes(params: PrerenderRoutesParams): Promise<void> {
+    if (!params.writeToDisk && !this.cacheEnabled) {
+      throw new Error("`writeToDisk` is required if caching is not enabled.");
+    }
+
+    const whitelist: RouteConf[] = [];
+    filterPrerender(whitelist, routeConfs);
+
+    await Promise.all(
+      whitelist.map(async (r: RouteConf) => {
+        const key = `${r.path}.${params.lang}`;
+
+        const [html, data] = await Promise.all([
+          this.getRouteHTML({ url: r.path as string, lang: params.lang }),
+          this.getRouteProto(RendererRequest.encode({ url: r.path as string, lang: params.lang }).finish()), // prettier-ignore
+        ]);
+
+        if (params.writeToDisk) {
+          await writeFileAsync(`${params.writeToDisk}/${key}.html`, html);
+        }
+        if (this.cacheEnabled) {
+          this.htmlCache.set(key, this.textEncoder.encode(html));
+          this.dataCache.set(key, data);
+        }
+      }),
+    );
+  }
 
   /**
    * Get the full HTML string for this route
@@ -202,8 +309,6 @@ export class Renderer {
         headContext,
         routerContext,
       });
-
-      // TODO: intercept API calls here in router context??
 
       if (!!routerContext.url) {
         response.statusCode = 302;
@@ -359,23 +464,13 @@ type GetAppElementParams = {
   routerContext: StaticRouterContext;
 };
 
-type RenderParams = {
-  url: string;
-  lang: string;
-};
-
-type RenderResponse = {
-  // primary
-  lang: string;
-  app: string;
-  metas: string;
-  links: string;
-  styles: string;
-  scripts: string;
-  initialState: string;
-  // metadata
-  statusCode: number;
-  ttr: string;
-  redirectTo?: string;
-  error?: { message: string; stackTrace?: string };
-};
+function filterPrerender(whitelist: RouteConf[], routes: RouteConf[]) {
+  for (let i = 0, ln = routes.length; i < ln; i++) {
+    if (routes[i].prerender && !!routes[i].path) {
+      whitelist.push(routes[i]);
+    }
+    if (!!routes[i].routes) {
+      return filterPrerender(whitelist, routes[i].routes as RouteConf[]);
+    }
+  }
+}
