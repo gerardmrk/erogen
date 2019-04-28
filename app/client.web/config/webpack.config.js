@@ -67,8 +67,9 @@ module.exports = async (args) => {
       rendererBuild,
       // derived
       appConfig,
-      enableSourceMap,
+      appEntrypointID,
       appMountPointID,
+      enableSourceMap,
     } = settings;
 
     let generatedHTML;
@@ -391,6 +392,7 @@ module.exports = async (args) => {
             new webpack.DefinePlugin({
                 INJECTED_DEV_MODE: JSON.stringify(devMode),
                 INJECTED_APP_CONFIG: JSON.stringify(appConfig),
+                INJECTED_APP_ENTRY_POINT_ID: JSON.stringify(appEntrypointID),
                 INJECTED_APP_MOUNT_POINT_ID: JSON.stringify(appMountPointID),
                 "process.env.NODE_ENV": JSON.stringify(mode),
             }),
@@ -623,13 +625,13 @@ module.exports = async (args) => {
     if (clientBuild) {
         // Client-specific build options
 
-        config.entry.app = ["src/client/main.tsx"]
+        config.entry[appEntrypointID] = ["src/client/main.tsx"];
 
         config.output = {
             path: CLIENT_DST,
             filename: devMode ? "scripts/[name].js" : "scripts/[name].[chunkhash].js",
             publicPath: devMode ? "/" : "/assets/",
-            crossOriginLoading: "anonymous"
+            crossOriginLoading: "anonymous",
         }
     } else {
         // Renderer-specific build options

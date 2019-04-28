@@ -59,6 +59,7 @@ module.exports = rootAppDir => ({
     appTwitterCardType: "summary_large_image",
   };
 
+  const appEntrypointID = "app";
   const appMountPointID = "app-mount-point";
 
   const settings = {
@@ -71,8 +72,9 @@ module.exports = rootAppDir => ({
     rendererBuild: source === "renderer",
     // derived
     appConfig,
-    enableSourceMap,
+    appEntrypointID,
     appMountPointID,
+    enableSourceMap,
   };
 
   return settings;
