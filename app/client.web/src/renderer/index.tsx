@@ -244,31 +244,47 @@ export class Renderer {
     }
 
     const whitelist: RouteConf[] = [];
-    filterPrerender(whitelist, routeConfs);
+    const blacklist: RouteConf[] = [];
+    filterPrerender(whitelist, blacklist, routeConfs);
 
     // prettier-ignore
-    await Promise.all(
-      whitelist.map(async (r: RouteConf) => {
-        const [html, data] = await Promise.all([
-          this.getRouteHTML({ url: r.path as string, lang: params.lang }),
-          this.getRouteProto(RendererRequest.encode({ url: r.path as string, lang: params.lang }).finish()),
-        ]);
+    await Promise.all(whitelist.map(async (r: RouteConf) => {
+      const html = await this.getRouteHTML({
+        url: r.path as string,
+        lang: params.lang
+      });
 
-        if (params.writeToDisk) {
-          const fname = `${(r.path === "/"
-            ? "[index]"
-            : (r.path as string).replace(/(\/([^/]*))/g, match => `[${match.substr(1)}]`))
-          }.${params.lang}`;
+      if (params.writeToDisk) {
+        const fname = `${(r.path === "/"
+          ? "[index]"
+          : (r.path as string).replace(/(\/([^/]*))/g, match => `[${match.substr(1)}]`))
+        }.${params.lang}`;
 
-          await writeFileAsync(normalize(`${params.writeToDisk}/${fname}.html`), html);
-        }
-        if (this.cacheEnabled) {
-          const key = `${r.path}.${params.lang}`;
-          this.htmlCache.set(key, this.textEncoder.encode(html));
-          this.dataCache.set(key, data);
-        }
-      }),
-    );
+        await writeFileAsync(normalize(`${params.writeToDisk}/${fname}.html`), html);
+      }
+
+      if (this.cacheEnabled) {
+        this.htmlCache.set(
+          `${r.path || r.status}.${params.lang}`,
+          this.textEncoder.encode(html)
+        );
+      }
+    }));
+
+    if (this.cacheEnabled) {
+      // prettier-ignore
+      await Promise.all(blacklist.map(async (r: RouteConf) => {
+        const data = await this.getRouteProto(RendererRequest.encode({
+          url: r.path as string,
+          lang: params.lang
+        }).finish());
+
+        this.dataCache.set(
+          `${r.path || r.status}.${params.lang}`,
+          data
+        );
+      }));
+    }
   }
 
   /**
@@ -501,11 +517,16 @@ type GetAppElementParams = {
   routerContext: StaticRouterContext;
 };
 
-function filterPrerender(whitelist: RouteConf[], routes: RouteConf[]) {
+function filterPrerender(
+  whitelist: RouteConf[],
+  blacklist: RouteConf[],
+  routes: RouteConf[],
+) {
   routes.forEach(r => {
     if (r.prerender && !!r.path) whitelist.push(r);
+    else blacklist.push(r);
     if (r.routes && r.routes.length > 0) {
-      return filterPrerender(whitelist, r.routes);
+      return filterPrerender(whitelist, blacklist, r.routes);
     }
   });
 }

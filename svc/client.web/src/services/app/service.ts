@@ -1,7 +1,7 @@
-import { resolve } from 'path';
-import { Injectable, Scope, OnApplicationBootstrap } from '@nestjs/common';
-import { Renderer, RendererCache } from '@app/client.web';
-import { IAppService } from '.';
+import { resolve } from "path";
+import { Injectable, Scope, OnApplicationBootstrap } from "@nestjs/common";
+import { Renderer, RendererCache } from "@app/client.web";
+import { IAppService } from ".";
 
 @Injectable({
   scope: Scope.DEFAULT,
@@ -24,18 +24,15 @@ export class AppService implements IAppService, OnApplicationBootstrap {
   public async onApplicationBootstrap() {
     try {
       await this.renderer.prerenderRoutes({
-        lang: 'en',
-        writeToDisk: resolve(__dirname, '../../../.cache'),
+        lang: "en",
+        // writeToDisk: resolve(__dirname, '../../../.cache'),
       });
-
-      console.log(this.htmlCache.keys());
-      console.log(this.dataCache.keys());
     } catch (err) {
-      console.error(`Failed to prerender routes: ${err}`);
+      throw new Error(`Failed to prerender routes: ${err}`);
     }
   }
 
-  public async getHtmlJsonData(url: string, lang: string = 'en'): Promise<any> {
+  public async getHtmlJsonData(url: string, lang: string = "en"): Promise<any> {
     try {
       const data = await this.renderer.getRouteJSON({ url, lang });
       if (!!data.error) {
@@ -48,7 +45,7 @@ export class AppService implements IAppService, OnApplicationBootstrap {
     }
   }
 
-  public async renderHTML(url: string, lang: string = 'en'): Promise<string> {
+  public async renderHTML(url: string, lang: string = "en"): Promise<string> {
     try {
       const html = await this.renderer.getRouteHTML({ url, lang });
       return html;
@@ -61,10 +58,10 @@ export class AppService implements IAppService, OnApplicationBootstrap {
   public async streamHtml(
     resp: NodeJS.WritableStream,
     url: string,
-    lang: string = 'en',
+    lang: string = "en",
   ): Promise<any> {
     try {
-      const metaData = { ttr: '', statusCode: 0 };
+      const metaData = { ttr: "", statusCode: 0 };
       await this.renderer.streamRouteHTML({ url, lang }, resp, metaData);
       return metaData;
     } catch (err) {
@@ -75,8 +72,8 @@ export class AppService implements IAppService, OnApplicationBootstrap {
 
   public async getHtmlProtoData(
     url: string,
-    lang: string = 'en',
+    lang: string = "en",
   ): Promise<Uint8Array> {
-    throw new Error('NotImplemented');
+    throw new Error("NotImplemented");
   }
 }

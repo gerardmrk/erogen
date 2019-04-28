@@ -1,13 +1,16 @@
-import { resolve } from 'path';
-import { NestFactory } from '@nestjs/core';
-import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify'; // prettier-ignore
-import hbs from 'hbs';
-import { ApplicationModule } from './app.module';
+import { resolve } from "path";
+import { NestFactory } from "@nestjs/core";
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from "@nestjs/platform-fastify";
+import hbs from "hbs";
+import { ApplicationModule } from "./app.module";
 
 const assetsDir = resolve(
   __dirname,
-  '..',
-  'node_modules/@app/client.web/dist/client',
+  "..",
+  "node_modules/@app/client.web/dist/client",
 );
 
 (async function bootstrap() {
@@ -17,7 +20,7 @@ const assetsDir = resolve(
     new FastifyAdapter(),
   );
 
-  app.useStaticAssets({ root: assetsDir, prefix: '/assets/' });
+  app.useStaticAssets({ root: assetsDir, prefix: "/assets/" });
 
   // use Handlebars for the view engine
   app.setViewEngine({

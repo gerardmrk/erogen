@@ -5,5 +5,8 @@ export interface IConfigService {
 }
 
 export interface IAssetsConfig {
-  assetsDir: string;
+  rootDir: string;
+  urlPrefix: string;
+  gzip: boolean;
+  brotli: boolean;
 }
