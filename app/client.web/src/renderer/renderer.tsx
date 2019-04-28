@@ -129,8 +129,9 @@ export class Renderer {
   });
 
   /**
-   * PUBLIC METHODS
-   * --------------
+   * ---------------------------------------------------------------------------
+   *    PUBLIC METHODS
+   * ---------------------------------------------------------------------------
    */
 
   /**
@@ -207,6 +208,7 @@ export class Renderer {
       if (!!routerContext.url) {
         response.statusCode = 302;
         response.redirectTo = routerContext.url;
+        response.ttr = `${process.hrtime.bigint() - timerStart}`;
         return response;
       }
 
@@ -225,11 +227,11 @@ export class Renderer {
         await this.chunkExtractor.getCssString(),
       );
 
+      response.initialState = JSON.stringify(store.getState());
+
       response.scripts = await this._replaceScriptAsyncToDefer(
         await this.chunkExtractor.getScriptTags(),
       );
-
-      response.initialState = JSON.stringify(store.getState());
 
       response.statusCode = routerContext.statusCode || 200;
       response.ttr = `${process.hrtime.bigint() - timerStart}`;
@@ -243,6 +245,90 @@ export class Renderer {
       response.statusCode = 500;
       response.ttr = `${process.hrtime.bigint() - timerStart}`;
       return response;
+    }
+  }
+
+  /**
+   * Stream the full HTML for a given route for better TTFB.
+   * WIP/INCOMPLETE/BLOCKED, issues:
+   * - race condition between react-helmet and react streaming prevents head tags generation.
+   * - unable to utilize PurgeCSS which is significant as the full CSS is over 100+kb.
+   *
+   * @param params The render params.
+   * @param response The response as a writable stream.
+   * @param meta The returned metadata: statusCode, redirectTo, error.
+   */
+  public async streamRouteHTML(
+    params: RenderParams,
+    response: NodeJS.WritableStream,
+    meta: Pick<RenderResponse, "statusCode" | "ttr" | "redirectTo" | "error">,
+  ): Promise<void> {
+    const timerStart = process.hrtime.bigint();
+    const headContext: HeadContext = { helmet: undefined };
+    const routerContext: StaticRouterContext = {};
+
+    try {
+      const store = await this._getStore();
+
+      const app = await this._getAppElement({
+        url: params.url,
+        store,
+        headContext,
+        routerContext,
+      });
+
+      if (!!routerContext.url) {
+        meta.statusCode = 302;
+        meta.redirectTo = routerContext.url;
+        meta.ttr = `${process.hrtime.bigint() - timerStart}`;
+        return;
+      }
+
+      const appStream = ReactDOMServer.renderToNodeStream(app);
+      response.write(this.htmlBits.docStart);
+
+      response.write(params.lang);
+      response.write(this.htmlBits.postLang);
+
+      response.write(await this._extractMetaTags(headContext["helmet"]));
+      response.write(this.htmlBits.postMetas);
+
+      response.write(this.chunkExtractor.getLinkTags() || "");
+      response.write(this.chunkExtractor.getStyleTags() || "");
+      response.write(this.htmlBits.postLinks);
+
+      response.write(await this.chunkExtractor.getCssString());
+      response.write(this.htmlBits.postStyles);
+
+      appStream.pipe(
+        response,
+        { end: false },
+      );
+
+      appStream.on("end", async () => {
+        response.write(this.htmlBits.postApp);
+
+        response.write(JSON.stringify(store.getState()));
+        response.write(this.htmlBits.postInitialState);
+
+        response.write(
+          await this._replaceScriptAsyncToDefer(
+            await this.chunkExtractor.getScriptTags(),
+          ),
+        );
+        response.write(this.htmlBits.docEnd);
+        meta.statusCode = routerContext.statusCode || 200;
+        meta.ttr = `${process.hrtime.bigint() - timerStart}`;
+        return response.end();
+      });
+    } catch (err) {
+      meta.error = {
+        message: err.message || "",
+        stackTrace: err.stack || "",
+      };
+      meta.statusCode = 500;
+      meta.ttr = `${process.hrtime.bigint() - timerStart}`;
+      return;
     }
   }
 }
