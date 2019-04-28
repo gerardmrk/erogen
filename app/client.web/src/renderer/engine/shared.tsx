@@ -7,6 +7,7 @@ import { Provider as StoreProvider } from "react-redux";
 import { StaticRouterContext, StaticRouter as Router } from "react-router";
 import { App } from "@client/views/core/App";
 import { HelmetProvider as HeadProvider } from "react-helmet-async";
+import PurgeCSS from "purgecss";
 
 export type GetHTMLBitsParams = {
   lang: string;
@@ -41,12 +42,11 @@ export const stripUnusedCSS = async (
   html: string,
   css: string,
 ): Promise<string> => {
-  return css;
-  // return new Promise(resolve => {
-  //   purifyCSS(html, css, { minify: true }, (purified: string) => {
-  //     return resolve(purified);
-  //   });
-  // });
+  const result = new PurgeCSS({
+    css: [{ raw: css, extension: "css" }],
+    content: [{ raw: html, extension: "html" }],
+  }).purge();
+  return result.reduce((rr, r) => (rr += r.css), "");
 };
 
 export const getAppElement = ({

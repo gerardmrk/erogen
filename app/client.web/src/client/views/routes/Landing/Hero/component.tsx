@@ -20,7 +20,7 @@ export class Hero extends React.PureComponent<Props, State> {
                 <em>{t("routes.landing.header")}</em>
               </h1>
               <div className={styles.fluff}>
-                <p>{"Where is myyyy mind"}</p>
+                <p>{"Designer Drugs Et Al."}</p>
                 <br />
                 <p>{"Alpha bravo charlie delta echo foxtrot golf"}</p>
                 <br />

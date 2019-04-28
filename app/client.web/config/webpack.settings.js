@@ -52,9 +52,8 @@ module.exports = rootAppDir => ({
   const appConfig = {
     appStage,
     appUrl: "http://localhost:4200",
-    appName: "Erogen",
-    appDescription:
-      "Next generation, state of the art, distributed satellite infrastructure",
+    appName: "Alaskan",
+    appDescription: "Designer Drugs",
     appImagePath: `/assets/images/logo.svg`,
     appTwitterHandle: `@404`,
     appTwitterCardType: "summary_large_image",

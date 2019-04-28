@@ -647,7 +647,8 @@ module.exports = async (args) => {
 
         // config.externals = [
         //     webpackNodeExternals({
-        //         whitelist: ["is-webpack-bundle", "webpack-require-weak", "semantic-ui-less/themes"]
+        //         // whitelist: ["is-webpack-bundle", "webpack-require-weak"],
+        //         // whitelist: ["is-webpack-bundle", "webpack-require-weak"]
         //     })
         // ]
     }
