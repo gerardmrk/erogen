@@ -482,6 +482,22 @@ module.exports = async (args) => {
                 },
             }),
 
+            // HTML, no SSR
+            prodMode && clientBuild && new HtmlPlugin({
+                filename: "index.html",
+                template: `${CLIENT_SRC}/index.html`,
+                vars: {
+                    lang: "en",
+                    metas: "",
+                    links: "",
+                    styles: "",
+                    app: "",
+                    initialState: "undefined",
+                    scripts: "",
+                    mountPointID: appMountPointID,
+                },
+            }),
+
             // golang templates
             prodMode && clientBuild && new HtmlPlugin({
                 filename: "index.gohtml",
