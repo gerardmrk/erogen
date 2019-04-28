@@ -19,8 +19,14 @@ import { RouteConf, routeConfs } from "@client/views/conf.routes";
 
 const writeFileAsync = fsPromises.writeFile;
 
+/**
+ * Renderer cache. values must be encoded
+ */
 export type RendererCache = Map<string, Uint8Array>;
 
+/**
+ * prerender params
+ */
 export type PrerenderRoutesParams = {
   // the language in locale code to prerender the route with.
   lang: string;
@@ -30,6 +36,9 @@ export type PrerenderRoutesParams = {
   writeToDisk?: string;
 };
 
+/**
+ * request input for the renderer's various rendering methods
+ */
 export type RenderParams = {
   // url of the route.
   url: string;
@@ -37,6 +46,9 @@ export type RenderParams = {
   lang: string;
 };
 
+/**
+ * response output for the renderer's various rendering methods
+ */
 export type RenderResponse = {
   // primary
   lang: string;
@@ -53,6 +65,9 @@ export type RenderResponse = {
   error?: { message: string; stackTrace?: string };
 };
 
+/**
+ * Renderer Config
+ */
 export type RendererConfig = {
   // enable debugging
   debug?: boolean;
@@ -61,7 +76,7 @@ export type RendererConfig = {
 };
 
 /**
- * App Serverside Renderer
+ * Serverside Renderer
  * This class is designed to be used as a singleton for performance reasons.
  * DO NOT create a new instance of this class per request. Study the code below
  * for reasons why.

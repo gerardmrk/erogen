@@ -13,7 +13,6 @@ const CompressionPlugin = require("compression-webpack-plugin");
 const ExtractCssChunksPlugin = require("mini-css-extract-plugin");
 const CommonJSTreeShakePlugin = require("webpack-common-shake").Plugin;
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const PurgeCSSPlugin = require("purgecss-webpack-plugin");
 const FaviconsPlugin = require("webapp-webpack-plugin");
 const HtmlIncludeAssetsPlugin = require("html-webpack-include-assets-plugin");
 const HtmlPlugin = require("html-webpack-plugin");
@@ -190,8 +189,9 @@ module.exports = async (args) => {
                             useBabel: true,
                             cacheDirectory: `${APP_CACHE_DIR}/atl.${source}.${mode}`,
                             errorsAsWarnings: true,
-                            useTranspileModule: true,
-                            forceIsolatedModules: true,
+                            transpileOnly: clientBuild,
+                            useTranspileModule: clientBuild,
+                            forceIsolatedModules: clientBuild,
                             configFileName: `${ROOT_APP_DIR}/tsconfig.${source}.json`,
                             reportFiles: ["src/**/*.{ts,tsx}"],
                             babelCore: "@babel/core",
@@ -419,7 +419,11 @@ module.exports = async (args) => {
                 maxChunks: 1
             }),
 
-            prodMode && new CommonJSTreeShakePlugin(),
+            prodMode && new CommonJSTreeShakePlugin({
+                onGlobalBailout: (bailouts) => {
+                  return;
+                },
+            }),
 
             devMode && clientBuild && new webpack.HotModuleReplacementPlugin(),
             
@@ -457,10 +461,10 @@ module.exports = async (args) => {
                 chunkFilename: devMode ? "styles/[id].css" : "styles/[id].[hash].css",
             }),
 
-            prodMode && clientBuild && new PurgeCSSPlugin({
-                paths: glob.sync(`${CLIENT_SRC}/**/*`, { nodir: true }),
-                only: ["bundle", "vendor"],
-            }),
+            // prodMode && clientBuild && new PurgeCSSPlugin({
+            //     paths: glob.sync(`${CLIENT_SRC}/**/*`, { nodir: true }),
+            //     only: ["bundle", "vendor"],
+            // }),
 
             // development
             devMode && clientBuild && new HtmlPlugin({
@@ -637,7 +641,7 @@ module.exports = async (args) => {
         // Renderer-specific build options
 
         config.entry = {
-            renderer: ["src/renderer/index.ts"],
+            renderer: ["src/renderer/index.tsx"],
         };
 
         config.output = {

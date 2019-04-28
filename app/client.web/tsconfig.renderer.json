@@ -6,6 +6,7 @@
     "target": "esnext",
     "sourceMap": true,
     "declaration": true,
-    "allowJs": false
+    "allowJs": false,
+    "removeComments": false
   }
 }

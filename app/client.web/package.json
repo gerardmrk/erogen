@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "web app",
   "main": "dist/renderer/index.js",
+  "types": "dist/renderer/index.d.ts",
   "engines": {
     "node": ">=0.11.4"
   },
