@@ -1,30 +1,43 @@
-import { Injectable, Scope } from '@nestjs/common';
-// @ts-ignore
-import { jsonRenderer, htmlStreamer, htmlRenderer } from '@app/client.web';
-// import { RenderResponse } from '@renderer/engine/render-engine';
-// import { RenderJsonFn, StreamHtmlFn } from '@renderer/index';
-// import { StreamMetaData } from '@renderer/engine/stream-engine';
+import { resolve } from 'path';
+import { Injectable, Scope, OnApplicationBootstrap } from '@nestjs/common';
+import { Renderer, RendererCache } from '@app/client.web';
 import { IAppService } from '.';
 
 @Injectable({
   scope: Scope.DEFAULT,
 })
-export class AppService implements IAppService {
-  private getJSON;
-  private getStream;
-  private getHTML;
+export class AppService implements IAppService, OnApplicationBootstrap {
+  private renderer: Renderer;
+  private htmlCache: RendererCache;
+  private dataCache: RendererCache;
 
   public constructor() {
-    // TODO: intercept or prevent egress API calls from renderer
-    // ----> find and replace with regex: fetch?? renderer build phase only
-    this.getJSON = jsonRenderer();
-    this.getStream = htmlStreamer();
-    this.getHTML = htmlRenderer();
+    this.htmlCache = new Map<string, Uint8Array>();
+    this.dataCache = new Map<string, Uint8Array>();
+
+    this.renderer = new Renderer({
+      debug: true,
+      cache: { html: this.htmlCache, data: this.dataCache },
+    });
+  }
+
+  public async onApplicationBootstrap() {
+    try {
+      await this.renderer.prerenderRoutes({
+        lang: 'en',
+        writeToDisk: resolve(__dirname, '../../../.cache'),
+      });
+
+      console.log(this.htmlCache.keys());
+      console.log(this.dataCache.keys());
+    } catch (err) {
+      console.error(`Failed to prerender routes: ${err}`);
+    }
   }
 
   public async getHtmlJsonData(url: string, lang: string = 'en'): Promise<any> {
     try {
-      const data = await this.getJSON({ url, lang });
+      const data = await this.renderer.getRouteJSON({ url, lang });
       if (!!data.error) {
         throw data.error;
       }
@@ -35,16 +48,9 @@ export class AppService implements IAppService {
     }
   }
 
-  public async getHtmlProtoData(
-    url: string,
-    lang: string = 'en',
-  ): Promise<Uint8Array> {
-    throw new Error('NotImplemented');
-  }
-
   public async renderHTML(url: string, lang: string = 'en'): Promise<string> {
     try {
-      const html = await this.getHTML({ url, lang });
+      const html = await this.renderer.getRouteHTML({ url, lang });
       return html;
     } catch (err) {
       console.error(err); // tslint:disable-line
@@ -58,12 +64,19 @@ export class AppService implements IAppService {
     lang: string = 'en',
   ): Promise<any> {
     try {
-      const metaData = {};
-      await this.getStream({ url, lang }, resp, metaData);
+      const metaData = { ttr: '', statusCode: 0 };
+      await this.renderer.streamRouteHTML({ url, lang }, resp, metaData);
       return metaData;
     } catch (err) {
       console.error(err); // tslint:disable-line
       throw err;
     }
+  }
+
+  public async getHtmlProtoData(
+    url: string,
+    lang: string = 'en',
+  ): Promise<Uint8Array> {
+    throw new Error('NotImplemented');
   }
 }

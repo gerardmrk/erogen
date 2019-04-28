@@ -1,4 +1,4 @@
-import { TextEncoder } from "util";
+import { TextEncoder, TextDecoder } from "util";
 import { promises as fsPromises } from "fs";
 
 import PurgeCSS from "purgecss";
@@ -16,7 +16,10 @@ import { storeCreator, Store } from "@client/store";
 import { ConfigProvider } from "@client/views/contexts/config";
 import { RendererResponse, RendererRequest } from "./proto";
 import { RouteConf, routeConfs } from "@client/views/conf.routes";
+import { normalize } from "path";
 
+const statAsync = fsPromises.stat;
+const mkdirAsync = fsPromises.mkdir;
 const writeFileAsync = fsPromises.writeFile;
 
 /**
@@ -94,14 +97,15 @@ export class Renderer {
 
   // helpers
   private textEncoder: TextEncoder;
+  private textDecoder: TextDecoder;
   private chunkExtractor: ChunkExtractor;
 
   // caches
   private htmlCache: Map<string, Uint8Array> = new Map<string, Uint8Array>();
   private dataCache: Map<string, Uint8Array> = new Map<string, Uint8Array>();
 
-  public constructor({ debug, cache }: RendererConfig) {
-    // Variables on the global object doesn't get garbage-collect, and these
+  public constructor({ debug, cache }: RendererConfig = {}) {
+    // Variables on the global object doesn't get garbage-collected, and these
     // ones need to cos they're huge, so create local copies here and delete the
     // original values from global right after. The local copies should now reside
     // in the stack and can be reliably marked as unreachable when the time comes.
@@ -130,6 +134,7 @@ export class Renderer {
     };
 
     this.textEncoder = new TextEncoder();
+    this.textDecoder = new TextDecoder();
 
     this.chunkExtractor = new ChunkExtractor({
       stats: this.moduleStats,
@@ -233,22 +238,32 @@ export class Renderer {
       throw new Error("`writeToDisk` is required if caching is not enabled.");
     }
 
+    if (params.writeToDisk) {
+      params.writeToDisk = normalize(params.writeToDisk);
+      await mkdirIfNotExists(params.writeToDisk);
+    }
+
     const whitelist: RouteConf[] = [];
     filterPrerender(whitelist, routeConfs);
 
+    // prettier-ignore
     await Promise.all(
       whitelist.map(async (r: RouteConf) => {
-        const key = `${r.path}.${params.lang}`;
-
         const [html, data] = await Promise.all([
           this.getRouteHTML({ url: r.path as string, lang: params.lang }),
-          this.getRouteProto(RendererRequest.encode({ url: r.path as string, lang: params.lang }).finish()), // prettier-ignore
+          this.getRouteProto(RendererRequest.encode({ url: r.path as string, lang: params.lang }).finish()),
         ]);
 
         if (params.writeToDisk) {
-          await writeFileAsync(`${params.writeToDisk}/${key}.html`, html);
+          const fname = `${(r.path === "/"
+            ? "[index]"
+            : (r.path as string).replace(/(\/([^/]*))/g, match => `[${match.substr(1)}]`))
+          }.${params.lang}`;
+
+          await writeFileAsync(normalize(`${params.writeToDisk}/${fname}.html`), html);
         }
         if (this.cacheEnabled) {
+          const key = `${r.path}.${params.lang}`;
           this.htmlCache.set(key, this.textEncoder.encode(html));
           this.dataCache.set(key, data);
         }
@@ -261,6 +276,12 @@ export class Renderer {
    * @param params render params
    */
   public async getRouteHTML(params: RenderParams): Promise<string> {
+    const cacheKey = `${params.url}.${params.lang}`;
+
+    if (this.cacheEnabled && this.htmlCache.has(cacheKey)) {
+      return this.textDecoder.decode(this.htmlCache.get(cacheKey));
+    }
+
     const out = await this.getRouteJSON(params);
     return (
       this.htmlBits.docStart +
@@ -311,6 +332,7 @@ export class Renderer {
    */
   public async getRouteJSON(params: RenderParams): Promise<RenderResponse> {
     const timerStart = process.hrtime.bigint();
+
     const response = this._createResponseObject();
     const headContext: HeadContext = { helmet: undefined };
     const routerContext: StaticRouterContext = {};
@@ -480,12 +502,23 @@ type GetAppElementParams = {
 };
 
 function filterPrerender(whitelist: RouteConf[], routes: RouteConf[]) {
-  for (let i = 0, ln = routes.length; i < ln; i++) {
-    if (routes[i].prerender && !!routes[i].path) {
-      whitelist.push(routes[i]);
+  routes.forEach(r => {
+    if (r.prerender && !!r.path) whitelist.push(r);
+    if (r.routes && r.routes.length > 0) {
+      return filterPrerender(whitelist, r.routes);
     }
-    if (!!routes[i].routes) {
-      return filterPrerender(whitelist, routes[i].routes as RouteConf[]);
+  });
+}
+
+async function mkdirIfNotExists(dirname) {
+  try {
+    const stat = await statAsync(dirname);
+    if (!stat.isDirectory()) throw new Error(`${dirname} is not a directory.`);
+  } catch (err) {
+    if (err && err.code === "ENOENT") {
+      await mkdirAsync(dirname);
+    } else {
+      throw err;
     }
   }
 }
