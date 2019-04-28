@@ -78,13 +78,25 @@ export const getMetaTags = (data: object): string => {
   return result;
 };
 
-// export const purifyCSS = (html: string, ) => {};
-
-export const getHTMLBits = ({ lang, appMountPointID }: GetHTMLBitsParams) => ({
-  docStart: `<!DOCTYPE html lang="${lang}"><html><head><meta charset="utf-8"/>`,
-  postHeadTags: `<style>`,
-  postInlineStyles: `</style><style>html,body,#app-mount-point{width:100%;height:100%;}</style></head><body><div id=${appMountPointID}>`,
-  postApp: `</div><script>window._INITIAL_STATE_ = `,
-  postInitialState: ";</script>",
-  docEnd: "</body></html>",
-});
+export const htmlSplitter = () => {
+  const [
+    docStart,
+    postLang,
+    postMetas,
+    postLinks,
+    postStyles,
+    postApp,
+    postInitialState,
+    docEnd,
+  ] = INJECTED_GENERATED_HTML.split(/(?:{{{[A-Za-z0-9]+}}})/g);
+  return ({ lang, appMountPointID }: GetHTMLBitsParams) => ({
+    docStart,
+    postLang,
+    postMetas,
+    postLinks,
+    postStyles,
+    postApp,
+    postInitialState,
+    docEnd,
+  });
+};

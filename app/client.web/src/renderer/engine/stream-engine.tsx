@@ -4,8 +4,8 @@ import {
   getChunkExtractor,
   getStore,
   getAppElement,
-  getHTMLBits,
   getMetaTags,
+  htmlSplitter,
 } from "./shared";
 import { Store } from "@client/store";
 import { StaticRouterContext } from "react-router";
@@ -19,11 +19,15 @@ export type StreamMetaData = Pick<
   "statusCode" | "redirectTo" | "error" | "ttr"
 >;
 
-// prettier-ignore
 export const streamEngine = () => {
   const extractor = getChunkExtractor();
+  const getHTMLBits = htmlSplitter();
 
-  return async (request: StreamRequest, response: StreamResponse, metaData: StreamMetaData) => {
+  return async (
+    request: StreamRequest,
+    response: StreamResponse,
+    metaData: StreamMetaData,
+  ) => {
     const timerStart = process.hrtime.bigint();
 
     try {
@@ -55,19 +59,28 @@ export const streamEngine = () => {
 
       response.write(htmlBits.docStart);
 
+      response.write(request.lang || "en");
+
+      response.write(htmlBits.postLang);
+
       response.write(getMetaTags(headContext["helmet"]));
+
+      response.write(htmlBits.postMetas);
 
       response.write(extractor.getLinkTags());
 
       response.write(extractor.getStyleTags());
 
-      response.write(htmlBits.postHeadTags);
+      response.write(htmlBits.postLinks);
 
       response.write(await extractor.getCssString());
-      
-      response.write(htmlBits.postInlineStyles);
 
-      appStream.pipe(response, { end: false });
+      response.write(htmlBits.postStyles);
+
+      appStream.pipe(
+        response,
+        { end: false },
+      );
 
       appStream.on("end", () => {
         response.write(htmlBits.postApp);
@@ -77,7 +90,7 @@ export const streamEngine = () => {
         response.write(htmlBits.postInitialState);
 
         response.write(extractor.getScriptTags({ defer: "" }));
-        
+
         response.write(htmlBits.docEnd);
 
         if (routerContext.url) {
