@@ -98,7 +98,8 @@ module.exports = async (args) => {
             children: false,
             cached: false,
             assetsSort: "chunks",
-            excludeAssets: [/^icons\//, /\.map$/, /\.br$/, /\.gz$/, /\.LICENSE$/]
+            excludeAssets: [/^icons\//, /\.map$/, /\.br$/, /\.gz$/, /\.LICENSE$/],
+            warningsFilter: [/\/node_modules\/purgecss\/lib\/purgecss\.es\.js/],
         },
 
         devtool: devMode ? "cheap-module-eval-source-map" : enableSourceMap ? "source-map" : false,
@@ -156,7 +157,7 @@ module.exports = async (args) => {
                         }
                     }
                 }),
-                clientBuild && new OptimizeCssAssetsPlugin({
+                new OptimizeCssAssetsPlugin({
                   canPrint: true,
                   assetNameRegExp: /\.css$/g,
                   cssProcessorPluginOptions: {
@@ -449,7 +450,7 @@ module.exports = async (args) => {
 
             prodMode && new webpack.HashedModuleIdsPlugin(),
 
-            new ExtractCssChunksPlugin({
+            clientBuild && new ExtractCssChunksPlugin({
                 filename: devMode ? "styles/[name].css" : "styles/[name].[hash].css",
                 chunkFilename: devMode ? "styles/[id].css" : "styles/[id].[hash].css",
             }),
