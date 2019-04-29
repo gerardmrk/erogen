@@ -31,6 +31,9 @@ export type RendererCache = Map<string, Uint8Array>;
  * prerender params
  */
 export type PrerenderRoutesParams = {
+  // whether to prerender all routes. If false, will only prerender routes
+  // that have been explicitly marked as `prerendered: true`.
+  all?: boolean;
   // the language in locale code to prerender the route with.
   lang: string;
   // if provided, will attempt to write the prerendered HTML to disk
@@ -75,7 +78,7 @@ export type RendererConfig = {
   // enable debugging
   debug?: boolean;
   // enable caching if true. The provided cache is used if one is provided.
-  cache?: boolean | { html: RendererCache; data: RendererCache };
+  cache?: boolean | { html?: RendererCache; data?: RendererCache };
 };
 
 /**
@@ -243,9 +246,14 @@ export class Renderer {
       await mkdirIfNotExists(params.writeToDisk);
     }
 
-    const whitelist: RouteConf[] = [];
-    const blacklist: RouteConf[] = [];
+    let whitelist: RouteConf[] = [];
+    let blacklist: RouteConf[] = [];
     filterPrerender(whitelist, blacklist, routeConfs);
+
+    if (params.all) {
+      whitelist = [...whitelist, ...blacklist];
+      blacklist = [...blacklist, ...whitelist];
+    }
 
     // prettier-ignore
     await Promise.all(whitelist.map(async (r: RouteConf) => {
@@ -255,12 +263,11 @@ export class Renderer {
       });
 
       if (params.writeToDisk) {
-        const fname = `${(r.path === "/"
+        const prefix = (r.path === "/"
           ? "[index]"
-          : (r.path as string).replace(/(\/([^/]*))/g, match => `[${match.substr(1)}]`))
-        }.${params.lang}`;
+          : (r.path as string).replace(/(\/([^/]*))/g, match => `[${match.substr(1)}]`));
 
-        await writeFileAsync(normalize(`${params.writeToDisk}/${fname}.html`), html);
+        await writeFileAsync(normalize(`${params.writeToDisk}/${prefix}.${params.lang}.html`), html);
       }
 
       if (this.cacheEnabled) {
@@ -523,7 +530,8 @@ function filterPrerender(
   routes: RouteConf[],
 ) {
   routes.forEach(r => {
-    if (r.prerender && !!r.path) whitelist.push(r);
+    if (!r.path) r.path = `/${r.status}`;
+    if (r.prerender) whitelist.push(r);
     else blacklist.push(r);
     if (r.routes && r.routes.length > 0) {
       return filterPrerender(whitelist, blacklist, r.routes);

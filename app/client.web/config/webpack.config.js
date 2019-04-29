@@ -98,7 +98,7 @@ module.exports = async (args) => {
             children: false,
             cached: false,
             assetsSort: "chunks",
-            excludeAssets: [/^icons\//, /\.map$/]
+            excludeAssets: [/^icons\//, /\.map$/, /\.br$/, /\.gz$/, /\.LICENSE$/]
         },
 
         devtool: devMode ? "cheap-module-eval-source-map" : enableSourceMap ? "source-map" : false,

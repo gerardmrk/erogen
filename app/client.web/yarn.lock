@@ -5108,6 +5108,16 @@ gulp-cli@^2.2.0:
     v8flags "^3.0.1"
     yargs "^7.1.0"
 
+gulp-purgecss@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/gulp-purgecss/-/gulp-purgecss-1.1.1.tgz#6135a5bca34bd79410afaaa42f7f5c8562dcd3ca"
+  integrity sha512-MDz9BSdHlaHGGGNsPCubPpQtg55DW/0ZvMm4vDYMC+Oep2+VbXz7qdfigDl+5pXUTw9eAG9HvTQu8DW9s1Ml/A==
+  dependencies:
+    glob "^7.1.2"
+    plugin-error "^1.0.1"
+    purgecss "^1.1.0"
+    through2 "^2.0.3"
+
 gulp@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/gulp/-/gulp-4.0.1.tgz#987a38a55a7d3677f6b49e291b06bc05809f33d9"
@@ -8362,6 +8372,16 @@ pkg-dir@^3.0.0:
   dependencies:
     find-up "^3.0.0"
 
+plugin-error@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/plugin-error/-/plugin-error-1.0.1.tgz#77016bd8919d0ac377fdcdd0322328953ca5781c"
+  integrity sha512-L1zP0dk7vGweZME2i+EeakvUNqSrdiI3F91TwEoYiGrAfUXmVv6fJIq4g82PAXxNsWOp0J7ZqQy/3Szz0ajTxA==
+  dependencies:
+    ansi-colors "^1.0.1"
+    arr-diff "^4.0.0"
+    arr-union "^3.1.0"
+    extend-shallow "^3.0.2"
+
 pn@^1.0.0, pn@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
@@ -8989,7 +9009,7 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-purgecss@1.3.0:
+purgecss@1.3.0, purgecss@^1.1.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/purgecss/-/purgecss-1.3.0.tgz#fc3c303df9a74a75547545b2c0da28a9ec63da00"
   integrity sha512-0UMnr8aUsPO7RbzAT72UELRvwMHhadtuunDm7rcgRS6b8pCVO8yglIqikiYFwQk2XP606mk+GpjI1G74Auxgtg==

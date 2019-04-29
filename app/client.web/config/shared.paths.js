@@ -6,7 +6,7 @@ const rootDir = resolve(__dirname, "..", "..", "..");
 const rootConfigDir = `${rootDir}/config`;
 
 const appDir = resolve(__dirname, "..");
-const cacheDir = `${appDir}/cache`;
+const cacheDir = `${appDir}/.cache`;
 const configDir = `${appDir}/config`;
 
 const sourceDir = `${appDir}/src`;

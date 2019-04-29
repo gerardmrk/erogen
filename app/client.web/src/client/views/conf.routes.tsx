@@ -35,6 +35,12 @@ export const LOGIN_PATH = "/login";
 export const DEFAULT_PUBLIC_PATH = "/";
 export const DEFAULT_PRIVATE_PATH = "/dashboard";
 
+/**
+ * IMPORTANT RULES:
+ * - only the last route is allowed to have a non-specified path.
+ * - the last route is reserved for the 404 route.
+ */
+
 // prettier-ignore
 export const routeConfs: RouteConf[] = [
   {

@@ -28,21 +28,20 @@
       "@client/*": [
         "src/client/*",
         "src/client/*/index.ts",
-        "src/client/*/index.tsx",
-        "src/client/*/index.js",
-        "src/client/*/index.jsx",
-        "src/client/*/index.json"
+        "src/client/*/index.tsx"
       ],
       "@renderer/*": [
         "src/renderer/*",
         "src/renderer/*/index.ts",
-        "src/renderer/*/index.tsx",
-        "src/renderer/*/index.js",
-        "src/renderer/*/index.jsx",
-        "src/renderer/*/index.json"
+        "src/renderer/*/index.tsx"
+      ],
+      "@server/*": [
+        "src/server/*",
+        "src/server/*/index.ts",
+        "src/server/*/index.tsx"
       ]
     }
   },
   "include": ["./src/**/*.tsx", "./src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }
