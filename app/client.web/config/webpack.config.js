@@ -1,7 +1,5 @@
 /* eslint-env node */
 /* eslint-disable no-console, @typescript-eslint/no-var-requires, @typescript-eslint/camelcase */
-const path = require("path");
-
 const Fiber = require("fibers");
 const webpack = require("webpack");
 const webpackNodeExternals = require("webpack-node-externals");
@@ -24,7 +22,6 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CheckerPlugin, TsConfigPathsPlugin } = require("awesome-typescript-loader"); // prettier-ignore
 const settingsBuilder = require("./webpack.settings");
 const { getAsyncModuleStats, getGeneratedHTML } = require("./webpack.helpers");
-
 const { paths } = require("./shared.paths");
 
 const getSettings = settingsBuilder(paths.appDir);
@@ -232,7 +229,7 @@ module.exports = async (args) => {
                     test:  /\.(sa|sc|c)ss$/,
                     exclude: [/dist/, /node_modules/],
                     use: [
-                        clientBuild && { 
+                        { 
                             loader: ExtractCssChunksPlugin.loader,
                             options: {
                                 hmr: devMode,
@@ -270,7 +267,7 @@ module.exports = async (args) => {
                     test: /\.less$/,
                     exclude: [/dist/, /node_modules\/(?!(semantic-ui-less\/(themes|definitions))\/).*/],
                     use: [
-                        clientBuild && { 
+                        { 
                             loader: ExtractCssChunksPlugin.loader,
                             options: {
                                 hmr: devMode,
@@ -369,8 +366,8 @@ module.exports = async (args) => {
                             emitFile: clientBuild,
                         },
                     }]
-                }
-            ]
+                },
+            ].filter(x => !!x),
         },
         plugins: [
             new HardSourcePlugin({
@@ -450,7 +447,7 @@ module.exports = async (args) => {
 
             prodMode && new webpack.HashedModuleIdsPlugin(),
 
-            clientBuild && new ExtractCssChunksPlugin({
+            new ExtractCssChunksPlugin({
                 filename: devMode ? "styles/[name].css" : "styles/[name].[hash].css",
                 chunkFilename: devMode ? "styles/[id].css" : "styles/[id].[hash].css",
             }),

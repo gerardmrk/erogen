@@ -1,5 +1,6 @@
-import { TextEncoder, TextDecoder } from "util";
+import { normalize } from "path";
 import { promises as fsPromises } from "fs";
+import { TextEncoder, TextDecoder } from "util";
 
 import PurgeCSS from "purgecss";
 import * as React from "react";
@@ -16,7 +17,6 @@ import { storeCreator, Store } from "@client/store";
 import { ConfigProvider } from "@client/views/contexts/config";
 import { RendererResponse, RendererRequest } from "./proto";
 import { RouteConf, routeConfs } from "@client/views/conf.routes";
-import { normalize } from "path";
 
 const statAsync = fsPromises.stat;
 const mkdirAsync = fsPromises.mkdir;
