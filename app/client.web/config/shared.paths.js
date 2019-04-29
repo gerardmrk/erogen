@@ -20,6 +20,10 @@ const rendererBuild = `${buildDir}/renderer`;
 const serverBuild = `${buildDir}/server`;
 
 exports.paths = {
+  /**
+   * Directories
+   */
+
   rootDir,
   rootConfigDir,
   appDir,
@@ -33,4 +37,12 @@ exports.paths = {
   clientBuild,
   rendererBuild,
   serverBuild,
+
+  /**
+   * Files
+   */
+
+  htmlTemplate: `${clientSrc}/index.html`,
+  asyncModuleStats: `${clientBuild}/async-modules.json`,
+  logoImage: `${rootConfigDir}/logo/logo.png`,
 };

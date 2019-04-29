@@ -95,11 +95,27 @@ module.exports = async (args) => {
             children: false,
             cached: false,
             assetsSort: "chunks",
-            excludeAssets: [/^icons\//, /\.map$/, /\.br$/, /\.gz$/, /\.LICENSE$/],
-            warningsFilter: [/\/node_modules\/purgecss\/lib\/purgecss\.es\.js/],
+            // tone down information in console
+            excludeAssets: [
+                /^icons\//,
+                /\.map$/,
+                /\.br$/,
+                /\.gz$/,
+                /\.LICENSE$/,
+                rendererBuild && /^client\//
+            ].filter(x => !!x),
+            warningsFilter: [
+                // purgecss pkg has a dynamic require statement for loading
+                // a config file at class instantiation. build is not affected.
+                /\/node_modules\/purgecss\/lib\/purgecss\.es\.js/
+            ],
         },
 
-        devtool: devMode ? "cheap-module-eval-source-map" : enableSourceMap ? "source-map" : false,
+        devtool: devMode
+            ? "cheap-module-eval-source-map"
+            : enableSourceMap
+                ? "source-map"
+                : false,
 
         devServer: {
             hot: true,
