@@ -2,7 +2,6 @@
 /* eslint-disable no-console, @typescript-eslint/no-var-requires, @typescript-eslint/camelcase */
 const path = require("path");
 
-const glob = require("glob");
 const Fiber = require("fibers");
 const webpack = require("webpack");
 const webpackNodeExternals = require("webpack-node-externals");
@@ -13,14 +12,12 @@ const CompressionPlugin = require("compression-webpack-plugin");
 const ExtractCssChunksPlugin = require("mini-css-extract-plugin");
 const CommonJSTreeShakePlugin = require("webpack-common-shake").Plugin;
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const FaviconsPlugin = require("webapp-webpack-plugin");
-const HtmlIncludeAssetsPlugin = require("html-webpack-include-assets-plugin");
+const ProgressiveWebAppPlugin = require("webapp-webpack-plugin");
 const HtmlPlugin = require("html-webpack-plugin");
 const HtmlScriptExtPlugin = require("script-ext-html-webpack-plugin");
 const LodashPlugin = require("lodash-webpack-plugin");
 const OfflinePlugin = require("offline-plugin");
 const RemoveServiceWorkerPlugin = require("webpack-remove-serviceworker-plugin");
-const SubresourceIntegrityPlugin = require("webpack-subresource-integrity");
 const TerserPlugin = require("terser-webpack-plugin");
 const LoadablePlugin = require("@loadable/webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
@@ -28,23 +25,9 @@ const { CheckerPlugin, TsConfigPathsPlugin } = require("awesome-typescript-loade
 const settingsBuilder = require("./webpack.settings");
 const { getAsyncModuleStats, getGeneratedHTML } = require("./webpack.helpers");
 
-const ROOT_DIR = path.resolve(__dirname, "..", "..", "..");
-const ROOT_CONFIG_DIR = `${ROOT_DIR}/config`;
+const { paths } = require("./shared.paths");
 
-const ROOT_APP_DIR = path.resolve(__dirname, "..");
-const APP_CONFIG_DIR = `${ROOT_APP_DIR}/config`;
-const APP_CACHE_DIR = `${ROOT_APP_DIR}/.cache`;
-
-const DST_DIR = `${ROOT_APP_DIR}/dist`;
-const SRC_DIR = `${ROOT_APP_DIR}/src`;
-
-const CLIENT_SRC = `${SRC_DIR}/client`;
-const RENDERER_SRC = `${SRC_DIR}/renderer`;
-
-const CLIENT_DST = `${DST_DIR}/client`;
-const RENDERER_DST = `${DST_DIR}/renderer`;
-
-const getSettings = settingsBuilder(ROOT_APP_DIR);
+const getSettings = settingsBuilder(paths.appDir);
 
 // prettier-ignore
 module.exports = async (args) => {
@@ -74,13 +57,13 @@ module.exports = async (args) => {
     let generatedHTML;
     let asyncModuleStats;
     if (rendererBuild) {
-      generatedHTML = await getGeneratedHTML(CLIENT_DST);
-      asyncModuleStats = await getAsyncModuleStats(CLIENT_DST);
+      generatedHTML = await getGeneratedHTML(paths.clientBuild);
+      asyncModuleStats = await getAsyncModuleStats(paths.clientBuild);
     }
 
     // base config
     const config = {
-        context: ROOT_APP_DIR,
+        context: paths.appDir,
 
         mode: mode,
 
@@ -96,18 +79,26 @@ module.exports = async (args) => {
             extensions: [".ts", ".tsx", ".js", ".jsx", ".json", ".css", "scss"],
             alias: {
                 // source code
-                "@client": CLIENT_SRC,
-                "@renderer": RENDERER_SRC,
+                "@client": paths.clientSrc,
+                "@renderer": paths.rendererSrc,
                 // route config
-                "@routeConfig": `${SRC_DIR}/route-config.json`,
+                "@routeConfig": `${paths.source}/route-config.json`,
                 // semantic ui theming path resolution
-                "../../theme.config$": `${CLIENT_SRC}/views/theme/theme.config`,
+                "../../theme.config$": `${paths.clientSrc}/views/theme/theme.config`,
             },
             plugins: [
                 new TsConfigPathsPlugin({
-                    configFileName: `${ROOT_APP_DIR}/tsconfig.${source}.json`
+                    configFileName: `${paths.appDir}/tsconfig.${source}.json`
                 }),
             ]
+        },
+
+        stats: {
+            modules: false,
+            children: false,
+            cached: false,
+            assetsSort: "chunks",
+            excludeAssets: [/^icons\//, /\.map$/]
         },
 
         devtool: devMode ? "cheap-module-eval-source-map" : enableSourceMap ? "source-map" : false,
@@ -144,7 +135,7 @@ module.exports = async (args) => {
             },
             minimizer: [
                 new TerserPlugin({
-                    cache: `${APP_CACHE_DIR}/terser.${source}.${mode}`,
+                    cache: `${paths.cacheDir}/plugin.terser@${source}.${mode}`,
                     parallel: true,
                     exclude: [/dist/],
                     extractComments: true,
@@ -187,12 +178,12 @@ module.exports = async (args) => {
                         options: {
                             useCache: true,
                             useBabel: true,
-                            cacheDirectory: `${APP_CACHE_DIR}/atl.${source}.${mode}`,
+                            cacheDirectory: `${paths.cacheDir}/loader.atl@${source}.${mode}`,
                             errorsAsWarnings: true,
                             transpileOnly: clientBuild,
                             useTranspileModule: clientBuild,
                             forceIsolatedModules: clientBuild,
-                            configFileName: `${ROOT_APP_DIR}/tsconfig.${source}.json`,
+                            configFileName: `${paths.appDir}/tsconfig.${source}.json`,
                             reportFiles: ["src/**/*.{ts,tsx}"],
                             babelCore: "@babel/core",
                             babelOptions: {
@@ -382,7 +373,11 @@ module.exports = async (args) => {
         },
         plugins: [
             new HardSourcePlugin({
-                cacheDirectory: `${APP_CACHE_DIR}/hard-source.${source}.${mode}`
+                cacheDirectory: `${paths.cacheDir}/plugin.hardsource@${source}.${mode}`,
+                cachePrune: {
+                    maxAge: 2 * 24 * 60 * 60 * 1000,
+                    sizeThreshold: 250 * 1024 * 1024
+                }
             }),
 
             new HardSourcePlugin.ExcludeModulePlugin([{
@@ -420,9 +415,7 @@ module.exports = async (args) => {
             }),
 
             prodMode && new CommonJSTreeShakePlugin({
-                onGlobalBailout: (bailouts) => {
-                  return;
-                },
+                onGlobalBailout: () => { return; },
             }),
 
             devMode && clientBuild && new webpack.HotModuleReplacementPlugin(),
@@ -434,10 +427,10 @@ module.exports = async (args) => {
                     '!index.html',
                     '!sw.js',
                     '!report.html',
-                    `${CLIENT_DST}/scripts/*`,
-                    `${CLIENT_DST}/styles/*`,
-                    `${CLIENT_DST}/images/*`,
-                    `${CLIENT_DST}/fonts/*`,
+                    `${paths.clientBuild}/scripts/*`,
+                    `${paths.clientBuild}/styles/*`,
+                    `${paths.clientBuild}/images/*`,
+                    `${paths.clientBuild}/fonts/*`,
                 ]
             }),
 
@@ -461,22 +454,17 @@ module.exports = async (args) => {
                 chunkFilename: devMode ? "styles/[id].css" : "styles/[id].[hash].css",
             }),
 
-            // prodMode && clientBuild && new PurgeCSSPlugin({
-            //     paths: glob.sync(`${CLIENT_SRC}/**/*`, { nodir: true }),
-            //     only: ["bundle", "vendor"],
-            // }),
-
             // development
             devMode && clientBuild && new HtmlPlugin({
                 filename: "index.html",
-                template: `${CLIENT_SRC}/index.html`,
+                template: `${paths.clientSrc}/index.html`,
                 vars: {
                     lang: "en",
                     metas: "",
                     links: "",
                     styles: "",
                     app: "",
-                    initialState: "undefined",
+                    initialState: "{}",
                     scripts: "",
                     mountPointID: appMountPointID,
                 },
@@ -485,14 +473,16 @@ module.exports = async (args) => {
             // HTML, no SSR
             prodMode && clientBuild && new HtmlPlugin({
                 filename: "index.html",
-                template: `${CLIENT_SRC}/index.html`,
+                template: `${paths.clientSrc}/index.html`,
+                cache: true,
+                minify: true,
                 vars: {
                     lang: "en",
                     metas: "",
                     links: "",
                     styles: "",
                     app: "",
-                    initialState: "undefined",
+                    initialState: "{}",
                     scripts: "",
                     mountPointID: appMountPointID,
                 },
@@ -501,8 +491,8 @@ module.exports = async (args) => {
             // golang templates
             prodMode && clientBuild && new HtmlPlugin({
                 filename: "index.gohtml",
-                template: `${CLIENT_SRC}/index.html`,
-                minify: true,
+                template: `${paths.clientSrc}/index.html`,
+                cache: true,
                 vars: {
                     lang: "{{.Lang}}",
                     metas: "{{.Metas}}",
@@ -519,8 +509,8 @@ module.exports = async (args) => {
             prodMode && clientBuild && new HtmlPlugin({
                 inject: false,
                 filename: "index.ssr.gohtml",
-                template: `${CLIENT_SRC}/index.html`,
-                minify: true,
+                template: `${paths.clientSrc}/index.html`,
+                cache: true,
                 vars: {
                     lang: "{{.Lang}}",
                     metas: "{{.Metas}}",
@@ -536,8 +526,8 @@ module.exports = async (args) => {
             // handlebars templates
             prodMode && clientBuild && new HtmlPlugin({
                 filename: "index.hbs",
-                template: `${CLIENT_SRC}/index.html`,
-                minify: true,
+                template: `${paths.clientSrc}/index.html`,
+                cache: true,
                 vars: {
                     lang: "{{{lang}}}",
                     metas: "{{{metas}}}",
@@ -554,8 +544,8 @@ module.exports = async (args) => {
             prodMode && clientBuild && new HtmlPlugin({
                 inject: false,
                 filename: "index.ssr.hbs",
-                template: `${CLIENT_SRC}/index.html`,
-                minify: true,
+                template: `${paths.clientSrc}/index.html`,
+                cache: true,
                 vars: {
                     lang: "{{{lang}}}",
                     metas: "{{{metas}}}",
@@ -572,9 +562,9 @@ module.exports = async (args) => {
                 defaultAttribute: "defer"
             }),
 
-            prodMode && clientBuild && new FaviconsPlugin({
-                logo: `${ROOT_CONFIG_DIR}/logo/logo.png`,
-                cache: true,
+            prodMode && clientBuild && new ProgressiveWebAppPlugin({
+                logo: `${paths.rootConfigDir}/logo/logo.png`,
+                cache: `${paths.cacheDir}/plugin.pwa@${source}.${mode}`,
                 prefix: "icons/",
                 inject: "force",
                 favicons: {
@@ -596,24 +586,23 @@ module.exports = async (args) => {
                 },
             }),
 
-            new SubresourceIntegrityPlugin({
-                enabled: prodMode && clientBuild,
-                hashFuncNames: ["sha256", "sha512"],
-            }),
-
             prodMode && clientBuild && new CompressionPlugin({
                 filename: "[path].gz[query]",
                 algorithm: "gzip",
-                test: new RegExp("\\.(js|css)$"),
+                test: new RegExp("\\.js$"),
+                // test: new RegExp("\\.(js|css)$"),
                 minRatio: 0.8,
+                cache: `${paths.cacheDir}/plugin.compression.gzip@${source}.${mode}`,
             }),
 
             prodMode && clientBuild && new CompressionPlugin({
                 filename: "[path].br[query]",
                 algorithm: "brotliCompress",
-                test: new RegExp("\\.(js|css)$"),
+                test: new RegExp("\\.js$"),
+                // test: new RegExp("\\.(js|css)$"),
                 minRatio: 0.8,
                 compressionOptions: { level: 11 },
+                cache: `${paths.cacheDir}/plugin.compression.brotli@${source}.${mode}`,
             }),
 
             clientBuild && new RemoveServiceWorkerPlugin(),
@@ -636,8 +625,8 @@ module.exports = async (args) => {
                 analyzerMode: "static",
                 openAnalyzer: false,
                 generateStatsFile: true,
-                statsFilename: `${DST_DIR}/stats.${source}.json`,
-                reportFilename: `${DST_DIR}/stats.${source}.html`,
+                statsFilename: `${paths.buildDir}/stats.${source}.json`,
+                reportFilename: `${paths.buildDir}/stats.${source}.html`,
             }),
         ].filter(t => !!t)
     }
@@ -648,7 +637,7 @@ module.exports = async (args) => {
         config.entry[appEntrypointID] = ["src/client/main.tsx"];
 
         config.output = {
-            path: CLIENT_DST,
+            path: paths.clientBuild,
             filename: devMode ? "scripts/[name].js" : "scripts/[name].[chunkhash].js",
             publicPath: devMode ? "/" : "/assets/",
             crossOriginLoading: "anonymous",
@@ -661,7 +650,7 @@ module.exports = async (args) => {
         };
 
         config.output = {
-            path: RENDERER_DST,
+            path: paths.rendererBuild,
             filename: "index.js",
             publicPath: "/assets/",
             libraryTarget: "commonjs",
