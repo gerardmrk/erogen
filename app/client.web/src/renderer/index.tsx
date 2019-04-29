@@ -263,9 +263,9 @@ export class Renderer {
       });
 
       if (params.writeToDisk) {
-        const prefix = (r.path === "/"
+        const prefix = r.path === "/"
           ? "[index]"
-          : (r.path as string).replace(/(\/([^/]*))/g, match => `[${match.substr(1)}]`));
+          : (r.path as string).replace(/(\/([^/]*))/g, match => `[${match.substr(1).replace(/:(.*)/g, "($1)")}]`);
 
         await writeFileAsync(normalize(`${params.writeToDisk}/${prefix}.${params.lang}.html`), html);
       }
