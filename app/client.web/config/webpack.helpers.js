@@ -1,19 +1,23 @@
 /* eslint-env node */
 /* eslint-disable no-console, @typescript-eslint/no-var-requires, @typescript-eslint/camelcase */
-const {
-  promises: { readFile },
-} = require("fs");
+import { promises } from "fs";
+import { paths } from "./shared.paths";
+
+const readFileAsync = promises.readFile;
 
 /**
  * Takes any number of arguments and return an array with falsy values removed.
  * @param  {...any} args ...
  */
-exports.compact = (...args) => args.filter(val => !!val);
+export const compact = (...args) => args.filter(val => !!val);
 
-exports.getAsyncModuleStats = async clientDest => {
-  return await readFile(`${clientDest}/async-modules.json`, "utf-8");
+export const getAsyncModuleStats = async () => {
+  return await readFileAsync(
+    `${paths.clientBuild}/async-modules.json`,
+    "utf-8",
+  );
 };
 
-exports.getGeneratedHTML = async clientDest => {
-  return await readFile(`${clientDest}/index.ssr.hbs`, "utf-8");
+export const getGeneratedHTML = async () => {
+  return await readFileAsync(`${paths.clientBuild}/index.ssr.hbs`, "utf-8");
 };

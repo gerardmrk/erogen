@@ -1,8 +1,7 @@
 /* eslint-env node */
-/* eslint-disable no-console, @typescript-eslint/no-var-requires, @typescript-eslint/camelcase */
-const dotenv = require("dotenv");
+import dotenv from "dotenv";
 
-module.exports = rootAppDir => ({
+export default rootAppDir => ({
   mode = "development",
   source = "client",
   sourceMap,

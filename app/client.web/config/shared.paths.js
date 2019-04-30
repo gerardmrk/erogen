@@ -1,6 +1,5 @@
 /* eslint-env node */
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { resolve } = require("path");
+import { resolve } from "path";
 
 const rootDir = resolve(__dirname, "..", "..", "..");
 const rootConfigDir = `${rootDir}/config`;
@@ -19,7 +18,7 @@ const clientBuild = `${buildDir}/client`;
 const rendererBuild = `${buildDir}/renderer`;
 const serverBuild = `${buildDir}/server`;
 
-exports.paths = {
+export const paths = {
   /**
    * References
    */
@@ -45,5 +44,6 @@ exports.paths = {
   htmlTemplate: `${clientSrc}/index.html`,
   asyncModuleStats: `${clientBuild}/async-modules.json`,
   logoImage: `${rootConfigDir}/logo/logo.png`,
-  protobufsDir: `${rendererSrc}/proto`,
+  protobufDef: `${sourceDir}/renderer.proto`,
+  protobufDir: `${rendererSrc}/proto`,
 };
