@@ -1,13 +1,15 @@
 /*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
-import * as $protobuf from "protobufjs/minimal";
+"use strict";
+
+var $protobuf = require("protobufjs/minimal");
 
 // Common aliases
-const $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
+var $Reader = $protobuf.Reader, $Writer = $protobuf.Writer, $util = $protobuf.util;
 
 // Exported root namespace
-const $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
+var $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
 
-export const RendererRequest = $root.RendererRequest = (() => {
+$root.RendererRequest = (function() {
 
     /**
      * Properties of a RendererRequest.
@@ -28,7 +30,7 @@ export const RendererRequest = $root.RendererRequest = (() => {
      */
     function RendererRequest(properties) {
         if (properties)
-            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                 if (properties[keys[i]] != null)
                     this[keys[i]] = properties[keys[i]];
     }
@@ -117,9 +119,9 @@ export const RendererRequest = $root.RendererRequest = (() => {
     RendererRequest.decode = function decode(reader, length) {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
-        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.RendererRequest();
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.RendererRequest();
         while (reader.pos < end) {
-            let tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
             case 1:
                 message.url = reader.string();
@@ -188,7 +190,7 @@ export const RendererRequest = $root.RendererRequest = (() => {
     RendererRequest.fromObject = function fromObject(object) {
         if (object instanceof $root.RendererRequest)
             return object;
-        let message = new $root.RendererRequest();
+        var message = new $root.RendererRequest();
         if (object.url != null)
             message.url = String(object.url);
         if (object.lang != null)
@@ -210,7 +212,7 @@ export const RendererRequest = $root.RendererRequest = (() => {
     RendererRequest.toObject = function toObject(message, options) {
         if (!options)
             options = {};
-        let object = {};
+        var object = {};
         if (options.defaults) {
             object.url = "";
             object.lang = "";
@@ -239,7 +241,7 @@ export const RendererRequest = $root.RendererRequest = (() => {
     return RendererRequest;
 })();
 
-export const RendererResponse = $root.RendererResponse = (() => {
+$root.RendererResponse = (function() {
 
     /**
      * Properties of a RendererResponse.
@@ -249,12 +251,12 @@ export const RendererResponse = $root.RendererResponse = (() => {
      * @property {RendererResponse.IRenderError|null} [error] RendererResponse error
      * @property {string|null} [redirectTo] RendererResponse redirectTo
      * @property {string|null} [lang] RendererResponse lang
-     * @property {Uint8Array|null} [metas] RendererResponse metas
-     * @property {Uint8Array|null} [app] RendererResponse app
-     * @property {Uint8Array|null} [links] RendererResponse links
-     * @property {Uint8Array|null} [styles] RendererResponse styles
-     * @property {Uint8Array|null} [scripts] RendererResponse scripts
-     * @property {Uint8Array|null} [initialState] RendererResponse initialState
+     * @property {string|null} [metas] RendererResponse metas
+     * @property {string|null} [app] RendererResponse app
+     * @property {string|null} [links] RendererResponse links
+     * @property {string|null} [styles] RendererResponse styles
+     * @property {string|null} [scripts] RendererResponse scripts
+     * @property {string|null} [initialState] RendererResponse initialState
      * @property {string|null} [ttr] RendererResponse ttr
      */
 
@@ -268,7 +270,7 @@ export const RendererResponse = $root.RendererResponse = (() => {
      */
     function RendererResponse(properties) {
         if (properties)
-            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                 if (properties[keys[i]] != null)
                     this[keys[i]] = properties[keys[i]];
     }
@@ -307,51 +309,51 @@ export const RendererResponse = $root.RendererResponse = (() => {
 
     /**
      * RendererResponse metas.
-     * @member {Uint8Array} metas
+     * @member {string} metas
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.metas = $util.newBuffer([]);
+    RendererResponse.prototype.metas = "";
 
     /**
      * RendererResponse app.
-     * @member {Uint8Array} app
+     * @member {string} app
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.app = $util.newBuffer([]);
+    RendererResponse.prototype.app = "";
 
     /**
      * RendererResponse links.
-     * @member {Uint8Array} links
+     * @member {string} links
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.links = $util.newBuffer([]);
+    RendererResponse.prototype.links = "";
 
     /**
      * RendererResponse styles.
-     * @member {Uint8Array} styles
+     * @member {string} styles
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.styles = $util.newBuffer([]);
+    RendererResponse.prototype.styles = "";
 
     /**
      * RendererResponse scripts.
-     * @member {Uint8Array} scripts
+     * @member {string} scripts
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.scripts = $util.newBuffer([]);
+    RendererResponse.prototype.scripts = "";
 
     /**
      * RendererResponse initialState.
-     * @member {Uint8Array} initialState
+     * @member {string} initialState
      * @memberof RendererResponse
      * @instance
      */
-    RendererResponse.prototype.initialState = $util.newBuffer([]);
+    RendererResponse.prototype.initialState = "";
 
     /**
      * RendererResponse ttr.
@@ -394,17 +396,17 @@ export const RendererResponse = $root.RendererResponse = (() => {
         if (message.lang != null && message.hasOwnProperty("lang"))
             writer.uint32(/* id 4, wireType 2 =*/34).string(message.lang);
         if (message.metas != null && message.hasOwnProperty("metas"))
-            writer.uint32(/* id 5, wireType 2 =*/42).bytes(message.metas);
+            writer.uint32(/* id 5, wireType 2 =*/42).string(message.metas);
         if (message.app != null && message.hasOwnProperty("app"))
-            writer.uint32(/* id 6, wireType 2 =*/50).bytes(message.app);
+            writer.uint32(/* id 6, wireType 2 =*/50).string(message.app);
         if (message.links != null && message.hasOwnProperty("links"))
-            writer.uint32(/* id 7, wireType 2 =*/58).bytes(message.links);
+            writer.uint32(/* id 7, wireType 2 =*/58).string(message.links);
         if (message.styles != null && message.hasOwnProperty("styles"))
-            writer.uint32(/* id 8, wireType 2 =*/66).bytes(message.styles);
+            writer.uint32(/* id 8, wireType 2 =*/66).string(message.styles);
         if (message.scripts != null && message.hasOwnProperty("scripts"))
-            writer.uint32(/* id 9, wireType 2 =*/74).bytes(message.scripts);
+            writer.uint32(/* id 9, wireType 2 =*/74).string(message.scripts);
         if (message.initialState != null && message.hasOwnProperty("initialState"))
-            writer.uint32(/* id 10, wireType 2 =*/82).bytes(message.initialState);
+            writer.uint32(/* id 10, wireType 2 =*/82).string(message.initialState);
         if (message.ttr != null && message.hasOwnProperty("ttr"))
             writer.uint32(/* id 11, wireType 2 =*/90).string(message.ttr);
         return writer;
@@ -437,9 +439,9 @@ export const RendererResponse = $root.RendererResponse = (() => {
     RendererResponse.decode = function decode(reader, length) {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
-        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.RendererResponse();
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.RendererResponse();
         while (reader.pos < end) {
-            let tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
             case 1:
                 message.statusCode = reader.int32();
@@ -454,22 +456,22 @@ export const RendererResponse = $root.RendererResponse = (() => {
                 message.lang = reader.string();
                 break;
             case 5:
-                message.metas = reader.bytes();
+                message.metas = reader.string();
                 break;
             case 6:
-                message.app = reader.bytes();
+                message.app = reader.string();
                 break;
             case 7:
-                message.links = reader.bytes();
+                message.links = reader.string();
                 break;
             case 8:
-                message.styles = reader.bytes();
+                message.styles = reader.string();
                 break;
             case 9:
-                message.scripts = reader.bytes();
+                message.scripts = reader.string();
                 break;
             case 10:
-                message.initialState = reader.bytes();
+                message.initialState = reader.string();
                 break;
             case 11:
                 message.ttr = reader.string();
@@ -513,7 +515,7 @@ export const RendererResponse = $root.RendererResponse = (() => {
             if (!$util.isInteger(message.statusCode))
                 return "statusCode: integer expected";
         if (message.error != null && message.hasOwnProperty("error")) {
-            let error = $root.RendererResponse.RenderError.verify(message.error);
+            var error = $root.RendererResponse.RenderError.verify(message.error);
             if (error)
                 return "error." + error;
         }
@@ -524,23 +526,23 @@ export const RendererResponse = $root.RendererResponse = (() => {
             if (!$util.isString(message.lang))
                 return "lang: string expected";
         if (message.metas != null && message.hasOwnProperty("metas"))
-            if (!(message.metas && typeof message.metas.length === "number" || $util.isString(message.metas)))
-                return "metas: buffer expected";
+            if (!$util.isString(message.metas))
+                return "metas: string expected";
         if (message.app != null && message.hasOwnProperty("app"))
-            if (!(message.app && typeof message.app.length === "number" || $util.isString(message.app)))
-                return "app: buffer expected";
+            if (!$util.isString(message.app))
+                return "app: string expected";
         if (message.links != null && message.hasOwnProperty("links"))
-            if (!(message.links && typeof message.links.length === "number" || $util.isString(message.links)))
-                return "links: buffer expected";
+            if (!$util.isString(message.links))
+                return "links: string expected";
         if (message.styles != null && message.hasOwnProperty("styles"))
-            if (!(message.styles && typeof message.styles.length === "number" || $util.isString(message.styles)))
-                return "styles: buffer expected";
+            if (!$util.isString(message.styles))
+                return "styles: string expected";
         if (message.scripts != null && message.hasOwnProperty("scripts"))
-            if (!(message.scripts && typeof message.scripts.length === "number" || $util.isString(message.scripts)))
-                return "scripts: buffer expected";
+            if (!$util.isString(message.scripts))
+                return "scripts: string expected";
         if (message.initialState != null && message.hasOwnProperty("initialState"))
-            if (!(message.initialState && typeof message.initialState.length === "number" || $util.isString(message.initialState)))
-                return "initialState: buffer expected";
+            if (!$util.isString(message.initialState))
+                return "initialState: string expected";
         if (message.ttr != null && message.hasOwnProperty("ttr"))
             if (!$util.isString(message.ttr))
                 return "ttr: string expected";
@@ -558,7 +560,7 @@ export const RendererResponse = $root.RendererResponse = (() => {
     RendererResponse.fromObject = function fromObject(object) {
         if (object instanceof $root.RendererResponse)
             return object;
-        let message = new $root.RendererResponse();
+        var message = new $root.RendererResponse();
         if (object.statusCode != null)
             message.statusCode = object.statusCode | 0;
         if (object.error != null) {
@@ -571,35 +573,17 @@ export const RendererResponse = $root.RendererResponse = (() => {
         if (object.lang != null)
             message.lang = String(object.lang);
         if (object.metas != null)
-            if (typeof object.metas === "string")
-                $util.base64.decode(object.metas, message.metas = $util.newBuffer($util.base64.length(object.metas)), 0);
-            else if (object.metas.length)
-                message.metas = object.metas;
+            message.metas = String(object.metas);
         if (object.app != null)
-            if (typeof object.app === "string")
-                $util.base64.decode(object.app, message.app = $util.newBuffer($util.base64.length(object.app)), 0);
-            else if (object.app.length)
-                message.app = object.app;
+            message.app = String(object.app);
         if (object.links != null)
-            if (typeof object.links === "string")
-                $util.base64.decode(object.links, message.links = $util.newBuffer($util.base64.length(object.links)), 0);
-            else if (object.links.length)
-                message.links = object.links;
+            message.links = String(object.links);
         if (object.styles != null)
-            if (typeof object.styles === "string")
-                $util.base64.decode(object.styles, message.styles = $util.newBuffer($util.base64.length(object.styles)), 0);
-            else if (object.styles.length)
-                message.styles = object.styles;
+            message.styles = String(object.styles);
         if (object.scripts != null)
-            if (typeof object.scripts === "string")
-                $util.base64.decode(object.scripts, message.scripts = $util.newBuffer($util.base64.length(object.scripts)), 0);
-            else if (object.scripts.length)
-                message.scripts = object.scripts;
+            message.scripts = String(object.scripts);
         if (object.initialState != null)
-            if (typeof object.initialState === "string")
-                $util.base64.decode(object.initialState, message.initialState = $util.newBuffer($util.base64.length(object.initialState)), 0);
-            else if (object.initialState.length)
-                message.initialState = object.initialState;
+            message.initialState = String(object.initialState);
         if (object.ttr != null)
             message.ttr = String(object.ttr);
         return message;
@@ -617,54 +601,18 @@ export const RendererResponse = $root.RendererResponse = (() => {
     RendererResponse.toObject = function toObject(message, options) {
         if (!options)
             options = {};
-        let object = {};
+        var object = {};
         if (options.defaults) {
             object.statusCode = 0;
             object.error = null;
             object.redirectTo = "";
             object.lang = "";
-            if (options.bytes === String)
-                object.metas = "";
-            else {
-                object.metas = [];
-                if (options.bytes !== Array)
-                    object.metas = $util.newBuffer(object.metas);
-            }
-            if (options.bytes === String)
-                object.app = "";
-            else {
-                object.app = [];
-                if (options.bytes !== Array)
-                    object.app = $util.newBuffer(object.app);
-            }
-            if (options.bytes === String)
-                object.links = "";
-            else {
-                object.links = [];
-                if (options.bytes !== Array)
-                    object.links = $util.newBuffer(object.links);
-            }
-            if (options.bytes === String)
-                object.styles = "";
-            else {
-                object.styles = [];
-                if (options.bytes !== Array)
-                    object.styles = $util.newBuffer(object.styles);
-            }
-            if (options.bytes === String)
-                object.scripts = "";
-            else {
-                object.scripts = [];
-                if (options.bytes !== Array)
-                    object.scripts = $util.newBuffer(object.scripts);
-            }
-            if (options.bytes === String)
-                object.initialState = "";
-            else {
-                object.initialState = [];
-                if (options.bytes !== Array)
-                    object.initialState = $util.newBuffer(object.initialState);
-            }
+            object.metas = "";
+            object.app = "";
+            object.links = "";
+            object.styles = "";
+            object.scripts = "";
+            object.initialState = "";
             object.ttr = "";
         }
         if (message.statusCode != null && message.hasOwnProperty("statusCode"))
@@ -676,17 +624,17 @@ export const RendererResponse = $root.RendererResponse = (() => {
         if (message.lang != null && message.hasOwnProperty("lang"))
             object.lang = message.lang;
         if (message.metas != null && message.hasOwnProperty("metas"))
-            object.metas = options.bytes === String ? $util.base64.encode(message.metas, 0, message.metas.length) : options.bytes === Array ? Array.prototype.slice.call(message.metas) : message.metas;
+            object.metas = message.metas;
         if (message.app != null && message.hasOwnProperty("app"))
-            object.app = options.bytes === String ? $util.base64.encode(message.app, 0, message.app.length) : options.bytes === Array ? Array.prototype.slice.call(message.app) : message.app;
+            object.app = message.app;
         if (message.links != null && message.hasOwnProperty("links"))
-            object.links = options.bytes === String ? $util.base64.encode(message.links, 0, message.links.length) : options.bytes === Array ? Array.prototype.slice.call(message.links) : message.links;
+            object.links = message.links;
         if (message.styles != null && message.hasOwnProperty("styles"))
-            object.styles = options.bytes === String ? $util.base64.encode(message.styles, 0, message.styles.length) : options.bytes === Array ? Array.prototype.slice.call(message.styles) : message.styles;
+            object.styles = message.styles;
         if (message.scripts != null && message.hasOwnProperty("scripts"))
-            object.scripts = options.bytes === String ? $util.base64.encode(message.scripts, 0, message.scripts.length) : options.bytes === Array ? Array.prototype.slice.call(message.scripts) : message.scripts;
+            object.scripts = message.scripts;
         if (message.initialState != null && message.hasOwnProperty("initialState"))
-            object.initialState = options.bytes === String ? $util.base64.encode(message.initialState, 0, message.initialState.length) : options.bytes === Array ? Array.prototype.slice.call(message.initialState) : message.initialState;
+            object.initialState = message.initialState;
         if (message.ttr != null && message.hasOwnProperty("ttr"))
             object.ttr = message.ttr;
         return object;
@@ -723,7 +671,7 @@ export const RendererResponse = $root.RendererResponse = (() => {
          */
         function RenderError(properties) {
             if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
@@ -802,9 +750,9 @@ export const RendererResponse = $root.RendererResponse = (() => {
         RenderError.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.RendererResponse.RenderError();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.RendererResponse.RenderError();
             while (reader.pos < end) {
-                let tag = reader.uint32();
+                var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
                     message.message = reader.string();
@@ -867,7 +815,7 @@ export const RendererResponse = $root.RendererResponse = (() => {
         RenderError.fromObject = function fromObject(object) {
             if (object instanceof $root.RendererResponse.RenderError)
                 return object;
-            let message = new $root.RendererResponse.RenderError();
+            var message = new $root.RendererResponse.RenderError();
             if (object.message != null)
                 message.message = String(object.message);
             if (object.stackTrace != null)
@@ -887,7 +835,7 @@ export const RendererResponse = $root.RendererResponse = (() => {
         RenderError.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
-            let object = {};
+            var object = {};
             if (options.defaults) {
                 object.message = "";
                 object.stackTrace = "";
@@ -916,4 +864,4 @@ export const RendererResponse = $root.RendererResponse = (() => {
     return RendererResponse;
 })();
 
-export { $root as default };
+module.exports = $root;

@@ -117,22 +117,22 @@ export interface IRendererResponse {
     lang?: (string|null);
 
     /** RendererResponse metas */
-    metas?: (Uint8Array|null);
+    metas?: (string|null);
 
     /** RendererResponse app */
-    app?: (Uint8Array|null);
+    app?: (string|null);
 
     /** RendererResponse links */
-    links?: (Uint8Array|null);
+    links?: (string|null);
 
     /** RendererResponse styles */
-    styles?: (Uint8Array|null);
+    styles?: (string|null);
 
     /** RendererResponse scripts */
-    scripts?: (Uint8Array|null);
+    scripts?: (string|null);
 
     /** RendererResponse initialState */
-    initialState?: (Uint8Array|null);
+    initialState?: (string|null);
 
     /** RendererResponse ttr */
     ttr?: (string|null);
@@ -160,22 +160,22 @@ export class RendererResponse implements IRendererResponse {
     public lang: string;
 
     /** RendererResponse metas. */
-    public metas: Uint8Array;
+    public metas: string;
 
     /** RendererResponse app. */
-    public app: Uint8Array;
+    public app: string;
 
     /** RendererResponse links. */
-    public links: Uint8Array;
+    public links: string;
 
     /** RendererResponse styles. */
-    public styles: Uint8Array;
+    public styles: string;
 
     /** RendererResponse scripts. */
-    public scripts: Uint8Array;
+    public scripts: string;
 
     /** RendererResponse initialState. */
-    public initialState: Uint8Array;
+    public initialState: string;
 
     /** RendererResponse ttr. */
     public ttr: string;

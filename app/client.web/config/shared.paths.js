@@ -21,7 +21,7 @@ const serverBuild = `${buildDir}/server`;
 
 exports.paths = {
   /**
-   * Directories
+   * References
    */
 
   rootDir,
@@ -39,10 +39,11 @@ exports.paths = {
   serverBuild,
 
   /**
-   * Files
+   * Configurable
    */
 
   htmlTemplate: `${clientSrc}/index.html`,
   asyncModuleStats: `${clientBuild}/async-modules.json`,
   logoImage: `${rootConfigDir}/logo/logo.png`,
+  protobufsDir: `${rendererSrc}/proto`,
 };

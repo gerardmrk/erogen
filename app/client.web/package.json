@@ -14,7 +14,7 @@
     "app:build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack --config=config/webpack.config.js --env.mode=production --env.source=client --env.sourceMap=true",
     "app:test": "cross-env NODE_ENV=test jest --config=./config/jest.config.js --logHeapUsage --forceExit --detectOpenHandles",
     "rdr:build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack --config=config/webpack.config.js --env.mode=production --env.source=renderer --env.sourceMap=true",
-    "rdr:proto:js": "./node_modules/.bin/pbjs -t static-module -w es6 -o ./src/renderer/proto/index.js ./src/renderer.proto; ./node_modules/.bin/pbts -o ./src/renderer/proto/index.d.ts ./src/renderer/proto/index.js",
+    "rdr:proto:js": "./node_modules/.bin/pbjs -t static-module -w commonjs -o ./src/renderer/proto/index.js ./src/renderer.proto; ./node_modules/.bin/pbts -o ./src/renderer/proto/index.d.ts ./src/renderer/proto/index.js",
     "rdr:proto:go": "protoc --go_out=./src/server/internal ./src/renderer.proto"
   },
   "license": "MIT",
@@ -62,6 +62,7 @@
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "clean-webpack-plugin": "2.0.1",
     "compression-webpack-plugin": "2.0.0",
+    "copy-webpack-plugin": "^5.0.3",
     "core-js": "3.0.1",
     "cross-env": "5.2.0",
     "css-loader": "2.1.1",

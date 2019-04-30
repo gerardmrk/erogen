@@ -36,6 +36,9 @@ export type PrerenderRoutesParams = {
   all?: boolean;
   // the language in locale code to prerender the route with.
   lang: string;
+  // Only prerender proto data (to cache). If true, `writeToDisk` option will be
+  // and an error thrown if caching is not enabled for the renderer.
+  protoOnly?: boolean;
   // if provided, will attempt to write the prerendered HTML to disk
   // at the given directory path, with the name format: `[routeName].html`.
   // otherwise the prerendered HTML will be cached instead.
@@ -238,7 +241,11 @@ export class Renderer {
    */
   public async prerenderRoutes(params: PrerenderRoutesParams): Promise<void> {
     if (!params.writeToDisk && !this.cacheEnabled) {
-      throw new Error("`writeToDisk` is required if caching is not enabled.");
+      throw new Error("`writeToDisk` is required if `caching` is not enabled.");
+    }
+
+    if (params.protoOnly && !this.cacheEnabled) {
+      throw new Error("Caching must be enabled on the renderer if `protoOnly` is true."); // prettier-ignore
     }
 
     if (params.writeToDisk) {
@@ -256,30 +263,32 @@ export class Renderer {
     }
 
     // prettier-ignore
-    await Promise.all(whitelist.map(async (r: RouteConf) => {
-      const html = await this.getRouteHTML({
-        url: r.path as string,
-        lang: params.lang
-      });
+    if (!params.protoOnly) {
+      await Promise.all(whitelist.map(async (r: RouteConf) => {
+        const html = await this.getRouteHTML({
+          url: r.path as string,
+          lang: params.lang
+        });
 
-      if (params.writeToDisk) {
-        const prefix = r.path === "/"
-          ? "[index]"
-          : (r.path as string).replace(/(\/([^/]*))/g, match => `[${match.substr(1).replace(/:(.*)/g, "($1)")}]`);
+        if (params.writeToDisk) {
+          const prefix = r.path === "/"
+            ? "[index]"
+            : (r.path as string).replace(/(\/([^/]*))/g, match => `[${match.substr(1).replace(/:(.*)/g, "($1)")}]`);
 
-        await writeFileAsync(normalize(`${params.writeToDisk}/${prefix}.${params.lang}.html`), html);
-      }
+          await writeFileAsync(normalize(`${params.writeToDisk}/${prefix}.${params.lang}.html`), html);
+        }
 
-      if (this.cacheEnabled) {
-        this.htmlCache.set(
-          `${r.path || r.status}.${params.lang}`,
-          this.textEncoder.encode(html)
-        );
-      }
-    }));
+        if (this.cacheEnabled) {
+          this.htmlCache.set(
+            `${r.path || r.status}.${params.lang}`,
+            this.textEncoder.encode(html)
+          );
+        }
+      }));
+    }
 
+    // prettier-ignore
     if (this.cacheEnabled) {
-      // prettier-ignore
       await Promise.all(blacklist.map(async (r: RouteConf) => {
         const data = await this.getRouteProto(RendererRequest.encode({
           url: r.path as string,
@@ -332,17 +341,9 @@ export class Renderer {
   public async getRouteProto(params: Uint8Array): Promise<Uint8Array> {
     const timerStart = process.hrtime.bigint();
 
-    const out = await this.getRouteJSON(await RendererRequest.decode(params));
-
-    const response = RendererResponse.create({
-      ...out,
-      app: this.textEncoder.encode(out.app),
-      metas: this.textEncoder.encode(out.metas),
-      links: this.textEncoder.encode(out.links),
-      styles: this.textEncoder.encode(out.styles),
-      scripts: this.textEncoder.encode(out.scripts),
-      initialState: this.textEncoder.encode(out.initialState),
-    });
+    const response = RendererResponse.create(
+      await this.getRouteJSON(await RendererRequest.decode(params)),
+    );
 
     response.ttr = `${process.hrtime.bigint() - timerStart}`;
 

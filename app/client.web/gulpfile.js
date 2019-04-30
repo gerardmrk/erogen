@@ -1,45 +1,52 @@
 /* eslint-env node */
 /* eslint-disable no-console, @typescript-eslint/no-var-requires */
-const { TextDecoder } = require("util");
+const { promises } = require("fs");
 const { src, dest, parallel } = require("gulp");
-const purgecss = require("gulp-purgecss");
+const PurgeCSS = require("purgecss");
 const { paths } = require("./config/shared.paths");
+const { Renderer } = require("./dist/renderer");
+const { RendererResponse } = require("./dist/renderer/proto");
+
+const writeFileAsync = promises.writeFile;
 
 async function getRoutes(cache) {
-  const { Renderer } = require("./dist/renderer");
   const renderer = new Renderer({ cache: { data: cache } });
   await renderer.prerenderRoutes({
     all: true,
     lang: "en",
-    writeToDisk: "./.routes",
+    protoOnly: true,
   });
 }
 
-function getCSSFiles() {
-  return src(`${paths.clientBuild}/styles/*.css`);
-}
-
-function getModuleStats() {
-  const stats = require(paths.asyncModuleStats);
-  return stats;
-}
-
 function trimVendorsCss(cssFile, htmls) {
-  return src(cssFile)
-    .pipe(
-      purgecss({
-        content: [...htmls.map(html => ({ raw: html, extension: html }))],
-      }),
-    )
-    .pipe("./xo");
+  const purgecss = new PurgeCSS({
+    css: [cssFile],
+    content: htmls.map(html => ({ raw: html, extension: "html" })),
+  });
+  return purgecss.purge()[0]["css"];
 }
 
 exports.default = async () => {
-  const stats = getModuleStats();
+  const stats = require(paths.asyncModuleStats);
   const vendorsAssetStats = stats["assetsByChunkName"]["vendors"];
   const vendorsStylesheet = vendorsAssetStats.find(a => a.endsWith(".css"));
 
   const cache = new Map();
   await getRoutes(cache);
-  console.log(cache.keys());
+
+  let htmls = [];
+  cache.forEach(val => {
+    htmls.push(RendererResponse.decode(val).app);
+  });
+
+  const result = trimVendorsCss(
+    `${paths.clientBuild}/${vendorsStylesheet}`,
+    htmls,
+  );
+
+  await writeFileAsync(
+    `${paths.clientBuild}/${vendorsStylesheet}`,
+    result,
+    "utf-8",
+  );
 };

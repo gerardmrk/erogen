@@ -1,25 +1,28 @@
 /* eslint-env node */
-/* eslint-disable no-console, @typescript-eslint/no-var-requires, @typescript-eslint/camelcase */
+/* eslint-disable no-console, @typescript-eslint/no-var-requires */
 const Fiber = require("fibers");
 const webpack = require("webpack");
 const webpackNodeExternals = require("webpack-node-externals");
+
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
-const HardSourcePlugin = require("hard-source-webpack-plugin");
 const CleanBuildPlugin = require("clean-webpack-plugin");
-const CompressionPlugin = require("compression-webpack-plugin");
-const ExtractCssChunksPlugin = require("mini-css-extract-plugin");
 const CommonJSTreeShakePlugin = require("webpack-common-shake").Plugin;
-const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const ProgressiveWebAppPlugin = require("webapp-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
+const CopyAssetsPlugin = require("copy-webpack-plugin");
+const ExtractCssChunksPlugin = require("mini-css-extract-plugin");
+const HardSourcePlugin = require("hard-source-webpack-plugin");
 const HtmlPlugin = require("html-webpack-plugin");
 const HtmlScriptExtPlugin = require("script-ext-html-webpack-plugin");
+const LoadablePlugin = require("@loadable/webpack-plugin");
 const LodashPlugin = require("lodash-webpack-plugin");
 const OfflinePlugin = require("offline-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const ProgressiveWebAppPlugin = require("webapp-webpack-plugin");
 const RemoveServiceWorkerPlugin = require("webpack-remove-serviceworker-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-const LoadablePlugin = require("@loadable/webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CheckerPlugin, TsConfigPathsPlugin } = require("awesome-typescript-loader"); // prettier-ignore
+
 const settingsBuilder = require("./webpack.settings");
 const { getAsyncModuleStats, getGeneratedHTML } = require("./webpack.helpers");
 const { paths } = require("./shared.paths");
@@ -209,9 +212,9 @@ module.exports = async (args) => {
                                       loose: true,
                                       useBuiltIns: "usage",
                                       corejs: { version: 3 },
-                                      targets: clientBuild
-                                          ? { browsers: ["last 2 versions", "not dead", "> 0.5%", "not ie < 11"] }
-                                          : { node: "current" }
+                                      targets: rendererBuild
+                                          ? { node: "current" }
+                                          : { browsers: ["last 2 versions", "not dead", "> 0.5%", "not ie < 11"] },
                                   }],
                                   "@babel/preset-react",
                               ],
@@ -219,7 +222,7 @@ module.exports = async (args) => {
                                   "@loadable/babel-plugin",
                                   "@babel/plugin-syntax-dynamic-import",
                                   ["@babel/plugin-proposal-class-properties", { loose: true }],
-                                  ["@babel/plugin-transform-runtime"],
+                                  "@babel/plugin-transform-runtime",
                                   ["lodash", { id: "lodash-compat" }],
                                   ["transform-imports", {
                                       lodash: { transform: "lodash/${member}",
@@ -448,6 +451,11 @@ module.exports = async (args) => {
                 ]
             }),
 
+            rendererBuild && new CopyAssetsPlugin([{
+                from: paths.protobufsDir,
+                to: `${paths.rendererBuild}/proto`,
+            }]),
+
             new CaseSensitivePathsPlugin(),
 
             new LodashPlugin({
@@ -673,7 +681,6 @@ module.exports = async (args) => {
         // config.externals = [
         //     webpackNodeExternals({
         //         // whitelist: ["is-webpack-bundle", "webpack-require-weak"],
-        //         // whitelist: ["is-webpack-bundle", "webpack-require-weak"]
         //     })
         // ]
     }
