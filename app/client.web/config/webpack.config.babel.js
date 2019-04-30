@@ -146,7 +146,7 @@ export default async (args) => {
                         test: /[\\/]node_modules[\\/]/,
                         name: "vendors",
                         chunks: "all",
-                        // maxSize: 80000,
+                        // maxSize: 100000,
                     }
                 }
             },
@@ -389,7 +389,8 @@ export default async (args) => {
             ].filter(x => !!x),
         },
         plugins: [
-            new HardSourcePlugin({
+            // TODO: reenable for prod after new release for webpack ^4.13
+            devMode && new HardSourcePlugin({
                 cacheDirectory: `${paths.cacheDir}/plugin.hardsource@${source}.${mode}`,
                 cachePrune: {
                     maxAge: 2 * 24 * 60 * 60 * 1000,
@@ -397,7 +398,8 @@ export default async (args) => {
                 }
             }),
 
-            new HardSourcePlugin.ExcludeModulePlugin([{
+            // TODO: reenable for prod after new release for webpack ^4.13
+            devMode && new HardSourcePlugin.ExcludeModulePlugin([{
                 test: /mini-css-extract-plugin[\\/]dist[\\/]loader/,
             }]),
 
@@ -611,8 +613,7 @@ export default async (args) => {
             prodMode && clientBuild && new CompressionPlugin({
                 filename: "[path].gz[query]",
                 algorithm: "gzip",
-                test: new RegExp("\\.js$"),
-                // test: new RegExp("\\.(js|css)$"),
+                test: new RegExp("\\.(js|css)$"),
                 minRatio: 0.8,
                 cache: `${paths.cacheDir}/plugin.compression.gzip@${source}.${mode}`,
             }),
@@ -620,8 +621,7 @@ export default async (args) => {
             prodMode && clientBuild && new CompressionPlugin({
                 filename: "[path].br[query]",
                 algorithm: "brotliCompress",
-                test: new RegExp("\\.js$"),
-                // test: new RegExp("\\.(js|css)$"),
+                test: new RegExp("\\.(js|css)$"),
                 minRatio: 0.8,
                 compressionOptions: { level: 11 },
                 cache: `${paths.cacheDir}/plugin.compression.brotli@${source}.${mode}`,

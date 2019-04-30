@@ -6,12 +6,13 @@ import { spawn } from "child_process";
 import { src, dest, series, parallel } from "gulp";
 import pbjs from "protobufjs/cli/pbjs";
 import pbts from "protobufjs/cli/pbts";
-import webpack from "webpack";
+import wpk from "webpack";
 import PurgeCSS from "purgecss";
 
 import { paths } from "./config/shared.paths";
 import { Renderer } from "./dist/renderer";
 import { RendererResponse } from "./dist/renderer/proto";
+import webpackConfig from "./config/webpack.config.babel";
 
 const writeFileAsync = promises.writeFile;
 
@@ -31,18 +32,36 @@ export const generateProto = async () => {
 };
 
 export const buildClient = async () => {
-  // ...
+  await webpack(
+    await webpackConfig({
+      source: "client",
+      mode: "production",
+      sourceMap: false,
+    }),
+  );
 };
 
 export const buildRenderer = async () => {
-  // ...
+  await webpack(
+    await webpackConfig({
+      source: "renderer",
+      mode: "production",
+      sourceMap: false,
+    }),
+  );
 };
 
 export const buildServer = async () => {
-  // ...
+  // await webpack(
+  //   await webpackConfig({
+  //     source: "server",
+  //     mode: "production",
+  //     sourceMap: true,
+  //   }),
+  // );
 };
 
-export const build = series(
+export const buildProd = series(
   generateProto,
   buildClient,
   buildRenderer,
@@ -105,6 +124,33 @@ async function protobufts(...args) {
     pbts.main(args, (err, out) => {
       if (err) return reject(err);
       return resolve(out);
+    });
+  });
+}
+
+async function webpack(config) {
+  return new Promise((resolve, reject) => {
+    wpk(config, (err, stats) => {
+      if (err) {
+        console.error(err.stack || err);
+        if (err.details) console.error(err.details);
+        return reject(err);
+      }
+
+      const info = stats.toJson();
+
+      if (stats.hasErrors()) {
+        console.error(info.errors);
+        return reject(err);
+      }
+
+      if (stats.hasWarnings()) {
+        console.warn(info.warnings);
+      }
+
+      // console.info(stats.toString());
+
+      return resolve(stats);
     });
   });
 }
