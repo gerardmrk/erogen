@@ -138,8 +138,8 @@ module.exports = async (args) => {
             splitChunks: {
                 cacheGroups: {
                     styles: {
-                        name: "styles",
                         test: /\.css$/,
+                        name: "styles",
                         chunks: "all",
                         enforce: true,
                     },
@@ -147,7 +147,7 @@ module.exports = async (args) => {
                         test: /[\\/]node_modules[\\/]/,
                         name: "vendors",
                         chunks: "all",
-                        maxSize: 90000,
+                        // maxSize: 90000,
                     }
                 }
             },
