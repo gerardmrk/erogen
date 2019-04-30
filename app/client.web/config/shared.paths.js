@@ -1,5 +1,6 @@
 /* eslint-env node */
-import { resolve } from "path";
+/* eslint-disable */
+const { resolve } = require("path");
 
 const rootDir = resolve(__dirname, "..", "..", "..");
 const rootConfigDir = `${rootDir}/config`;
@@ -18,7 +19,7 @@ const clientBuild = `${buildDir}/client`;
 const rendererBuild = `${buildDir}/renderer`;
 const serverBuild = `${buildDir}/server`;
 
-export const paths = {
+exports.paths = {
   /**
    * References
    */

@@ -1,37 +1,37 @@
 /* eslint-env node */
-/* eslint-disable no-console, @typescript-eslint/camelcase */
+/* eslint-disable */
 
-import Fiber from "fibers";
-import webpack from "webpack";
-import webpackNodeExternals from "webpack-node-externals";
+const Fiber = require("fibers");
+const webpack = require("webpack");
+const webpackNodeExternals = require("webpack-node-externals");
 
-import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin";
-import CleanBuildPlugin from "clean-webpack-plugin";
-import CompressionPlugin from "compression-webpack-plugin";
-import { Plugin as CommonJSTreeShakePlugin } from "webpack-common-shake";
-import CopyAssetsPlugin from "copy-webpack-plugin";
-import ExtractCssChunksPlugin from "mini-css-extract-plugin";
-import HardSourcePlugin from "hard-source-webpack-plugin";
-import HtmlPlugin from "html-webpack-plugin";
-import HtmlScriptExtPlugin from "script-ext-html-webpack-plugin";
-import LoadablePlugin from "@loadable/webpack-plugin";
-import LodashPlugin from "lodash-webpack-plugin";
-import OfflinePlugin from "offline-plugin";
-import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
-import ProgressiveWebAppPlugin from "webapp-webpack-plugin";
-import RemoveServiceWorkerPlugin from "webpack-remove-serviceworker-plugin";
-import TerserPlugin from "terser-webpack-plugin";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import { CheckerPlugin, TsConfigPathsPlugin } from "awesome-typescript-loader"; // prettier-ignore
+const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
+const CleanBuildPlugin = require("clean-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
+const CommonJSTreeShakePlugin = require("webpack-common-shake").Plugin;
+const CopyAssetsPlugin = require("copy-webpack-plugin");
+const ExtractCssChunksPlugin = require("mini-css-extract-plugin");
+const HardSourcePlugin = require("hard-source-webpack-plugin");
+const HtmlPlugin = require("html-webpack-plugin");
+const HtmlScriptExtPlugin = require("script-ext-html-webpack-plugin");
+const LoadablePlugin = require("@loadable/webpack-plugin");
+const LodashPlugin = require("lodash-webpack-plugin");
+const OfflinePlugin = require("offline-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const ProgressiveWebAppPlugin = require("webapp-webpack-plugin");
+const RemoveServiceWorkerPlugin = require("webpack-remove-serviceworker-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const { CheckerPlugin, TsConfigPathsPlugin } = require("awesome-typescript-loader"); // prettier-ignore
 
-import { paths } from "./shared.paths";
-import settingsBuilder from "./webpack.settings";
-import { getAsyncModuleStats, getGeneratedHTML } from "./webpack.helpers";
+const { paths } = require("./shared.paths");
+const settingsBuilder = require("./webpack.settings");
+const { getAsyncModuleStats, getGeneratedHTML } = require("./webpack.helpers");
 
 const getSettings = settingsBuilder(paths.appDir);
 
 // prettier-ignore
-export default async (args) => {
+module.exports = async (args) => {
     const settings = getSettings(args);
 
     console.info("BUILD SETTINGS:");
@@ -81,6 +81,7 @@ export default async (args) => {
                 // source code
                 "@client": paths.clientSrc,
                 "@renderer": paths.rendererSrc,
+                "@server": paths.serverSrc,
                 // route config
                 "@routeConfig": `${paths.source}/route-config.json`,
                 // semantic ui theming path resolution
@@ -146,7 +147,7 @@ export default async (args) => {
                         test: /[\\/]node_modules[\\/]/,
                         name: "vendors",
                         chunks: "all",
-                        // maxSize: 100000,
+                        maxSize: 90000,
                     }
                 }
             },
