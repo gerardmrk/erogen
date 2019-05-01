@@ -1,6 +1,7 @@
 /* eslint-disable */
-const { promises } = require("fs");
 const { spawn } = require("child_process");
+const { promises, createReadStream, createWriteStream } = require("fs");
+const { constants, createGzip, createBrotliCompress } = require("zlib");
 
 const { src, dest, series, parallel } = require("gulp");
 const pbjs = require("protobufjs/cli/pbjs");
@@ -13,6 +14,7 @@ const { Renderer } = require("./dist/renderer");
 const { RendererResponse } = require("./dist/renderer/proto");
 const webpackConfig = require("./config/webpack.config");
 
+const statAsync = promises.stat;
 const writeFileAsync = promises.writeFile;
 
 // =============================================================================
@@ -107,34 +109,53 @@ const buildServer = async () => {
   //     children: false,
   //     cached: false,
   //     assetsSort: "chunks",
-  //     // tone down information in console
-  //     excludeAssets: [
-  //       /^icons\//,
-  //       /\.map$/,
-  //       /\.br$/,
-  //       /\.gz$/,
-  //       /\.LICENSE$/,
-  //       rendererBuild && /^client\//,
-  //     ].filter(x => !!x),
-  //     warningsFilter: [
-  //       // purgecss pkg has a dynamic require statement for loading
-  //       // a config file at class instantiation. build is not affected.
-  //       /\/node_modules\/purgecss\/lib\/purgecss\.es\.js/,
-  //     ],
+  //     excludeAssets: [/\.LICENSE$/].filter(x => !!x),
   //   }),
   // );
 };
 
-exports.buildServer = buildServer;
-exports.buildRenderer = buildRenderer;
-exports.buildClient = buildClient;
-exports.generateProto = generateProto;
-exports.buildProd = series(
+// =============================================================================
+// Purge main styles entrypoint
+// =============================================================================
+const purgeMainStylesChunk = async () => {
+  const stats = require(paths.asyncModuleStats);
+
+  const vendorsAssetStats = stats["assetsByChunkName"]["vendors"];
+  const stylesChunk = vendorsAssetStats.find(a => a.endsWith(".css"));
+  const destFile = `${paths.clientBuild}/${stylesChunk}`;
+
+  const htmls = [];
+  const cache = new Map();
+  await getRoutes(cache);
+
+  cache.forEach(val => htmls.push(RendererResponse.decode(val).app));
+
+  const result = trimCss(destFile, htmls);
+
+  await writeFileAsync(destFile, result, "utf-8");
+  compressWithGzip(destFile);
+  compressWithBrotli(destFile);
+};
+
+const buildProd = series(
   generateProto,
   buildClient,
   buildRenderer,
   buildServer,
+  purgeMainStylesChunk,
 );
+
+exports.buildClient = buildClient;
+exports.buildRenderer = buildRenderer;
+exports.buildServer = buildServer;
+exports.generateProto = generateProto;
+exports.purgeMainStylesChunk = purgeMainStylesChunk;
+exports.buildProd = buildProd;
+exports.default = buildProd;
+
+// =============================================================================
+// Helpers
+// =============================================================================
 
 async function getRoutes(cache) {
   const renderer = new Renderer({ cache: { data: cache } });
@@ -145,38 +166,39 @@ async function getRoutes(cache) {
   });
 }
 
-function trimVendorsCss(cssFile, htmls) {
+function compressWithGzip(file) {
+  const inp = createReadStream(file);
+  const out = createWriteStream(`${file}.gz`);
+  // prettier-ignore
+  inp.pipe(createGzip({
+    chunkSize: 32 * 1024,
+    level: constants.Z_BEST_COMPRESSION,
+  })).pipe(out);
+}
+
+async function compressWithBrotli(file) {
+  const inp = createReadStream(file);
+  const out = createWriteStream(`${file}.br`);
+  const { size } = await statAsync(file);
+  // prettier-ignore
+  inp.pipe(createBrotliCompress({
+    chunkSize: 32 * 1024,
+    level: constants.Z_BEST_COMPRESSION,
+    params: {
+      [constants.BROTLI_PARAM_MODE]: constants.BROTLI_MODE_TEXT,
+      [constants.BROTLI_PARAM_QUALITY]: 11,
+      [constants.BROTLI_PARAM_SIZE_HINT]: size,
+    }
+  })).pipe(out);
+}
+
+function trimCss(cssFile, htmls) {
   const purgecss = new PurgeCSS({
     css: [cssFile],
     content: htmls.map(html => ({ raw: html, extension: "html" })),
   });
   return purgecss.purge()[0]["css"];
 }
-
-exports.default = async () => {
-  const stats = require(paths.asyncModuleStats);
-  const vendorsAssetStats = stats["assetsByChunkName"]["vendors"];
-  const vendorsStylesheet = vendorsAssetStats.find(a => a.endsWith(".css"));
-
-  const cache = new Map();
-  await getRoutes(cache);
-
-  let htmls = [];
-  cache.forEach(val => {
-    htmls.push(RendererResponse.decode(val).app);
-  });
-
-  const result = trimVendorsCss(
-    `${paths.clientBuild}/${vendorsStylesheet}`,
-    htmls,
-  );
-
-  await writeFileAsync(
-    `${paths.clientBuild}/${vendorsStylesheet}`,
-    result,
-    "utf-8",
-  );
-};
 
 async function protobufjs(...args) {
   return new Promise((resolve, reject) => {

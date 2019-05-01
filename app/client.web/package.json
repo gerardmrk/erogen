@@ -10,7 +10,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development ./node_modules/.bin/webpack-dev-server --config=config/webpack.config.babel.js --env.mode=development --env.source=client --env.sourceMap=true",
     "test": "cross-env NODE_ENV=test jest --config=./config/jest.config.js --logHeapUsage --forceExit --detectOpenHandles",
-    "build": "node_modules/.bin/gulp buildProd",
+    "build": "node_modules/.bin/gulp",
     "build:app": "node_modules/.bin/gulp buildClient",
     "build:rdr": "node_modules/.bin/gulp buildRenderer",
     "build:srv": "node_modules/.bin/gulp buildServer",
