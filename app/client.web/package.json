@@ -74,6 +74,7 @@
     "eslint-plugin-prettier": "3.0.1",
     "eslint-plugin-react": "7.12.4",
     "extract-css-chunks-webpack-plugin": "4.3.1",
+    "fastify": "^2.3.0",
     "fibers": "3.1.1",
     "file-loader": "3.0.1",
     "gulp": "^4.0.1",
