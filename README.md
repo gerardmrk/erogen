@@ -48,7 +48,7 @@ Tearing down the resources each time after the fun's over is just as tedious as 
 
 Not anymore, getting down to business to automate this once and for all, from start to end, from setup to teardown, where I can afford to. This repo will serve as a base boilerplate for any of my future fake fortune 500s, with the goal of clicking and typing as few things as possible to create a multi-tenanted multi-cloud multi-region highly-available highly-scalable distributed microservices architecture with a vendor-agnostic stack that isn't Kubernetes.
 
-This is primarily for personal use, but feel free to take a look if you feel like throwing away your weekends too. This project will reach a "usable" state, but never a "complete" state; I will continue to over-engineer and micro-optimize this code till I die (or get a new girlfriend). I may even recreate the repo if I feel the project structure is wrong.
+This is primarily for personal use, but feel free to take a look if you feel like throwing away your weekends too. This project will reach a "usable" state, but never a "complete" state; I will continue to over-engineer and micro-optimize this code till I die. I may even recreate the repo if I feel the project structure is wrong.
 
 ## Disclaimer
 

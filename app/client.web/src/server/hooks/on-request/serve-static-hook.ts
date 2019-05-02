@@ -1,3 +1,8 @@
+/**
+ * Everything in this file looks overly-abstracted and u because it
+ * was written primarily with performance in mind. Notably, wherever possible,
+ * derivations and instantiations are done outside the request scope.
+ */
 import { promises } from "fs";
 import { resolve, normalize } from "path";
 import {
@@ -19,75 +24,85 @@ export const serveStaticHook = async ({
   brotli = false,
   preferBrotli = false,
 }: HookConfig) => {
+  if (preferBrotli && !brotli) {
+    throw new Error('`assets.preferBrotli` cannot be true if `assets.brotli` is false');
+  }
+
   let encodingEnabled = gzip || brotli;
-
-  let identity = new Map<string, boolean>();
-  let gzipped = new Map<string, boolean>();
-  let brotlied = new Map<string, boolean>();
-
-  const assetsPublicPaths: string[] = [];
-  await recursiveCollect(urlPrefix, rootDir, assetsPublicPaths);
-  populateMappings(assetsPublicPaths, identity, gzipped, brotlied);
+  let urnCache = new Map<string, number>();
+  await recursiveCollect(urnCache, urlPrefix, rootDir);
 
   return async (req: ServerRequest, res: ServerResponse): Promise<void> => {
     if (!req.raw.url || !req.raw.url.startsWith(urlPrefix)) {
       return;
     }
 
-    const acceptedEncs = new AcceptEncoding(req.headers["accept-encoding"]);
-    const acceptEncodedOnly = acceptedEncs.encodedContentOnly();
-    const acceptOriginalOnly = acceptedEncs.originalContentOnly();
+    const acceptedEncs = new AcceptEncoding(
+      req.headers["accept-encoding"],
+    );
 
-    if (
-      (acceptEncodedOnly && !encodingEnabled) ||
-      (acceptOriginalOnly && (
-        gzipped.has(req.raw.url) || brotlied.has(req.raw.url)
-      ))
-    ) {
+    if (acceptedEncs.encodedContentOnly() && !encodingEnabled) {
       res.code(406);
-      res.send("Not Acceptable");
       return;
     }
 
-    let assetPath = req.raw.url;
+    let urn = normalize(req.raw.url);
 
-    if (!encodingEnabled || acceptOriginalOnly) {
+    const urnWithGz = urn + ".gz";
+    const urnWithGzExists = urnCache.has(urnWithGz);
+    const acceptsGz = acceptedEncs.accepts("gzip");
+
+    const urnWithBr = urn + ".br";
+    const urnWithBrExists = urnCache.has(urnWithBr);
+    const acceptsBr = acceptedEncs.accepts("br");
+
+    if (
+      !urnCache.has(urn) &&
+      !urnWithGzExists &&
+      !urnWithBrExists
+    ) {
+      res.code(404);
+      return;
     }
+
+    if (!acceptedEncs.originalContentOnly()) {
+      if (preferBrotli && acceptsBr && urnWithBrExists) {
+        // `preferBrotli` is true, disregard qfactors as long as `br` is
+        // specified in the accepts header and the file exists.
+        urn = urnWithBr;
+      } else {
+        // check if prioritized exists.
+        const prioritized = acceptedEncs.prioritized();
+
+        if (prioritized === "gzip" && urnWithGzExists) {
+          urn = urnWithGz;
+        } else if (prioritized === "br" && urnWithBrExists) {
+          urn = urnWithBr;
+        } else if (acceptsGz && urnWithGzExists) {
+          urn = urnWithGz;
+        } else if (acceptsBr && urnWithBrExists) {
+          urn = urnWithBr;
+        }
+      }
+    }
+
+    res.code(200);
+    res.header("Content-Encoding", "");
   };
 };
 
 /**
- * Populates/enriches the store by encoding extension. Currently only gz and br.
- * @param list the list to derive data from
- * @param gzip the gzip mappings cache
- * @param brotli the brotli mappings cache
- */
-function populateMappings(
-  list: string[],
-  identity: Map<string, boolean>,
-  gzip: Map<string, boolean>,
-  brotli: Map<string, boolean>,
-): void {
-  for (let i = 0, ln = list.length; i < ln; i++) {
-    const f = list[i];
-    if (f.endsWith(".gz")) gzip.set(f.substr(0, f.length - 3), true);
-    else if (f.endsWith(".br")) brotli.set(f.substr(0, f.length - 3), true);
-    else identity.set(f, true);
-  }
-}
-
-/**
  * Recursively walks down a directory tree and populates the list
  * with flattened file paths in the format `{urlPrefix}/{subdir}/{file}`
+ * @param paths the lookup store to populate the flattened paths with
  * @param urlPrefix the url path to prefix to each returned path
  * @param dir the target directory
- * @param list the list to populate the flattened paths with
  * @param subDir this is for recursive usage only, do not specify
  */
 async function recursiveCollect(
+  paths: Map<string, number>,
   urlPrefix: string,
   dir: string,
-  list: string[],
   subDir: string = "",
 ): Promise<void> {
   const ff = await readdirAsync(dir);
@@ -97,11 +112,11 @@ async function recursiveCollect(
       const stat = await statAsync(abs);
 
       if (stat.isFile()) {
-        list.push(normalize(`${urlPrefix}/${subDir}/${f}`));
+        paths.set(normalize(`${urlPrefix}/${subDir}/${f}`), stat.size);
       }
 
       if (stat.isDirectory()) {
-        return await recursiveCollect(urlPrefix, abs, list, f);
+        return await recursiveCollect(paths, urlPrefix, abs, f);
       }
     }),
   );
@@ -149,9 +164,9 @@ export class AcceptEncoding {
   }
 
   /**
-   * returns the preferred encoding.
+   * returns the prioritized/preferred encoding.
    */
-  public preferred(): EncType {
+  public prioritized(): EncType {
     return this.sorted[0];
   }
 
