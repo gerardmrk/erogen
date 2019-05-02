@@ -497,7 +497,7 @@ module.exports = async (args) => {
 
             // HTML, no SSR
             prodMode && clientBuild && new HtmlPlugin({
-                filename: "index.html",
+                filename: "index.basic.html",
                 template: `${paths.clientSrc}/index.html`,
                 cache: true,
                 minify: true,
@@ -595,8 +595,10 @@ module.exports = async (args) => {
                 favicons: {
                     background: "#ddd",
                     theme_color: "#333",
+                    start_url: "/",
                     appName: appConfig.appName,
                     appDescription: appConfig.appDescription,
+                    loadManifestWithCredentials: false,
                     icons: {
                         android: true,
                         appleIcon: true,
@@ -628,13 +630,12 @@ module.exports = async (args) => {
                 cache: `${paths.cacheDir}/plugin.compression.brotli@${source}.${mode}`,
             }),
 
-            clientBuild && new RemoveServiceWorkerPlugin(),
+            prodMode && clientBuild && new RemoveServiceWorkerPlugin(),
 
             clientBuild && new OfflinePlugin({
                 caches: "all",
                 appShell: "/",
                 responseStrategy: devMode ? "network-first" : "cache-first",
-                excludes: ["**/*.map", "index.html"],
                 autoUpdate: 1000 * 60 * 3,
                 AppCache: false,
                 ServiceWorker: {
@@ -642,6 +643,17 @@ module.exports = async (args) => {
                     minify: false,
                     navigateFallbackURL: "/",
                 },
+                excludes: [
+                    "**/.*",
+                    "**/*.gz",
+                    "**/*.br",
+                    "**/*.map",
+                    "**/index.hbs",
+                    "**/index.gohtml",
+                    "**/index.ssr.hbs",
+                    "**/index.ssr.gohtml",
+                    "**/async-modules.json",
+                ],
             }),
 
             prodMode && clientBuild && new BundleAnalyzerPlugin({

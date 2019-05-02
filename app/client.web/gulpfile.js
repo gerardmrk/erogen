@@ -138,7 +138,7 @@ const purgeMainStylesChunk = async () => {
 };
 
 const buildProd = series(
-  generateProto,
+  // generateProto,
   buildClient,
   buildRenderer,
   buildServer,

@@ -1,18 +1,21 @@
 /**
- * Everything in this file looks overly-abstracted and u because it
- * was written primarily with performance in mind. Notably, wherever possible,
+ * Everything in this file looks overly-abstracted and unnecessarily complex cos
+ * it was written primarily with performance in mind. Notably, wherever possible,
  * derivations and instantiations are done outside the request scope.
  */
-import { promises } from "fs";
 import { resolve, normalize } from "path";
-import {
-  ServerRequest,
-  ServerResponse,
-  StaticAssetsConfig,
-} from "@server/server";
+import { promises, createReadStream } from "fs";
+import mime from "mime";
+import { ServerRequest, ServerResponse, StaticAssetsConfig } from "@server/server"; // prettier-ignore
 
 const statAsync = promises.stat;
 const readdirAsync = promises.readdir;
+
+export type AssetAttributes = {
+  size: number;
+  mimetype: string;
+  filepath: string;
+};
 
 export type HookConfig = StaticAssetsConfig & {};
 
@@ -29,10 +32,15 @@ export const serveStaticHook = async ({
   }
 
   let encodingEnabled = gzip || brotli;
-  let urnCache = new Map<string, number>();
+  let urnCache = new Map<string, AssetAttributes>();
   await recursiveCollect(urnCache, urlPrefix, rootDir);
 
-  return async (req: ServerRequest, res: ServerResponse): Promise<void> => {
+
+  /**
+   * REQUEST SCOPE
+   */
+
+  return async (req: ServerRequest, res: ServerResponse): Promise<ServerResponse | void> => {
     if (!req.raw.url || !req.raw.url.startsWith(urlPrefix)) {
       return;
     }
@@ -42,11 +50,11 @@ export const serveStaticHook = async ({
     );
 
     if (acceptedEncs.encodedContentOnly() && !encodingEnabled) {
-      res.code(406);
-      return;
+      return res.code(406).send();
     }
 
-    let urn = normalize(req.raw.url);
+    let enc = "identity";
+    let urn = normalize(stripQueryString(req.raw.url));
 
     const urnWithGz = urn + ".gz";
     const urnWithGzExists = urnCache.has(urnWithGz);
@@ -61,35 +69,53 @@ export const serveStaticHook = async ({
       !urnWithGzExists &&
       !urnWithBrExists
     ) {
-      res.code(404);
-      return;
+      return res.code(404).send();
     }
 
     if (!acceptedEncs.originalContentOnly()) {
       if (preferBrotli && acceptsBr && urnWithBrExists) {
         // `preferBrotli` is true, disregard qfactors as long as `br` is
         // specified in the accepts header and the file exists.
+        enc = "br";
         urn = urnWithBr;
       } else {
         // check if prioritized exists.
         const prioritized = acceptedEncs.prioritized();
 
         if (prioritized === "gzip" && urnWithGzExists) {
+          enc = "gzip";
           urn = urnWithGz;
         } else if (prioritized === "br" && urnWithBrExists) {
+          enc = "br";
           urn = urnWithBr;
         } else if (acceptsGz && urnWithGzExists) {
+          enc = "gzip";
           urn = urnWithGz;
         } else if (acceptsBr && urnWithBrExists) {
+          enc = "br";
           urn = urnWithBr;
         }
       }
     }
 
-    res.code(200);
-    res.header("Content-Encoding", "");
+    const { size, mimetype, filepath } = <AssetAttributes>(urnCache.get(urn));
+
+    return res
+      .code(200)
+      .header("Content-Type", mimetype)
+      .header("Content-Length", size)
+      .header("Content-Encoding", enc)
+      .send(createReadStream(filepath));
   };
 };
+
+/**
+ * strip off trailing query string, if any.
+ * current implementation feels hacky. need to find another solution.
+ */
+function stripQueryString(url: string) {
+  return url.split("?")[0];
+}
 
 /**
  * Recursively walks down a directory tree and populates the list
@@ -100,7 +126,7 @@ export const serveStaticHook = async ({
  * @param subDir this is for recursive usage only, do not specify
  */
 async function recursiveCollect(
-  paths: Map<string, number>,
+  paths: Map<string, AssetAttributes>,
   urlPrefix: string,
   dir: string,
   subDir: string = "",
@@ -112,7 +138,11 @@ async function recursiveCollect(
       const stat = await statAsync(abs);
 
       if (stat.isFile()) {
-        paths.set(normalize(`${urlPrefix}/${subDir}/${f}`), stat.size);
+        paths.set(normalize(`${urlPrefix}/${subDir}/${f}`), {
+          size: stat.size,
+          mimetype: mime.getType(f),
+          filepath: abs,
+        });
       }
 
       if (stat.isDirectory()) {
