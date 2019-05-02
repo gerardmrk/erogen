@@ -1,11 +1,8 @@
+import { Http2ServerRequest, Http2ServerResponse } from "http2";
 import { RequestHandler } from "fastify";
-import {
-  IncomingMessage as HTTPRequest,
-  ServerResponse as HTTPResponse,
-} from "http";
 import { Renderer } from "../../../dist/renderer";
 
-export type Router = RequestHandler<HTTPRequest, HTTPResponse>;
+export type Router = RequestHandler<Http2ServerRequest, Http2ServerResponse>;
 
 export const initRouter = async (): Promise<Router> => {
   const renderer = new Renderer({ cache: true });

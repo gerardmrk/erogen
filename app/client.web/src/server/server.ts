@@ -1,21 +1,16 @@
-import {
-  Server as HTTPServer,
-  IncomingMessage as HTTPRequest,
-  ServerResponse as HTTPResponse,
-} from "http";
-import fastify, {
-  FastifyInstance,
-  FastifyRequest,
-  FastifyReply,
-} from "fastify";
-import staticServer from "fastify-static";
-import securityHeaders from "fastify-helmet";
+import { Http2SecureServer, Http2ServerRequest, Http2ServerResponse } from 'http2'; // prettier-ignore
+import fastify, { FastifyInstance, FastifyRequest, FastifyReply } from "fastify"; // prettier-ignore
+// import securityHeaders from "fastify-helmet";
 import { initRouter } from "./router";
 import { registerLifecycleHooks } from "./hooks";
 
-export type Server = FastifyInstance<HTTPServer, HTTPRequest, HTTPResponse>;
-export type ServerRequest = FastifyRequest<HTTPRequest>;
-export type ServerResponse = FastifyReply<HTTPResponse>;
+export type Server = FastifyInstance<
+  Http2SecureServer,
+  Http2ServerRequest,
+  Http2ServerResponse
+>;
+export type ServerRequest = FastifyRequest<Http2ServerRequest>;
+export type ServerResponse = FastifyReply<Http2ServerResponse>;
 
 export type ServerConfig = {
   port: number;
@@ -32,7 +27,13 @@ export type StaticAssetsConfig = {
 };
 
 export const initServer = async (conf: ServerConfig): Promise<Server> => {
-  const srv: Server = fastify({ logger: { prettyPrint: true } });
+  const srv: Server = fastify({
+    http2: true,
+    https: {
+      allowHTTP1: true,
+    },
+    logger: { prettyPrint: true },
+  });
 
   // register lifecycle hooks
   // https://www.fastify.io/docs/latest/Hooks/
@@ -40,14 +41,7 @@ export const initServer = async (conf: ServerConfig): Promise<Server> => {
 
   // enables better security with various HTTP header settings
   // https://helmetjs.github.io/
-  srv.register(securityHeaders);
-
-  // static file server middleware
-  // https://github.com/fastify/fastify-static
-  srv.register(staticServer, {
-    root: conf.assets.rootDir,
-    prefix: conf.assets.urlPrefix,
-  });
+  // srv.register(securityHeaders);
 
   srv.route({
     url: "*",

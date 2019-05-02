@@ -3,7 +3,7 @@
  * it was written primarily with performance in mind. Notably, wherever possible,
  * derivations and instantiations are done outside the request scope.
  */
-import { resolve, normalize } from "path";
+import { resolve, normalize, extname, basename } from "path";
 import { promises, createReadStream } from "fs";
 import mime from "mime";
 import { ServerRequest, ServerResponse, StaticAssetsConfig } from "@server/server"; // prettier-ignore
@@ -15,6 +15,8 @@ export type AssetAttributes = {
   size: number;
   mimetype: string;
   filepath: string;
+  encoding: EncType;
+  cache?: boolean | number | "immutable";
 };
 
 export type HookConfig = StaticAssetsConfig & {};
@@ -53,7 +55,6 @@ export const serveStaticHook = async ({
       return res.code(406).send();
     }
 
-    let enc = "identity";
     let urn = normalize(stripQueryString(req.raw.url));
 
     const urnWithGz = urn + ".gz";
@@ -76,35 +77,37 @@ export const serveStaticHook = async ({
       if (preferBrotli && acceptsBr && urnWithBrExists) {
         // `preferBrotli` is true, disregard qfactors as long as `br` is
         // specified in the accepts header and the file exists.
-        enc = "br";
         urn = urnWithBr;
       } else {
         // check if prioritized exists.
         const prioritized = acceptedEncs.prioritized();
 
         if (prioritized === "gzip" && urnWithGzExists) {
-          enc = "gzip";
           urn = urnWithGz;
         } else if (prioritized === "br" && urnWithBrExists) {
-          enc = "br";
           urn = urnWithBr;
         } else if (acceptsGz && urnWithGzExists) {
-          enc = "gzip";
           urn = urnWithGz;
         } else if (acceptsBr && urnWithBrExists) {
-          enc = "br";
           urn = urnWithBr;
         }
       }
     }
 
-    const { size, mimetype, filepath } = <AssetAttributes>(urnCache.get(urn));
+    const {
+      size,
+      mimetype,
+      filepath,
+      encoding
+    } = <AssetAttributes>(urnCache.get(urn));
 
     return res
       .code(200)
       .header("Content-Type", mimetype)
       .header("Content-Length", size)
-      .header("Content-Encoding", enc)
+      .header("Content-Encoding", encoding)
+      .header("Vary", "Accept-Encoding")
+      .header("Cache-Control", "public, max-age=31536000")
       .send(createReadStream(filepath));
   };
 };
@@ -113,8 +116,33 @@ export const serveStaticHook = async ({
  * strip off trailing query string, if any.
  * current implementation feels hacky. need to find another solution.
  */
-function stripQueryString(url: string) {
+function stripQueryString(url: string): string {
   return url.split("?")[0];
+}
+
+/**
+ * poor man's encoding type derivator. this is a naive implementation
+ * but works fine for this project's use-case. don't try to reuse this.
+ * @param fname filename
+ */
+function getEncodingType(fname: string): EncType {
+  const ext = extname(fname);
+  if (ext === ".gz") return "gzip";
+  if (ext === ".br") return "br";
+  return "identity";
+}
+
+/**
+ * convenience wrapper around mime pkg to conditionally remove
+ * encoding extension if present before calling mime.getType()
+ * @param fname filename
+ */
+function getMimeType(fname: string): string {
+  const ext = extname(fname);
+  if (ext === ".br" || ext === ".gz") {
+    return mime.getType(basename(fname, ext));
+  }
+  return mime.getType(fname);
 }
 
 /**
@@ -140,8 +168,9 @@ async function recursiveCollect(
       if (stat.isFile()) {
         paths.set(normalize(`${urlPrefix}/${subDir}/${f}`), {
           size: stat.size,
-          mimetype: mime.getType(f),
           filepath: abs,
+          mimetype: getMimeType(f),
+          encoding: getEncodingType(f),
         });
       }
 
