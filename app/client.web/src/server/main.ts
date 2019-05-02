@@ -15,6 +15,11 @@ dotenv.config({ path: "../../.env" });
 })({
   port: parseInt(process.env.SERVER_PORT || "4200"),
   host: process.env.SERVER_HOST || "::",
-  assetsUrlPrefix: "/assets/",
-  assetsDir: resolve(__dirname, "../../dist/client"),
+  assets: {
+    rootDir: resolve(__dirname, "../../dist/client"),
+    urlPrefix: "/assets/",
+    gzip: true,
+    brotli: true,
+    preferBrotli: true,
+  },
 });

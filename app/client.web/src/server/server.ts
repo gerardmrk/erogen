@@ -20,8 +20,15 @@ export type ServerResponse = FastifyReply<HTTPResponse>;
 export type ServerConfig = {
   port: number;
   host: string;
-  assetsDir: string;
-  assetsUrlPrefix: string;
+  assets: StaticAssetsConfig;
+};
+
+export type StaticAssetsConfig = {
+  rootDir: string;
+  urlPrefix: string;
+  gzip?: boolean;
+  brotli?: boolean;
+  preferBrotli?: boolean;
 };
 
 export const initServer = async (conf: ServerConfig): Promise<Server> => {
@@ -38,8 +45,8 @@ export const initServer = async (conf: ServerConfig): Promise<Server> => {
   // static file server middleware
   // https://github.com/fastify/fastify-static
   srv.register(staticServer, {
-    root: conf.assetsDir,
-    prefix: conf.assetsUrlPrefix,
+    root: conf.assets.rootDir,
+    prefix: conf.assets.urlPrefix,
   });
 
   srv.route({
