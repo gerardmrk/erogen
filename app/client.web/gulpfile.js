@@ -1,5 +1,4 @@
 /* eslint-disable */
-const { spawn } = require("child_process");
 const { promises, createReadStream, createWriteStream } = require("fs");
 const { constants, createGzip, createBrotliCompress } = require("zlib");
 
@@ -10,8 +9,6 @@ const wpk = require("webpack");
 const PurgeCSS = require("purgecss");
 
 const { paths } = require("./config/shared.paths");
-const { Renderer } = require("./dist/renderer");
-const { RendererResponse } = require("./dist/renderer/proto");
 const webpackConfig = require("./config/webpack.config");
 
 const statAsync = promises.stat;
@@ -81,7 +78,13 @@ const buildRenderer = async () => {
       cached: false,
       assetsSort: "chunks",
       // tone down information in console
-      excludeAssets: [/\.map$/, /\.br$/, /\.gz$/, /\.LICENSE$/, /^client\//],
+      excludeAssets: [
+        /\.map$/,
+        /\.br$/,
+        /\.gz$/,
+        /\.LICENSE$/,
+        /^\.\.\/client\//,
+      ],
       warningsFilter: [
         // purgecss pkg has a dynamic require statement for loading
         // a config file at class instantiation. build is not affected.
@@ -119,6 +122,7 @@ const buildServer = async () => {
 // =============================================================================
 const purgeMainStylesChunk = async () => {
   const stats = require(paths.asyncModuleStats);
+  const { RendererResponse } = require(paths.protobufDir);
 
   const vendorsAssetStats = stats["assetsByChunkName"]["vendors"];
   const stylesChunk = vendorsAssetStats.find(a => a.endsWith(".css"));
@@ -158,6 +162,7 @@ exports.default = buildProd;
 // =============================================================================
 
 async function getRoutes(cache) {
+  const { Renderer } = require(paths.rendererBuild);
   const renderer = new Renderer({ cache: { data: cache } });
   await renderer.prerenderRoutes({
     all: true,

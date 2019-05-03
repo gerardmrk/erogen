@@ -2,12 +2,12 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "moduleResolution": "node",
-    "module": "esnext",
+    "module": "commonjs",
     "target": "esnext",
     "sourceMap": true,
     "declaration": true,
-    "declarationDir": "dist/renderer",
     "allowJs": false,
     "removeComments": false
-  }
+  },
+  "exclude": ["./src/server"]
 }

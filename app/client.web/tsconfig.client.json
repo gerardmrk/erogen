@@ -5,5 +5,6 @@
     "module": "esnext",
     "target": "esnext",
     "sourceMap": true
-  }
+  },
+  "exclude": ["./src/renderer", "./src/server"]
 }
