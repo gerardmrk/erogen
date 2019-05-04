@@ -7,6 +7,10 @@
     "head_description": "Blog",
     "head_title": "Blog"
   },
+  "routes/Blog/BlogPost": {
+    "head_description": "{{articleDesc}}",
+    "head_title": "{{articleTitle}}"
+  },
   "routes/Dashboard": {
     "head_description": "Papan Pemuka",
     "head_title": "Papan Pemuka"

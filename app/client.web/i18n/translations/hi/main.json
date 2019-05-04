@@ -7,6 +7,10 @@
     "head_description": "ब्लॉग",
     "head_title": "ब्लॉग"
   },
+  "routes/Blog/BlogPost": {
+    "head_description": "{{articleDesc}}",
+    "head_title": "{{articleTitle}}"
+  },
   "routes/Dashboard": {
     "head_description": "डैशबोर्ड",
     "head_title": "डैशबोर्ड"

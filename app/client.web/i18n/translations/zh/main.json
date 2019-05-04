@@ -7,6 +7,10 @@
     "head_description": "博客",
     "head_title": "博客"
   },
+  "routes/Blog/BlogPost": {
+    "head_description": "{{articleDesc}}",
+    "head_title": "{{articleTitle}}"
+  },
   "routes/Dashboard": {
     "head_description": "仪表板",
     "head_title": "仪表板"

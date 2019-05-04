@@ -7,6 +7,10 @@
     "head_description": "Блог",
     "head_title": "Блог"
   },
+  "routes/Blog/BlogPost": {
+    "head_description": "{{articleDesc}}",
+    "head_title": "{{articleTitle}}"
+  },
   "routes/Dashboard": {
     "head_description": "Приборная доска",
     "head_title": "Приборная доска"

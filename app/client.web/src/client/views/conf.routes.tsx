@@ -1,3 +1,7 @@
+/**
+ * Routes config
+ */
+
 import { default as loadable, LoadableComponent } from "@loadable/component";
 
 export type RouteConf<P = any> = {
@@ -44,8 +48,8 @@ export const DEFAULT_PRIVATE_PATH = "/dashboard";
 // prettier-ignore
 export const routeConfs: RouteConf[] = [
   {
-    title: "Login",
-    description: "Login to the app",
+    title: "routes/Login.head_title",
+    description: "routes/Login.head_description",
     path: "/login",
     exact: true,
     guarded: false,
@@ -53,6 +57,8 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/Login")),
   },
   {
+    title: "routes/Landing.head_title",
+    description: "routes/Landing.head_description",
     path: DEFAULT_PUBLIC_PATH,
     exact: true,
     guarded: false,
@@ -60,7 +66,8 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/Landing")),
   },
   {
-    title: "Product",
+    title: "routes/Product.head_title",
+    description: "routes/Product.head_description",
     path: "/about/product",
     exact: true,
     guarded: false,
@@ -68,7 +75,8 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/Product")),
   },
   {
-    title: "Blog",
+    title: "routes/Blog.head_title",
+    description: "routes/Blog.head_description",
     path: "/blog",
     exact: false,
     guarded: false,
@@ -76,7 +84,8 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/Blog")),
     routes: [
       {
-        title: "Blog",
+        title: "routes/Blog/BlogPost.head_title",
+        description: "routes/Blog/BlogPost.head_description",
         path: "/blog/:post",
         exact: true,
         guarded: false,
@@ -86,7 +95,8 @@ export const routeConfs: RouteConf[] = [
     ],
   },
   {
-    title: "Documentation",
+    title: "routes/Documentation.head_title",
+    description: "routes/Documentation.head_description",
     path: "/documentation",
     exact: true,
     guarded: false,
@@ -94,7 +104,8 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/Documentation")),
   },
   {
-    title: "Support",
+    title: "routes/Support.head_title",
+    description: "routes/Support.head_description",
     path: "/support",
     exact: true,
     guarded: false,
@@ -102,7 +113,8 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/Support")),
   },
   {
-    title: "Register",
+    title: "routes/Register.head_title",
+    description: "routes/Register.head_description",
     path: "/register",
     exact: true,
     guarded: false,
@@ -110,7 +122,8 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/Register")),
   },
   {
-    title: "Forgot Password",
+    title: "routes/ForgotPassword.head_title",
+    description: "routes/ForgotPassword.head_description",
     path: "/forgot-password",
     exact: true,
     guarded: false,
@@ -118,7 +131,8 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/ForgotPassword")),
   },
   {
-    title: "Reset Password",
+    title: "routes/ResetPassword.head_title",
+    description: "routes/ResetPassword.head_description",
     path: "/reset-password",
     exact: true,
     guarded: false,
@@ -126,7 +140,8 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/ResetPassword")),
   },
   {
-    title: "Auth",
+    title: "routes/Auth.head_title",
+    description: "routes/Auth.head_description",
     path: "/auth",
     exact: true,
     guarded: false,
@@ -134,7 +149,8 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/Auth")),
   },
   {
-    title: "Dashboard",
+    title: "routes/Dashboard.head_title",
+    description: "routes/Dashboard.head_description",
     path: DEFAULT_PRIVATE_PATH,
     exact: true,
     guarded: true,
@@ -142,7 +158,8 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/Dashboard")),
   },
   {
-    title: "Home Feed",
+    title: "routes/HomeFeed.head_title",
+    description: "routes/HomeFeed.head_description",
     path: "/feed",
     exact: true,
     guarded: true,
@@ -150,7 +167,8 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/HomeFeed")),
   },
   {
-    title: "Settings",
+    title: "routes/Settings.head_title",
+    description: "routes/Settings.head_description",
     path: "/settings",
     exact: false,
     guarded: true,
@@ -158,7 +176,8 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/Settings")),
     routes: [
       {
-        title: "Profile Settings",
+        title: "routes/Settings/ProfileSettings.head_title",
+        description: "routes/Settings/ProfileSettings.head_description",
         path: "/settings/profile",
         exact: true,
         guarded: true,
@@ -166,17 +185,28 @@ export const routeConfs: RouteConf[] = [
         component: loadable(() => import("@client/views/routes/Settings/ProfileSettings")),
       },
       {
-        title: "Account Settings",
+        title: "routes/Settings/AccountSettings.head_title",
+        description: "routes/Settings/AccountSettings.head_description",
         path: "/settings/account",
         exact: true,
         guarded: true,
         prerender: false,
         component: loadable(() => import("@client/views/routes/Settings/AccountSettings")),
       },
+      {
+        title: "routes/Settings/BillingSettings.head_title",
+        description: "routes/Settings/BillingSettings.head_description",
+        path: "/settings/billing",
+        exact: true,
+        guarded: true,
+        prerender: false,
+        component: loadable(() => import("@client/views/routes/Settings/BillingSettings")),
+      },
     ],
   },
   {
-    title: "Maintenance Mode",
+    title: "routes/Maintenance.head_title",
+    description: "routes/Maintenance.head_description",
     path: "/maintenance",
     exact: true,
     guarded: false,
@@ -184,7 +214,8 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/Maintenance")),
   },
   {
-    title: "Profile",
+    title: "routes/Profile.head_title",
+    description: "routes/Profile.head_description",
     path: "/user/:user",
     exact: true,
     guarded: false,
@@ -193,7 +224,8 @@ export const routeConfs: RouteConf[] = [
   },
   {
     status: 500,
-    title: "500 Server Error",
+    title: "routes/ServerError.head_title",
+    description: "routes/ServerError.head_description",
     path: "/500",
     exact: true,
     guarded: false,
@@ -202,7 +234,8 @@ export const routeConfs: RouteConf[] = [
   },
   {
     status: 404,
-    title: "404 Not Found",
+    title: "routes/NotFound.head_title",
+    description: "routes/NotFound.head_description",
     exact: false,
     guarded: false,
     prerender: true,
