@@ -1,0 +1,81 @@
+{
+  "routes/Auth": {
+    "head_description": "Auth",
+    "head_title": "Auth"
+  },
+  "routes/Blog": {
+    "head_description": "Blog",
+    "head_title": "Blog"
+  },
+  "routes/Dashboard": {
+    "head_description": "painel de controle",
+    "head_title": "painel de controle"
+  },
+  "routes/Documentation": {
+    "head_description": "Documentos da API, documentos do SDK",
+    "head_title": "Documentação"
+  },
+  "routes/ForgotPassword": {
+    "head_description": "Solicite uma redefinição de senha aqui.",
+    "head_title": "Esqueceu sua senha?"
+  },
+  "routes/Landing": {
+    "head_description": "{{appName}}",
+    "head_title": "{{appName}}"
+  },
+  "routes/Login": {
+    "form_heading": "Entrar",
+    "head_description": "Login para {{appName}}",
+    "head_title": "Entrar"
+  },
+  "routes/Maintenance": {
+    "head_description": "O servidor está no modo de manutenção.",
+    "head_title": "Modo de manutenção"
+  },
+  "routes/NotFound": {
+    "head_description": "404 não encontrado",
+    "head_title": "404 não encontrado"
+  },
+  "routes/Product": {
+    "head_description": "produtos",
+    "head_title": "produtos"
+  },
+  "routes/Profile": {
+    "head_description": "{{Username}} - Perfil",
+    "head_title": "{{Username}} - Perfil"
+  },
+  "routes/Register": {
+    "form_heading": "registo",
+    "head_description": "Crie uma conta com {{appName}}",
+    "head_title": "registo"
+  },
+  "routes/ResetPassword": {
+    "form_heading": "Defina sua nova senha",
+    "head_description": "Redefinir senha",
+    "head_title": "Redefinir senha"
+  },
+  "routes/ServerError": {
+    "head_description": "500 erro do servidor",
+    "head_title": "500 erro do servidor"
+  },
+  "routes/Settings": {
+    "head_description": "Definições",
+    "head_title": "Definições"
+  },
+  "routes/Settings/AccountSettings": {
+    "head_description": "Configurações da conta",
+    "head_title": "Configurações da conta"
+  },
+  "routes/Settings/BillingSettings": {
+    "head_description": "Faturamento",
+    "head_title": "Faturamento"
+  },
+  "routes/Settings/ProfileSettings": {
+    "head_description": "Configurações de perfil",
+    "head_title": "Configurações de perfil"
+  },
+  "routes/Support": {
+    "head_description": "Apoio, suporte",
+    "head_title": "Apoio, suporte"
+  }
+}
