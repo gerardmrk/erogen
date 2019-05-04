@@ -6,13 +6,19 @@
 Thumbs.db
 
 # compressed assets
+*.br
 *.gz
 *.zip
+*.tar
 
 # env variable files
 .env*
 *.env
 !.env.example
+
+# TLS/SSL keys and certs
+*.key
+*.pem
 
 # ----------------------------------------------------------------------------------------------------------------------
 # IDE Settings
@@ -100,10 +106,5 @@ bazel-*
 # ----------------------------------------------------------------------------------------------------------------------
 
 .state/
-
-# for init script
-.init.json
-
-config/env_vars.toml
 
 .personal

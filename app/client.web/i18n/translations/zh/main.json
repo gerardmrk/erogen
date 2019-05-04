@@ -1,0 +1,78 @@
+{
+	"routes/Auth": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/Blog": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/Dashboard": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/Documentation": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/ForgotPassword": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/Landing": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/Login": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/Maintenance": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/NotFound": {
+		"head_description": "请求的页面不存在。",
+		"head_title": "404未找到"
+	},
+	"routes/Product": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/Profile": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/Register": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/ResetPassword": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/ServerError": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/Settings": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/Settings/AccountSettings": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/Settings/BillingSettings": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/Settings/ProfileSettings": {
+		"head_description": "-",
+		"head_title": "-"
+	},
+	"routes/Support": {
+		"head_description": "-",
+		"head_title": "-"
+	}
+}

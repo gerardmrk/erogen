@@ -21,13 +21,11 @@ resource "tls_self_signed_cert" "root" {
   ]
 
   subject {
-    common_name         = "${var.org_name} Root"
+    common_name         = "${var.org_name} Root CA"
     organization        = "${var.org_name}"
-    organizational_unit = "${var.org_unit}"
-    street_address      = "${var.org_addr_street}"
+    organizational_unit = "${var.org_unit} Certificate Authority"
     locality            = "${var.org_addr_locality}"
     province            = "${var.org_addr_province}"
-    postal_code         = "${var.org_addr_postcode}"
     country             = "${var.org_addr_country}"
   }
 }
