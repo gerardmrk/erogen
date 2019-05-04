@@ -47,7 +47,7 @@ symlink_githooks() {
     log_info "${filename} setting access permissions"
     chmod +x "${SCRIPT_DIR}/../.hooks/${filename}"
 
-    ln -s "../../hooks/${filename}" ".git/hooks/${filename}"
+    ln -s "../../.hooks/${filename}" ".git/hooks/${filename}"
     log_info "${filename} => .git/hooks/${filename} ✓"
   done
 }
