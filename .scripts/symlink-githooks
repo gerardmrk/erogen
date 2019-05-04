@@ -1,17 +1,7 @@
 #!/bin/bash
 #
-# generates protocol buffers for definitions in proto/
+# This script symlinks githooks in <root>/hooks/... to <root>/.git/hooks/...
 #
-#   (
-#    cd "$ROOT_DIR" && \
-#    protoc "$file_path" \
-#      --cpp_out=. \
-#      --go_out=plugins=grpc:. \
-#      --js_out=library="$output_path":. \
-#      --ruby_out=. \
-#      --python_out=. \
-#      --csharp_out="$base_path"
-#  )
 
 set -e
 
@@ -33,32 +23,34 @@ readonly FMT_VARS="$SCRIPT_DIR/_colors_"
 # load formatters for logging
 . "$FMT_VARS"
 
-# script entrypoint.
 main() {
-  # ensure required binaries are installed
-  check_required_binaries "protoc"
-
   log_info "Starting..."
 
-  generate_proto_code "./proto/user" "./proto/user/user.proto" "./proto/user/user_pb"
-  generate_proto_code "./proto/i18n" "./proto/i18n/i18n.proto" "./proto/i18n/i18n_pb"
-  generate_proto_code "./proto/auth" "./proto/auth/auth.proto" "./proto/auth/auth.proto"
+  remove_existing_symlinks
+
+  symlink_githooks
 
   log_info "Done!"
 }
 
-generate_proto_code() {
-  local readonly base_path="$1"
-  local readonly file_path="$2"
-  local readonly output_path="$3"
-  (
-    cd "$ROOT_DIR" && \
-    protoc "$file_path" \
-      --go_out=plugins=grpc:.
-  )
-  
+remove_existing_symlinks() {
+  log_info "Removing existing symlinks..."
+  find "${SCRIPT_DIR}/../.git/hooks" -type l -name '*' -exec rm {} +
 }
 
+symlink_githooks() {
+  cd "${SCRIPT_DIR}/.."
+
+  for filename in ${SCRIPT_DIR}/../.hooks/*; do
+    filename=$(basename ${filename})
+
+    log_info "${filename} setting access permissions"
+    chmod +x "${SCRIPT_DIR}/../.hooks/${filename}"
+
+    ln -s "../../hooks/${filename}" ".git/hooks/${filename}"
+    log_info "${filename} => .git/hooks/${filename} ✓"
+  done
+}
 
 # ******************************************************************************
 #    LOGGERS
