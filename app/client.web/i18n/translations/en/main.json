@@ -1,78 +1,81 @@
 {
-	"routes/Auth": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/Blog": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/Dashboard": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/Documentation": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/ForgotPassword": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/Landing": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/Login": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/Maintenance": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/NotFound": {
-		"head_description": "The requested page does not exist.",
-		"head_title": "404 Not Found"
-	},
-	"routes/Product": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/Profile": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/Register": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/ResetPassword": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/ServerError": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/Settings": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/Settings/AccountSettings": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/Settings/BillingSettings": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/Settings/ProfileSettings": {
-		"head_description": "-",
-		"head_title": "-"
-	},
-	"routes/Support": {
-		"head_description": "-",
-		"head_title": "-"
-	}
+  "routes/Auth": {
+    "head_description": "Auth",
+    "head_title": "Auth"
+  },
+  "routes/Blog": {
+    "head_description": "Blog",
+    "head_title": "Blog"
+  },
+  "routes/Dashboard": {
+    "head_description": "Dashboard",
+    "head_title": "Dashboard"
+  },
+  "routes/Documentation": {
+    "head_description": "API docs, SDK docs",
+    "head_title": "Documentation"
+  },
+  "routes/ForgotPassword": {
+    "head_description": "Request a password reset here.",
+    "head_title": "Forgot Your Password?"
+  },
+  "routes/Landing": {
+    "head_description": "{{appName}}",
+    "head_title": "{{appName}}"
+  },
+  "routes/Login": {
+    "form_heading": "Login",
+    "head_description": "Login to {{appName}}",
+    "head_title": "Login"
+  },
+  "routes/Maintenance": {
+    "head_description": "Server is in maintenance mode.",
+    "head_title": "Maintenance Mode"
+  },
+  "routes/NotFound": {
+    "head_description": "404 Not Found",
+    "head_title": "404 Not Found"
+  },
+  "routes/Product": {
+    "head_description": "Product",
+    "head_title": "Product"
+  },
+  "routes/Profile": {
+    "head_description": "{{Username}} - Profile",
+    "head_title": "{{Username}} - Profile"
+  },
+  "routes/Register": {
+    "form_heading": "Register",
+    "head_description": "Create an account with {{appName}}",
+    "head_title": "Register"
+  },
+  "routes/ResetPassword": {
+    "form_heading": "Set your new password",
+    "head_description": "Reset password",
+    "head_title": "Reset Password"
+  },
+  "routes/ServerError": {
+    "head_description": "500 Server Error",
+    "head_title": "500 Server Error"
+  },
+  "routes/Settings": {
+    "head_description": "Settings",
+    "head_title": "Settings"
+  },
+  "routes/Settings/AccountSettings": {
+    "head_description": "Account settings",
+    "head_title": "Account Settings"
+  },
+  "routes/Settings/BillingSettings": {
+    "head_description": "Billing",
+    "head_title": "Billing"
+  },
+  "routes/Settings/ProfileSettings": {
+    "head_description": "Profile settings",
+    "head_title": "Profile Settings"
+  },
+  "routes/Support": {
+    "head_description": "Support",
+    "head_title": "Support"
+  }
 }
