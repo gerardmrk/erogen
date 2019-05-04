@@ -36,7 +36,7 @@ type AppParams = {
     await loadableReady();
   }
 
-  render(
+  const app = (
     <ConfigProvider config={config}>
       <I18nProvider i18n={i18n}>
         <HeadProvider>
@@ -47,15 +47,16 @@ type AppParams = {
           </StoreProvider>
         </HeadProvider>
       </I18nProvider>
-    </ConfigProvider>,
-    document.getElementById(appMountPointID),
+    </ConfigProvider>
   );
 
-  initServiceWorker((error: Error | null) => {
-    if (error) {
-      services.errorReporter.logError(error);
-      throw error;
-    }
+  render(app, document.getElementById(appMountPointID), () => {
+    initServiceWorker((error: Error | null) => {
+      if (error) {
+        services.errorReporter.logError(error);
+        throw error;
+      }
+    });
   });
 })({
   devMode: INJECTED_DEV_MODE,

@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+
+readonly FMT_RESET="\e[0m"
+readonly FMT_BOLD="\e[1m"
+readonly FMT_DIM="\e[2m"
+readonly FMT_UNDERLINED="\e[4m"
+readonly FMT_BLINK="\e[5m"
+readonly FMT_REVERSE="\e[7m"
+readonly FMT_HIDDEN="\e[8m"
+readonly FMT_CLR_RED="\e[00;31m"
+readonly FMT_CLR_LRED="\e[01;31m"
+readonly FMT_CLR_GREEN="\e[00;32m"
+readonly FMT_CLR_LGREEN="\e[01;32m"
+readonly FMT_CLR_YELLOW="\e[00;33m"
+readonly FMT_CLR_LYELLOW="\e[01;33m"
+readonly FMT_CLR_BLUE="\e[00;34m"
+readonly FMT_CLR_LBLUE="\e[01;34m"
+readonly FMT_CLR_PURPLE="\e[00;35m"
+readonly FMT_CLR_LPURPLE="\e[01;35m"
+readonly FMT_CLR_CYAN="\e[00;36m"
+readonly FMT_CLR_LCYAN="\e[01;36m"
+readonly FMT_CLR_LGREY="\e[00;37m"
+readonly FMT_CLR_WHITE="\e[01;37m"
+
