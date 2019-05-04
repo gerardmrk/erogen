@@ -1,30 +1,32 @@
 #!/bin/bash
 #
 
-
 set -e
 
-# **************************************************************************************************
+# ******************************************************************************
 #    CONSTANTS
 
 # script name
 readonly SCRIPT_NAME="$(basename "$0")"
-# directory paths
+# root dir
 readonly ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+# scripts dir
 readonly SCRIPT_DIR="$(cd "${ROOT_DIR}/.scripts" && pwd)"
+# formatters
+readonly FMT_VARS="$SCRIPT_DIR/_colors_"
 
+# ******************************************************************************
+#    MAIN FUNCTIONS
 
-# **************************************************************************************************
-#    MAIN FUNCS
+# load formatters for logging
+. "$FMT_VARS"
 
 # script entrypoint.
 main() {
-  log_info "Starting..."
-
-  log_info "Completed"
+  log_info "..."
 }
 
-# **************************************************************************************************
+# ******************************************************************************
 #    HELPER FUNCS
 
 
@@ -38,33 +40,34 @@ check_required_binaries() {
   fi
 }
 
-# **************************************************************************************************
+# ******************************************************************************
 #    LOGGERS
+
 
 # base logger
 log() {
   local readonly lvl="$1"
   local readonly msg="$2"
-  local readonly tst=$(date +"%m/%d %H:%M:%S")
-  >&2 printf "${tst} ${lvl} [$SCRIPT_NAME] ${msg}\n\033[0m"
+  local readonly tst=$(date +"%H:%M:%S")
+  printf "$FMT_CLR_PURPLE$tst $FMT_RESET$FMT_BOLD$lvl$FMT_RESET $msg\n"
 }
 
 # logger - LVL INFO
 log_info() {
-  log "\e[38;2;0;255;255m INFO" "$1"
+  log "\e[38;2;0;255;255m INFO [$SCRIPT_NAME]$FMT_RESET" "$1"
 }
 
 # logger - LVL WARN
 log_warn() {
-  log "\e[38;2;255;165;0m WARN" "$1"
+  log "\e[38;2;255;165;0m WARN [$SCRIPT_NAME]$FMT_RESET" "$1"
 }
 
 # logger - LVL ERROR
 log_error() {
-  log "\e[38;2;255;0;0mERROR" "$1"
+  log "\e[38;2;255;0;0mERROR [$SCRIPT_NAME]$FMT_RESET" "$1"
 }
 
-# **************************************************************************************************
+# ******************************************************************************
 #    Execute
 main "$@"
 exit 0
