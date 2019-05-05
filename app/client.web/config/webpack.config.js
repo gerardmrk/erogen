@@ -82,6 +82,8 @@ module.exports = async (args) => {
                 "@client": paths.clientSrc,
                 "@renderer": paths.rendererSrc,
                 "@server": paths.serverSrc,
+                // i18n translations
+                "@i18n": paths.i18nDir,
                 // route config
                 "@routeConfig": `${paths.source}/route-config.json`,
                 // semantic ui theming path resolution

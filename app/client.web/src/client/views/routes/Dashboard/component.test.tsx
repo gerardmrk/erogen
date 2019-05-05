@@ -8,4 +8,9 @@ describe("<Dashboard/>", () => {
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });
+
+  it("has static properties required for a route", () => {
+    expect(Dashboard).toHaveProperty("chunkName");
+    expect(Dashboard).toHaveProperty("i18nNamespace");
+  });
 });

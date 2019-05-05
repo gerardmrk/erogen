@@ -7,4 +7,9 @@ describe("<Register/>", () => {
     const wrapper = shallow(<Register />);
     expect(wrapper).toExist();
   });
+
+  it("has static properties required for a route", () => {
+    expect(Register).toHaveProperty("chunkName");
+    expect(Register).toHaveProperty("i18nNamespace");
+  });
 });

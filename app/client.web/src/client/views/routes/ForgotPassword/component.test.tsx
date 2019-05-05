@@ -7,4 +7,9 @@ describe("<ForgotPassword/>", () => {
     const wrapper = shallow(<ForgotPassword />);
     expect(wrapper).toExist();
   });
+
+  it("has static properties required for a route", () => {
+    expect(ForgotPassword).toHaveProperty("chunkName");
+    expect(ForgotPassword).toHaveProperty("i18nNamespace");
+  });
 });

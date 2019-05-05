@@ -8,4 +8,9 @@ describe("<BillingSettings/>", () => {
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });
+
+  it("has static properties required for a route", () => {
+    expect(BillingSettings).toHaveProperty("chunkName");
+    expect(BillingSettings).toHaveProperty("i18nNamespace");
+  });
 });

@@ -3,6 +3,9 @@ import i18nBackend from "i18next-xhr-backend";
 import LangDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 
+// TODO: dynamic import
+// import en from "@i18n/translations/en/main.json";
+
 // the translations
 const resources = {
   en: {

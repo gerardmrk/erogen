@@ -39,7 +39,8 @@
         "src/server/*",
         "src/server/*/index.ts",
         "src/server/*/index.tsx"
-      ]
+      ],
+      "@i18n/*": ["i18n/*"]
     }
   },
   "include": ["./src/**/*.tsx", "./src/**/*.ts"],

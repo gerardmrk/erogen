@@ -1,5 +1,5 @@
+import { connect } from "react-redux";
 import { State, Dispatcher } from "@client/store";
-import connect from "react-redux/es/connect/connect";
 
 import { AppHeader } from "./component";
 
@@ -12,12 +12,12 @@ export type StoreProps = {
 export type DispatchProps = {};
 
 const mapStateToProps = (state: State): StoreProps => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 const mapDispatchToProps = (dispatch: Dispatcher): DispatchProps => ({});
 
 export default connect<StoreProps, DispatchProps, LocalProps, State>(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(AppHeader);

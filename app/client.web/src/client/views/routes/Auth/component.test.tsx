@@ -8,4 +8,9 @@ describe("<Auth/>", () => {
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });
+
+  it("has static properties required for a route", () => {
+    expect(Auth).toHaveProperty("chunkName");
+    expect(Auth).toHaveProperty("i18nNamespace");
+  });
 });

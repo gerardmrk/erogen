@@ -8,7 +8,7 @@ describe("<Blog/>", () => {
 
   beforeAll(() => {
     props = {
-      routes: []
+      routes: [],
     };
 
     wrapper = shallow(<Blog {...props} />);
@@ -17,5 +17,10 @@ describe("<Blog/>", () => {
   it("renders ok", () => {
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
+  });
+
+  it("has static properties required for a route", () => {
+    expect(Blog).toHaveProperty("chunkName");
+    expect(Blog).toHaveProperty("i18nNamespace");
   });
 });

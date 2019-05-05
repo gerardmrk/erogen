@@ -8,4 +8,9 @@ describe("<Maintenance/>", () => {
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });
+
+  it("has static properties required for a route", () => {
+    expect(Maintenance).toHaveProperty("chunkName");
+    expect(Maintenance).toHaveProperty("i18nNamespace");
+  });
 });

@@ -8,6 +8,7 @@ const rootConfigDir = `${rootDir}/config`;
 const appDir = resolve(__dirname, "..");
 const cacheDir = `${appDir}/.cache`;
 const configDir = `${appDir}/config`;
+const i18nDir = `${appDir}/i18n`;
 
 const sourceDir = `${appDir}/src`;
 const clientSrc = `${sourceDir}/client`;
@@ -29,6 +30,7 @@ exports.paths = {
   appDir,
   cacheDir,
   configDir,
+  i18nDir,
   sourceDir,
   clientSrc,
   rendererSrc,
@@ -47,4 +49,5 @@ exports.paths = {
   logoImage: `${rootConfigDir}/logo/logo.png`,
   protobufDef: `${sourceDir}/renderer.proto`,
   protobufDir: `${rendererSrc}/proto`,
+  translationsDir: `${i18nDir}/translations`,
 };
