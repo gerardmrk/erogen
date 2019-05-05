@@ -11,6 +11,9 @@ describe("<Auth/>", () => {
 
   it("has static properties required for a route", () => {
     expect(Auth.chunkName).toBeDefined();
+    expect(typeof Auth.chunkName).toEqual("string");
+
     expect(Auth.i18nNamespace).toBeDefined();
+    expect(typeof Auth.i18nNamespace).toEqual("string");
   });
 });

@@ -11,6 +11,9 @@ describe("<ProfileSettings/>", () => {
 
   it("has static properties required for a route", () => {
     expect(ProfileSettings.chunkName).toBeDefined();
+    expect(typeof ProfileSettings.chunkName).toEqual("string");
+
     expect(ProfileSettings.i18nNamespace).toBeDefined();
+    expect(typeof ProfileSettings.i18nNamespace).toEqual("string");
   });
 });

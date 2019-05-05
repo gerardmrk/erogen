@@ -10,6 +10,9 @@ describe("<Register/>", () => {
 
   it("has static properties required for a route", () => {
     expect(Register.chunkName).toBeDefined();
+    expect(typeof Register.chunkName).toEqual("string");
+
     expect(Register.i18nNamespace).toBeDefined();
+    expect(typeof Register.i18nNamespace).toEqual("string");
   });
 });

@@ -11,6 +11,9 @@ describe("<ServerError/>", () => {
 
   it("has static properties required for a route", () => {
     expect(ServerError.chunkName).toBeDefined();
+    expect(typeof ServerError.chunkName).toEqual("string");
+
     expect(ServerError.i18nNamespace).toBeDefined();
+    expect(typeof ServerError.i18nNamespace).toEqual("string");
   });
 });

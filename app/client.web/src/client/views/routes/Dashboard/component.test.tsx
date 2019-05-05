@@ -11,6 +11,9 @@ describe("<Dashboard/>", () => {
 
   it("has static properties required for a route", () => {
     expect(Dashboard.chunkName).toBeDefined();
+    expect(typeof Dashboard.chunkName).toEqual("string");
+
     expect(Dashboard.i18nNamespace).toBeDefined();
+    expect(typeof Dashboard.i18nNamespace).toEqual("string");
   });
 });

@@ -21,6 +21,9 @@ describe("<Blog/>", () => {
 
   it("has static properties required for a route", () => {
     expect(Blog.chunkName).toBeDefined();
+    expect(typeof Blog.chunkName).toEqual("string");
+
     expect(Blog.i18nNamespace).toBeDefined();
+    expect(typeof Blog.i18nNamespace).toEqual("string");
   });
 });

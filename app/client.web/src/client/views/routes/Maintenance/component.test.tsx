@@ -11,6 +11,9 @@ describe("<Maintenance/>", () => {
 
   it("has static properties required for a route", () => {
     expect(Maintenance.chunkName).toBeDefined();
+    expect(typeof Maintenance.chunkName).toEqual("string");
+
     expect(Maintenance.i18nNamespace).toBeDefined();
+    expect(typeof Maintenance.i18nNamespace).toEqual("string");
   });
 });
