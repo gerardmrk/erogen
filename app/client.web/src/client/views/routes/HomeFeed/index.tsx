@@ -1,6 +1,7 @@
+import { WithTranslation, withTranslation } from "react-i18next";
 import { HomeFeed } from "./component";
-import { WithTranslation } from "react-i18next";
+import { RouteConf } from "@client/views/conf.routes";
 
-export type LocalProps = WithTranslation & {};
+export type LocalProps = WithTranslation & RouteConf & {};
 
-export default HomeFeed;
+export default withTranslation("route_HomeFeed")(HomeFeed);

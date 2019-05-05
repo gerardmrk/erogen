@@ -34,8 +34,8 @@ export class EnhancedRoute extends React.Component<Props, State> {
     this.redirectTo.search = `?from=${encodeURIComponent(fromRoute)}`;
   }
 
-  private renderRoute = props => {
-    const RouteComponent = this.props.component;
+  private renderRoute = routeProps => {
+    const { component: RouteComponent, ...props } = this.props;
 
     // staticContext exists if route is being rendered on the server.
     // we use this to communicate route-specific settings to the caller.
@@ -45,7 +45,7 @@ export class EnhancedRoute extends React.Component<Props, State> {
     }
 
     if (this.props.guarded && !this.props.isAuthenticated) {
-      return props.action === "REPLACE" ? null : (
+      return routeProps.action === "REPLACE" ? null : (
         <Redirect
           from={this.props.path}
           to={this.redirectTo}
@@ -56,6 +56,7 @@ export class EnhancedRoute extends React.Component<Props, State> {
     return (
       <RouteComponent
         {...props}
+        {...routeProps}
         useSuspense={false}
         routes={this.props.routes}
       />

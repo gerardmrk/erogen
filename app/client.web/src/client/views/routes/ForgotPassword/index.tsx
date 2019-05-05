@@ -1,6 +1,7 @@
+import { WithTranslation, withTranslation } from "react-i18next";
+import { RouteConf } from "@client/views/conf.routes";
 import { ForgotPassword } from "./component";
-import { WithTranslation } from "react-i18next";
 
-export type LocalProps = WithTranslation & {};
+export type LocalProps = WithTranslation & RouteConf & {};
 
-export default ForgotPassword;
+export default withTranslation("route_ForgotPassword")(ForgotPassword);

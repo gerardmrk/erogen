@@ -1,6 +1,7 @@
+import { WithTranslation, withTranslation } from "react-i18next";
 import { Profile } from "./component";
-import { WithTranslation } from "react-i18next";
+import { RouteConf } from "@client/views/conf.routes";
 
-export type LocalProps = WithTranslation & {};
+export type LocalProps = WithTranslation & RouteConf & {};
 
-export default Profile;
+export default withTranslation("route_Profile")(Profile);
