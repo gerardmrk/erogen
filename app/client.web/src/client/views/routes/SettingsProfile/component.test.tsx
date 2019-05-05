@@ -1,10 +1,10 @@
 import * as React from "react";
 import { shallow } from "enzyme";
-import { AccountSettings } from "./component";
+import { SettingsProfile } from "./component";
 
-describe("<AccountSettings/>", () => {
+describe("<SettingsProfile/>", () => {
   it("renders ok", () => {
-    const wrapper = shallow(<AccountSettings />);
+    const wrapper = shallow(<SettingsProfile />);
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });

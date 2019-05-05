@@ -6,9 +6,6 @@ type Props = {};
 type State = {};
 
 export class BlogPost extends React.PureComponent<Props, State> {
-  public static readonly chunkName = "Blog-BlogPost";
-  public static readonly i18nNamespace = "";
-
   public render() {
     return (
       <div className={styles.main}>
