@@ -11,19 +11,21 @@ type State = {};
 
 export class Login extends React.PureComponent<Props, State> {
   public render() {
+    const { t } = this.props;
+
     return (
       <React.Fragment>
         <HeadTags
           path={this.props.path}
-          title={this.props.t("title")}
-          description={this.props.t("description")}
+          title={t("title")}
+          description={t("description")}
           metaType={this.props.metaType}
           metaImgPath={this.props.metaImgPath}
           metaImgAlt={this.props.metaImgAlt}
           metaTwitterCardType={this.props.metaTwitterCardType}
         />
 
-        <AuthRoutesWrapper title={"Login"}>
+        <AuthRoutesWrapper title={t("form_heading")}>
           <div className={styles.main}>
             <LoginForm />
           </div>

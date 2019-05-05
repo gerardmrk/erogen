@@ -31,6 +31,10 @@ export const initI18N = async (publicPath: string) => {
 
     // https://github.com/i18next/i18next-browser-languageDetector#detector-options
     detection: {},
+
+    react: {
+      useSuspense: false,
+    },
   });
 
   return i18n;

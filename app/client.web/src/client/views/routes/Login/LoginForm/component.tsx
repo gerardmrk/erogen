@@ -1,8 +1,9 @@
 import * as React from "react";
 import Form from "@client/views/components/ui.collections/Form";
 import styles from "./component.styles.scss";
+import { LocalProps } from ".";
 
-type Props = {};
+type Props = LocalProps;
 
 type State = {};
 
