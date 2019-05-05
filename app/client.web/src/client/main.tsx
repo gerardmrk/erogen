@@ -36,11 +36,11 @@ type AppParams = {
   const createStore = storeCreator(services, devMode);
   const store = createStore(initialState as State);
 
-  const i18n = initI18N(publicPath);
-
   if (!devMode) {
     await loadableReady();
   }
+
+  const i18n = await initI18N(publicPath);
 
   const app = (
     <ConfigProvider config={config}>

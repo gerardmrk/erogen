@@ -1,3 +1,6 @@
 import { SettingsAccount } from "./component";
+import { WithTranslation, withTranslation } from "react-i18next";
 
-export default SettingsAccount;
+export type LocalProps = WithTranslation & {};
+
+export default withTranslation("route_SettingsAccount")(SettingsAccount);

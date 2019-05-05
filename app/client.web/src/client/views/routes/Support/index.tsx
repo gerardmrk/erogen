@@ -1,3 +1,6 @@
 import { Support } from "./component";
+import { WithTranslation, withTranslation } from "react-i18next";
 
-export default Support;
+export type LocalProps = WithTranslation & {};
+
+export default withTranslation("route_Support")(Support);

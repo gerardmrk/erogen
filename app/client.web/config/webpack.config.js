@@ -462,10 +462,17 @@ module.exports = async (args) => {
                 ]
             }),
 
-            rendererBuild && new CopyAssetsPlugin([{
-                from: paths.protobufDir,
-                to: `${paths.rendererBuild}/proto`,
-            }]),
+            rendererBuild && new CopyAssetsPlugin([
+                {
+                    from: paths.i18nDir,
+                    to: `${paths.clientBuild}/i18n`,
+                },
+                {
+                    from: paths.protobufDir,
+                    to: `${paths.rendererBuild}/proto`,
+                },
+            ]),
+            
 
             new CaseSensitivePathsPlugin(),
 

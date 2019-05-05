@@ -1,16 +1,19 @@
 import i18n from "i18next";
-import i18nBackend from "i18next-xhr-backend";
+import Backend from "i18next-xhr-backend";
+import Cache from "i18next-localstorage-cache";
 import LangDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 
-export const initI18N = (publicPath: string) => {
-  i18n.use(i18nBackend);
+export const initI18N = async (publicPath: string) => {
+  i18n.use(Backend);
+
+  i18n.use(Cache);
 
   i18n.use(LangDetector);
 
   i18n.use(initReactI18next); // passes i18n down to react-i18next
 
-  i18n.init({
+  await i18n.init({
     load: "languageOnly", // instruct i18n-next to skip region code
 
     fallbackLng: "en", // our default lang

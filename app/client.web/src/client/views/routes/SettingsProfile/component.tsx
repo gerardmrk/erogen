@@ -1,7 +1,8 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
+import { LocalProps } from ".";
 
-type Props = {};
+type Props = LocalProps;
 
 type State = {};
 

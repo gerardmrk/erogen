@@ -1,3 +1,6 @@
 import { ServerError } from "./component";
+import { WithTranslation, withTranslation } from "react-i18next";
 
-export default ServerError;
+export type LocalProps = WithTranslation & {};
+
+export default withTranslation("route_ServerError")(ServerError);
