@@ -39,6 +39,8 @@ export type RouteConf<P = any> = {
   notFoundRoute?: boolean;
 };
 
+export const ROUTE_CHUNK_NAME_PREFIX = "client-views-routes-";
+
 export const LOGIN_PATH = "/login";
 export const DEFAULT_PUBLIC_PATH = "/";
 export const DEFAULT_PRIVATE_PATH = "/dashboard";

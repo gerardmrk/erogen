@@ -8,12 +8,4 @@ describe("<HomeFeed/>", () => {
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });
-
-  it("has static properties required for a route", () => {
-    expect(HomeFeed.chunkName).toBeDefined();
-    expect(typeof HomeFeed.chunkName).toEqual("string");
-
-    expect(HomeFeed.i18nNamespace).toBeDefined();
-    expect(typeof HomeFeed.i18nNamespace).toEqual("string");
-  });
 });

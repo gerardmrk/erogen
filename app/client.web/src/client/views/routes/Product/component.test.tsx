@@ -8,12 +8,4 @@ describe("<Product/>", () => {
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });
-
-  it("has static properties required for a route", () => {
-    expect(Product.chunkName).toBeDefined();
-    expect(typeof Product.chunkName).toEqual("string");
-
-    expect(Product.i18nNamespace).toBeDefined();
-    expect(typeof Product.i18nNamespace).toEqual("string");
-  });
 });

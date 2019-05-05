@@ -8,12 +8,4 @@ describe("<BillingSettings/>", () => {
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });
-
-  it("has static properties required for a route", () => {
-    expect(BillingSettings.chunkName).toBeDefined();
-    expect(typeof BillingSettings.chunkName).toEqual("string");
-
-    expect(BillingSettings.i18nNamespace).toBeDefined();
-    expect(typeof BillingSettings.i18nNamespace).toEqual("string");
-  });
 });

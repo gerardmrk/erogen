@@ -7,12 +7,4 @@ describe("<Login/>", () => {
     const wrapper = shallow(<Login />);
     expect(wrapper).toExist();
   });
-
-  it("has static properties required for a route", () => {
-    expect(Login.chunkName).toBeDefined();
-    expect(typeof Login.chunkName).toEqual("string");
-
-    expect(Login.i18nNamespace).toBeDefined();
-    expect(typeof Login.i18nNamespace).toEqual("string");
-  });
 });

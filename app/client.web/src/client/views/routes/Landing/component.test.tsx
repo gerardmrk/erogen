@@ -8,12 +8,4 @@ describe("<Landing/>", () => {
     expect(wrapper).toExist();
     expect(wrapper).toHaveClassName("main");
   });
-
-  it("has static properties required for a route", () => {
-    expect(Landing.chunkName).toBeDefined();
-    expect(typeof Landing.chunkName).toEqual("string");
-
-    expect(Landing.i18nNamespace).toBeDefined();
-    expect(typeof Landing.i18nNamespace).toEqual("string");
-  });
 });
