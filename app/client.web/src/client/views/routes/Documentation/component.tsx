@@ -8,7 +8,7 @@ type State = {};
 
 export class Documentation extends React.PureComponent<Props, State> {
   public static readonly chunkName = "";
-  public static readonly i18nNamespace = "";
+  public static readonly i18nNamespace = "Documentation";
 
   public render() {
     return (

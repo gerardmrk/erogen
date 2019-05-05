@@ -8,6 +8,7 @@ export type Props = LocalProps & StoreProps & DispatchProps;
 
 export type State = {};
 
+// prettier-ignore
 export class EnhancedRoute extends React.Component<Props, State> {
   public static defaultProps = {
     status: 200,
@@ -22,16 +23,20 @@ export class EnhancedRoute extends React.Component<Props, State> {
   public constructor(props) {
     super(props);
 
-    const fromRoute =
-      props.location && props.location.pathname
-        ? `${props.location.pathname}${props.location.search || ""}`
-        : DEFAULT_PRIVATE_PATH;
+    const fromRoute = props.location && props.location.pathname
+      ? `${props.location.pathname}${props.location.search || ""}`
+      : DEFAULT_PRIVATE_PATH;
 
     this.redirectTo.state.from = fromRoute;
     this.redirectTo.search = `?from=${encodeURIComponent(fromRoute)}`;
   }
 
   private renderRoute = props => {
+    const RouteComponent = this.props.component;
+
+    // staticContext exists if route is being rendered on the server.
+    // we use this to communicate route-specific settings to the caller.
+
     if (this.props.staticContext) {
       this.props.staticContext["statusCode"] = this.props.status || 200;
     }
@@ -39,13 +44,19 @@ export class EnhancedRoute extends React.Component<Props, State> {
     if (this.props.guarded && !this.props.isAuthenticated) {
       return props.action === "REPLACE" ? null : (
         <React.Fragment>
-          <HeadTags path={"/login"} title={"Login"} description={"Login"} />
-          <Redirect from={this.props.path} to={this.redirectTo} />
+          <HeadTags
+            path={"/login"}
+            title={"Login"}
+            description={"Login"}
+          />
+          <Redirect
+            from={this.props.path}
+            to={this.redirectTo}
+          />
         </React.Fragment>
       );
     }
 
-    const RouteComponent = this.props.component;
     return (
       <React.Fragment>
         <HeadTags
@@ -57,7 +68,10 @@ export class EnhancedRoute extends React.Component<Props, State> {
           metaImgAlt={this.props.metaImgAlt}
           metaTwitterCardType={this.props.metaTwitterCardType}
         />
-        <RouteComponent {...props} routes={this.props.routes} />
+        <RouteComponent
+          {...props}
+          routes={this.props.routes}
+        />
       </React.Fragment>
     );
   };

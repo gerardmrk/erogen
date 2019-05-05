@@ -1,85 +1,85 @@
 {
-  "routes/Auth": {
-    "head_description": "Auth",
-    "head_title": "Auth"
-  },
-  "routes/Blog": {
-    "head_description": "Blog",
-    "head_title": "Blog"
-  },
-  "routes/Blog/BlogPost": {
-    "head_description": "{{articleDesc}}",
-    "head_title": "{{articleTitle}}"
-  },
-  "routes/Dashboard": {
-    "head_description": "Instrumententafel",
-    "head_title": "Instrumententafel"
-  },
-  "routes/Documentation": {
-    "head_description": "API-Dokumente, SDK-Dokumente",
-    "head_title": "Dokumentation"
-  },
-  "routes/ForgotPassword": {
-    "head_description": "Fordern Sie hier ein Passwort zurücksetzen.",
-    "head_title": "Haben Sie Ihr Passwort vergessen?"
-  },
-  "routes/Landing": {
-    "head_description": "{{appName}}",
-    "head_title": "{{appName}}"
-  },
-  "routes/Login": {
-    "form_heading": "Anmeldung",
-    "head_description": "Bei {{appName}}anmelden",
-    "head_title": "Anmeldung"
-  },
-  "routes/Maintenance": {
-    "head_description": "Server befindet sich im Wartungsmodus.",
-    "head_title": "Wartungsmodus"
-  },
-  "routes/NotFound": {
-    "head_description": "Die angeforderte Seite existiert nicht.",
-    "head_title": "404 Nicht gefunden"
-  },
-  "routes/Product": {
-    "head_description": "Produkt",
-    "head_title": "Produkt"
-  },
-  "routes/Profile": {
-    "head_description": "{{Username}} - Profil",
-    "head_title": "{{Username}} - Profil"
-  },
-  "routes/Register": {
-    "form_heading": "Registrieren",
-    "head_description": "Erstellen Sie ein Konto mit {{appName}}",
-    "head_title": "Registrieren"
-  },
-  "routes/ResetPassword": {
-    "form_heading": "Legen Sie Ihr neues Passwort fest",
-    "head_description": "Passwort zurücksetzen",
-    "head_title": "Passwort zurücksetzen"
-  },
-  "routes/ServerError": {
-    "head_description": "500 Serverfehler",
-    "head_title": "500 Serverfehler"
-  },
-  "routes/Settings": {
-    "head_description": "die Einstellungen",
-    "head_title": "die Einstellungen"
-  },
-  "routes/Settings/AccountSettings": {
-    "head_description": "Kontoeinstellungen",
-    "head_title": "Kontoeinstellungen"
-  },
-  "routes/Settings/BillingSettings": {
-    "head_description": "Abrechnung",
-    "head_title": "Abrechnung"
-  },
-  "routes/Settings/ProfileSettings": {
-    "head_description": "Profileinstellungen",
-    "head_title": "Profileinstellungen"
-  },
-  "routes/Support": {
-    "head_description": "Unterstützung",
-    "head_title": "Unterstützung"
-  }
+	"AccountSettings": {
+		"head_description": "Kontoeinstellungen",
+		"head_title": "Kontoeinstellungen"
+	},
+	"Auth": {
+		"head_description": "Auth",
+		"head_title": "Auth"
+	},
+	"BillingSettings": {
+		"head_description": "Abrechnung",
+		"head_title": "Abrechnung"
+	},
+	"Blog": {
+		"head_description": "Blog",
+		"head_title": "Blog"
+	},
+	"BlogPost": {
+		"head_description": "{{articleDesc}}",
+		"head_title": "{{articleTitle}}"
+	},
+	"Dashboard": {
+		"head_description": "Instrumententafel",
+		"head_title": "Instrumententafel"
+	},
+	"Documentation": {
+		"head_description": "API-Dokumente, SDK-Dokumente",
+		"head_title": "Dokumentation"
+	},
+	"ForgotPassword": {
+		"head_description": "Fordern Sie hier ein Passwort zurücksetzen.",
+		"head_title": "Haben Sie Ihr Passwort vergessen?"
+	},
+	"Landing": {
+		"head_description": "{{appName}}",
+		"head_title": "{{appName}}"
+	},
+	"Login": {
+		"form_heading": "Anmeldung",
+		"head_description": "Bei {{appName}}anmelden",
+		"head_title": "Anmeldung"
+	},
+	"Maintenance": {
+		"head_description": "Server befindet sich im Wartungsmodus.",
+		"head_title": "Wartungsmodus"
+	},
+	"NotFound": {
+		"head_description": "Die angeforderte Seite existiert nicht.",
+		"head_title": "404 Nicht gefunden"
+	},
+	"Product": {
+		"head_description": "Produkt",
+		"head_title": "Produkt"
+	},
+	"Profile": {
+		"head_description": "{{Username}} - Profil",
+		"head_title": "{{Username}} - Profil"
+	},
+	"ProfileSettings": {
+		"head_description": "Profileinstellungen",
+		"head_title": "Profileinstellungen"
+	},
+	"Register": {
+		"form_heading": "Registrieren",
+		"head_description": "Erstellen Sie ein Konto mit {{appName}}",
+		"head_title": "Registrieren"
+	},
+	"ResetPassword": {
+		"form_heading": "Legen Sie Ihr neues Passwort fest",
+		"head_description": "Passwort zurücksetzen",
+		"head_title": "Passwort zurücksetzen"
+	},
+	"ServerError": {
+		"head_description": "500 Serverfehler",
+		"head_title": "500 Serverfehler"
+	},
+	"Settings": {
+		"head_description": "die Einstellungen",
+		"head_title": "die Einstellungen"
+	},
+	"Support": {
+		"head_description": "Unterstützung",
+		"head_title": "Unterstützung"
+	}
 }

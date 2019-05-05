@@ -33,6 +33,10 @@ export type RouteConf<P = any> = {
   component: LoadableComponent<P>;
   // nested children routes.
   routes?: RouteConf[];
+  // internal: whether this is the default public page.
+  defaultPublicRoute?: boolean;
+  // internal: whether this is the default 404 page.
+  notFoundRoute?: boolean;
 };
 
 export const LOGIN_PATH = "/login";
@@ -63,6 +67,7 @@ export const routeConfs: RouteConf[] = [
     exact: true,
     guarded: false,
     prerender: true,
+    defaultPublicRoute: true,
     component: loadable(() => import("@client/views/routes/Landing")),
   },
   {
@@ -239,6 +244,7 @@ export const routeConfs: RouteConf[] = [
     exact: false,
     guarded: false,
     prerender: true,
+    notFoundRoute: true,
     component: loadable(() => import("@client/views/routes/NotFound")),
   },
 ];

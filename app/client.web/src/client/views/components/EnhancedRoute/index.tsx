@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-// import { withTranslation } from 'react-i18next'
+import { withTranslation, WithTranslation } from "react-i18next";
 
 import { State, Dispatcher } from "@client/store";
 import { RouteConf } from "@client/views/conf.routes";
@@ -11,7 +11,8 @@ export type StoreProps = {
 
 export type DispatchProps = {};
 
-export type LocalProps = { staticContext?: object } & RouteConf;
+export type LocalProps = { staticContext?: object } & RouteConf &
+  WithTranslation;
 
 const mapStateToProps = (state: State, ownProps: LocalProps): StoreProps => ({
   isAuthenticated: state.auth.isAuthenticated,
@@ -19,7 +20,9 @@ const mapStateToProps = (state: State, ownProps: LocalProps): StoreProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatcher): DispatchProps => ({});
 
-export default connect<StoreProps, DispatchProps, LocalProps, State>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(EnhancedRoute);
+export default withTranslation()(
+  connect<StoreProps, DispatchProps, LocalProps, State>(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(EnhancedRoute),
+);
