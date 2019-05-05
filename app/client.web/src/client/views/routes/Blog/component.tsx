@@ -10,6 +10,9 @@ export type Props = LocalProps;
 export type State = {};
 
 export class Blog extends React.PureComponent<Props, State> {
+  public static readonly chunkName = "";
+  public static readonly i18nNamespace = "";
+
   public render() {
     return (
       <div className={styles.main}>

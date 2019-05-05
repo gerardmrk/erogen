@@ -10,7 +10,7 @@ describe("<Auth/>", () => {
   });
 
   it("has static properties required for a route", () => {
-    expect(Auth).toHaveProperty("chunkName");
-    expect(Auth).toHaveProperty("i18nNamespace");
+    expect(Auth.chunkName).toBeDefined();
+    expect(Auth.i18nNamespace).toBeDefined();
   });
 });

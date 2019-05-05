@@ -9,7 +9,7 @@ describe("<Register/>", () => {
   });
 
   it("has static properties required for a route", () => {
-    expect(Register).toHaveProperty("chunkName");
-    expect(Register).toHaveProperty("i18nNamespace");
+    expect(Register.chunkName).toBeDefined();
+    expect(Register.i18nNamespace).toBeDefined();
   });
 });

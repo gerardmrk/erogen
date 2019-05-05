@@ -9,7 +9,7 @@ describe("<ForgotPassword/>", () => {
   });
 
   it("has static properties required for a route", () => {
-    expect(ForgotPassword).toHaveProperty("chunkName");
-    expect(ForgotPassword).toHaveProperty("i18nNamespace");
+    expect(ForgotPassword.chunkName).toBeDefined();
+    expect(ForgotPassword.i18nNamespace).toBeDefined();
   });
 });

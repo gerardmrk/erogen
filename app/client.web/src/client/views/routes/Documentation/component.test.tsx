@@ -10,7 +10,7 @@ describe("<Documentation/>", () => {
   });
 
   it("has static properties required for a route", () => {
-    expect(Documentation).toHaveProperty("chunkName");
-    expect(Documentation).toHaveProperty("i18nNamespace");
+    expect(Documentation.chunkName).toBeDefined();
+    expect(Documentation.i18nNamespace).toBeDefined();
   });
 });

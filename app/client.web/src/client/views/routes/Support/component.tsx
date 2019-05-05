@@ -7,6 +7,9 @@ type Props = {};
 type State = {};
 
 export class Support extends React.PureComponent<Props, State> {
+  public static readonly chunkName = "";
+  public static readonly i18nNamespace = "";
+
   public render() {
     return (
       <div className={styles.main}>

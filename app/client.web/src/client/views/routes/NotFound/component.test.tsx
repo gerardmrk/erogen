@@ -10,7 +10,7 @@ describe("<NotFound/>", () => {
   });
 
   it("has static properties required for a route", () => {
-    expect(NotFound).toHaveProperty("chunkName");
-    expect(NotFound).toHaveProperty("i18nNamespace");
+    expect(NotFound.chunkName).toBeDefined();
+    expect(NotFound.i18nNamespace).toBeDefined();
   });
 });

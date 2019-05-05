@@ -10,7 +10,7 @@ describe("<Dashboard/>", () => {
   });
 
   it("has static properties required for a route", () => {
-    expect(Dashboard).toHaveProperty("chunkName");
-    expect(Dashboard).toHaveProperty("i18nNamespace");
+    expect(Dashboard.chunkName).toBeDefined();
+    expect(Dashboard.i18nNamespace).toBeDefined();
   });
 });

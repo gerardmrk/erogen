@@ -9,7 +9,7 @@ describe("<Login/>", () => {
   });
 
   it("has static properties required for a route", () => {
-    expect(Login).toHaveProperty("chunkName");
-    expect(Login).toHaveProperty("i18nNamespace");
+    expect(Login.chunkName).toBeDefined();
+    expect(Login.i18nNamespace).toBeDefined();
   });
 });

@@ -20,7 +20,7 @@ describe("<Blog/>", () => {
   });
 
   it("has static properties required for a route", () => {
-    expect(Blog).toHaveProperty("chunkName");
-    expect(Blog).toHaveProperty("i18nNamespace");
+    expect(Blog.chunkName).toBeDefined();
+    expect(Blog.i18nNamespace).toBeDefined();
   });
 });

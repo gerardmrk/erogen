@@ -10,7 +10,7 @@ describe("<Landing/>", () => {
   });
 
   it("has static properties required for a route", () => {
-    expect(Landing).toHaveProperty("chunkName");
-    expect(Landing).toHaveProperty("i18nNamespace");
+    expect(Landing.chunkName).toBeDefined();
+    expect(Landing.i18nNamespace).toBeDefined();
   });
 });

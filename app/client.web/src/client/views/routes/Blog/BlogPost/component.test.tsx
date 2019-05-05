@@ -10,7 +10,7 @@ describe("<BlogPost/>", () => {
   });
 
   it("has static properties required for a route", () => {
-    expect(BlogPost).toHaveProperty("chunkName");
-    expect(BlogPost).toHaveProperty("i18nNamespace");
+    expect(BlogPost.chunkName).toBeDefined();
+    expect(BlogPost.i18nNamespace).toBeDefined();
   });
 });

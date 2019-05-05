@@ -10,7 +10,7 @@ describe("<ServerError/>", () => {
   });
 
   it("has static properties required for a route", () => {
-    expect(ServerError).toHaveProperty("chunkName");
-    expect(ServerError).toHaveProperty("i18nNamespace");
+    expect(ServerError.chunkName).toBeDefined();
+    expect(ServerError.i18nNamespace).toBeDefined();
   });
 });

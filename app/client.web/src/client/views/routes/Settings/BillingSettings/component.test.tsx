@@ -10,7 +10,7 @@ describe("<BillingSettings/>", () => {
   });
 
   it("has static properties required for a route", () => {
-    expect(BillingSettings).toHaveProperty("chunkName");
-    expect(BillingSettings).toHaveProperty("i18nNamespace");
+    expect(BillingSettings.chunkName).toBeDefined();
+    expect(BillingSettings.i18nNamespace).toBeDefined();
   });
 });

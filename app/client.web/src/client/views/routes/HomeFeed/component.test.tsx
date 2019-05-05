@@ -10,7 +10,7 @@ describe("<HomeFeed/>", () => {
   });
 
   it("has static properties required for a route", () => {
-    expect(HomeFeed).toHaveProperty("chunkName");
-    expect(HomeFeed).toHaveProperty("i18nNamespace");
+    expect(HomeFeed.chunkName).toBeDefined();
+    expect(HomeFeed.i18nNamespace).toBeDefined();
   });
 });
