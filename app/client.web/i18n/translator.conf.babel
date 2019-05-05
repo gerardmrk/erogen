@@ -918,6 +918,51 @@
                         </translations>
                     </concept_node>
                     <concept_node>
+                        <name>form_heading</name>
+                        <definition_loaded>false</definition_loaded>
+                        <description></description>
+                        <comment></comment>
+                        <default_text></default_text>
+                        <translations>
+                            <translation>
+                                <language>de-DE</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>en-US</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>es-ES</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>fr-FR</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>hi-IN</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>ms-MY</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>pt-PT</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>ru-RU</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>zh-CN</language>
+                                <approved>true</approved>
+                            </translation>
+                        </translations>
+                    </concept_node>
+                    <concept_node>
                         <name>title</name>
                         <definition_loaded>false</definition_loaded>
                         <description></description>
@@ -1398,6 +1443,51 @@
                         </translations>
                     </concept_node>
                     <concept_node>
+                        <name>form_heading</name>
+                        <definition_loaded>false</definition_loaded>
+                        <description></description>
+                        <comment></comment>
+                        <default_text></default_text>
+                        <translations>
+                            <translation>
+                                <language>de-DE</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>en-US</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>es-ES</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>fr-FR</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>hi-IN</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>ms-MY</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>pt-PT</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>ru-RU</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>zh-CN</language>
+                                <approved>true</approved>
+                            </translation>
+                        </translations>
+                    </concept_node>
+                    <concept_node>
                         <name>title</name>
                         <definition_loaded>false</definition_loaded>
                         <description></description>
@@ -1465,6 +1555,51 @@
                             </translation>
                             <translation>
                                 <language>de-DE</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>fr-FR</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>hi-IN</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>ms-MY</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>pt-PT</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>ru-RU</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>zh-CN</language>
+                                <approved>true</approved>
+                            </translation>
+                        </translations>
+                    </concept_node>
+                    <concept_node>
+                        <name>form_heading</name>
+                        <definition_loaded>false</definition_loaded>
+                        <description></description>
+                        <comment></comment>
+                        <default_text></default_text>
+                        <translations>
+                            <translation>
+                                <language>de-DE</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>en-US</language>
+                                <approved>true</approved>
+                            </translation>
+                            <translation>
+                                <language>es-ES</language>
                                 <approved>true</approved>
                             </translation>
                             <translation>

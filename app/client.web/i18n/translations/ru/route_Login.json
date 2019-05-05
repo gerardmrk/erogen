@@ -1,4 +1,5 @@
 {
 	"description": "Войдите в {{appName}}",
+	"form_heading": "Авторизоваться",
 	"title": "Авторизоваться"
 }

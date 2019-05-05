@@ -1,4 +1,5 @@
 {
 	"description": "Sign in to {{appName}}",
+	"form_heading": "Login",
 	"title": "Login"
 }

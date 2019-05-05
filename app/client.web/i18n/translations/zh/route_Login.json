@@ -1,4 +1,5 @@
 {
 	"description": "登录 {{appName}}",
+	"form_heading": "登录",
 	"title": "登录"
 }

@@ -1,4 +1,5 @@
 {
 	"description": "Inicia sesión en {{appName}}",
+	"form_heading": "Iniciar sesión",
 	"title": "Iniciar sesión"
 }
