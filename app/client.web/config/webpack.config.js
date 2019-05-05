@@ -53,7 +53,12 @@ module.exports = async (args) => {
       appEntrypointID,
       appMountPointID,
       enableSourceMap,
+      publicPath,
+      devHost,
+      devPort
     } = settings;
+
+    console.log(publicPath);
 
     let generatedHTML, asyncModuleStats;
     if (rendererBuild) {
@@ -125,10 +130,10 @@ module.exports = async (args) => {
 
         devServer: {
             hot: true,
-            port: 4200,
-            host: "127.0.0.1",
-            publicPath: "/",
-            contentBase: "/assets/",
+            port: devPort,
+            host: devHost,
+            publicPath: publicPath,
+            contentBase: paths.appDir,
             historyApiFallback: true,
             watchOptions: { poll: true },
             stats: "errors-only",
@@ -408,6 +413,7 @@ module.exports = async (args) => {
 
             new webpack.DefinePlugin({
                 INJECTED_DEV_MODE: JSON.stringify(devMode),
+                INJECTED_PUBLIC_PATH: JSON.stringify(publicPath),
                 INJECTED_APP_CONFIG: JSON.stringify(appConfig),
                 INJECTED_APP_ENTRY_POINT_ID: JSON.stringify(appEntrypointID),
                 INJECTED_APP_MOUNT_POINT_ID: JSON.stringify(appMountPointID),
@@ -676,7 +682,7 @@ module.exports = async (args) => {
         config.output = {
             path: paths.clientBuild,
             filename: devMode ? "scripts/[name].js" : "scripts/[name].[chunkhash].js",
-            publicPath: devMode ? "/" : "/assets/",
+            publicPath: publicPath,
             crossOriginLoading: "anonymous",
         }
     } else {
@@ -689,7 +695,7 @@ module.exports = async (args) => {
         config.output = {
             path: paths.rendererBuild,
             filename: "index.js",
-            publicPath: "/assets/",
+            publicPath: publicPath,
             libraryTarget: "commonjs",
         };
 

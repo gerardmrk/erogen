@@ -17,11 +17,18 @@ import { ConfigProvider } from "./views/contexts/config";
 type AppParams = {
   devMode: boolean;
   config: AppConfig;
+  publicPath: string;
   initialState: Partial<State>;
   appMountPointID: string;
 };
 
-(async ({ config, devMode, initialState, appMountPointID }: AppParams) => {
+(async ({
+  config,
+  devMode,
+  initialState,
+  appMountPointID,
+  publicPath,
+}: AppParams) => {
   const render = devMode ? ReactDOM.render : ReactDOM.hydrate;
 
   const services = new Services();
@@ -29,8 +36,7 @@ type AppParams = {
   const createStore = storeCreator(services, devMode);
   const store = createStore(initialState as State);
 
-  const defaultLang = "en";
-  const i18n = initI18N(defaultLang);
+  const i18n = initI18N(publicPath);
 
   if (!devMode) {
     await loadableReady();
@@ -63,4 +69,5 @@ type AppParams = {
   config: INJECTED_APP_CONFIG,
   initialState: window._INITIAL_STATE_,
   appMountPointID: INJECTED_APP_MOUNT_POINT_ID,
+  publicPath: INJECTED_PUBLIC_PATH,
 });

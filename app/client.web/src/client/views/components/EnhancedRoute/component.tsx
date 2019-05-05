@@ -56,6 +56,7 @@ export class EnhancedRoute extends React.Component<Props, State> {
     return (
       <RouteComponent
         {...props}
+        useSuspense={false}
         routes={this.props.routes}
       />
     );

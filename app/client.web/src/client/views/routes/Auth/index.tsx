@@ -4,4 +4,4 @@ import { RouteConf } from "@client/views/conf.routes";
 
 export type LocalProps = RouteConf & WithTranslation & {};
 
-export default withTranslation(Auth.i18nNamespace)(Auth);
+export default withTranslation("route_Auth")(Auth);

@@ -3,33 +3,32 @@ import i18nBackend from "i18next-xhr-backend";
 import LangDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 
-// TODO: dynamic import
-// import en from "@i18n/translations/en/main.json";
+export const initI18N = (publicPath: string) => {
+  i18n.use(i18nBackend);
 
-// the translations
-const resources = {
-  en: {
-    translation: {
-      "routes.landing.header": "Where is my mind?",
+  i18n.use(LangDetector);
+
+  i18n.use(initReactI18next); // passes i18n down to react-i18next
+
+  i18n.init({
+    load: "languageOnly", // instruct i18n-next to skip region code
+
+    fallbackLng: "en", // our default lang
+
+    keySeparator: false, // whether to use keys in form `messages.welcome`
+
+    interpolation: {
+      escapeValue: false, // react already safes from xss
     },
-  },
-};
 
-export const initI18N = (defaultLang: string) => {
-  i18n
-    .use(i18nBackend)
-    .use(LangDetector)
-    .use(initReactI18next) // passes i18n down to react-i18next
-    .init({
-      resources,
-      keySeparator: false, // whether to use keys in form `messages.welcome`
-      interpolation: {
-        escapeValue: false, // react already safes from xss
-      },
+    // https://github.com/i18next/i18next-xhr-backend#backend-options
+    backend: {
+      loadPath: `${publicPath}i18n/translations/{{lng}}/{{ns}}.json`,
+    },
 
-      // https://github.com/i18next/i18next-browser-languageDetector#detector-options
-      detection: {},
-    });
+    // https://github.com/i18next/i18next-browser-languageDetector#detector-options
+    detection: {},
+  });
 
   return i18n;
 };

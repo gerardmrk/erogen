@@ -1,6 +1,5 @@
-import { withTranslation, WithTranslation } from "react-i18next";
 import { Hero } from "./component";
 
-export type LocalProps = {} & WithTranslation;
+export type LocalProps = {};
 
-export default withTranslation()(Hero);
+export default Hero;

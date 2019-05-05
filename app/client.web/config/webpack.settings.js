@@ -51,7 +51,7 @@ module.exports = rootAppDir => ({
   // TODO: derive from stdin
   const appConfig = {
     appStage,
-    appUrl: "http://localhost:4200",
+    appUrl: "http://127.0.0.1:4200",
     appName: "Alaskan",
     appDescription: "Designer Drugs",
     appImagePath: `/assets/images/logo.svg`,
@@ -59,6 +59,9 @@ module.exports = rootAppDir => ({
     appTwitterCardType: "summary_large_image",
   };
 
+  const devHost = "127.0.0.1";
+  const devPort = 4200;
+  const publicPath = mode === "development" ? "/" : "/assets/";
   const appEntrypointID = "app";
   const appMountPointID = "app-mount-point";
 
@@ -75,6 +78,9 @@ module.exports = rootAppDir => ({
     appEntrypointID,
     appMountPointID,
     enableSourceMap,
+    publicPath,
+    devHost,
+    devPort,
   };
 
   return settings;

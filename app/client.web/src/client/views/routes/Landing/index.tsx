@@ -1,5 +1,6 @@
 import { Landing } from "./component";
+import { withTranslation, WithTranslation } from "react-i18next";
 
-export type LocalProps = {};
+export type LocalProps = WithTranslation & {};
 
-export default Landing;
+export default withTranslation("route_Landing")(Landing);

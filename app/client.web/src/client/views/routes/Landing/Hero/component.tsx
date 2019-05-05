@@ -9,15 +9,13 @@ type State = {};
 
 export class Hero extends React.PureComponent<Props, State> {
   public render() {
-    const { t } = this.props;
-
     return (
       <section className={styles.main}>
         <Container>
           <div className={styles.canvas}>
             <div className={styles.leftPane}>
               <h1>
-                <em>{t("routes.landing.header")}</em>
+                <em>{"Where Is My Mind?"}</em>
               </h1>
               <div className={styles.fluff}>
                 <p>{"Designer Drugs Et Al."}</p>
