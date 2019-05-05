@@ -1,4 +1,4 @@
 {
-	"description": "",
-	"title": ""
+	"description": "{{userOrYour}} Profil",
+	"title": "{{userOrYour}}"
 }

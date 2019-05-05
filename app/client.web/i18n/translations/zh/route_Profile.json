@@ -1,4 +1,4 @@
 {
-	"description": "",
-	"title": ""
+	"description": "{{userOrYour}} 个人资料",
+	"title": "{{userOrYour}}"
 }
