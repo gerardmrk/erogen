@@ -11,7 +11,7 @@ export class Hero extends React.PureComponent<Props, State> {
   public render() {
     return (
       <section className={styles.main}>
-        <Container>
+        <Container className={styles.container}>
           <div className={styles.canvas}>
             <div className={styles.leftPane}>
               <h1>

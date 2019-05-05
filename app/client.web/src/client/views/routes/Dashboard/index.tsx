@@ -1,3 +1,6 @@
 import { Dashboard } from "./component";
+import { WithTranslation, withTranslation } from "react-i18next";
 
-export default Dashboard;
+export type LocalProps = WithTranslation & {};
+
+export default withTranslation("route_Dashboard")(Dashboard);

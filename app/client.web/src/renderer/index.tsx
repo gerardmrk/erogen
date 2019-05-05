@@ -2,10 +2,12 @@ import { normalize } from "path";
 import { promises as fsPromises } from "fs";
 import { TextEncoder, TextDecoder } from "util";
 
+import i18n from "i18next";
 import PurgeCSS from "purgecss";
 import * as React from "react";
 import * as ReactDOMServer from "react-dom/server";
 import { Provider as StoreProvider } from "react-redux";
+import { I18nextProvider as I18nProvider } from "react-i18next";
 import { FilledContext as HeadContext } from "react-helmet-async";
 import { HelmetProvider as HeadProvider } from "react-helmet-async";
 import { ChunkExtractor, ChunkExtractorManager } from "@loadable/server";
@@ -78,6 +80,7 @@ export type RenderResponse = {
  * Renderer Config
  */
 export type RendererConfig = {
+  i18n: i18n.i18n;
   // enable debugging
   debug?: boolean;
   // enable caching if true. The provided cache is used if one is provided.
@@ -110,7 +113,10 @@ export class Renderer {
   private htmlCache: Map<string, Uint8Array> = new Map<string, Uint8Array>();
   private dataCache: Map<string, Uint8Array> = new Map<string, Uint8Array>();
 
-  public constructor({ debug, cache }: RendererConfig = {}) {
+  // other
+  private i18n: i18n.i18n;
+
+  public constructor({ i18n, debug, cache }: RendererConfig) {
     // Variables on the global object doesn't get garbage-collected, and these
     // ones need to cos they're huge, so create local copies here and delete the
     // original values from global right after. The local copies should now reside
@@ -162,6 +168,8 @@ export class Renderer {
         this.dataCache = new Map<string, Uint8Array>();
       }
     }
+
+    this.i18n = i18n;
   }
 
   private _getStore = async () => {
@@ -197,20 +205,23 @@ export class Renderer {
   private _getAppElement = async ({
     url,
     store,
+    i18n,
     headContext,
     routerContext,
   }: GetAppElementParams) => {
     return Promise.resolve(
       <ConfigProvider config={this.appConfig}>
-        <HeadProvider context={headContext}>
-          <StoreProvider store={store}>
-            <Router location={url} context={routerContext}>
-              <ChunkExtractorManager extractor={this.chunkExtractor}>
-                <App />
-              </ChunkExtractorManager>
-            </Router>
-          </StoreProvider>
-        </HeadProvider>
+        <I18nProvider i18n={i18n}>
+          <HeadProvider context={headContext}>
+            <StoreProvider store={store}>
+              <Router location={url} context={routerContext}>
+                <ChunkExtractorManager extractor={this.chunkExtractor}>
+                  <App />
+                </ChunkExtractorManager>
+              </Router>
+            </StoreProvider>
+          </HeadProvider>
+        </I18nProvider>
       </ConfigProvider>,
     );
   };
@@ -362,11 +373,13 @@ export class Renderer {
     const routerContext: StaticRouterContext = {};
 
     try {
+      await this.i18n.init({});
       const store = await this._getStore();
 
       const app = await this._getAppElement({
         url: params.url,
         store,
+        i18n: this.i18n,
         headContext,
         routerContext,
       });
@@ -439,6 +452,7 @@ export class Renderer {
       const app = await this._getAppElement({
         url: params.url,
         store,
+        i18n: this.i18n,
         headContext,
         routerContext,
       });
@@ -521,6 +535,7 @@ type HTMLBits = {
 type GetAppElementParams = {
   url: string;
   store: Store;
+  i18n: typeof i18n;
   headContext: HeadContext;
   routerContext: StaticRouterContext;
 };
