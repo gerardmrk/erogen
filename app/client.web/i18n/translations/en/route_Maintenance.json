@@ -1,4 +1,4 @@
 {
-  "title": "Maintenance Mode",
-  "description": "Server is in scheduled maintenance mode. Please check back again in a few minutes."
+	"description": "Server is in scheduled maintenance mode. Please check back again in a few minutes.",
+	"title": "Maintenance Mode"
 }

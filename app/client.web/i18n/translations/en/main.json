@@ -1,4 +1,4 @@
 {
-  "appTitle": "{{appName}}",
-  "appDescription": "Industry leader in next-generation graphene technology."
+	"appDescription": "Industry leader in next-generation graphene technology.",
+	"appTitle": "{{appName}}"
 }

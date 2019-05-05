@@ -1,4 +1,4 @@
 {
-  "title": "Register",
-  "description": "Sign up for {{appName}}"
+	"description": "Sign up for {{appName}}",
+	"title": "Register"
 }
