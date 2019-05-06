@@ -33,5 +33,38 @@
         "tsconfig.server.test.json"
       ]
     }
+  ],
+
+  "vsicons.associations.folders": [
+    {
+      "icon": "script",
+      "format": "svg",
+      "extensions": [".scripts"]
+    },
+    {
+      "icon": "package",
+      "format": "svg",
+      "extensions": ["pkg"]
+    },
+    {
+      "icon": "services",
+      "format": "svg",
+      "extensions": ["svc"]
+    },
+    {
+      "icon": "cli",
+      "format": "svg",
+      "extensions": ["cmd"]
+    },
+    {
+      "icon": "temp",
+      "format": "svg",
+      "extensions": ["cache", ".cache"]
+    },
+    {
+      "icon": "git",
+      "format": "svg",
+      "extensions": [".hooks"]
+    }
   ]
 }
