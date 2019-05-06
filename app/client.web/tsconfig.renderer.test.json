@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.renderer.json",
+  "include": ["./src/renderer/**/*.test.tsx"],
+  "exclude": ["./src/server"]
+}

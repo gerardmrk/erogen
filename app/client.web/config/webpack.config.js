@@ -58,8 +58,6 @@ module.exports = async (args) => {
       devPort
     } = settings;
 
-    console.log(publicPath);
-
     let generatedHTML, asyncModuleStats;
     if (rendererBuild) {
       generatedHTML = await getGeneratedHTML();

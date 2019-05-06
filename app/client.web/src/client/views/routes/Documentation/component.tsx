@@ -4,9 +4,9 @@ import Container from "@client/views/components/ui.elements/Container";
 import { LocalProps } from ".";
 import HeadTags from "@client/views/components/HeadTags";
 
-type Props = LocalProps;
+export type Props = LocalProps;
 
-type State = {};
+export type State = {};
 
 export class Documentation extends React.PureComponent<Props, State> {
   public render() {

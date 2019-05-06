@@ -7,5 +7,7 @@ export const ConfigContext = React.createContext<AppConfig>({
   appKeywords: "",
   appImagePath: "",
   appTwitterHandle: "",
-  appTwitterCardType: "summary_large_image"
+  appTwitterCardType: "summary_large_image",
+  defaultLanguage: "en",
+  supportedLanguages: [],
 });

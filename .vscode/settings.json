@@ -1,0 +1,37 @@
+{
+  "go.inferGopath": false,
+
+  "eslint.enable": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.options": {
+    "configFile": "app/client.web/.eslintrc.js"
+  },
+
+  "prettier.disableLanguages": ["less"],
+  "prettier.trailingComma": "all",
+
+  "files.associations": {
+    "*.variables": "less",
+    "*.overrides": "less"
+  },
+
+  "[handlebars]": {
+    "editor.formatOnSave": false
+  },
+
+  "vsicons.associations.files": [
+    {
+      "icon": "tsconfig",
+      "filename": true,
+      "format": "svg",
+      "extensions": [
+        "tsconfig.client.json",
+        "tsconfig.client.test.json",
+        "tsconfig.renderer.json",
+        "tsconfig.renderer.test.json",
+        "tsconfig.server.json",
+        "tsconfig.server.test.json"
+      ]
+    }
+  ]
+}
