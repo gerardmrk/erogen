@@ -10,7 +10,10 @@ import PurgeCSS from "purgecss";
 import * as React from "react";
 import * as ReactDOMServer from "react-dom/server";
 import { Provider as StoreProvider } from "react-redux";
-import { I18nextProvider as I18nProvider } from "react-i18next";
+import {
+  I18nextProvider as I18nProvider,
+  initReactI18next,
+} from "react-i18next";
 import { FilledContext as HeadContext } from "react-helmet-async";
 import { HelmetProvider as HeadProvider } from "react-helmet-async";
 import { ChunkExtractor, ChunkExtractorManager } from "@loadable/server";
@@ -177,6 +180,12 @@ export class Renderer {
     const createStore = storeCreator(services);
     const store = createStore();
     return Promise.resolve(store);
+  };
+
+  private _getRefreshedI18n = async (lng: string) => {
+    const i18n = await this.i18n.cloneInstance({ lng });
+    i18n.use(initReactI18next);
+    return i18n;
   };
 
   private _extractMetaTags = async (data: HeadContext["helmet"]) => {
@@ -426,7 +435,7 @@ export class Renderer {
 
     try {
       const store = await this._getStore();
-      const i18n = await this.i18n.cloneInstance({ lng: params.lang });
+      const i18n = await this._getRefreshedI18n(params.lang);
 
       const app = await this._getAppElement({
         url: params.url,
@@ -500,7 +509,7 @@ export class Renderer {
 
     try {
       const store = await this._getStore();
-      const i18n = await this.i18n.cloneInstance({ lng: params.lang });
+      const i18n = await this._getRefreshedI18n(params.lang);
 
       const app = await this._getAppElement({
         url: params.url,

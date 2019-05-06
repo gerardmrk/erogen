@@ -1,9 +1,10 @@
 import { withTranslation, WithTranslation } from "react-i18next";
 import { RouteConf } from "@client/views/conf.routes";
 import { Blog } from "./component";
+import { Omit } from "utility-types";
 
 export type LocalProps = WithTranslation &
-  RouteConf & {
+  Omit<RouteConf, "component"> & {
     routes: RouteConf[];
   };
 
