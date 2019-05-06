@@ -2,8 +2,11 @@ import { normalize } from "path";
 import { promises as fsPromises } from "fs";
 import { TextEncoder, TextDecoder } from "util";
 
-import i18n from "i18next";
+import i18next from "i18next";
+import I18nextBackend from "i18next-node-fs-backend";
+
 import PurgeCSS from "purgecss";
+
 import * as React from "react";
 import * as ReactDOMServer from "react-dom/server";
 import { Provider as StoreProvider } from "react-redux";
@@ -30,9 +33,9 @@ const writeFileAsync = fsPromises.writeFile;
 export type RendererCache = Map<string, Uint8Array>;
 
 /**
- * prerender params
+ * prerender settings
  */
-export type PrerenderRoutesParams = {
+export type PrerenderSettings = {
   // whether to prerender all routes. If false, will only prerender routes
   // that have been explicitly marked as `prerendered: true`.
   all?: boolean;
@@ -80,11 +83,26 @@ export type RenderResponse = {
  * Renderer Config
  */
 export type RendererConfig = {
-  i18n: i18n.i18n;
   // enable debugging
   debug?: boolean;
-  // enable caching if true. The provided cache is used if one is provided.
+};
+
+/**
+ * Init Params
+ */
+export type InitParams = {
+  // prerendering settings.
+  prerender?: false | PrerenderSettings;
+  // enable caching if true. The provided cache(s) is used if one is provided.
   cache?: boolean | { html?: RendererCache; data?: RendererCache };
+  // i18n settings
+  internationalization: {
+    // sets i18next's internal debug option
+    debug?: boolean;
+    // path to the translations directory.
+    // must contain children with path: `/[lang]/[namespace].json`
+    translations: string;
+  };
 };
 
 /**
@@ -107,21 +125,16 @@ export class Renderer {
   // helpers
   private textEncoder: TextEncoder;
   private textDecoder: TextDecoder;
-  private chunkExtractor: ChunkExtractor;
 
   // caches
   private htmlCache: Map<string, Uint8Array> = new Map<string, Uint8Array>();
   private dataCache: Map<string, Uint8Array> = new Map<string, Uint8Array>();
 
-  // other
-  private i18n: i18n.i18n;
+  // core
+  private chunkExtractor: ChunkExtractor;
+  private i18n: i18next.i18n = i18next.createInstance();
 
-  public constructor({ i18n, debug, cache }: RendererConfig) {
-    // Variables on the global object doesn't get garbage-collected, and these
-    // ones need to cos they're huge, so create local copies here and delete the
-    // original values from global right after. The local copies should now reside
-    // in the stack and can be reliably marked as unreachable when the time comes.
-
+  public constructor({ debug }: RendererConfig) {
     this.appEntrypointID = INJECTED_APP_ENTRY_POINT_ID;
     global["INJECTED_APP_ENTRY_POINT_ID"] = null;
 
@@ -157,19 +170,6 @@ export class Renderer {
       this.debugEnabled = true;
       console.warn("Renderer.debugEnabled", this.debugEnabled);
     }
-
-    if (!!cache) {
-      this.cacheEnabled = true;
-      if (typeof cache === "object") {
-        this.htmlCache = !!cache.html ? cache.html : new Map<string, Uint8Array>(); // prettier-ignore
-        this.dataCache = !!cache.data ? cache.data : new Map<string, Uint8Array>(); // prettier-ignore
-      } else {
-        this.htmlCache = new Map<string, Uint8Array>();
-        this.dataCache = new Map<string, Uint8Array>();
-      }
-    }
-
-    this.i18n = i18n;
   }
 
   private _getStore = async () => {
@@ -247,69 +247,121 @@ export class Renderer {
    */
 
   /**
-   * Prerender all prerender-able routes.
-   * @param params the prerender params
+   * IMPORTANT: It is required to invoke this method after creating a new
+   * renderer instance. This performs the following:
+   * - sets up internationalization.
+   * - optionally sets up caches for routes.
+   * - optionally prerenders routes.
+   *
+   * Prerendering can also be invoked separately if preferred, but must only
+   * be called after initialization.
+   *
+   * @param param.cache cache settings
+   * @param param.prerender prerendering settings
+   * @param param.internationalization i18n settings
    */
-  public async prerenderRoutes(params: PrerenderRoutesParams): Promise<void> {
-    if (!params.writeToDisk && !this.cacheEnabled) {
-      throw new Error("`writeToDisk` is required if `caching` is not enabled.");
+  public async init({ internationalization, cache, prerender }: InitParams) {
+    // caching
+    if (!!cache) {
+      this.cacheEnabled = true;
+      if (typeof cache === "object") {
+        this.htmlCache = cache.html || new Map<string, Uint8Array>();
+        this.dataCache = cache.data || new Map<string, Uint8Array>();
+      } else {
+        this.htmlCache = new Map<string, Uint8Array>();
+        this.dataCache = new Map<string, Uint8Array>();
+      }
     }
 
-    if (params.protoOnly && !this.cacheEnabled) {
-      throw new Error("Caching must be enabled on the renderer if `protoOnly` is true."); // prettier-ignore
+    // prerendering
+
+    // prettier-ignore
+    if (!!prerender) {
+      if (!prerender.writeToDisk && !cache) {
+        throw new Error("`prerender.writeToDisk` is required if `cache` is not enabled.");
+      }
+      if (!prerender.protoOnly && !cache) {
+        throw new Error("`cache` must be enabled if `prerender.protoOnly` is true.");
+      }
+      await this.prerenderRoutes(prerender);
     }
 
-    if (params.writeToDisk) {
-      params.writeToDisk = normalize(params.writeToDisk);
-      await mkdirIfNotExists(params.writeToDisk);
+    // i18n
+    const { debug, translations } = internationalization;
+
+    const i18n = await i18next.createInstance();
+    i18n.use(I18nextBackend);
+
+    await i18n.init({
+      debug: !!debug,
+      load: "languageOnly",
+      whitelist: this.appConfig.supportedLanguages,
+      fallbackLng: this.appConfig.defaultLanguage,
+      backend: {
+        loadPath: `${translations}/{{lng}}/{{ns}}.json`,
+      },
+    });
+
+    this.i18n = i18n;
+  }
+
+  /**
+   * Prerenders application routes.
+   * @param settings
+   */
+  public async prerenderRoutes(settings: PrerenderSettings): Promise<void> {
+    if (settings.writeToDisk) {
+      settings.writeToDisk = normalize(settings.writeToDisk);
+      await mkdirIfNotExists(settings.writeToDisk);
     }
 
     let whitelist: RouteConf[] = [];
     let blacklist: RouteConf[] = [];
     filterPrerender(whitelist, blacklist, routeConfs);
 
-    if (params.all) {
+    if (settings.all) {
       whitelist = [...whitelist, ...blacklist];
       blacklist = [...blacklist, ...whitelist];
     }
 
-    // prettier-ignore
-    if (!params.protoOnly) {
-      await Promise.all(whitelist.map(async (r: RouteConf) => {
-        const html = await this.getRouteHTML({
-          url: r.path as string,
-          lang: params.lang
-        });
+    if (!settings.protoOnly) {
+      // prettier-ignore
+      await Promise.all(
+        whitelist.map(async (r: RouteConf) => {
+          const html = await this.getRouteHTML({
+            url: r.path as string,
+            lang: settings.lang,
+          });
 
-        if (params.writeToDisk) {
-          const prefix = r.path === "/"
-            ? "[index]"
-            : (r.path as string).replace(/(\/([^/]*))/g, match => `[${match.substr(1).replace(/:(.*)/g, "($1)")}]`);
+          if (settings.writeToDisk) {
+            const prefix = r.path === "/"
+              ? "[index]"
+              : (r.path as string).replace(/(\/([^/]*))/g, match => `[${match.substr(1).replace(/:(.*)/g, "($1)")}]`);
 
-          await writeFileAsync(normalize(`${params.writeToDisk}/${prefix}.${params.lang}.html`), html);
-        }
+            await writeFileAsync(
+              normalize(`${settings.writeToDisk}/${prefix}.${settings.lang}.html`),
+              html,
+            );
+          }
 
-        if (this.cacheEnabled) {
-          this.htmlCache.set(
-            `${r.path || r.status}.${params.lang}`,
-            this.textEncoder.encode(html)
-          );
-        }
-      }));
+          if (this.cacheEnabled) {
+            this.htmlCache.set(
+              `${r.path || r.status}.${settings.lang}`,
+              this.textEncoder.encode(html),
+            );
+          }
+        }),
+      );
     }
 
-    // prettier-ignore
     if (this.cacheEnabled) {
+      // prettier-ignore
       await Promise.all(blacklist.map(async (r: RouteConf) => {
         const data = await this.getRouteProto(RendererRequest.encode({
           url: r.path as string,
-          lang: params.lang
+          lang: settings.lang,
         }).finish());
-
-        this.dataCache.set(
-          `${r.path || r.status}.${params.lang}`,
-          data
-        );
+        this.dataCache.set(`${r.path || r.status}.${settings.lang}`, data);
       }));
     }
   }
@@ -373,13 +425,13 @@ export class Renderer {
     const routerContext: StaticRouterContext = {};
 
     try {
-      await this.i18n.init({});
       const store = await this._getStore();
+      const i18n = await this.i18n.cloneInstance({ lng: params.lang });
 
       const app = await this._getAppElement({
         url: params.url,
         store,
-        i18n: this.i18n,
+        i18n,
         headContext,
         routerContext,
       });
@@ -448,11 +500,12 @@ export class Renderer {
 
     try {
       const store = await this._getStore();
+      const i18n = await this.i18n.cloneInstance({ lng: params.lang });
 
       const app = await this._getAppElement({
         url: params.url,
         store,
-        i18n: this.i18n,
+        i18n,
         headContext,
         routerContext,
       });
@@ -535,7 +588,7 @@ type HTMLBits = {
 type GetAppElementParams = {
   url: string;
   store: Store;
-  i18n: typeof i18n;
+  i18n: i18next.i18n;
   headContext: HeadContext;
   routerContext: StaticRouterContext;
 };

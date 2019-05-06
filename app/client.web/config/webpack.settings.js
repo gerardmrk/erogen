@@ -57,6 +57,8 @@ module.exports = rootAppDir => ({
     appImagePath: `/assets/images/logo.svg`,
     appTwitterHandle: `@404`,
     appTwitterCardType: "summary_large_image",
+    defaultLanguage: "en",
+    supportedLanguages: ["en", "de", "es", "fr", "hi", "ms", "pt", "ru", "zh"],
   };
 
   const devHost = "127.0.0.1";

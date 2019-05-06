@@ -6,6 +6,8 @@ type AppConfig = {
   appImagePath: string;
   appTwitterHandle?: string;
   appTwitterCardType?: "summary" | "summary_large_image" | "app" | "player";
+  defaultLanguage: string;
+  supportedLanguages: string[];
 };
 
 type TranslationKey = string;
