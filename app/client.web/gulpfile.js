@@ -89,6 +89,9 @@ const buildRenderer = async () => {
         // purgecss pkg has a dynamic require statement for loading
         // a config file at class instantiation. build is not affected.
         /\/node_modules\/purgecss\/lib\/purgecss\.es\.js/,
+        /\/node_modules\/i18next-node-fs-backend\/lib\/index\.js/,
+        /\/node_modules\/js-yaml\/lib\/js-yaml\/type\/binary\.js/,
+        /\/node_modules\/js-yaml\/lib\/js-yaml\/type\/js\/function\.js/,
       ],
     }),
   );
@@ -163,17 +166,27 @@ exports.default = buildProd;
 
 async function getRoutes(cache) {
   const { Renderer } = require(paths.rendererBuild);
-  const renderer = new Renderer({ cache: { data: cache } });
-  await renderer.prerenderRoutes({
-    all: true,
-    lang: "en",
-    protoOnly: true,
+  const renderer = new Renderer({ debug: true });
+
+  await renderer.init({
+    cache: { data: cache },
+    prerender: {
+      all: true,
+      lang: "en",
+      protoOnly: true,
+    },
+    internationalization: {
+      debug: true,
+      translations: `${paths.clientBuild}/i18n/translations`,
+    },
   });
+  console.log(cache);
 }
 
 function compressWithGzip(file) {
   const inp = createReadStream(file);
   const out = createWriteStream(`${file}.gz`);
+
   // prettier-ignore
   inp.pipe(createGzip({
     chunkSize: 32 * 1024,
@@ -185,6 +198,7 @@ async function compressWithBrotli(file) {
   const inp = createReadStream(file);
   const out = createWriteStream(`${file}.br`);
   const { size } = await statAsync(file);
+
   // prettier-ignore
   inp.pipe(createBrotliCompress({
     chunkSize: 32 * 1024,

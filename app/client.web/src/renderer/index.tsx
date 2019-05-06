@@ -1,3 +1,4 @@
+import "source-map-support/register";
 import { normalize } from "path";
 import { promises as fsPromises } from "fs";
 import { TextEncoder, TextDecoder } from "util";
@@ -298,20 +299,31 @@ export class Renderer {
     // i18n
     const { debug, translations } = internationalization;
 
-    const i18n = await i18next.createInstance();
-    i18n.use(I18nextBackend);
-
-    await i18n.init({
+    i18next.use(I18nextBackend);
+    i18next.use(initReactI18next);
+    await i18next.init({
+      initImmediate: false,
       debug: !!debug,
+      // lng: this.appConfig.defaultLanguage,
+      lng: "en",
       load: "languageOnly",
-      whitelist: this.appConfig.supportedLanguages,
-      fallbackLng: this.appConfig.defaultLanguage,
+      // whitelist: this.appConfig.supportedLanguages,
+      // fallbackLng: this.appConfig.defaultLanguage,
+      // fallbackLng: "en",
+      // fallbackNS: "main",
+      keySeparator: false,
+      react: {
+        useSuspense: false,
+      },
+      interpolation: {
+        escapeValue: false,
+      },
       backend: {
         loadPath: `${translations}/{{lng}}/{{ns}}.json`,
       },
     });
 
-    this.i18n = i18n;
+    this.i18n = i18next;
   }
 
   /**
