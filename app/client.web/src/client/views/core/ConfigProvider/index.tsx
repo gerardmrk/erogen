@@ -1,11 +1,18 @@
 import * as React from "react";
-import { ConfigContext } from "./context";
+import { ConfigContext } from "./consumer";
+export { withConfig } from "./consumer";
 
-export type Props = {
-  config: AppConfig;
+export type WithConfig = {
+  app: AppConfig;
+  devMode: boolean;
+  ssrMode: boolean;
+  publicPath: string;
+  translationsPath: string;
 };
 
-export type State = {} & AppConfig;
+export type Props = { config: WithConfig };
+
+export type State = WithConfig & {};
 
 export class ConfigProvider extends React.PureComponent<Props, State> {
   public constructor(props) {

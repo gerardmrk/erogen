@@ -1,4 +1,4 @@
-import { withConfig, InjectedConfig } from "@client/views/contexts/config";
+import { withConfig, InjectedConfig } from "@client/views/core/config";
 import { HeadTags } from "./component";
 
 export type LocalProps = InjectedConfig & {

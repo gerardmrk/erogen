@@ -4,6 +4,7 @@ import { StateType } from "typesafe-actions";
 import { IServices } from "@client/services";
 import { composeMiddleware } from "./middleware";
 import * as auth from "./state/auth";
+import * as i18n from "./state/i18n";
 import * as globalUILoader from "./state/global-ui-loader";
 import * as globalUIMessage from "./state/global-ui-message";
 
@@ -15,22 +16,24 @@ export type Dispatcher = Dispatch<Action> & ThunkDispatch<State, IServices, Acti
 
 type _State = {
   auth: auth.State;
+  i18n: i18n.State;
   globalUILoader: globalUILoader.State;
   globalUIMessage: globalUIMessage.State;
 };
 
 const reducer: Reducer<_State, Action> = combineReducers({
   auth: auth.reducer,
+  i18n: i18n.reducer,
   globalUILoader: globalUILoader.reducer,
-  globalUIMessage: globalUIMessage.reducer
+  globalUIMessage: globalUIMessage.reducer,
 });
 
 export const storeCreator = (services: IServices, devMode: boolean = false) => (
-  preloadedState?: State
+  preloadedState?: State,
 ): Store => {
   return createStore(
     reducer,
     preloadedState,
-    composeMiddleware(services, devMode)
+    composeMiddleware(services, devMode),
   );
 };

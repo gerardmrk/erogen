@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="<%= htmlWebpackPlugin.options.vars.lang %>">
+<head>
+<meta charset="utf-8" />
+<%= htmlWebpackPlugin.options.vars.metas %>
+<%= htmlWebpackPlugin.options.vars.links %>
+<style><%= htmlWebpackPlugin.options.vars.styles %></style>
+<style>
+html,body,\#<%= htmlWebpackPlugin.options.vars.mountPointID %>{width: 100%;height: 100%;}
+</style>
+</head>
+<body>
+<noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="<%= htmlWebpackPlugin.options.vars.mountPointID %>">
+<%= htmlWebpackPlugin.options.vars.app %>
+</div>
+<script>
+window._SSR_MODE_ = <%= htmlWebpackPlugin.options.vars.ssrMode %>;
+window._INITIAL_STATE_ = <%= htmlWebpackPlugin.options.vars.initialState %>;
+</script>
+<%= htmlWebpackPlugin.options.vars.scripts %>
+</body>
+</html>

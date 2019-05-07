@@ -8,13 +8,13 @@ type AppConfig = {
   appTwitterCardType?: "summary" | "summary_large_image" | "app" | "player";
   defaultLanguage: string;
   supportedLanguages: string[];
-  publicPath: string;
 };
 
 type TranslationKey = string;
 
 interface Window {
-  _INITIAL_STATE_: any;
+  _SSR_MODE_: unknown;
+  _INITIAL_STATE_: unknown;
 }
 
 type AsyncModuleStats = {

@@ -31,12 +31,8 @@ export class I18nProvider extends React.Component<Props, State> {
       load: "languageOnly",
       fallbackLng: config.defaultLanguage,
       keySeparator: false,
-      react: {
-        useSuspense: false,
-      },
-      interpolation: {
-        escapeValue: false,
-      },
+      react: { useSuspense: false },
+      interpolation: { escapeValue: false },
       backend: {
         loadPath: `${config.publicPath}/i18n/translations/{{lng}}/{{ns}}.json`,
       },

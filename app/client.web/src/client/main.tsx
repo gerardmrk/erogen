@@ -4,31 +4,23 @@ import * as ReactDOM from "react-dom";
 import { loadableReady } from "@loadable/component";
 import { Provider as StoreProvider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
-import { I18nextProvider as I18nProvider } from "react-i18next";
 import { HelmetProvider as HeadProvider } from "react-helmet-async";
 
 import { Services } from "@client/services";
 import { storeCreator, State } from "@client/store";
 import App from "@client/views/core/App";
-import { initI18N } from "./main.i18n";
 import { initServiceWorker } from "./main.offline";
-import { ConfigProvider } from "./views/contexts/config";
+import { ConfigProvider } from "./views/core/ConfigProvider";
+import I18nProvider from "./views/core/I18nProvider";
 
 type AppParams = {
   devMode: boolean;
-  config: AppConfig;
-  publicPath: string;
+  appConfig: AppConfig;
   initialState: Partial<State>;
   appMountPointID: string;
 };
 
-(async ({
-  config,
-  devMode,
-  initialState,
-  appMountPointID,
-  publicPath,
-}: AppParams) => {
+(async ({ appConfig, devMode, initialState, appMountPointID }: AppParams) => {
   const render = devMode ? ReactDOM.render : ReactDOM.hydrate;
 
   const services = new Services();
@@ -40,19 +32,25 @@ type AppParams = {
     await loadableReady();
   }
 
-  const i18n = await initI18N(publicPath);
+  const config = {
+    app: appConfig,
+    devMode,
+    ssrMode: false,
+    publicPath: "",
+    translationsPath: "",
+  };
 
   const app = (
     <ConfigProvider config={config}>
-      <I18nProvider i18n={i18n}>
-        <HeadProvider>
-          <StoreProvider store={store}>
+      <StoreProvider store={store}>
+        <I18nProvider>
+          <HeadProvider>
             <Router>
               <App />
             </Router>
-          </StoreProvider>
-        </HeadProvider>
-      </I18nProvider>
+          </HeadProvider>
+        </I18nProvider>
+      </StoreProvider>
     </ConfigProvider>
   );
 
@@ -66,8 +64,7 @@ type AppParams = {
   });
 })({
   devMode: INJECTED_DEV_MODE,
-  config: INJECTED_APP_CONFIG,
+  appConfig: INJECTED_APP_CONFIG,
   initialState: window._INITIAL_STATE_,
   appMountPointID: INJECTED_APP_MOUNT_POINT_ID,
-  publicPath: INJECTED_PUBLIC_PATH,
 });

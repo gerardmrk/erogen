@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { State, Dispatcher } from "@client/store";
 import { I18nProvider } from "./component";
-import { withConfig, InjectedConfig } from "@client/views/contexts/config";
+import { withConfig, InjectedConfig } from "@client/views/core/config";
 
 export type LocalProps = InjectedConfig & {};
 
@@ -16,7 +16,9 @@ const mapDispatchToProps = (
   localProps: LocalProps,
 ) => ({});
 
-export default connect<StoreProps, DispatchProps, LocalProps, State>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withConfig(I18nProvider));
+export default withConfig(
+  connect<StoreProps, DispatchProps, LocalProps, State>(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(I18nProvider),
+);
