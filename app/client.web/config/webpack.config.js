@@ -54,6 +54,7 @@ module.exports = async (args) => {
       appMountPointID,
       enableSourceMap,
       publicPath,
+      translationsPath,
       devHost,
       devPort
     } = settings;
@@ -412,6 +413,7 @@ module.exports = async (args) => {
             new webpack.DefinePlugin({
                 INJECTED_DEV_MODE: JSON.stringify(devMode),
                 INJECTED_PUBLIC_PATH: JSON.stringify(publicPath),
+                INJECTED_TRANSLATIONS_PATH: JSON.stringify(translationsPath),
                 INJECTED_APP_CONFIG: JSON.stringify(appConfig),
                 INJECTED_APP_ENTRY_POINT_ID: JSON.stringify(appEntrypointID),
                 INJECTED_APP_MOUNT_POINT_ID: JSON.stringify(appMountPointID),
@@ -511,7 +513,7 @@ module.exports = async (args) => {
 
             // HTML, no SSR
             prodMode && clientBuild && new HtmlPlugin({
-                filename: "index.basic.html",
+                filename: "index.html",
                 template: paths.htmlTemplate,
                 cache: true,
                 minify: true,
@@ -530,7 +532,7 @@ module.exports = async (args) => {
 
             // golang templates
             prodMode && clientBuild && new HtmlPlugin({
-                filename: "index.gohtml",
+                filename: "index.tpl.gohtml",
                 template: paths.htmlTemplate,
                 cache: true,
                 vars: {
@@ -549,7 +551,7 @@ module.exports = async (args) => {
             // golang templates; SSR
             prodMode && clientBuild && new HtmlPlugin({
                 inject: false,
-                filename: "index.ssr.gohtml",
+                filename: "index.tpl.ssronly.gohtml",
                 template: paths.htmlTemplate,
                 cache: true,
                 vars: {
@@ -567,7 +569,7 @@ module.exports = async (args) => {
 
             // handlebars templates
             prodMode && clientBuild && new HtmlPlugin({
-                filename: "index.hbs",
+                filename: "index.tpl.hbs",
                 template: paths.htmlTemplate,
                 cache: true,
                 vars: {
@@ -586,7 +588,7 @@ module.exports = async (args) => {
             // handlebars templates; SSR
             prodMode && clientBuild && new HtmlPlugin({
                 inject: false,
-                filename: "index.ssr.hbs",
+                filename: "index.tpl.ssronly.hbs",
                 template: paths.htmlTemplate,
                 cache: true,
                 vars: {

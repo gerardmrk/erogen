@@ -13,8 +13,8 @@ type AppConfig = {
 type TranslationKey = string;
 
 interface Window {
-  _SSR_MODE_: unknown;
-  _INITIAL_STATE_: unknown;
+  _SSR_MODE_: unknown | boolean;
+  _INITIAL_STATE_: unknown | object;
 }
 
 type AsyncModuleStats = {

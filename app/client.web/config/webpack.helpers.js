@@ -12,12 +12,12 @@ const readFileAsync = promises.readFile;
 exports.compact = (...args) => args.filter(val => !!val);
 
 exports.getAsyncModuleStats = async () => {
-  return await readFileAsync(
-    `${paths.clientBuild}/async-modules.json`,
-    "utf-8",
-  );
+  return await readFileAsync(paths.asyncModuleStats, "utf-8");
 };
 
 exports.getGeneratedHTML = async () => {
-  return await readFileAsync(`${paths.clientBuild}/index.ssr.hbs`, "utf-8");
+  return await readFileAsync(
+    `${paths.clientBuild}/index.tpl.ssronly.hbs`,
+    "utf-8",
+  );
 };

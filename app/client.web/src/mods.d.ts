@@ -4,6 +4,7 @@ declare global {
   // available to both client and renderer
   const INJECTED_DEV_MODE: boolean;
   const INJECTED_PUBLIC_PATH: string;
+  const INJECTED_TRANSLATIONS_PATH: string;
   const INJECTED_APP_CONFIG: AppConfig;
   const INJECTED_APP_ENTRY_POINT_ID: string;
   const INJECTED_APP_MOUNT_POINT_ID: string;

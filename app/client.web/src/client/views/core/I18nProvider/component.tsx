@@ -18,25 +18,23 @@ export class I18nProvider extends React.Component<Props, State> {
   public constructor(props: Props) {
     super(props);
 
-    this.i18n = i18next
+    i18next
       .use(Backend)
       .use(Cache)
       .use(LangDetector)
-      .use(initReactI18next);
-  }
-
-  public async componentDidMount() {
-    const { config } = this.props
-    await this.i18n.init({
-      load: "languageOnly",
-      fallbackLng: config.defaultLanguage,
-      keySeparator: false,
-      react: { useSuspense: false },
-      interpolation: { escapeValue: false },
-      backend: {
-        loadPath: `${config.publicPath}/i18n/translations/{{lng}}/{{ns}}.json`,
-      },
-    });
+      .use(initReactI18next)
+      .init({
+        load: "languageOnly",
+        fallbackLng: props.config.app.defaultLanguage,
+        keySeparator: false,
+        react: { useSuspense: false },
+        interpolation: { escapeValue: false },
+        backend: {
+          loadPath: props.config.translationsPath,
+        },
+      })
+    
+    this.i18n = i18next;
   }
 
   public render() {

@@ -3,26 +3,29 @@ import { Subtract } from "utility-types";
 import { WithConfig } from ".";
 
 export const ConfigContext = React.createContext<WithConfig>({
-  devMode: false,
-  ssrMode: false,
-  publicPath: "/assets/",
-  translationsPath: "/assets/i18n/translations/{{lng}}/{{ns}}.json",
-  app: {
-    appUrl: "https://0.0.0.0:443",
-    appName: "App",
-    appDescription: "...",
-    appKeywords: "app",
-    appImagePath: "",
-    appTwitterHandle: "",
-    appTwitterCardType: "summary_large_image",
-    defaultLanguage: "en",
-    supportedLanguages: ["en"],
+  config: {
+    devMode: false,
+    ssrMode: false,
+    publicPath: "/assets/",
+    translationsPath: "/assets/i18n/translations/{{lng}}/{{ns}}.json",
+    app: {
+      appUrl: "https://0.0.0.0:443",
+      appName: "App",
+      appDescription: "...",
+      appKeywords: "app",
+      appImagePath: "",
+      appTwitterHandle: "",
+      appTwitterCardType: "summary_large_image",
+      defaultLanguage: "en",
+      supportedLanguages: ["en"],
+    },
   },
 });
 
-export const withConfig = <WrappedComponentProps extends WithConfig>(
-  WrappedComponent: React.ComponentType<WrappedComponentProps>,
-) => {
+// prettier-ignore
+export const withConfig = <WrappedComponentProps extends WithConfig>(_WrappedComponent: React.ComponentType<WrappedComponentProps>) => {
+  const WrappedComponent = _WrappedComponent as React.ComponentType<WithConfig>;
+
   type Props = Subtract<WrappedComponentProps, WithConfig>;
   type State = {};
 
@@ -34,8 +37,11 @@ export const withConfig = <WrappedComponentProps extends WithConfig>(
       super(props);
     }
 
-    public renderWrappedComponent = (value: WithConfig) => (
-      <WrappedComponent {...this.props as any} {...value} />
+    public renderWrappedComponent = (injected: WithConfig) => (
+      <WrappedComponent
+        {...this.props}
+        {...injected}
+      />
     );
 
     public render() {

@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { State, Dispatcher } from "@client/store";
 import { I18nProvider } from "./component";
-import { withConfig, InjectedConfig } from "@client/views/core/config";
+import { withConfig, WithConfig } from "@client/views/core/ConfigProvider";
 
-export type LocalProps = InjectedConfig & {};
+export type LocalProps = WithConfig & {};
 
 export type StoreProps = {};
 

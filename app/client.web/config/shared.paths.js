@@ -53,9 +53,12 @@ exports.paths = {
   tsconfigServerTest: `${appDir}/tsconfig.server.test.json`,
 
   htmlTemplate: `${clientSrc}/index.ejs`,
+  htmlPage: `${clientBuild}/index.html`,
   asyncModuleStats: `${clientBuild}/async-modules.json`,
   logoImage: `${rootConfigDir}/logo/logo.png`,
+
   protobufDef: `${sourceDir}/renderer.proto`,
   protobufDir: `${rendererSrc}/proto`,
+
   translationsDir: `${i18nDir}/translations`,
 };

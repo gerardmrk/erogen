@@ -23,7 +23,7 @@ import { StaticRouter as Router, StaticRouterContext } from "react-router";
 import { App } from "@client/views/core/App";
 import { Services } from "@client/services";
 import { storeCreator, Store } from "@client/store";
-import { ConfigProvider } from "@client/views/core/config";
+import { ConfigProvider } from "@client/views/core/ConfigProvider";
 import { RendererResponse, RendererRequest } from "./proto";
 import { RouteConf, routeConfs } from "@client/views/conf.routes";
 

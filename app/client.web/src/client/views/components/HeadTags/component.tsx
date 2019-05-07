@@ -14,16 +14,16 @@ export class HeadTags extends React.PureComponent<Props, State> {
   // prettier-ignore
   public render() {
     const { config } = this.props;
-    const titleTemplate = this.props.title ? `${config.appName} | %s` : "%s";
-    const appName = config.appName;
-    const url = !this.props.path || this.props.path === "/" ? config.appUrl : `${config.appUrl}${this.props.path}`;
-    const title = this.props.title || config.appName;
-    const description = this.props.description || config.appDescription;
-    const keywords = this.props.keywords || config.appKeywords || config.appName;
+    const titleTemplate = this.props.title ? `${config.app.appName} | %s` : "%s";
+    const appName = config.app.appName;
+    const url = !this.props.path || this.props.path === "/" ? config.app.appUrl : `${config.app.appUrl}${this.props.path}`;
+    const title = this.props.title || config.app.appName;
+    const description = this.props.description || config.app.appDescription;
+    const keywords = this.props.keywords || config.app.appKeywords || config.app.appName;
     const metaType = this.props.metaType || "website";
-    const metaImageUrl = this.props.metaImgPath ? `${url}${this.props.metaImgPath}` : `${url}${config.appImagePath}`;
-    const metaImageAlt = this.props.metaImgAlt || config.appName;
-    const metaTwitterCardType = this.props.metaTwitterCardType || config.appTwitterCardType || "summary_large_image";
+    const metaImageUrl = this.props.metaImgPath ? `${url}${this.props.metaImgPath}` : `${url}${config.app.appImagePath}`;
+    const metaImageAlt = this.props.metaImgAlt || config.app.appName;
+    const metaTwitterCardType = this.props.metaTwitterCardType || config.app.appTwitterCardType || "summary_large_image";
 
     return (
       <Helmet titleTemplate={titleTemplate}>
@@ -55,9 +55,9 @@ export class HeadTags extends React.PureComponent<Props, State> {
         <meta name="og:image:alt" content={metaImageAlt} />
 
         {/* Twitter */}
-        <meta name="twitter:domain" content={config.appUrl} />
-        <meta name="twitter:site" content={config.appTwitterHandle} />
-        <meta name="twitter:creator" content={config.appTwitterHandle} />
+        <meta name="twitter:domain" content={config.app.appUrl} />
+        <meta name="twitter:site" content={config.app.appTwitterHandle} />
+        <meta name="twitter:creator" content={config.app.appTwitterHandle} />
         <meta name="twitter:url" content={url} />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />

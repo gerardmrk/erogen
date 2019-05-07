@@ -66,6 +66,7 @@ module.exports = rootAppDir => ({
   const publicPath = mode === "development" ? "/" : "/assets/";
   const appEntrypointID = "app";
   const appMountPointID = "app-mount-point";
+  const translationsPath = `${publicPath}/i18n/translations/{{lng}}/{{ns}}.json`;
 
   const settings = {
     mode,
@@ -81,6 +82,7 @@ module.exports = rootAppDir => ({
     appMountPointID,
     enableSourceMap,
     publicPath,
+    translationsPath,
     devHost,
     devPort,
   };

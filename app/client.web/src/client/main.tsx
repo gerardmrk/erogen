@@ -1,4 +1,5 @@
 import "@client/views/theme/semantic.less";
+
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { loadableReady } from "@loadable/component";
@@ -10,61 +11,78 @@ import { Services } from "@client/services";
 import { storeCreator, State } from "@client/store";
 import App from "@client/views/core/App";
 import { initServiceWorker } from "./main.offline";
-import { ConfigProvider } from "./views/core/ConfigProvider";
+import ConfigProvider from "./views/core/ConfigProvider";
 import I18nProvider from "./views/core/I18nProvider";
 
-type AppParams = {
-  devMode: boolean;
-  appConfig: AppConfig;
-  initialState: Partial<State>;
-  appMountPointID: string;
-};
+(async function init() {
+  /**
+   * variables injected at build time.
+   */
 
-(async ({ appConfig, devMode, initialState, appMountPointID }: AppParams) => {
-  const render = devMode ? ReactDOM.render : ReactDOM.hydrate;
+  const devMode = INJECTED_DEV_MODE;
+  const appConfig = INJECTED_APP_CONFIG;
+  const publicPath = INJECTED_PUBLIC_PATH;
+  const translationsPath = INJECTED_TRANSLATIONS_PATH;
+  const appMountPointID = INJECTED_APP_MOUNT_POINT_ID;
 
-  const services = new Services();
+  /**
+   * variables from HTML script tag, set by server.
+   */
 
-  const createStore = storeCreator(services, devMode);
-  const store = createStore(initialState as State);
-
-  if (!devMode) {
-    await loadableReady();
+  let ssrMode = window._SSR_MODE_;
+  if (ssrMode === undefined || typeof ssrMode !== "boolean") {
+    ssrMode = false;
   }
 
-  const config = {
-    app: appConfig,
-    devMode,
-    ssrMode: false,
-    publicPath: "",
-    translationsPath: "",
-  };
+  let initialState = window._INITIAL_STATE_;
+  if (initialState === undefined || typeof initialState !== "object") {
+    initialState = {};
+  }
 
-  const app = (
-    <ConfigProvider config={config}>
-      <StoreProvider store={store}>
-        <I18nProvider>
-          <HeadProvider>
-            <Router>
-              <App />
-            </Router>
-          </HeadProvider>
-        </I18nProvider>
-      </StoreProvider>
-    </ConfigProvider>
-  );
+  try {
+    const services = new Services();
 
-  render(app, document.getElementById(appMountPointID), () => {
-    initServiceWorker((error: Error | null) => {
-      if (error) {
-        services.errorReporter.logError(error);
-        throw error;
-      }
-    });
-  });
-})({
-  devMode: INJECTED_DEV_MODE,
-  appConfig: INJECTED_APP_CONFIG,
-  initialState: window._INITIAL_STATE_,
-  appMountPointID: INJECTED_APP_MOUNT_POINT_ID,
-});
+    const createStore = storeCreator(services, devMode);
+    const store = createStore(initialState as State);
+
+    let render: ReactDOM.Renderer = ReactDOM.render;
+
+    if (!devMode && ssrMode) {
+      render = ReactDOM.hydrate;
+      await loadableReady();
+    }
+
+    const config = {
+      devMode,
+      ssrMode: ssrMode as boolean,
+      app: appConfig,
+      publicPath,
+      translationsPath,
+    };
+
+    render(
+      <ConfigProvider config={config}>
+        <StoreProvider store={store}>
+          <I18nProvider>
+            <HeadProvider>
+              <Router>
+                <App />
+              </Router>
+            </HeadProvider>
+          </I18nProvider>
+        </StoreProvider>
+      </ConfigProvider>,
+      document.getElementById(appMountPointID),
+      () => {
+        initServiceWorker((error: Error | null) => {
+          if (error) {
+            services.errorReporter.logError(error);
+            throw error;
+          }
+        });
+      },
+    );
+  } catch (err) {
+    console.error(err);
+  }
+})();
