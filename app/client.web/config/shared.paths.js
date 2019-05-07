@@ -44,6 +44,14 @@ exports.paths = {
    * Configurable
    */
 
+  tsconfig: `${appDir}/tsconfig.json`,
+  tsconfigClient: `${appDir}/tsconfig.client.json`,
+  tsconfigClientTest: `${appDir}/tsconfig.client.test.json`,
+  tsconfigRenderer: `${appDir}/tsconfig.renderer.json`,
+  tsconfigRendererTest: `${appDir}/tsconfig.renderer.test.json`,
+  tsconfigServer: `${appDir}/tsconfig.server.json`,
+  tsconfigServerTest: `${appDir}/tsconfig.server.test.json`,
+
   htmlTemplate: `${clientSrc}/index.html`,
   asyncModuleStats: `${clientBuild}/async-modules.json`,
   logoImage: `${rootConfigDir}/logo/logo.png`,

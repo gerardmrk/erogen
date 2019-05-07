@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { paths } from "./shared.paths";
 
 // prettier-ignore
 module.exports = {
@@ -22,5 +23,10 @@ module.exports = {
     "@client/(.*)$": "<rootDir>/src/client/$1",
     "@renderer/(.*)$": "<rootDir>/src/renderer/$1",
     "@server/(.*)$": "<rootDir>/src/server/$1",
+  },
+  globals: {
+    "ts-jest": {
+      tsConfig: paths.tsconfigClientTest
+    }
   },
 };
