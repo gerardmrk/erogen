@@ -495,7 +495,7 @@ module.exports = async (args) => {
             // development
             devMode && clientBuild && new HtmlPlugin({
                 filename: "index.html",
-                template: `${paths.clientSrc}/index.html`,
+                template: paths.htmlTemplate,
                 vars: {
                     lang: "en",
                     metas: "",
@@ -512,7 +512,7 @@ module.exports = async (args) => {
             // HTML, no SSR
             prodMode && clientBuild && new HtmlPlugin({
                 filename: "index.basic.html",
-                template: `${paths.clientSrc}/index.html`,
+                template: paths.htmlTemplate,
                 cache: true,
                 minify: true,
                 vars: {
@@ -531,7 +531,7 @@ module.exports = async (args) => {
             // golang templates
             prodMode && clientBuild && new HtmlPlugin({
                 filename: "index.gohtml",
-                template: `${paths.clientSrc}/index.html`,
+                template: paths.htmlTemplate,
                 cache: true,
                 vars: {
                     lang: "{{.Lang}}",
@@ -540,7 +540,7 @@ module.exports = async (args) => {
                     styles: "{{.Styles}}",
                     app: "{{.App}}",
                     initialState: "{{.InitialState}}",
-                    ssrMode: "true",
+                    ssrMode: "{{.SsrMode}}",
                     scripts: "{{.Scripts}}",
                     mountPointID: appMountPointID,
                 },
@@ -550,7 +550,7 @@ module.exports = async (args) => {
             prodMode && clientBuild && new HtmlPlugin({
                 inject: false,
                 filename: "index.ssr.gohtml",
-                template: `${paths.clientSrc}/index.html`,
+                template: paths.htmlTemplate,
                 cache: true,
                 vars: {
                     lang: "{{.Lang}}",
@@ -568,7 +568,7 @@ module.exports = async (args) => {
             // handlebars templates
             prodMode && clientBuild && new HtmlPlugin({
                 filename: "index.hbs",
-                template: `${paths.clientSrc}/index.html`,
+                template: paths.htmlTemplate,
                 cache: true,
                 vars: {
                     lang: "{{{lang}}}",
@@ -577,7 +577,7 @@ module.exports = async (args) => {
                     styles: "{{{styles}}}",
                     app: "{{{app}}}",
                     initialState: "{{{initialState}}}",
-                    ssrMode: "true",
+                    ssrMode: "{{{ssrMode}}}",
                     scripts: "{{{scripts}}}",
                     mountPointID: appMountPointID,
                 },
@@ -587,7 +587,7 @@ module.exports = async (args) => {
             prodMode && clientBuild && new HtmlPlugin({
                 inject: false,
                 filename: "index.ssr.hbs",
-                template: `${paths.clientSrc}/index.html`,
+                template: paths.htmlTemplate,
                 cache: true,
                 vars: {
                     lang: "{{{lang}}}",

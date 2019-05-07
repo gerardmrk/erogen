@@ -52,7 +52,7 @@ exports.paths = {
   tsconfigServer: `${appDir}/tsconfig.server.json`,
   tsconfigServerTest: `${appDir}/tsconfig.server.test.json`,
 
-  htmlTemplate: `${clientSrc}/index.html`,
+  htmlTemplate: `${clientSrc}/index.ejs`,
   asyncModuleStats: `${clientBuild}/async-modules.json`,
   logoImage: `${rootConfigDir}/logo/logo.png`,
   protobufDef: `${sourceDir}/renderer.proto`,
