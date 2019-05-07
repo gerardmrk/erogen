@@ -12,7 +12,8 @@ import { storeCreator, State } from "@client/store";
 import App from "@client/views/core/App";
 import { initServiceWorker } from "./main.offline";
 import ConfigProvider from "./views/core/ConfigProvider";
-import I18nProvider from "./views/core/I18nProvider";
+import { initI18N } from "./main.i18n";
+import { I18nextProvider as I18nProvider } from "react-i18next";
 
 (async function init() {
   /**
@@ -60,10 +61,14 @@ import I18nProvider from "./views/core/I18nProvider";
       translationsPath,
     };
 
+    console.log(translationsPath);
+
+    const i18n = await initI18N(translationsPath);
+
     render(
       <ConfigProvider config={config}>
         <StoreProvider store={store}>
-          <I18nProvider>
+          <I18nProvider i18n={i18n}>
             <HeadProvider>
               <Router>
                 <App />

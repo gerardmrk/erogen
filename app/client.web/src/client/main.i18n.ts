@@ -4,7 +4,7 @@ import Cache from "i18next-localstorage-cache";
 import LangDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 
-export const initI18N = async (publicPath: string) => {
+export const initI18N = async (translationsPath: string) => {
   i18n.use(Backend);
 
   i18n.use(Cache);
@@ -26,7 +26,7 @@ export const initI18N = async (publicPath: string) => {
 
     // https://github.com/i18next/i18next-xhr-backend#backend-options
     backend: {
-      loadPath: `${publicPath}i18n/translations/{{lng}}/{{ns}}.json`,
+      loadPath: translationsPath,
     },
 
     // https://github.com/i18next/i18next-browser-languageDetector#detector-options
