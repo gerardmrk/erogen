@@ -32,6 +32,18 @@
         "tsconfig.server.json",
         "tsconfig.server.test.json"
       ]
+    },
+    {
+      "icon": "webpack",
+      "filename": true,
+      "format": "svg",
+      "extensions": ["webpack.helpers.js", "webpack.settings.js"]
+    },
+    {
+      "icon": "jest",
+      "filename": true,
+      "format": "svg",
+      "extensions": ["jest.setup.enzyme.js", "jest.transform.non-tsx.js"]
     }
   ],
 

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const { configure } = require("enzyme");
 const Adapter = require("enzyme-adapter-react-16");
 

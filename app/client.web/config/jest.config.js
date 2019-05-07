@@ -1,16 +1,18 @@
+/* eslint-disable */
+
+// prettier-ignore
 module.exports = {
   preset: "ts-jest",
   notify: !process.env.CI,
   verbose: true,
   rootDir: "./../",
   roots: ["<rootDir>/src"],
-  setupFiles: ["<rootDir>/config/jest.enzyme.js"],
+  setupFiles: ["<rootDir>/config/jest.setup.enzyme.js"],
   setupFilesAfterEnv: ["<rootDir>/node_modules/jest-enzyme/lib/index.js"],
   testEnvironment: "enzyme",
   transform: {
     "^.+\\.tsx?$": "ts-jest",
-    "^(?!.*\\.(js|jsx|mjs|css|json)$)":
-      "<rootDir>/config/jest.fileTransform.js",
+    "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest.non-ts-loader.js",
   },
   testRegex: "((\\.|/)(test|spec))\\.tsx?$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
@@ -19,6 +21,6 @@ module.exports = {
     "@client/(.*)\\?noembed$": "<rootDir>/src/client/$1",
     "@client/(.*)$": "<rootDir>/src/client/$1",
     "@renderer/(.*)$": "<rootDir>/src/renderer/$1",
-    // "@translations/(.*)$": "<rootDir>/config/i18n/translations/$1",
+    "@server/(.*)$": "<rootDir>/src/server/$1",
   },
 };
