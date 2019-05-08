@@ -8,6 +8,7 @@ export const ConfigContext = React.createContext<WithConfig>({
     ssrMode: false,
     publicPath: "/assets/",
     translationsPath: "/assets/i18n/translations/{{lng}}/{{ns}}.json",
+    untranslatedPath: "/assets/i18n/translations/en/{{ns}}.json",
     app: {
       appUrl: "https://0.0.0.0:443",
       appName: "App",

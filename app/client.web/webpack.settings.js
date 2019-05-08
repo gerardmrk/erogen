@@ -68,6 +68,7 @@ module.exports = rootAppDir => ({
   const appEntrypointID = "app";
   const appMountPointID = "app-mount-point";
   const translationsPath = `${publicPath}i18n/translations/{{lng}}/{{ns}}.json`;
+  const untranslatedPath = `${publicPath}i18n/translations/${appConfig.defaultLanguage}/{{ns}}.json`; // prettier-ignore
 
   const settings = {
     mode,
@@ -84,6 +85,7 @@ module.exports = rootAppDir => ({
     enableSourceMap,
     publicPath,
     translationsPath,
+    untranslatedPath,
     devHost,
     devPort,
   };

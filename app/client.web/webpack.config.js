@@ -55,6 +55,7 @@ module.exports = async (args) => {
       enableSourceMap,
       publicPath,
       translationsPath,
+      untranslatedPath,
       devHost,
       devPort
     } = settings;
@@ -414,6 +415,7 @@ module.exports = async (args) => {
                 INJECTED_DEV_MODE: JSON.stringify(devMode),
                 INJECTED_PUBLIC_PATH: JSON.stringify(publicPath),
                 INJECTED_TRANSLATIONS_PATH: JSON.stringify(translationsPath),
+                INJECTED_UNTRANSLATED_PATH: JSON.stringify(untranslatedPath),
                 INJECTED_APP_CONFIG: JSON.stringify(appConfig),
                 INJECTED_APP_ENTRY_POINT_ID: JSON.stringify(appEntrypointID),
                 INJECTED_APP_MOUNT_POINT_ID: JSON.stringify(appMountPointID),

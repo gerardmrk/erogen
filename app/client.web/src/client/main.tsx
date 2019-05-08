@@ -24,6 +24,7 @@ import { I18nextProvider as I18nProvider } from "react-i18next";
   const appConfig = INJECTED_APP_CONFIG;
   const publicPath = INJECTED_PUBLIC_PATH;
   const translationsPath = INJECTED_TRANSLATIONS_PATH;
+  const untranslatedPath = INJECTED_UNTRANSLATED_PATH;
   const appMountPointID = INJECTED_APP_MOUNT_POINT_ID;
 
   /**
@@ -59,9 +60,10 @@ import { I18nextProvider as I18nProvider } from "react-i18next";
       app: appConfig,
       publicPath,
       translationsPath,
+      untranslatedPath,
     };
 
-    const i18n = await initI18N(translationsPath);
+    const i18n = await initI18N(translationsPath, untranslatedPath);
 
     render(
       <ConfigProvider config={config}>

@@ -4,7 +4,10 @@ import Cache from "i18next-localstorage-cache";
 import LangDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 
-export const initI18N = async (translationsPath: string) => {
+export const initI18N = async (
+  translationsPath: string,
+  untranslatedPath: string,
+) => {
   i18n.use(Backend);
 
   i18n.use(Cache);
@@ -14,9 +17,15 @@ export const initI18N = async (translationsPath: string) => {
   i18n.use(initReactI18next); // passes i18n down to react-i18next
 
   await i18n.init({
+    debug: true,
+
+    saveMissing: true,
+
     load: "languageOnly", // instruct i18n-next to skip region code
 
     fallbackLng: "en", // our default lang
+
+    defaultNS: "main",
 
     keySeparator: false, // whether to use keys in form `messages.welcome`
 
@@ -26,6 +35,7 @@ export const initI18N = async (translationsPath: string) => {
 
     // https://github.com/i18next/i18next-xhr-backend#backend-options
     backend: {
+      addPath: untranslatedPath,
       loadPath: translationsPath,
     },
 

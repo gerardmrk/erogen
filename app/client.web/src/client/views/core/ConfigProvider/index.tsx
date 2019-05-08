@@ -9,6 +9,7 @@ export type WithConfig = {
     ssrMode: boolean;
     publicPath: string;
     translationsPath: string;
+    untranslatedPath: string;
   };
 };
 
