@@ -609,7 +609,7 @@ module.exports = async (args) => {
             }),
 
             prodMode && clientBuild && new ProgressiveWebAppPlugin({
-                logo: `${paths.rootConfigDir}/logo/logo.png`,
+                logo: paths.logoImagePng,
                 cache: `${paths.cacheDir}/plugin.pwa@${source}.${mode}`,
                 prefix: "icons/",
                 inject: "force",

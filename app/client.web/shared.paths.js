@@ -2,10 +2,7 @@
 /* eslint-disable */
 const { resolve } = require("path");
 
-const rootDir = resolve(__dirname, "..", "..", "..");
-const rootConfigDir = `${rootDir}/config`;
-
-const appDir = resolve(__dirname, "..");
+const appDir = resolve(__dirname);
 const cacheDir = `${appDir}/.cache`;
 const configDir = `${appDir}/config`;
 const i18nDir = `${appDir}/i18n`;
@@ -25,8 +22,6 @@ exports.paths = {
    * References
    */
 
-  rootDir,
-  rootConfigDir,
   appDir,
   cacheDir,
   configDir,
@@ -55,7 +50,9 @@ exports.paths = {
   htmlTemplate: `${clientSrc}/index.ejs`,
   htmlPage: `${clientBuild}/index.html`,
   asyncModuleStats: `${clientBuild}/async-modules.json`,
-  logoImage: `${rootConfigDir}/logo/logo.png`,
+
+  logoImagePng: `${clientSrc}/logo.png`,
+  logoImageSvg: `${clientSrc}/logo.svg`,
 
   protobufDef: `${sourceDir}/renderer.proto`,
   protobufDir: `${rendererSrc}/proto`,

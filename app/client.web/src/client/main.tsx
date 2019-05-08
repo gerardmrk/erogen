@@ -61,8 +61,6 @@ import { I18nextProvider as I18nProvider } from "react-i18next";
       translationsPath,
     };
 
-    console.log(translationsPath);
-
     const i18n = await initI18N(translationsPath);
 
     render(

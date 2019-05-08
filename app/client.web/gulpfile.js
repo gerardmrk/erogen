@@ -8,8 +8,8 @@ const pbts = require("protobufjs/cli/pbts");
 const wpk = require("webpack");
 const PurgeCSS = require("purgecss");
 
-const { paths } = require("./config/shared.paths");
-const webpackConfig = require("./config/webpack.config");
+const { paths } = require("./shared.paths");
+const webpackConfig = require("./webpack.config");
 
 const statAsync = promises.stat;
 const writeFileAsync = promises.writeFile;

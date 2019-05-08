@@ -1,6 +1,7 @@
 /* eslint-env node */
 /* eslint-disable */
 const dotenv = require("dotenv");
+const paths = require("./shared.paths");
 
 module.exports = rootAppDir => ({
   mode = "development",
@@ -29,7 +30,7 @@ module.exports = rootAppDir => ({
   }
 
   // load custom envs if provided
-  dotenv.config({ path: `${rootAppDir}/.env` });
+  dotenv.config({ path: `${paths.appDir}/.env` });
 
   const appStage = process.env.APP_STAGE || "local";
 
