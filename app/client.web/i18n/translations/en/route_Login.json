@@ -1,5 +1,5 @@
 {
-	"description": "Sign in to {{appName}}",
-	"form_heading": "Login",
-	"title": "Login"
+  "description": "Sign in to {{appName}}",
+  "form-heading": "Login",
+  "title": "Login"
 }

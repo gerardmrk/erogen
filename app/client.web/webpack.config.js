@@ -3,6 +3,7 @@
 
 const Fiber = require("fibers");
 const webpack = require("webpack");
+const bodyParser = require("body-parser");
 const webpackNodeExternals = require("webpack-node-externals");
 
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
@@ -137,6 +138,15 @@ module.exports = async (args) => {
             historyApiFallback: true,
             watchOptions: { poll: true },
             stats: "errors-only",
+            setup: app => {
+              app.use(bodyParser.json());
+              app.use(bodyParser.urlencoded());
+              app.post(`${untranslatedPath.replace("{{ns}}", ":ns")}`, (req, res) => {
+                console.log(req.params);
+                console.log(req.body);
+                res.status(201).end();
+              });
+            }
         },
 
         optimization: {

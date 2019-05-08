@@ -918,7 +918,7 @@
                         </translations>
                     </concept_node>
                     <concept_node>
-                        <name>form_heading</name>
+                        <name>form-heading</name>
                         <definition_loaded>false</definition_loaded>
                         <description></description>
                         <comment></comment>
@@ -1443,7 +1443,7 @@
                         </translations>
                     </concept_node>
                     <concept_node>
-                        <name>form_heading</name>
+                        <name>form-heading</name>
                         <definition_loaded>false</definition_loaded>
                         <description></description>
                         <comment></comment>
@@ -1584,7 +1584,7 @@
                         </translations>
                     </concept_node>
                     <concept_node>
-                        <name>form_heading</name>
+                        <name>form-heading</name>
                         <definition_loaded>false</definition_loaded>
                         <description></description>
                         <comment></comment>
