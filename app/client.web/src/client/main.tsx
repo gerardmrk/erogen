@@ -1,5 +1,3 @@
-import "@client/views/theme/semantic.less";
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { loadableReady } from "@loadable/component";

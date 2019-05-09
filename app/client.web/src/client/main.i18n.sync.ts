@@ -53,14 +53,14 @@ export default i18next;
 /**
  * wraps the i18next instance with a promise
  */
-function initI18nAsync(
-  i18n: i18next.i18n,
-  opts: i18next.InitOptions,
-): Promise<i18next.TFunction> {
-  return new Promise((resolve, reject) => {
-    i18next.init(opts, (err: Error | null, t: i18next.TFunction) => {
-      if (err) return reject(err);
-      return resolve(t);
-    });
-  });
-}
+// function initI18nAsync(
+//   i18n: i18next.i18n,
+//   opts: i18next.InitOptions,
+// ): Promise<i18next.TFunction> {
+//   return new Promise((resolve, reject) => {
+//     i18next.init(opts, (err: Error | null, t: i18next.TFunction) => {
+//       if (err) return reject(err);
+//       return resolve(t);
+//     });
+//   });
+// }

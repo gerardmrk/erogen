@@ -5,10 +5,10 @@ type AppConfig = {
   appName: string;
   // [SEO] App's main description, and
   // default value to use if none provided by the current route.
-  appDescription: string;
+  appDescription: TranslationKey | string;
   // [SEO] App's main keywords, in comma-separated list, and
   // default value to use if none provided by the current route.
-  appKeywords?: string;
+  appKeywords?: TranslationKey | string;
   // [SEO] App's main image, in PNG format (500x500 at least), and
   // default value to use if none provided by the current route.
   appImagePath: string;

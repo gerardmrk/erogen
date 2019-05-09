@@ -172,7 +172,8 @@ export class Renderer {
       postStyles: bits[4],
       postApp: bits[5],
       postInitialState: bits[6],
-      docEnd: bits[7],
+      postI18nResources: bits[7],
+      docEnd: bits[8],
     };
 
     this.textEncoder = new TextEncoder();
@@ -202,7 +203,10 @@ export class Renderer {
   };
 
   private _extractMetaTags = async (data: HeadContext["helmet"]) => {
-    if (!data) return Promise.resolve("");
+    if (!data) {
+      return Promise.resolve("");
+    }
+
     let result = "";
     for (let dd = Object.values(data), i = 0, l = dd.length; i < l; i++) {
       result += dd[i].toString();
@@ -211,12 +215,18 @@ export class Renderer {
   };
 
   private _replaceScriptAsyncToDefer = async (scriptTags: string) => {
-    if (!scriptTags) return Promise.resolve("");
+    if (!scriptTags) {
+      return Promise.resolve("");
+    }
+
     return Promise.resolve(scriptTags.replace(/\sasync\s/g, " defer "));
   };
 
   private _stripUnusedCssFromHtml = async (html: string, css: string) => {
-    if (!css && !html) return Promise.resolve("");
+    if (!css && !html) {
+      return Promise.resolve("");
+    }
+
     const result = new PurgeCSS({
       css: [{ raw: css, extension: "css" }],
       content: [{ raw: html, extension: "html" }],
@@ -599,7 +609,9 @@ type HTMLBits = {
   postApp: string;
   // post store's initial state injection.
   postInitialState: string;
-  // post script tags injection; end of the HTML doc.
+  // post i18n resources injection.
+  postI18nResources: string;
+  // end of the HTML doc.
   docEnd: string;
 };
 

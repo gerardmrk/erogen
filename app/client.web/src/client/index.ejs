@@ -11,9 +11,7 @@ html,body,#<%= htmlWebpackPlugin.options.vars.mountPointID %>{width: 100%;height
 </head>
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>
-<div id="<%= htmlWebpackPlugin.options.vars.mountPointID %>">
-<%= htmlWebpackPlugin.options.vars.app %>
-</div>
+<div id="<%= htmlWebpackPlugin.options.vars.mountPointID %>"><%= htmlWebpackPlugin.options.vars.app %></div>
 <script>
 window._SSR_MODE_ = <%= htmlWebpackPlugin.options.vars.ssrMode %>;
 window._INITIAL_STATE_ = <%= htmlWebpackPlugin.options.vars.initialState %>;

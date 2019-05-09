@@ -1,3 +1,4 @@
+import "@client/views/theme/semantic.less";
 import * as React from "react";
 import { hot } from "react-hot-loader";
 import loadable from "@loadable/component";
