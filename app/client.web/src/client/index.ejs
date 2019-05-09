@@ -17,6 +17,7 @@ html,body,#<%= htmlWebpackPlugin.options.vars.mountPointID %>{width: 100%;height
 <script>
 window._SSR_MODE_ = <%= htmlWebpackPlugin.options.vars.ssrMode %>;
 window._INITIAL_STATE_ = <%= htmlWebpackPlugin.options.vars.initialState %>;
+window._I18N_RESOURCES_ = <%= htmlWebpackPlugin.options.vars.i18nResources %>;
 </script>
 <%= htmlWebpackPlugin.options.vars.scripts %>
 </body>

@@ -68,15 +68,15 @@ import { I18nextProvider as I18nProvider } from "react-i18next";
 
     render(
       <ConfigProvider config={config}>
-        <StoreProvider store={store}>
-          <I18nProvider i18n={i18n}>
+        <I18nProvider i18n={i18n}>
+          <StoreProvider store={store}>
             <HeadProvider>
               <Router>
                 <App />
               </Router>
             </HeadProvider>
-          </I18nProvider>
-        </StoreProvider>
+          </StoreProvider>
+        </I18nProvider>
       </ConfigProvider>,
       document.getElementById(appMountPointID),
       () => {

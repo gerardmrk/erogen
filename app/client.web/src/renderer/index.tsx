@@ -233,8 +233,8 @@ export class Renderer {
   }: GetAppElementParams) => {
     return Promise.resolve(
       <ConfigProvider config={this.config}>
-        <StoreProvider store={store}>
-          <I18nProvider i18n={i18n}>
+        <I18nProvider i18n={i18n}>
+          <StoreProvider store={store}>
             <HeadProvider context={headContext}>
               <Router location={url} context={routerContext}>
                 <ChunkExtractorManager extractor={this.chunkExtractor}>
@@ -242,8 +242,8 @@ export class Renderer {
                 </ChunkExtractorManager>
               </Router>
             </HeadProvider>
-          </I18nProvider>
-        </StoreProvider>
+          </StoreProvider>
+        </I18nProvider>
       </ConfigProvider>,
     );
   };
