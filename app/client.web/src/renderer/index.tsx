@@ -11,10 +11,7 @@ import PurgeCSS from "purgecss";
 import * as React from "react";
 import * as ReactDOMServer from "react-dom/server";
 import { Provider as StoreProvider } from "react-redux";
-import {
-  I18nextProvider as I18nProvider,
-  initReactI18next,
-} from "react-i18next";
+import { I18nextProvider as I18nProvider } from "react-i18next";
 import { FilledContext as HeadContext } from "react-helmet-async";
 import { HelmetProvider as HeadProvider } from "react-helmet-async";
 import { ChunkExtractor, ChunkExtractorManager } from "@loadable/server";
@@ -23,7 +20,7 @@ import { StaticRouter as Router, StaticRouterContext } from "react-router";
 import { App } from "@client/views/core/App";
 import { Services } from "@client/services";
 import { storeCreator, Store } from "@client/store";
-import { ConfigProvider } from "@client/views/core/ConfigProvider";
+import { ConfigProvider, WithConfig } from "@client/views/core/ConfigProvider";
 import { RendererResponse, RendererRequest } from "./proto";
 import { RouteConf, routeConfs } from "@client/views/conf.routes";
 
@@ -121,10 +118,8 @@ export class Renderer {
   private cacheEnabled: boolean = false;
 
   // injected
-  private appConfig: AppConfig;
-  private moduleStats: AsyncModuleStats;
+  private config: WithConfig["config"];
   private htmlBits: HTMLBits;
-  private appEntrypointID: string;
 
   // helpers
   private textEncoder: TextEncoder;
@@ -139,17 +134,35 @@ export class Renderer {
   private i18n: i18next.i18n = i18next.createInstance();
 
   public constructor({ debug }: RendererConfig) {
-    this.appEntrypointID = INJECTED_APP_ENTRY_POINT_ID;
-    global["INJECTED_APP_ENTRY_POINT_ID"] = null;
-
-    this.appConfig = JSON.parse(JSON.stringify(INJECTED_APP_CONFIG));
-    global["INJECTED_APP_CONFIG"] = null;
-
-    this.moduleStats = JSON.parse(JSON.stringify(INJECTED_ASYNC_MODULE_STATS));
+    const moduleStats = JSON.parse(JSON.stringify(INJECTED_ASYNC_MODULE_STATS));
     global["INJECTED_ASYNC_MODULE_STATS"] = null;
+
+    const appConfig = JSON.parse(JSON.stringify(INJECTED_APP_CONFIG));
+    global["INJECTED_APP_CONFIG"] = null;
 
     const bits = INJECTED_GENERATED_HTML.split(/(?:{{{[A-Za-z0-9]+}}})/g);
     global["INJECTED_GENERATED_HTML"] = null;
+
+    const appEntrypointID = INJECTED_APP_ENTRY_POINT_ID;
+    global["INJECTED_APP_ENTRY_POINT_ID"] = null;
+
+    const appPublicPath = INJECTED_PUBLIC_PATH;
+    global["INJECTED_PUBLIC_PATH"] = null;
+
+    const appTranslationsPath = INJECTED_TRANSLATIONS_PATH;
+    global["INJECTED_TRANSLATIONS_PATH"] = null;
+
+    const appUntranslatedPath = INJECTED_UNTRANSLATED_PATH;
+    global["INJECTED_UNTRANSLATED_PATH"] = null;
+
+    this.config = {
+      app: appConfig as AppConfig,
+      devMode: false,
+      ssrMode: true,
+      publicPath: appPublicPath,
+      translationsPath: appTranslationsPath,
+      untranslatedPath: appUntranslatedPath,
+    };
 
     this.htmlBits = {
       docStart: bits[0],
@@ -166,8 +179,8 @@ export class Renderer {
     this.textDecoder = new TextDecoder();
 
     this.chunkExtractor = new ChunkExtractor({
-      stats: this.moduleStats,
-      entrypoints: [this.appEntrypointID],
+      stats: moduleStats,
+      entrypoints: [appEntrypointID],
     });
 
     if (!!debug) {
@@ -185,7 +198,6 @@ export class Renderer {
 
   private _getRefreshedI18n = async (lng: string) => {
     const i18n = await this.i18n.cloneInstance({ lng });
-    i18n.use(initReactI18next);
     return i18n;
   };
 
@@ -220,7 +232,7 @@ export class Renderer {
     routerContext,
   }: GetAppElementParams) => {
     return Promise.resolve(
-      <ConfigProvider config={this.appConfig}>
+      <ConfigProvider config={this.config}>
         <StoreProvider store={store}>
           <I18nProvider i18n={i18n}>
             <HeadProvider context={headContext}>
@@ -300,12 +312,9 @@ export class Renderer {
     const { debug, translations } = internationalization;
 
     i18next.use(I18nextBackend);
-    i18next.use(initReactI18next);
     await i18next.init({
       initImmediate: false,
       debug: !!debug,
-      // lng: this.appConfig.defaultLanguage,
-      lng: "en",
       load: "languageOnly",
       // whitelist: this.appConfig.supportedLanguages,
       // fallbackLng: this.appConfig.defaultLanguage,
