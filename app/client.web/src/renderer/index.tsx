@@ -312,24 +312,13 @@ export class Renderer {
     const { debug, translations } = internationalization;
 
     i18next.use(I18nextBackend);
-    await i18next.init({
+    await initI18nAsync(i18next, {
       initImmediate: false,
       debug: !!debug,
       load: "languageOnly",
-      // whitelist: this.appConfig.supportedLanguages,
-      // fallbackLng: this.appConfig.defaultLanguage,
-      // fallbackLng: "en",
-      // fallbackNS: "main",
-      keySeparator: false,
-      react: {
-        useSuspense: false,
-      },
-      interpolation: {
-        escapeValue: false,
-      },
-      backend: {
-        loadPath: `${translations}/{{lng}}/{{ns}}.json`,
-      },
+      preload: [...this.config.app.supportedLanguages],
+      interpolation: { escapeValue: false },
+      backend: { loadPath: `${translations}/{{lng}}/{{ns}}.json` },
     });
 
     this.i18n = i18next;
@@ -439,7 +428,6 @@ export class Renderer {
     );
 
     response.ttr = `${process.hrtime.bigint() - timerStart}`;
-
     return RendererResponse.encode(response).finish();
   }
 
@@ -638,7 +626,7 @@ function filterPrerender(
   });
 }
 
-async function mkdirIfNotExists(dirname) {
+async function mkdirIfNotExists(dirname): Promise<void> {
   try {
     const stat = await statAsync(dirname);
     if (!stat.isDirectory()) throw new Error(`${dirname} is not a directory.`);
@@ -649,4 +637,19 @@ async function mkdirIfNotExists(dirname) {
       throw err;
     }
   }
+}
+
+/**
+ * wraps the i18next instance with a promise
+ */
+function initI18nAsync(
+  i18n: i18next.i18n,
+  opts: i18next.InitOptions,
+): Promise<i18next.TFunction> {
+  return new Promise((resolve, reject) => {
+    i18n.init(opts, (err: Error | null, t: i18next.TFunction) => {
+      if (err) return reject(err);
+      return resolve(t);
+    });
+  });
 }

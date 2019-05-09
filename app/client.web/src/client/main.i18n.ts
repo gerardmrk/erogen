@@ -1,29 +1,28 @@
-import i18n from "i18next";
+import i18next from "i18next";
 import Backend from "i18next-xhr-backend";
 import Cache from "i18next-localstorage-cache";
-// import LangDetector from "i18next-browser-languagedetector";
+import LangDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 
 export const initI18N = async (
   translationsPath: string,
   untranslatedPath: string,
 ) => {
-  i18n.use(Backend);
+  i18next.use(Backend);
 
-  i18n.use(Cache);
+  i18next.use(Cache);
 
-  // i18n.use(LangDetector);
+  i18next.use(LangDetector);
 
-  i18n.use(initReactI18next); // passes i18n down to react-i18next
+  i18next.use(initReactI18next); // passes i18n down to react-i18next
 
-  await i18n.init({
+  await i18next.init({
+    // await initI18nAsync(i18next, {
     debug: true,
 
     saveMissing: true,
 
     saveMissingTo: "current",
-
-    lng: "en",
 
     load: "languageOnly", // instruct i18n-next to skip region code
 
@@ -51,5 +50,20 @@ export const initI18N = async (
     },
   });
 
-  return i18n;
+  return i18next;
 };
+
+/**
+ * wraps the i18next instance with a promise
+ */
+function initI18nAsync(
+  i18n: i18next.i18n,
+  opts: i18next.InitOptions,
+): Promise<i18next.TFunction> {
+  return new Promise((resolve, reject) => {
+    i18next.init(opts, (err: Error | null, t: i18next.TFunction) => {
+      if (err) return reject(err);
+      return resolve(t);
+    });
+  });
+}
