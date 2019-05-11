@@ -10,6 +10,8 @@ type Props = LocalProps;
 type State = {};
 
 export class ForgotPassword extends React.PureComponent<Props, State> {
+  public static i18nNamespace = "route_ForgotPassword";
+
   public render() {
     return (
       <React.Fragment>

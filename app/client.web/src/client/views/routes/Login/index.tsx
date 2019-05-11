@@ -8,4 +8,4 @@ export type LocalProps = WithConfig &
   WithTranslation &
   Omit<RouteConf, "component"> & {};
 
-export default withConfig(withTranslation("route_Login")(Login));
+export default withConfig(withTranslation(Login).i18nNamespace)(Login));

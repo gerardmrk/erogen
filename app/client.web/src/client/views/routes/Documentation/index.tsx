@@ -5,4 +5,4 @@ import { Omit } from "utility-types";
 
 export type LocalProps = WithTranslation & Omit<RouteConf, "component"> & {};
 
-export default withTranslation("route_Documentation")(Documentation);
+export default withTranslation(Documentation.i18nNamespace)(Documentation);

@@ -8,6 +8,8 @@ type Props = LocalProps;
 type State = {};
 
 export class Settings extends React.PureComponent<Props, State> {
+  public static i18nNamespace = "route_Settings";
+
   public render() {
     return (
       <React.Fragment>

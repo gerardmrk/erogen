@@ -9,6 +9,8 @@ type Props = LocalProps;
 type State = {};
 
 export class Product extends React.PureComponent<Props, State> {
+  public static i18nNamespace = "route_Product";
+
   public render() {
     return (
       <React.Fragment>

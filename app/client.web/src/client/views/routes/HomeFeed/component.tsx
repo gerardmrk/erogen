@@ -8,6 +8,8 @@ type Props = LocalProps;
 type State = {};
 
 export class HomeFeed extends React.PureComponent<Props, State> {
+  public static i18nNamespace = "route_HomeFeed";
+
   public render() {
     return (
       <React.Fragment>

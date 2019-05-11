@@ -8,4 +8,4 @@ export type LocalProps = WithTranslation &
     routes: RouteConf[];
   };
 
-export default withTranslation("route_Blog")(Blog);
+export default withTranslation(Blog.i18nNamespace)(Blog);
