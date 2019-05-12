@@ -3,11 +3,9 @@ import Backend from "i18next-xhr-backend";
 import Cache from "i18next-localstorage-cache";
 import LangDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
+import { WithConfig } from "./views/core/ConfigProvider";
 
-export const initI18N = async (
-  translationsPath: string,
-  untranslatedPath: string,
-) => {
+export const initI18N = async (conf: WithConfig["config"]) => {
   i18next.use(Backend);
 
   i18next.use(Cache);
@@ -28,8 +26,6 @@ export const initI18N = async (
 
     fallbackLng: "en", // our default lang
 
-    keySeparator: false, // whether to use keys in form `messages.welcome`
-
     defaultNS: "",
 
     interpolation: {
@@ -38,8 +34,8 @@ export const initI18N = async (
 
     // https://github.com/i18next/i18next-xhr-backend#backend-options
     backend: {
-      addPath: untranslatedPath,
-      loadPath: translationsPath,
+      addPath: conf.untranslatedPath,
+      loadPath: conf.translationsPath,
     },
 
     // https://github.com/i18next/i18next-browser-languageDetector#detector-options

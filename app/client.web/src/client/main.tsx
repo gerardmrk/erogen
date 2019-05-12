@@ -5,14 +5,13 @@ import { Provider as StoreProvider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { HelmetProvider as HeadProvider } from "react-helmet-async";
 
+import App from "@client/views/core/App";
 import { Services } from "@client/services";
 import { storeCreator, State } from "@client/store";
-import App from "@client/views/core/App";
-import { initServiceWorker } from "./main.offline";
-import ConfigProvider from "./views/core/ConfigProvider";
-// import { initI18N } from "./main.i18n";
-import i18n from "./main.i18n.sync";
-import { I18nextProvider as I18nProvider } from "react-i18next";
+import { initI18N } from "@client/main.i18n";
+import { initServiceWorker } from "@client/main.offline";
+import { I18nProvider } from "@client/views/core/I18nProvider";
+import { ConfigProvider } from "@client/views/core/ConfigProvider";
 
 (async function init() {
   /**
@@ -62,7 +61,7 @@ import { I18nextProvider as I18nProvider } from "react-i18next";
       untranslatedPath,
     };
 
-    // const i18n = await initI18N(translationsPath, untranslatedPath);
+    const i18n = await initI18N(config);
 
     render(
       <ConfigProvider config={config}>

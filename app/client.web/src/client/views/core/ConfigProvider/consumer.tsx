@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Subtract } from "utility-types";
+import hoistStatics from "hoist-non-react-statics";
 import { WithConfig } from ".";
 
 export const ConfigContext = React.createContext<WithConfig>({
@@ -30,7 +31,7 @@ export const withConfig = <WrappedComponentProps extends WithConfig>(_WrappedCom
   type Props = Subtract<WrappedComponentProps, WithConfig>;
   type State = {};
 
-  return class WrappedWithConfig extends React.PureComponent<Props, State> {
+  class WrappedWithConfig extends React.PureComponent<Props, State> {
     public static displayName = `wrappedWithConfig(${WrappedComponent.name})`;
     public static readonly WrappedComponent = WrappedComponent;
 
@@ -53,4 +54,8 @@ export const withConfig = <WrappedComponentProps extends WithConfig>(_WrappedCom
       );
     }
   };
+
+  hoistStatics(WrappedWithConfig, WrappedComponent);
+
+  return WrappedWithConfig;
 };
