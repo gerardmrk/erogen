@@ -5,8 +5,16 @@ import { Renderer } from "../../../dist/renderer";
 export type Router = RequestHandler<Http2ServerRequest, Http2ServerResponse>;
 
 export const initRouter = async (): Promise<Router> => {
-  const renderer = new Renderer({ cache: true });
-  await renderer.prerenderRoutes({ lang: "en", all: true });
+  const renderer = new Renderer({ debug: true });
+
+  await renderer.init({
+    cache: true,
+    prerender: { lang: "en", all: true },
+    internationalization: {
+      debug: true,
+      translations: "../../dist/client/i18n/translations",
+    },
+  });
 
   return async (req, res) => {
     const html = await renderer.getRouteHTML({

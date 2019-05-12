@@ -13,7 +13,7 @@ dotenv.config({ path: "../../.env" });
     console.info(`server listening on ${addr}`);
   });
 })({
-  port: parseInt(process.env.SERVER_PORT || "4200"),
+  port: parseInt(process.env.SERVER_PORT || "4300"),
   host: process.env.SERVER_HOST || "::",
   assets: {
     rootDir: resolve(__dirname, "../../dist/client"),

@@ -203,6 +203,8 @@ export class Renderer {
     return i18n;
   };
 
+  private _getI18nResources = async () => ({});
+
   private _extractMetaTags = async (data: HeadContext["helmet"]) => {
     if (!data) {
       return Promise.resolve("");
@@ -493,6 +495,8 @@ export class Renderer {
       );
 
       response.initialState = JSON.stringify(store.getState());
+
+      response.i18nResources = JSON.stringify(this._getI18nResources());
 
       response.scripts = await this._replaceScriptAsyncToDefer(
         await this.chunkExtractor.getScriptTags(),
