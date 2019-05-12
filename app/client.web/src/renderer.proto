@@ -17,7 +17,8 @@ message RendererResponse {
     string styles = 8;
     string scripts = 9;
     string initial_state = 10;
-    string ttr = 11; // TODO: revert back to uint64 when protobufjs supports Node v10's bigint type
+    string i18n_resources = 11;
+    string ttr = 12; // TODO: revert back to uint64 when protobufjs supports Node v10's bigint type
 
     message RenderError {
         string message = 1;

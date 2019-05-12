@@ -73,6 +73,7 @@ export type RenderResponse = {
   styles: string;
   scripts: string;
   initialState: string;
+  i18nResources: string;
   // metadata
   statusCode: number;
   ttr: string;
@@ -265,7 +266,8 @@ export class Renderer {
     links: "",
     styles: "",
     scripts: "",
-    initialState: "",
+    initialState: "{}",
+    i18nResources: "{}",
     statusCode: 200,
     ttr: "",
     redirectTo: undefined,
@@ -423,6 +425,8 @@ export class Renderer {
       this.htmlBits.postApp +
       out.initialState +
       this.htmlBits.postInitialState +
+      out.i18nResources +
+      this.htmlBits.postI18nResources +
       out.scripts +
       this.htmlBits.docEnd
     );

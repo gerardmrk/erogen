@@ -257,6 +257,7 @@ $root.RendererResponse = (function() {
      * @property {string|null} [styles] RendererResponse styles
      * @property {string|null} [scripts] RendererResponse scripts
      * @property {string|null} [initialState] RendererResponse initialState
+     * @property {string|null} [i18nResources] RendererResponse i18nResources
      * @property {string|null} [ttr] RendererResponse ttr
      */
 
@@ -356,6 +357,14 @@ $root.RendererResponse = (function() {
     RendererResponse.prototype.initialState = "";
 
     /**
+     * RendererResponse i18nResources.
+     * @member {string} i18nResources
+     * @memberof RendererResponse
+     * @instance
+     */
+    RendererResponse.prototype.i18nResources = "";
+
+    /**
      * RendererResponse ttr.
      * @member {string} ttr
      * @memberof RendererResponse
@@ -407,8 +416,10 @@ $root.RendererResponse = (function() {
             writer.uint32(/* id 9, wireType 2 =*/74).string(message.scripts);
         if (message.initialState != null && message.hasOwnProperty("initialState"))
             writer.uint32(/* id 10, wireType 2 =*/82).string(message.initialState);
+        if (message.i18nResources != null && message.hasOwnProperty("i18nResources"))
+            writer.uint32(/* id 11, wireType 2 =*/90).string(message.i18nResources);
         if (message.ttr != null && message.hasOwnProperty("ttr"))
-            writer.uint32(/* id 11, wireType 2 =*/90).string(message.ttr);
+            writer.uint32(/* id 12, wireType 2 =*/98).string(message.ttr);
         return writer;
     };
 
@@ -474,6 +485,9 @@ $root.RendererResponse = (function() {
                 message.initialState = reader.string();
                 break;
             case 11:
+                message.i18nResources = reader.string();
+                break;
+            case 12:
                 message.ttr = reader.string();
                 break;
             default:
@@ -543,6 +557,9 @@ $root.RendererResponse = (function() {
         if (message.initialState != null && message.hasOwnProperty("initialState"))
             if (!$util.isString(message.initialState))
                 return "initialState: string expected";
+        if (message.i18nResources != null && message.hasOwnProperty("i18nResources"))
+            if (!$util.isString(message.i18nResources))
+                return "i18nResources: string expected";
         if (message.ttr != null && message.hasOwnProperty("ttr"))
             if (!$util.isString(message.ttr))
                 return "ttr: string expected";
@@ -584,6 +601,8 @@ $root.RendererResponse = (function() {
             message.scripts = String(object.scripts);
         if (object.initialState != null)
             message.initialState = String(object.initialState);
+        if (object.i18nResources != null)
+            message.i18nResources = String(object.i18nResources);
         if (object.ttr != null)
             message.ttr = String(object.ttr);
         return message;
@@ -613,6 +632,7 @@ $root.RendererResponse = (function() {
             object.styles = "";
             object.scripts = "";
             object.initialState = "";
+            object.i18nResources = "";
             object.ttr = "";
         }
         if (message.statusCode != null && message.hasOwnProperty("statusCode"))
@@ -635,6 +655,8 @@ $root.RendererResponse = (function() {
             object.scripts = message.scripts;
         if (message.initialState != null && message.hasOwnProperty("initialState"))
             object.initialState = message.initialState;
+        if (message.i18nResources != null && message.hasOwnProperty("i18nResources"))
+            object.i18nResources = message.i18nResources;
         if (message.ttr != null && message.hasOwnProperty("ttr"))
             object.ttr = message.ttr;
         return object;

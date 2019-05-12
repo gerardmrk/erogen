@@ -134,6 +134,9 @@ export interface IRendererResponse {
     /** RendererResponse initialState */
     initialState?: (string|null);
 
+    /** RendererResponse i18nResources */
+    i18nResources?: (string|null);
+
     /** RendererResponse ttr */
     ttr?: (string|null);
 }
@@ -176,6 +179,9 @@ export class RendererResponse implements IRendererResponse {
 
     /** RendererResponse initialState. */
     public initialState: string;
+
+    /** RendererResponse i18nResources. */
+    public i18nResources: string;
 
     /** RendererResponse ttr. */
     public ttr: string;
