@@ -131,7 +131,7 @@ export class Renderer {
 
   // core
   private chunkExtractor: ChunkExtractor;
-  private i18n: i18next.i18n = i18next.createInstance();
+  private i18n: i18next.i18n = i18next;
 
   public constructor({ debug }: RendererConfig) {
     const moduleStats = JSON.parse(JSON.stringify(INJECTED_ASYNC_MODULE_STATS));
@@ -305,8 +305,25 @@ export class Renderer {
       }
     }
 
-    // prerendering
+    // i18n
+    const { debug, translations } = internationalization;
 
+    this.i18n.use(I18nextBackend);
+    await initI18nAsync(this.i18n, {
+      initImmediate: false,
+      debug: !!debug,
+      load: "languageOnly",
+      ns: [],
+      saveMissing: false,
+      defaultNS: undefined,
+      lng: this.config.app.defaultLanguage,
+      fallbackLng: false,
+      fallbackNS: false,
+      interpolation: { escapeValue: false },
+      backend: { loadPath: `${translations}/{{lng}}/{{ns}}.json` },
+    });
+
+    // prerendering
     // prettier-ignore
     if (!!prerender) {
       if (!prerender.writeToDisk && !cache) {
@@ -317,21 +334,6 @@ export class Renderer {
       }
       await this.prerenderRoutes(prerender);
     }
-
-    // i18n
-    const { debug, translations } = internationalization;
-
-    i18next.use(I18nextBackend);
-    await initI18nAsync(i18next, {
-      initImmediate: false,
-      debug: !!debug,
-      load: "languageOnly",
-      preload: [...this.config.app.supportedLanguages],
-      interpolation: { escapeValue: false },
-      backend: { loadPath: `${translations}/{{lng}}/{{ns}}.json` },
-    });
-
-    this.i18n = i18next;
   }
 
   /**
@@ -658,8 +660,8 @@ function initI18nAsync(
   i18n: i18next.i18n,
   opts: i18next.InitOptions,
 ): Promise<i18next.TFunction> {
-  return new Promise((resolve, reject) => {
-    i18n.init(opts, (err: Error | null, t: i18next.TFunction) => {
+  return new Promise(async (resolve, reject) => {
+    await i18n.init(opts, (err: Error | null, t: i18next.TFunction) => {
       if (err) return reject(err);
       return resolve(t);
     });

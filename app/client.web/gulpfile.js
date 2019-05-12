@@ -176,7 +176,7 @@ async function getRoutes(cache) {
       protoOnly: true,
     },
     internationalization: {
-      debug: true,
+      debug: false,
       translations: `${paths.clientBuild}/i18n/translations`,
     },
   });

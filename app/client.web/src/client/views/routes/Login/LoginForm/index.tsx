@@ -1,4 +1,3 @@
-import { Login } from "../component";
 import { LoginForm } from "./component";
 import {
   withTranslation,
@@ -6,4 +5,4 @@ import {
 } from "@client/views/core/I18nProvider";
 export type LocalProps = WithTranslation & {};
 
-export default withTranslation(Login.i18nNamespace)(LoginForm);
+export default withTranslation("route_Login")(LoginForm);

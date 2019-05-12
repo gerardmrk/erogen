@@ -5,10 +5,8 @@ import {
 import { RouteConf } from "@client/views/conf.routes";
 import { Login } from "./component";
 import { Omit } from "utility-types";
-import { withConfig, WithConfig } from "@client/views/core/ConfigProvider";
+import { hot } from "react-hot-loader";
 
-export type LocalProps = WithConfig &
-  WithTranslation &
-  Omit<RouteConf, "component"> & {};
+export type LocalProps = WithTranslation & Omit<RouteConf, "component"> & {};
 
-export default withTranslation(Login.i18nNamespace)(withConfig(Login));
+export default hot(module)(withTranslation(Login.i18nNamespace)(Login));

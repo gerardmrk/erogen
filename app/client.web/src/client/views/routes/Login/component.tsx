@@ -13,17 +13,14 @@ export class Login extends React.PureComponent<Props, State> {
   public static i18nNamespace = "route_Login";
 
   public render() {
-    const {
-      t,
-      config: { app },
-    } = this.props;
+    const { t } = this.props;
 
     return (
       <React.Fragment>
         <HeadTags
           path={this.props.path}
           title={t("title")}
-          description={t("description", { appName: app.appName })}
+          description={t("description", { appName: "xo" })}
           metaType={this.props.metaType}
           metaImgPath={this.props.metaImgPath}
           metaImgAlt={this.props.metaImgAlt}
