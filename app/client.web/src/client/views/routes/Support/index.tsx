@@ -1,5 +1,8 @@
 import { Support } from "./component";
-import { WithTranslation, withTranslation } from "react-i18next";
+import {
+  withTranslation,
+  WithTranslation,
+} from "@client/views/core/I18nProvider";
 import { RouteConf } from "@client/views/conf.routes";
 import { Omit } from "utility-types";
 

@@ -1,4 +1,7 @@
-import { WithTranslation, withTranslation } from "react-i18next";
+import {
+  withTranslation,
+  WithTranslation,
+} from "@client/views/core/I18nProvider";
 import { RouteConf } from "@client/views/conf.routes";
 import { Login } from "./component";
 import { Omit } from "utility-types";
@@ -8,4 +11,4 @@ export type LocalProps = WithConfig &
   WithTranslation &
   Omit<RouteConf, "component"> & {};
 
-export default withConfig(withTranslation(Login).i18nNamespace)(Login));
+export default withTranslation(Login.i18nNamespace)(withConfig(Login));

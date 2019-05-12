@@ -3,7 +3,7 @@ import i18next from "i18next";
 import hoistStatics from "hoist-non-react-statics";
 import {
   I18nextProvider,
-  WithTranslation,
+  WithTranslation as _WithTranslation,
   withTranslation as _withTranslation,
   Namespace,
 } from "react-i18next";
@@ -23,6 +23,8 @@ export class I18nProvider extends React.Component<Props, State> {
     );
   }
 }
+
+export type WithTranslation = _WithTranslation;
 
 // prettier-ignore
 export const withTranslation = (

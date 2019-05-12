@@ -1,4 +1,7 @@
-import { withTranslation, WithTranslation } from "react-i18next";
+import {
+  withTranslation,
+  WithTranslation,
+} from "@client/views/core/I18nProvider";
 import { Landing } from "./component";
 import { RouteConf } from "@client/views/conf.routes";
 import { Omit } from "utility-types";

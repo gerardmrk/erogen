@@ -1,4 +1,7 @@
-import { WithTranslation, withTranslation } from "react-i18next";
+import {
+  withTranslation,
+  WithTranslation,
+} from "@client/views/core/I18nProvider";
 import { HomeFeed } from "./component";
 import { RouteConf } from "@client/views/conf.routes";
 import { Omit } from "utility-types";
