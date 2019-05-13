@@ -29,9 +29,7 @@ export type StaticAssetsConfig = {
 export const initServer = async (conf: ServerConfig): Promise<Server> => {
   const srv: Server = fastify({
     http2: true,
-    https: {
-      allowHTTP1: true,
-    },
+    https: { allowHTTP1: true },
     logger: { prettyPrint: true },
   });
 

@@ -8,5 +8,4 @@ import { Omit } from "utility-types";
 import { hot } from "react-hot-loader";
 
 export type LocalProps = WithTranslation & Omit<RouteConf, "component"> & {};
-
 export default hot(module)(withTranslation(Login.i18nNamespace)(Login));

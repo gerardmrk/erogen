@@ -8,25 +8,31 @@ import { WithConfig } from "./views/core/ConfigProvider";
 export const initI18N = async (conf: WithConfig["config"]) => {
   i18next.use(Backend);
 
-  i18next.use(Cache);
+  // i18next.use(Cache);
 
   i18next.use(LangDetector);
 
   i18next.use(initReactI18next); // passes i18n down to react-i18next
 
-  await i18next.init({
-    // await initI18nAsync(i18next, {
+  // await i18next.init({
+  await initI18nAsync(i18next, {
+    initImmediate: false,
+
     debug: true,
 
-    saveMissing: true,
+    // saveMissing: true,
 
-    saveMissingTo: "current",
+    // saveMissingTo: "current",
 
     load: "languageOnly", // instruct i18n-next to skip region code
 
-    fallbackLng: "en", // our default lang
+    fallbackLng: false,
 
-    defaultNS: "",
+    fallbackNS: false,
+
+    defaultNS: undefined,
+
+    ns: [],
 
     interpolation: {
       escapeValue: false, // react already safes from xss
@@ -52,14 +58,14 @@ export const initI18N = async (conf: WithConfig["config"]) => {
 /**
  * wraps the i18next instance with a promise
  */
-// function initI18nAsync(
-//   i18n: i18next.i18n,
-//   opts: i18next.InitOptions,
-// ): Promise<i18next.TFunction> {
-//   return new Promise((resolve, reject) => {
-//     i18next.init(opts, (err: Error | null, t: i18next.TFunction) => {
-//       if (err) return reject(err);
-//       return resolve(t);
-//     });
-//   });
-// }
+function initI18nAsync(
+  i18n: i18next.i18n,
+  opts: i18next.InitOptions,
+): Promise<i18next.TFunction> {
+  return new Promise(async (resolve, reject) => {
+    await i18n.init(opts, (err: Error | null, t: i18next.TFunction) => {
+      if (err) return reject(err);
+      return resolve(t);
+    });
+  });
+}

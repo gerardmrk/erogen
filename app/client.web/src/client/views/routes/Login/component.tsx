@@ -12,6 +12,8 @@ type State = {};
 export class Login extends React.PureComponent<Props, State> {
   public static i18nNamespace = "route_Login";
 
+  public componentDidMount() {}
+
   public render() {
     const { t } = this.props;
 

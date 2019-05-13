@@ -3,8 +3,9 @@
  * it was written primarily with performance in mind. Notably, wherever possible,
  * derivations and instantiations are done outside the request scope.
  */
-import { resolve, normalize, extname, basename } from "path";
 import { promises, createReadStream } from "fs";
+import { resolve, normalize, extname, basename } from "path";
+
 import mime from "mime";
 import { ServerRequest, ServerResponse, StaticAssetsConfig } from "@server/server"; // prettier-ignore
 

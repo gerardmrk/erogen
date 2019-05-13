@@ -313,6 +313,7 @@ export class Renderer {
     const { debug, translations } = internationalization;
 
     this.i18n.use(I18nextBackend);
+
     await initI18nAsync(this.i18n, {
       initImmediate: false,
       debug: !!debug,

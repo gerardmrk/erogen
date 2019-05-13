@@ -42,10 +42,6 @@ export class EnhancedRoute extends React.Component<Props, State> {
 
     if (this.props.staticContext) {
       this.props.staticContext["statusCode"] = this.props.status || 200;
-      this.props.staticContext["i18nNamespaces"] = [
-        ...this.props.staticContext["i18nNamespaces"],
-        (RouteComponent as any).i18nNamespace
-      ]
     }
 
     if (this.props.guarded && !this.props.isAuthenticated) {
@@ -61,7 +57,6 @@ export class EnhancedRoute extends React.Component<Props, State> {
       <RouteComponent
         {...props}
         {...routeProps}
-        useSuspense={false}
         routes={this.props.routes}
       />
     );
