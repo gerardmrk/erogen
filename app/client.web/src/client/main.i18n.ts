@@ -8,13 +8,12 @@ import { WithConfig } from "./views/core/ConfigProvider";
 export const initI18N = async (conf: WithConfig["config"]) => {
   i18next.use(Backend);
 
-  // i18next.use(Cache);
+  i18next.use(Cache);
 
   i18next.use(LangDetector);
 
   i18next.use(initReactI18next); // passes i18n down to react-i18next
 
-  // await i18next.init({
   await initI18nAsync(i18next, {
     initImmediate: false,
 

@@ -682,6 +682,9 @@ module.exports = async (args) => {
                     minify: false,
                     navigateFallbackURL: "/",
                 },
+                externals: [
+                    `${paths}`
+                ],
                 excludes: [
                     "**/.*",
                     "**/*.gz",

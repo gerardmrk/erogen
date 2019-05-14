@@ -13,8 +13,10 @@ dotenv.config({ path: "../../.env" });
     console.info(`server listening on ${addr}`);
   });
 })({
-  port: parseInt(process.env.SERVER_PORT || "4300"),
-  host: process.env.SERVER_HOST || "::",
+  port: parseInt(process.env.SERVER_PORT || "443"),
+  host: process.env.SERVER_HOST || "localhost",
+  tlsKeyPath: resolve(__dirname, "../../.tls/localhost.key"),
+  tlsCertPath: resolve(__dirname, "../../.tls/localhost.cert"),
   assets: {
     rootDir: resolve(__dirname, "../../dist/client"),
     urlPrefix: "/assets/",

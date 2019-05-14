@@ -11,7 +11,7 @@ export const initRouter = async (): Promise<Router> => {
     cache: true,
     prerender: { lang: "en", all: true },
     internationalization: {
-      debug: true,
+      debug: false,
       translations: "../../dist/client/i18n/translations",
     },
   });

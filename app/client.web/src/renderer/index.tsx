@@ -473,6 +473,8 @@ export class Renderer {
         routerContext,
       });
 
+      console.log(params, routerContext, headContext);
+
       if (!!routerContext.url) {
         response.statusCode = 302;
         response.redirectTo = routerContext.url;
