@@ -3,6 +3,7 @@ import * as React from "react";
 import { hot } from "react-hot-loader";
 import loadable from "@loadable/component";
 import styles from "./App.scss";
+import GlobalLoader from "./GlobalLoader";
 
 const AppHeader = loadable(() => import("@client/views/core/AppHeader"));
 const AppContent = loadable(() => import("@client/views/core/AppContent"));
@@ -16,6 +17,7 @@ export class App extends React.Component<Props, State> {
   public render() {
     return (
       <div className={styles.main}>
+        <GlobalLoader />
         <AppHeader />
         <AppContent />
         <AppFooter />

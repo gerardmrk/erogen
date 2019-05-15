@@ -2,6 +2,7 @@
 @import "~@client/views/styles.dimens.scss";
 
 .main {
+  position: relative;
   min-height: 100%;
   display: grid;
   grid-template-rows: $app-header-height auto $app-footer-height;

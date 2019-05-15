@@ -2,6 +2,7 @@ import { Dispatcher, State } from "@client/store";
 import { IServices } from "@client/services";
 import * as actions from "./actions";
 import { MessageType } from "../global-ui-message";
+import { sleep } from "@client/utils/sleep";
 
 export const login = (
   alias: string,
@@ -14,6 +15,8 @@ export const login = (
 ) => {
   try {
     dispatch(actions.loginPending({ triggerLoader: "Logging in..." }));
+
+    await sleep(2000);
 
     const { authKeys } = await services.auth.login({
       alias,
