@@ -9,7 +9,7 @@ export const initRouter = async (): Promise<Router> => {
 
   await renderer.init({
     cache: true,
-    prerender: { lang: "en", all: true },
+    // prerender: { lang: "en", all: true },
     internationalization: {
       debug: false,
       translations: "../../dist/client/i18n/translations",

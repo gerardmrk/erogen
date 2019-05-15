@@ -180,7 +180,6 @@ async function getRoutes(cache) {
       translations: `${paths.clientBuild}/i18n/translations`,
     },
   });
-  console.log(cache);
 }
 
 function compressWithGzip(file) {

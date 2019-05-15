@@ -2,7 +2,7 @@
  * Routes config
  */
 
-import { default as loadable, LoadableComponent } from "@loadable/component";
+import loadable, { LoadableComponent } from "@loadable/component";
 
 export type RouteConf<P = any> = {
   // route's designated OpenGraph type (og:type); used in the og:type meta tag.

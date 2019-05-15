@@ -181,12 +181,12 @@ module.exports = async (args) => {
                         sourceMap: enableSourceMap,
                         compress: {
                             passes: 1,
-                            keep_fnames: false,
+                            keep_fnames: /loadable/,
                             keep_classnames: false,
                             keep_fargs: false,
                         },
                         mangle: {
-                            keep_fnames: false,
+                            keep_fnames: /loadable/,
                             keep_classnames: false,
                         }
                     }
