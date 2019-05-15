@@ -64,7 +64,7 @@ export type RenderParams = {
 /**
  * response output for the renderer's various rendering methods
  */
-export type RenderResponse = {
+export type RenderJsonResponse = {
   // primary
   lang: string;
   app: string;
@@ -80,6 +80,10 @@ export type RenderResponse = {
   redirectTo?: string;
   error?: { message: string; stackTrace?: string };
 };
+
+export type RenderHtmlResponse = {
+  html: string;
+} & Pick<RenderJsonResponse, "statusCode" | "ttr" | "redirectTo" | "error">;
 
 /**
  * Renderer Config
@@ -261,7 +265,7 @@ export class Renderer {
     );
   };
 
-  private _createResponseObject = (): RenderResponse => ({
+  private _createJsonResponseObject = (): RenderJsonResponse => ({
     lang: "",
     app: "",
     metas: "",
@@ -364,7 +368,7 @@ export class Renderer {
       // prettier-ignore
       await Promise.all(
         whitelist.map(async (r: RouteConf) => {
-          const html = await this.getRouteHTML({
+          const resp = await this.getRouteHTML({
             url: r.path as string,
             lang: settings.lang,
           });
@@ -376,14 +380,14 @@ export class Renderer {
 
             await writeFileAsync(
               normalize(`${settings.writeToDisk}/${prefix}.${settings.lang}.html`),
-              html,
+              resp.html,
             );
           }
 
           if (this.cacheEnabled) {
             this.htmlCache.set(
               `${r.path || r.status}.${settings.lang}`,
-              this.textEncoder.encode(html),
+              this.textEncoder.encode(JSON.stringify(resp)),
             );
           }
         }),
@@ -406,33 +410,39 @@ export class Renderer {
    * Get the full HTML string for this route
    * @param params render params
    */
-  public async getRouteHTML(params: RenderParams): Promise<string> {
+  public async getRouteHTML(params: RenderParams): Promise<RenderHtmlResponse> {
     const cacheKey = `${params.url}.${params.lang}`;
 
     if (this.cacheEnabled && this.htmlCache.has(cacheKey)) {
-      return this.textDecoder.decode(this.htmlCache.get(cacheKey));
+      return JSON.parse(this.textDecoder.decode(this.htmlCache.get(cacheKey)));
     }
 
     const out = await this.getRouteJSON(params);
-    return (
-      this.htmlBits.docStart +
-      out.lang +
-      this.htmlBits.postLang +
-      out.metas +
-      this.htmlBits.postMetas +
-      out.links +
-      this.htmlBits.postLinks +
-      out.styles +
-      this.htmlBits.postStyles +
-      out.app +
-      this.htmlBits.postApp +
-      out.initialState +
-      this.htmlBits.postInitialState +
-      out.i18nResources +
-      this.htmlBits.postI18nResources +
-      out.scripts +
-      this.htmlBits.docEnd
-    );
+
+    return {
+      statusCode: out.statusCode,
+      redirectTo: out.redirectTo,
+      ttr: out.ttr,
+      error: out.error,
+      html:
+        this.htmlBits.docStart +
+        out.lang +
+        this.htmlBits.postLang +
+        out.metas +
+        this.htmlBits.postMetas +
+        out.links +
+        this.htmlBits.postLinks +
+        out.styles +
+        this.htmlBits.postStyles +
+        out.app +
+        this.htmlBits.postApp +
+        out.initialState +
+        this.htmlBits.postInitialState +
+        out.i18nResources +
+        this.htmlBits.postI18nResources +
+        out.scripts +
+        this.htmlBits.docEnd,
+    };
   }
 
   /**
@@ -454,10 +464,10 @@ export class Renderer {
    * Get the JSON output for this route
    * @param params render params
    */
-  public async getRouteJSON(params: RenderParams): Promise<RenderResponse> {
+  public async getRouteJSON(params: RenderParams): Promise<RenderJsonResponse> {
     const timerStart = process.hrtime.bigint();
 
-    const response = this._createResponseObject();
+    const response = this._createJsonResponseObject();
     const headContext: HeadContext = { helmet: undefined };
     const routerContext: StaticRouterContext = {};
 
@@ -533,7 +543,10 @@ export class Renderer {
   public async streamRouteHTML(
     params: RenderParams,
     response: NodeJS.WritableStream,
-    meta: Pick<RenderResponse, "statusCode" | "ttr" | "redirectTo" | "error">,
+    meta: Pick<
+      RenderJsonResponse,
+      "statusCode" | "ttr" | "redirectTo" | "error"
+    >,
   ): Promise<void> {
     const timerStart = process.hrtime.bigint();
     const headContext: HeadContext = { helmet: undefined };

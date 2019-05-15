@@ -17,13 +17,15 @@ export const initRouter = async (): Promise<Router> => {
   });
 
   return async (req, res) => {
-    const html = await renderer.getRouteHTML({
+    const resp = await renderer.getRouteHTML({
       url: req.req.url || "/",
       lang: "en",
     });
 
+    console.log(resp);
+
     res.header("Content-Type", "text/html");
-    res.header("Content-Length", html.length);
-    res.send(html);
+    res.header("Content-Length", resp.html.length);
+    res.send(resp.html);
   };
 };
