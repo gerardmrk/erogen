@@ -1,5 +1,11 @@
+@import "~@client/views/styles.dimens.scss";
+
 .main {
-  background-color: inherit;
+  position: absolute;
+  top: $app-header-height + 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 9999;
 }
 
 .container {

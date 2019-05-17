@@ -22,6 +22,8 @@ export type Action = ActionType<typeof actions>;
 type _State = DeepReadonly<{
   messageType: MessageType;
   message: TranslationKey | undefined;
+  autoDismiss: boolean;
+  duration: number;
 }>;
 
 // =============================================================================
@@ -30,6 +32,8 @@ type _State = DeepReadonly<{
 const defaultState = {
   messageType: MessageType.Info,
   message: undefined,
+  autoDismiss: true,
+  duration: 2000,
 };
 
 export const reducer: Reducer<_State, Action> = (

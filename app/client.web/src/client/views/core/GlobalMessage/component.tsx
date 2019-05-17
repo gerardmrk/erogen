@@ -1,5 +1,7 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
+import Container from "@client/views/components/ui.elements/Container";
+import Message from "@client/views/components/ui.collections/Message";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 
 type Props = LocalProps & StoreProps & DispatchProps;
@@ -10,7 +12,12 @@ export class GlobalMessage extends React.PureComponent<Props, State> {
   public render() {
     return (
       <div className={styles.main}>
-        <div className={styles.container}>{"GlobalMessage"}</div>
+        <Message>
+          <Container>
+            <Message.Header>{"HELLO"}</Message.Header>
+            <Message.Content>{"HELLO"}</Message.Content>
+          </Container>
+        </Message>
       </div>
     );
   }

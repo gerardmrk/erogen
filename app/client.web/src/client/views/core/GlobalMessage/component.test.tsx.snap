@@ -5,9 +5,22 @@ exports[`<GlobalMessage/> snapshot 1`] = `
   className="main"
 >
   <div
-    className="container"
+    className="ui message"
   >
-    GlobalMessage
+    <div
+      className="ui container"
+    >
+      <div
+        className="header"
+      >
+        HELLO
+      </div>
+      <div
+        className="content"
+      >
+        HELLO
+      </div>
+    </div>
   </div>
 </div>
 `;

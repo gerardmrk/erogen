@@ -9,7 +9,7 @@ import { Services } from "@client/services";
 // instruct react-helmet to account for non-DOM environment.
 (HeadProvider as any).canUseDOM = false;
 
-export const createRenderer = (elm: React.ReactElement) => {
+export const createRenderer = async (elm: React.ReactElement) => {
   const store = storeCreator(new Services(), true)();
 
   return create(

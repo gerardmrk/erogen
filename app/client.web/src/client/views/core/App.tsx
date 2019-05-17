@@ -6,6 +6,7 @@ import GlobalLoader from "./GlobalLoader";
 import AppHeader from "./AppHeader";
 import AppContent from "./AppContent";
 import AppFooter from "./AppFooter";
+import GlobalMessage from "./GlobalMessage";
 
 type Props = {};
 
@@ -16,6 +17,8 @@ export class App extends React.Component<Props, State> {
     return (
       <div className={styles.main}>
         <GlobalLoader />
+        <GlobalMessage />
+
         <AppHeader />
         <AppContent />
         <AppFooter />

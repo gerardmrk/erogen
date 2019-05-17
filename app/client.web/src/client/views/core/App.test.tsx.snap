@@ -4,6 +4,28 @@ exports[`<App/> snapshot 1`] = `
 <div
   className="main"
 >
+  <div
+    className="main"
+  >
+    <div
+      className="ui message"
+    >
+      <div
+        className="ui container"
+      >
+        <div
+          className="header"
+        >
+          HELLO
+        </div>
+        <div
+          className="content"
+        >
+          HELLO
+        </div>
+      </div>
+    </div>
+  </div>
   <header
     className="main"
   >
