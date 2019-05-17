@@ -1,12 +1,12 @@
 import * as React from "react";
 import { create, ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
 
-import { ResetPassword } from "./component";
+import { HomeFeed } from "./component";
 import { withTranslationMock } from "@client/views/_fixtures_/wrapper";
 
-const Component = withTranslationMock()(ResetPassword);
+const Component = withTranslationMock()(HomeFeed);
 
-describe("<ResetPassword/>", () => {
+describe("<HomeFeed/>", () => {
   let renderer: ReactTestRenderer;
   let component: ReactTestInstance;
 
