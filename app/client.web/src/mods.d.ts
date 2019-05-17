@@ -1,5 +1,3 @@
-import "jest-enzyme";
-
 declare global {
   // available to both client and renderer
   const INJECTED_DEV_MODE: boolean;

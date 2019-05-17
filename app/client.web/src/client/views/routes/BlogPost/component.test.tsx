@@ -1,5 +1,5 @@
 import * as React from "react";
-import { shallow } from "enzyme";
+
 import { BlogPost } from "./component";
 
 describe("<BlogPost/>", () => {

@@ -8,9 +8,13 @@ module.exports = {
   verbose: true,
   rootDir: "./",
   roots: ["<rootDir>/src"],
-  setupFiles: ["<rootDir>/jest.setup.enzyme.js"],
-  setupFilesAfterEnv: ["<rootDir>/node_modules/jest-enzyme/lib/index.js"],
-  testEnvironment: "enzyme",
+  setupFiles: [
+    // "<rootDir>/jest.setup.[...].js"
+  ],
+  setupFilesAfterEnv: [
+    // "<rootDir>/node_modules/[...].js"
+  ],
+  // testEnvironment: "...",
   transform: {
     "^.+\\.tsx?$": "ts-jest",
     "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/jest.non-ts-loader.js",

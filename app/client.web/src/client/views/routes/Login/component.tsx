@@ -2,10 +2,10 @@ import * as React from "react";
 import styles from "./component.styles.scss";
 import AuthRoutesWrapper from "@client/views/core/AuthRoutesWrapper";
 import LoginForm from "./LoginForm";
-import { LocalProps } from ".";
+import { LocalProps, StoreProps, DispatchProps } from ".";
 import HeadTags from "@client/views/components/HeadTags";
 
-type Props = LocalProps;
+type Props = LocalProps & StoreProps & DispatchProps;
 
 type State = {};
 
@@ -16,6 +16,9 @@ export class Login extends React.PureComponent<Props, State> {
 
   public render() {
     const { t } = this.props;
+
+    if (this.props.isAuthenticated) {
+    }
 
     return (
       <React.Fragment>

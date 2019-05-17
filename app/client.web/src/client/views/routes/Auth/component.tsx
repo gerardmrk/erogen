@@ -3,9 +3,9 @@ import styles from "./component.styles.scss";
 import HeadTags from "@client/views/components/HeadTags";
 import { LocalProps } from ".";
 
-type Props = LocalProps;
+export type Props = LocalProps;
 
-type State = {};
+export type State = {};
 
 export class Auth extends React.PureComponent<Props, State> {
   public static i18nNamespace = "route_Auth";

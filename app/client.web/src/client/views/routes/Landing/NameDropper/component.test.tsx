@@ -1,5 +1,5 @@
 import * as React from "react";
-import { shallow } from "enzyme";
+
 import { NameDropper } from "./component";
 
 describe("<NameDropper/>", () => {

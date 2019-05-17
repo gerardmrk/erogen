@@ -25,7 +25,9 @@ const mapDispatchToProps = (
   },
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withTranslation("route_Login")(LoginForm));
+export default withTranslation("route_Login")(
+  connect<StoreProps, DispatchProps, LocalProps, State>(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(LoginForm),
+);

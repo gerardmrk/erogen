@@ -1,11 +1,20 @@
 import * as React from "react";
-import { shallow } from "enzyme";
 import { Auth } from "./component";
+import { withTranslationMock } from "@client/views/_fixtures_/wrapper";
+import { create, ReactTestInstance } from "react-test-renderer";
+
+const Component = withTranslationMock()(Auth);
 
 describe("<Auth/>", () => {
+  let component: ReactTestInstance | null;
+
+  beforeEach(() => {
+    const renderer = create(<Component />);
+    component = renderer.getInstance();
+  });
+
   it("renders ok", () => {
-    const wrapper = shallow(<Auth />);
-    expect(wrapper).toExist();
-    expect(wrapper).toHaveClassName("main");
+    expect(component).toExist();
+    expect(component).toHaveClassName("main");
   });
 });
