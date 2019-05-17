@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Dashboard/> snapshot 1`] = `
+<div
+  className="main"
+>
+  <h1>
+    Dashboard
+  </h1>
+</div>
+`;

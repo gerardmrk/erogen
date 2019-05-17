@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Login/> snapshot 1`] = `
+<div
+  className="main"
+>
+  <div
+    className="container"
+  >
+    <div
+      className="ui fluid card"
+      onClick={[Function]}
+    >
+      <div
+        className="content header"
+      >
+        <div
+          className="header"
+        >
+          <h1>
+            form-heading
+          </h1>
+        </div>
+      </div>
+      <div
+        className="content"
+      >
+        <div
+          className="content"
+        >
+          <div
+            className="main"
+          >
+            <form
+              className="ui form main"
+              onSubmit={[Function]}
+            >
+              <div
+                className="field"
+                widths="equal"
+              >
+                <label>
+                  <span>
+                    Username
+                  </span>
+                  <div
+                    className="ui fluid input"
+                  >
+                    <input
+                      autoComplete="username"
+                      onChange={[Function]}
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </label>
+              </div>
+              <div
+                className="field"
+                widths="equal"
+              >
+                <label>
+                  <span>
+                    Password
+                  </span>
+                  <div
+                    className="ui fluid input"
+                  >
+                    <input
+                      autoComplete="current-password"
+                      onChange={[Function]}
+                      type="password"
+                      value=""
+                    />
+                  </div>
+                </label>
+              </div>
+              <div
+                className="field"
+              >
+                <div
+                  className="ui checkbox"
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  onMouseDown={[Function]}
+                  onMouseUp={[Function]}
+                >
+                  <input
+                    checked={false}
+                    className="hidden"
+                    readOnly={true}
+                    tabIndex={0}
+                    type="checkbox"
+                  />
+                  <label>
+                    Remember Me
+                  </label>
+                </div>
+              </div>
+              <button
+                className="ui button"
+                onClick={[Function]}
+                type="submit"
+              >
+                Login
+              </button>
+            </form>
+          </div>
+          <nav
+            className="main"
+          >
+            nav1 nav2 nav3
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

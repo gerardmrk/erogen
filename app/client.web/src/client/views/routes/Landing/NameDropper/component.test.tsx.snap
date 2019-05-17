@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NameDropper/> snapshot 1`] = `
+<section
+  className="main"
+>
+  <div
+    className="ui container container"
+  >
+    <div
+      className="brandCarousel"
+    >
+      <div
+        className="brandItem"
+      >
+        <p>
+          Smashing
+        </p>
+      </div>
+      <div
+        className="brandItem"
+      >
+        <p>
+          Pumpkins
+        </p>
+      </div>
+      <div
+        className="brandItem"
+      >
+        <p>
+          2077 :(
+        </p>
+      </div>
+      <div
+        className="brandItem"
+      >
+        <p>
+          Arabian
+        </p>
+      </div>
+      <div
+        className="brandItem"
+      >
+        <p>
+          Nights
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+`;
