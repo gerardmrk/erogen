@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AuthNavs/> snapshot 1`] = `
+<nav
+  className="main"
+>
+  nav1 nav2 nav3
+</nav>
+`;

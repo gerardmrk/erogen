@@ -1,0 +1,247 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App/> snapshot 1`] = `
+<div
+  className="main"
+>
+  <header
+    className="main"
+  >
+    <div
+      className="ui container container"
+    >
+      <div
+        className="logo"
+      >
+        <div
+          className="main"
+        >
+          <a
+            href="/"
+            onClick={[Function]}
+          >
+            <img
+              alt="brand logo"
+              src="logo.svg"
+            />
+          </a>
+        </div>
+      </div>
+      <div
+        className="main"
+      >
+        <nav
+          className="main"
+        >
+          <div
+            className="otherNavsGroup"
+          >
+            <div
+              className="navBox"
+            >
+              <a
+                aria-current={null}
+                href="/about/product"
+                onClick={[Function]}
+              >
+                <span>
+                  Product
+                </span>
+              </a>
+            </div>
+            <div
+              className="navBox"
+            >
+              <a
+                aria-current={null}
+                href="/blog"
+                onClick={[Function]}
+              >
+                <span>
+                  Blog
+                </span>
+              </a>
+            </div>
+            <div
+              className="navBox"
+            >
+              <a
+                aria-current={null}
+                href="/documentation"
+                onClick={[Function]}
+              >
+                <span>
+                  Docs
+                </span>
+              </a>
+            </div>
+            <div
+              className="navBox"
+            >
+              <a
+                aria-current={null}
+                href="/support"
+                onClick={[Function]}
+              >
+                <span>
+                  Support
+                </span>
+              </a>
+            </div>
+          </div>
+          <div
+            className="defaultNavsGroup"
+          >
+            <div
+              className="navBox"
+            >
+              <a
+                aria-current={null}
+                href="/login"
+                onClick={[Function]}
+              >
+                <span>
+                  Login
+                </span>
+              </a>
+            </div>
+            <div
+              className="navBox"
+            >
+              /
+            </div>
+            <div
+              className="navBox"
+            >
+              <a
+                aria-current={null}
+                href="/register"
+                onClick={[Function]}
+              >
+                <span>
+                  Register
+                </span>
+              </a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main
+    className="main"
+  >
+    <div
+      className="routeContainer"
+    >
+      <div
+        className="main"
+      >
+        <section
+          className="main"
+        >
+          <div
+            className="ui container container"
+          >
+            <div
+              className="canvas"
+            >
+              <div
+                className="leftPane"
+              >
+                <h1>
+                  <em>
+                    Where Is My Mind?
+                  </em>
+                </h1>
+                <div
+                  className="fluff"
+                >
+                  <p>
+                    Designer Drugs Et Al.
+                  </p>
+                  <br />
+                  <p>
+                    Alpha bravo charlie delta echo foxtrot golf
+                  </p>
+                  <br />
+                  <p>
+                    Hotel india juliet kilo lima mike november oscar papa
+                  </p>
+                  <br />
+                  <p>
+                    Quebec romeo sierra tango unicorn victor whiskey x-ray yankee zulu
+                  </p>
+                </div>
+              </div>
+              <div
+                className="rightPane"
+              >
+                <div>
+                  Nothing to see here
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section
+          className="main"
+        >
+          <div
+            className="ui container container"
+          >
+            <div
+              className="brandCarousel"
+            >
+              <div
+                className="brandItem"
+              >
+                <p>
+                  Smashing
+                </p>
+              </div>
+              <div
+                className="brandItem"
+              >
+                <p>
+                  Pumpkins
+                </p>
+              </div>
+              <div
+                className="brandItem"
+              >
+                <p>
+                  2077 :(
+                </p>
+              </div>
+              <div
+                className="brandItem"
+              >
+                <p>
+                  Arabian
+                </p>
+              </div>
+              <div
+                className="brandItem"
+              >
+                <p>
+                  Nights
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <footer
+    className="main"
+  >
+    <div
+      className="ui container container"
+    >
+      F O O T E R
+    </div>
+  </footer>
+</div>
+`;

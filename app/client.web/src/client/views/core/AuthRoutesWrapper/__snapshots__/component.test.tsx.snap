@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AuthRoutesWrapper/> snapshot 1`] = `
+<div
+  className="main"
+>
+  <div
+    className="container"
+  >
+    <div
+      className="ui fluid card"
+      onClick={[Function]}
+    >
+      <div
+        className="content header"
+      >
+        <div
+          className="header"
+        >
+          <h1>
+            x
+          </h1>
+        </div>
+      </div>
+      <div
+        className="content"
+      >
+        <div
+          className="content"
+        >
+          <nav
+            className="main"
+          >
+            nav1 nav2 nav3
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
