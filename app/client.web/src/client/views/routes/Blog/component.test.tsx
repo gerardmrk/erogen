@@ -1,21 +1,21 @@
 import * as React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
-import { Blog, Props } from "./component";
+import { create, ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
 
-describe("<Blog/>", () => {
-  let props: Props;
-  let wrapper: ShallowWrapper;
+import { ResetPassword } from "./component";
+import { withTranslationMock } from "@client/views/_fixtures_/wrapper";
 
-  beforeAll(() => {
-    props = {
-      routes: [],
-    };
+const Component = withTranslationMock()(ResetPassword);
 
-    wrapper = shallow(<Blog {...props} />);
+describe("<ResetPassword/>", () => {
+  let renderer: ReactTestRenderer;
+  let component: ReactTestInstance;
+
+  beforeEach(() => {
+    renderer = create(<Component />);
+    component = renderer.getInstance() as ReactTestInstance;
   });
 
   it("renders ok", () => {
-    expect(wrapper).toExist();
-    expect(wrapper).toHaveClassName("main");
+    expect(component).toBeDefined();
   });
 });

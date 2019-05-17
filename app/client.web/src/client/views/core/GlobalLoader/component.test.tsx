@@ -1,16 +1,20 @@
 import * as React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
+import { create, ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
+
 import { GlobalLoader } from "./component";
 
-describe("<GlobalLoader/>", () => {
-  let wrapper: ShallowWrapper;
+const Component = GlobalLoader;
 
-  beforeAll(() => {
-    wrapper = shallow(<GlobalLoader loading={true} message={""} />);
+describe("<GlobalLoader/>", () => {
+  let renderer: ReactTestRenderer;
+  let component: ReactTestInstance;
+
+  beforeEach(() => {
+    renderer = create(<Component loading={false} message={"message"} />);
+    component = renderer.getInstance() as ReactTestInstance;
   });
 
   it("renders ok", () => {
-    expect(wrapper).toExist();
-    expect(wrapper).toHaveClassName("main");
+    expect(component).toBeDefined();
   });
 });

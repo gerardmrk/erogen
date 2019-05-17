@@ -1,11 +1,21 @@
 import * as React from "react";
+import { create, ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
 
 import { SettingsProfile } from "./component";
+import { withTranslationMock } from "@client/views/_fixtures_/wrapper";
+
+const Component = withTranslationMock()(SettingsProfile);
 
 describe("<SettingsProfile/>", () => {
+  let renderer: ReactTestRenderer;
+  let component: ReactTestInstance;
+
+  beforeEach(() => {
+    renderer = create(<Component />);
+    component = renderer.getInstance() as ReactTestInstance;
+  });
+
   it("renders ok", () => {
-    const wrapper = shallow(<SettingsProfile />);
-    expect(wrapper).toExist();
-    expect(wrapper).toHaveClassName("main");
+    expect(component).toBeDefined();
   });
 });

@@ -1,29 +1,20 @@
 import * as React from "react";
+import { create, ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
 
-import { AppHeader, Props } from "./component";
+import { AppHeader } from "./component";
+
+const Component = AppHeader;
 
 describe("<AppHeader/>", () => {
-  describe("isAuthenticated === true", () => {
-    let props: Props;
-    beforeAll(() => {
-      props = { isAuthenticated: true };
-    });
+  let renderer: ReactTestRenderer;
+  let component: ReactTestInstance;
 
-    it("renders ok", () => {
-      const wrapper = shallow(<AppHeader {...props} />);
-      expect(wrapper).toExist();
-    });
+  beforeEach(() => {
+    renderer = create(<Component isAuthenticated={true} />);
+    component = renderer.getInstance() as ReactTestInstance;
   });
 
-  describe("isAuthenticated === false", () => {
-    let props: Props;
-    beforeAll(() => {
-      props = { isAuthenticated: false };
-    });
-
-    it("renders ok", () => {
-      const wrapper = shallow(<AppHeader {...props} />);
-      expect(wrapper).toExist();
-    });
+  it("renders ok", () => {
+    expect(component).toBeDefined();
   });
 });

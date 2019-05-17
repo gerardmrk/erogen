@@ -1,40 +1,20 @@
 import * as React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
-import { HeaderNavBar, Props } from "./component";
+import { create, ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
+
+import { HeaderNavBar } from "./component";
+
+const Component = HeaderNavBar;
 
 describe("<HeaderNavBar/>", () => {
-  let wrapper: ShallowWrapper;
+  let renderer: ReactTestRenderer;
+  let component: ReactTestInstance;
 
-  beforeAll(() => {
-    wrapper = shallow(<HeaderNavBar isAuthenticated={false} />);
+  beforeEach(() => {
+    renderer = create(<Component isAuthenticated={true} />);
+    component = renderer.getInstance() as ReactTestInstance;
   });
 
   it("renders ok", () => {
-    expect(wrapper).toExist();
-    expect(wrapper).toHaveClassName("main");
-  });
-
-  describe("isAuthenticated === false", () => {
-    let props: Props;
-    beforeAll(() => {
-      props = { isAuthenticated: false };
-    });
-
-    it("renders <PublicNavs/>", () => {
-      const wrapper = shallow(<HeaderNavBar {...props} />);
-      expect(wrapper).toContainMatchingElement("PublicNavs");
-    });
-  });
-
-  describe("isAuthenticated === true", () => {
-    let props: Props;
-    beforeAll(() => {
-      props = { isAuthenticated: true };
-    });
-
-    it("renders <PrivateNavs/>", () => {
-      const wrapper = shallow(<HeaderNavBar {...props} />);
-      expect(wrapper).toContainMatchingElement("PrivateNavs");
-    });
+    expect(component).toBeDefined();
   });
 });

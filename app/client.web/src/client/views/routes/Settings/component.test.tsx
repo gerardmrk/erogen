@@ -1,11 +1,21 @@
 import * as React from "react";
+import { create, ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
 
-import { Settings } from "./component";
+import { ResetPassword } from "./component";
+import { withTranslationMock } from "@client/views/_fixtures_/wrapper";
 
-describe("<Settings/>", () => {
+const Component = withTranslationMock()(ResetPassword);
+
+describe("<ResetPassword/>", () => {
+  let renderer: ReactTestRenderer;
+  let component: ReactTestInstance;
+
+  beforeEach(() => {
+    renderer = create(<Component />);
+    component = renderer.getInstance() as ReactTestInstance;
+  });
+
   it("renders ok", () => {
-    const wrapper = shallow(<Settings />);
-    expect(wrapper).toExist();
-    expect(wrapper).toHaveClassName("main");
+    expect(component).toBeDefined();
   });
 });

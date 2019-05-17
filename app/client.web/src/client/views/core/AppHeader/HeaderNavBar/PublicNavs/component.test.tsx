@@ -1,20 +1,20 @@
 import * as React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
+import { create, ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
+
 import { PublicNavs } from "./component";
 
-describe("<PublicNavs/>", () => {
-  let wrapper: ShallowWrapper;
+const Component = PublicNavs;
 
-  beforeAll(() => {
-    wrapper = shallow(<PublicNavs />);
+describe("<PublicNavs/>", () => {
+  let renderer: ReactTestRenderer;
+  let component: ReactTestInstance;
+
+  beforeEach(() => {
+    renderer = create(<Component />);
+    component = renderer.getInstance() as ReactTestInstance;
   });
 
   it("renders ok", () => {
-    expect(wrapper).toExist();
+    expect(component).toBeDefined();
   });
-
-  // it("displays 'Login' and 'Register' link", () => {
-  //   expect(wrapper).toHaveText("Login");
-  //   expect(wrapper).toHaveText("Register");
-  // });
 });

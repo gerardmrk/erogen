@@ -1,9 +1,20 @@
 import * as React from "react";
-import App from "./App";
+import { create, ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
 
-describe("<App />", () => {
+import { App } from "./App";
+
+const Component = App;
+
+describe("<App/>", () => {
+  let renderer: ReactTestRenderer;
+  let component: ReactTestInstance;
+
+  beforeEach(() => {
+    renderer = create(<Component />);
+    component = renderer.getInstance() as ReactTestInstance;
+  });
+
   it("renders ok", () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper).toExist();
+    expect(component).toBeDefined();
   });
 });
