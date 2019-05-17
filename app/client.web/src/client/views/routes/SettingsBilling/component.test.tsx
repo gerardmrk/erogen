@@ -3,7 +3,7 @@ import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // p
 import { createRenderer } from "@client/views/_fixtures_/create-renderer";
 
 import { SettingsBilling } from "./component";
-import { withTranslationMock } from "@client/views/_fixtures_/withTranslationMock";
+import { withTranslationMock } from "@client/views/_fixtures_/withtranslation-mock";
 
 const Component = withTranslationMock()(SettingsBilling);
 
