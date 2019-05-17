@@ -94,6 +94,8 @@ module.exports = async (args) => {
                 "@routeConfig": `${paths.source}/route-config.json`,
                 // semantic ui theming path resolution
                 "../../theme.config$": `${paths.clientSrc}/views/theme/theme.config`,
+                // see -> https://github.com/gaearon/react-hot-loader#react--dom
+                "react-dom": "@hot-loader/react-dom",
             },
             plugins: [
                 new TsConfigPathsPlugin({

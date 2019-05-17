@@ -1,13 +1,11 @@
 import "@client/views/theme/semantic.less";
+import { hot } from "react-hot-loader/root";
 import * as React from "react";
-import { hot } from "react-hot-loader";
-import loadable from "@loadable/component";
 import styles from "./App.scss";
 import GlobalLoader from "./GlobalLoader";
-
-const AppHeader = loadable(() => import("@client/views/core/AppHeader"));
-const AppContent = loadable(() => import("@client/views/core/AppContent"));
-const AppFooter = loadable(() => import("@client/views/core/AppFooter"));
+import AppHeader from "./AppHeader";
+import AppContent from "./AppContent";
+import AppFooter from "./AppFooter";
 
 type Props = {};
 
@@ -26,4 +24,4 @@ export class App extends React.Component<Props, State> {
   }
 }
 
-export default hot(module)(App);
+export default hot(App);

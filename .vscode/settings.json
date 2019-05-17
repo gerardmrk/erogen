@@ -43,7 +43,11 @@
       "icon": "jest",
       "filename": true,
       "format": "svg",
-      "extensions": ["jest.setup.enzyme.js", "jest.transformer.js"]
+      "extensions": [
+        "jest.setup.enzyme.js",
+        "jest.transform.non-ts.js",
+        "jest.mock.loadable.js"
+      ]
     }
   ],
 

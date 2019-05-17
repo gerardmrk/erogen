@@ -73,5 +73,3 @@ export class EnhancedRoute extends React.Component<Props, State> {
     );
   }
 }
-
-export default EnhancedRoute;

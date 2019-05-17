@@ -1,5 +1,5 @@
-declare module "@loadable/server" {
-  interface ChunkExtractor {
-    getCssString(): Promise<string>;
-  }
-}
+// declare module "@loadable/server" {
+//   interface ChunkExtractor {
+//     getCssString(): Promise<string>;
+//   }
+// }

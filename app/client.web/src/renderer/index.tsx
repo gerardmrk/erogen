@@ -504,7 +504,7 @@ export class Renderer {
 
       response.styles = await this._stripUnusedCssFromHtml(
         response.app,
-        await this.chunkExtractor.getCssString(),
+        await (this.chunkExtractor as any).getCssString(),
       );
 
       response.initialState = JSON.stringify(store.getState());
@@ -584,7 +584,7 @@ export class Renderer {
       response.write(this.chunkExtractor.getStyleTags() || "");
       response.write(this.htmlBits.postLinks);
 
-      response.write(await this.chunkExtractor.getCssString());
+      response.write(await (this.chunkExtractor as any).getCssString());
       response.write(this.htmlBits.postStyles);
 
       appStream.pipe(

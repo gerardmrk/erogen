@@ -20,5 +20,3 @@ export class EnhancedNavLink extends React.PureComponent<Props, State> {
     return <NavLink {...this.props} onClick={this.onClick} />;
   }
 }
-
-export default EnhancedNavLink;

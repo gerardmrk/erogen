@@ -17,7 +17,7 @@ export const initI18N = async (conf: WithConfig["config"]) => {
   await initI18nAsync(i18next, {
     initImmediate: false,
 
-    debug: true,
+    // debug: true,
 
     // saveMissing: true,
 
