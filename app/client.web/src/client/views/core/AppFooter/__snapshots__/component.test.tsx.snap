@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AppFooter/> snapshot 1`] = `
+<footer
+  className="main"
+>
+  <div
+    className="ui container container"
+  >
+    F O O T E R
+  </div>
+</footer>
+`;

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Auth } from "./component";
 import { withTranslationMock } from "@client/views/_fixtures_/withTranslationMock";
 import { ReactTestInstance, ReactTestRenderer } from "react-test-renderer";
-import { createRenderer } from "@client/views/_fixtures_/createRenderer";
+import { createRenderer } from "@client/views/_fixtures_/create-renderer";
 
 const Component = withTranslationMock()(Auth);
 

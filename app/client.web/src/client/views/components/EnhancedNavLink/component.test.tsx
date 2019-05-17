@@ -1,7 +1,7 @@
 import * as React from "react";
 import { EnhancedNavLink } from "./component";
 import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer";
-import { createRenderer } from "@client/views/_fixtures_/createRenderer";
+import { createRenderer } from "@client/views/_fixtures_/create-renderer";
 
 const Component = EnhancedNavLink;
 

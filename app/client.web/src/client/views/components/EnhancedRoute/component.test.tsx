@@ -4,7 +4,7 @@ const SNAPSHOT_ENABLED = true;
 
 import * as React from "react";
 import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer";
-import { createRenderer } from "@client/views/_fixtures_/createRenderer";
+import { createRenderer } from "@client/views/_fixtures_/create-renderer";
 import { EnhancedRoute } from "./component";
 import { mockAsyncRoute } from "@client/views/_fixtures_/mock-async-route";
 

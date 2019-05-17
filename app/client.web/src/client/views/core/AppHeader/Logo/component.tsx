@@ -24,5 +24,3 @@ export class Logo extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Logo;

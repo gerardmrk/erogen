@@ -68,5 +68,3 @@ export class HeadTags extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default HeadTags;

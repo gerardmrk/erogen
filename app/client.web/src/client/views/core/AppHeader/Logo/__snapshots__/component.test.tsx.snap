@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Logo/> snapshot 1`] = `
+<div
+  className="main"
+>
+  <a
+    href="/"
+    onClick={[Function]}
+  >
+    <img
+      alt="brand logo"
+      src="logo.svg"
+    />
+  </a>
+</div>
+`;

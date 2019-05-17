@@ -25,5 +25,3 @@ export class NavLink extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default NavLink;
