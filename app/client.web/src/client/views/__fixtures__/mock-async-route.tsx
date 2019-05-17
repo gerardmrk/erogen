@@ -6,5 +6,5 @@ export const mockAsyncRoute: RouteConf = {
   exact: true,
   guarded: false,
   prerender: true,
-  component: loadable(() => import("@client/views/_fixtures_/mock-component")),
+  component: loadable(() => import("@client/views/__fixtures__/mock-component")),
 };

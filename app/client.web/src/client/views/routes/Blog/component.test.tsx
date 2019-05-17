@@ -1,10 +1,10 @@
 import * as React from "react";
 import { withRouter } from "react-router";
 import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
-import { createRenderer } from "@client/views/_fixtures_/create-renderer";
+import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { Blog } from "./component";
-import { withTranslationMock } from "@client/views/_fixtures_/withtranslation-mock";
+import { withTranslationMock } from "@client/views/__fixtures__/withtranslation-mock";
 
 const Component = withTranslationMock()(withRouter(Blog));
 

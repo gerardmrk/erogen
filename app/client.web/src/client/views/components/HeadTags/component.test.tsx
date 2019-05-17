@@ -4,7 +4,7 @@ const SNAPSHOT_ENABLED = true;
 
 import * as React from "react";
 import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer";
-import { createRenderer } from "@client/views/_fixtures_/create-renderer";
+import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 import { HeadTags } from "./component";
 import { withConfig } from "@client/views/core/ConfigProvider";
 

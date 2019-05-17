@@ -10,7 +10,7 @@ module.exports = {
   roots: ["<rootDir>/src"],
   transform: {
     "^.+\\.tsx?$": "ts-jest",
-    "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/src/client/_fixtures_/jest.transform.non-ts.js",
+    "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/src/client/__fixtures__/jest.transform.non-ts.js",
   },
   testRegex: "((\\.|/)(test|spec))\\.tsx?$",
   testPathIgnorePatterns: [
@@ -22,7 +22,7 @@ module.exports = {
     "@client/(.*)$": "<rootDir>/src/client/$1",
     "@renderer/(.*)$": "<rootDir>/src/renderer/$1",
     "@server/(.*)$": "<rootDir>/src/server/$1",
-    // "@loadable/component": "<rootDir>/src/client/_fixtures_/jest.mock.loadable.js",
+    // "@loadable/component": "<rootDir>/src/client/__fixtures__/jest.mock.loadable.js",
   },
   globals: {
     "ts-jest": {

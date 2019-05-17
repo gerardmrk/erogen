@@ -1,9 +1,9 @@
 import * as React from "react";
 import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
-import { createRenderer } from "@client/views/_fixtures_/create-renderer";
+import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { ForgotPassword } from "./component";
-import { withTranslationMock } from "@client/views/_fixtures_/withtranslation-mock";
+import { withTranslationMock } from "@client/views/__fixtures__/withtranslation-mock";
 
 const Component = withTranslationMock()(ForgotPassword);
 
