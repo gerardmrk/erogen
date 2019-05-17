@@ -14,8 +14,8 @@ describe("<App/>", () => {
   let renderer: ReactTestRenderer;
   let component: ReactTestInstance;
 
-  beforeEach(() => {
-    renderer = createRenderer(<Component />);
+  beforeEach(async () => {
+    renderer = await createRenderer(<Component />);
     component = renderer.getInstance() as ReactTestInstance;
   });
 

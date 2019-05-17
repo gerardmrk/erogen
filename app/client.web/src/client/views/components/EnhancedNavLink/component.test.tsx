@@ -9,8 +9,8 @@ describe("<EnhancedNavLink/>", () => {
   let renderer: ReactTestRenderer;
   let component: ReactTestInstance;
 
-  beforeEach(() => {
-    renderer = createRenderer(<Component appHasUpdates={false} to={"/"} />);
+  beforeEach(async () => {
+    renderer = await createRenderer(<Component appHasUpdates={false} to={"/"} />);
     component = renderer.getInstance() as ReactTestInstance;
   });
 

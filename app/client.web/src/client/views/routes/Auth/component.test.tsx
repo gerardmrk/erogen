@@ -14,8 +14,8 @@ describe("<Auth/>", () => {
   let renderer: ReactTestRenderer;
   let component: ReactTestInstance | null;
 
-  beforeEach(() => {
-    renderer = createRenderer(<Component />);
+  beforeEach(async () => {
+    renderer = await createRenderer(<Component />);
     component = renderer.getInstance();
   });
 

@@ -12,12 +12,12 @@ export class GlobalMessage extends React.PureComponent<Props, State> {
   public render() {
     return (
       <div className={styles.main}>
-        <Message>
-          <Container>
+        <Container>
+          <Message>
             <Message.Header>{"HELLO"}</Message.Header>
             <Message.Content>{"HELLO"}</Message.Content>
-          </Container>
-        </Message>
+          </Message>
+        </Container>
       </div>
     );
   }

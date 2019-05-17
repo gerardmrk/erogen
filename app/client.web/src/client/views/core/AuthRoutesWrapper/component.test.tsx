@@ -14,8 +14,8 @@ describe("<AuthRoutesWrapper/>", () => {
   let renderer: ReactTestRenderer;
   let component: ReactTestInstance;
 
-  beforeEach(() => {
-    renderer = createRenderer(<Component title={"x"} />);
+  beforeEach(async () => {
+    renderer = await createRenderer(<Component title={"x"} />);
     component = renderer.getInstance() as ReactTestInstance;
   });
 
