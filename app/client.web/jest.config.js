@@ -20,6 +20,10 @@ module.exports = {
     "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/jest.transformer.js",
   },
   testRegex: "((\\.|/)(test|spec))\\.tsx?$",
+  testPathIgnorePatterns: [
+    "<rootDir>/src/client/views/core",
+    "<rootDir>/src/client/views/components",
+  ],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   moduleNameMapper: {
     ".+\\.(css|less|scss|sass)$": "identity-obj-proxy",

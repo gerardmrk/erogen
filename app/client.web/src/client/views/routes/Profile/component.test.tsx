@@ -2,7 +2,7 @@ import * as React from "react";
 import { create, ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
 
 import { Profile } from "./component";
-import { withTranslationMock } from "@client/views/_fixtures_/wrapper";
+import { withTranslationMock } from "@client/views/_fixtures_/withTranslationMock";
 
 const Component = withTranslationMock()(Profile);
 
