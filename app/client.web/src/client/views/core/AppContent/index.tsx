@@ -1,10 +1,11 @@
-import { withRouter } from "react-router";
+// import { withRouter } from "react-router";
 import { AppContent } from "./component";
+import { RouteComponentProps } from "react-router";
 
-export type LocalProps = {};
+export type LocalProps = {} & RouteComponentProps;
 
 export type StoreProps = {};
 
 export type DispatchProps = {};
 
-export default withRouter(AppContent);
+export default AppContent;

@@ -14,7 +14,6 @@ describe("<Auth/>", () => {
   });
 
   it("renders ok", () => {
-    expect(component).toExist();
-    expect(component).toHaveClassName("main");
+    expect(component).toBeDefined();
   });
 });
