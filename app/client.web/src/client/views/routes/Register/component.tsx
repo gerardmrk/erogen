@@ -31,5 +31,3 @@ export class Register extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Register;

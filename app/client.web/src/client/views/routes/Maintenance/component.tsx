@@ -30,5 +30,3 @@ export class Maintenance extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Maintenance;

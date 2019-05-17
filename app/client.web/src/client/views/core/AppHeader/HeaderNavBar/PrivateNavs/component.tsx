@@ -15,5 +15,3 @@ export class PrivateNavs extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default PrivateNavs;

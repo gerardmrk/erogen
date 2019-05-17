@@ -30,5 +30,3 @@ export class SettingsAccount extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default SettingsAccount;

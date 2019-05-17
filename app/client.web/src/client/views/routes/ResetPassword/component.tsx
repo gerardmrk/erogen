@@ -31,5 +31,3 @@ export class ResetPassword extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default ResetPassword;

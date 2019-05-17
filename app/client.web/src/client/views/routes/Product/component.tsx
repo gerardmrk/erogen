@@ -104,5 +104,3 @@ export class Product extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Product;

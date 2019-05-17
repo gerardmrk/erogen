@@ -23,5 +23,3 @@ export class GlobalLoader extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default GlobalLoader;

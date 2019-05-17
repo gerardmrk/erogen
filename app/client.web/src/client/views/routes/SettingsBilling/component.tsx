@@ -30,5 +30,3 @@ export class SettingsBilling extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default SettingsBilling;

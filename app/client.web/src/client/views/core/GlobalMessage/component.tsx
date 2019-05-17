@@ -15,5 +15,3 @@ export class GlobalMessage extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default GlobalMessage;

@@ -24,5 +24,3 @@ export class AppHeader extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default AppHeader;

@@ -32,5 +32,3 @@ export class AuthRoutesWrapper extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default AuthRoutesWrapper;

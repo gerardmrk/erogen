@@ -11,5 +11,3 @@ export class AuthNavs extends React.PureComponent<Props, State> {
     return <nav className={styles.main}>{"nav1 nav2 nav3"}</nav>;
   }
 }
-
-export default AuthNavs;

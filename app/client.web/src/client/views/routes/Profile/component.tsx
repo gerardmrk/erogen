@@ -30,5 +30,3 @@ export class Profile extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Profile;

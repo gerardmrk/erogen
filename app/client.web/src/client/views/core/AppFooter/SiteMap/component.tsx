@@ -15,5 +15,3 @@ export class SiteMap extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default SiteMap;

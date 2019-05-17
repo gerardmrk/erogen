@@ -15,5 +15,3 @@ export class LanguageSelector extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default LanguageSelector;

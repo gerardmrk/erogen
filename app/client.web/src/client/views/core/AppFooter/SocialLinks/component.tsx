@@ -15,5 +15,3 @@ export class SocialLinks extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default SocialLinks;

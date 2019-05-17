@@ -15,5 +15,3 @@ export class CopyRight extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default CopyRight;

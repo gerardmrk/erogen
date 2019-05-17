@@ -16,5 +16,3 @@ export class HeaderNavBar extends React.Component<Props, State> {
     );
   }
 }
-
-export default HeaderNavBar;

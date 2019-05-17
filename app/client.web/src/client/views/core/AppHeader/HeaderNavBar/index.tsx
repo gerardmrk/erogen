@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { State, Dispatcher } from "@client/store";
-import HeaderNavBar from "./component";
+import { HeaderNavBar } from "./component";
 
 export type LocalProps = {};
 

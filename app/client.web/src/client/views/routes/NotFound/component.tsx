@@ -34,5 +34,3 @@ export class NotFound extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default NotFound;

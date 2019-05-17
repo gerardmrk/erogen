@@ -30,5 +30,3 @@ export class BlogPost extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default BlogPost;

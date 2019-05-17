@@ -16,5 +16,3 @@ export class AppFooter extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default AppFooter;

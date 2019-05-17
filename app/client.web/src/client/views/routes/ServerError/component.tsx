@@ -34,5 +34,3 @@ export class ServerError extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default ServerError;
