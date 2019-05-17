@@ -24,6 +24,7 @@ module.exports = {
     "@server/(.*)$": "<rootDir>/src/server/$1",
     // "@loadable/component": "<rootDir>/src/client/__fixtures__/jest.mock.loadable.js",
   },
+  snapshotResolver: "<rootDir>/src/client/__fixtures__/jest.resolve.snapshots.js",
   globals: {
     "ts-jest": {
       // tsConfig: paths.tsconfigClientTest,
