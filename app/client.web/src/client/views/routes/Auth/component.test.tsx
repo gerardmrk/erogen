@@ -1,15 +1,17 @@
 import * as React from "react";
 import { Auth } from "./component";
 import { withTranslationMock } from "@client/views/_fixtures_/withTranslationMock";
-import { create, ReactTestInstance } from "react-test-renderer";
+import { ReactTestInstance, ReactTestRenderer } from "react-test-renderer";
+import { createRenderer } from "@client/views/_fixtures_/createRenderer";
 
 const Component = withTranslationMock()(Auth);
 
 describe("<Auth/>", () => {
+  let renderer: ReactTestRenderer;
   let component: ReactTestInstance | null;
 
   beforeEach(() => {
-    const renderer = createRenderer(<Component />);
+    renderer = createRenderer(<Component />);
     component = renderer.getInstance();
   });
 

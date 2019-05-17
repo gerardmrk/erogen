@@ -11,7 +11,9 @@ describe("<GlobalLoader/>", () => {
   let component: ReactTestInstance;
 
   beforeEach(() => {
-    renderer = create(<Component loading={false} message={"message"} />);
+    renderer = createRenderer(
+      <Component loading={false} message={"message"} />,
+    );
     component = renderer.getInstance() as ReactTestInstance;
   });
 

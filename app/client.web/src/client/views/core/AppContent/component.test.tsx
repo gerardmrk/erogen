@@ -12,7 +12,7 @@ describe("<AppContent/>", () => {
   let component: ReactTestInstance;
 
   beforeEach(() => {
-    renderer = create(
+    renderer = createRenderer(
       <MemoryRouter>
         <Component />
       </MemoryRouter>,

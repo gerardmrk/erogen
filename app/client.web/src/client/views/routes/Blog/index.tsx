@@ -5,8 +5,10 @@ import {
 import { RouteConf } from "@client/views/conf.routes";
 import { Blog } from "./component";
 import { Omit } from "utility-types";
+import { RouteComponentProps } from "react-router";
 
 export type LocalProps = WithTranslation &
+  RouteComponentProps &
   Omit<RouteConf, "component"> & {
     routes: RouteConf[];
   };

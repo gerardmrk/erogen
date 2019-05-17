@@ -1,3 +1,15 @@
+// available to both client and renderer
+declare const INJECTED_DEV_MODE: boolean;
+declare const INJECTED_PUBLIC_PATH: string;
+declare const INJECTED_TRANSLATIONS_PATH: string;
+declare const INJECTED_UNTRANSLATED_PATH: string;
+declare const INJECTED_APP_CONFIG: AppConfig;
+declare const INJECTED_APP_ENTRY_POINT_ID: string;
+declare const INJECTED_APP_MOUNT_POINT_ID: string;
+// available to renderer only
+declare const INJECTED_GENERATED_HTML: string;
+declare const INJECTED_ASYNC_MODULE_STATS: AsyncModuleStats;
+
 type AppConfig = {
   // [SEO] App's canonical URL.
   appUrl: string;

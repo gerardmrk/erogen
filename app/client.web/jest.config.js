@@ -5,24 +5,15 @@ const { paths } = require("./shared.paths");
 module.exports = {
   preset: "ts-jest",
   notify: !process.env.CI,
-  verbose: true,
+  verbose: false,
   rootDir: paths.rootDir,
   roots: ["<rootDir>/src"],
-  setupFiles: [
-    // "<rootDir>/jest.setup.[...].js"
-  ],
-  setupFilesAfterEnv: [
-    // "<rootDir>/node_modules/[...].js"
-  ],
-  // testEnvironment: "...",
   transform: {
     "^.+\\.tsx?$": "ts-jest",
     "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/jest.transformer.js",
   },
   testRegex: "((\\.|/)(test|spec))\\.tsx?$",
   testPathIgnorePatterns: [
-    "<rootDir>/src/client/views/core",
-    "<rootDir>/src/client/views/components",
   ],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   moduleNameMapper: {

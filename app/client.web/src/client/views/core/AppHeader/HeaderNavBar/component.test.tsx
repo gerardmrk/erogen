@@ -11,7 +11,7 @@ describe("<HeaderNavBar/>", () => {
   let component: ReactTestInstance;
 
   beforeEach(() => {
-    renderer = create(<Component isAuthenticated={true} />);
+    renderer = createRenderer(<Component isAuthenticated={true} />);
     component = renderer.getInstance() as ReactTestInstance;
   });
 

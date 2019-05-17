@@ -3,7 +3,6 @@ import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // p
 import { createRenderer } from "@client/views/_fixtures_/createRenderer";
 
 import { SocialLinks } from "./component";
-import { withTranslationMock } from "@client/views/_fixtures_/withTranslationMock";
 
 const Component = SocialLinks;
 
