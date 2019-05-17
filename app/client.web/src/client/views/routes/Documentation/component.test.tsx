@@ -1,5 +1,6 @@
 import * as React from "react";
-import { create, ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
+import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
+import { createRenderer } from "@client/views/_fixtures_/createRenderer";
 
 import { Documentation } from "./component";
 import { withTranslationMock } from "@client/views/_fixtures_/withTranslationMock";
@@ -11,7 +12,7 @@ describe("<Documentation/>", () => {
   let component: ReactTestInstance;
 
   beforeEach(() => {
-    renderer = create(<Component />);
+    renderer = createRenderer(<Component />);
     component = renderer.getInstance() as ReactTestInstance;
   });
 

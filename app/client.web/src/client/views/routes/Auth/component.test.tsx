@@ -9,7 +9,7 @@ describe("<Auth/>", () => {
   let component: ReactTestInstance | null;
 
   beforeEach(() => {
-    const renderer = create(<Component />);
+    const renderer = createRenderer(<Component />);
     component = renderer.getInstance();
   });
 
