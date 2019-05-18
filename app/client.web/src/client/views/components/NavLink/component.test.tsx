@@ -16,7 +16,7 @@ describe("<NavLink/>", () => {
   beforeEach(async () => {
     renderer = await createRenderer(<Component path={"/"} label={"Home"} />);
     component = renderer.getInstance() as ReactTestInstance;
-  });
+    await (component as any).componentDidMount();});
 
   if (SNAPSHOT_ENABLED) {
     test("snapshot", () => {

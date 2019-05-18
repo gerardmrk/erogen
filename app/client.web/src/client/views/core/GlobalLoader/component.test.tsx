@@ -19,6 +19,7 @@ describe("<GlobalLoader/>", () => {
       <Component loading={false} message={"message"} />,
     );
     component = renderer.getInstance() as ReactTestInstance;
+    await (component as any).componentDidMount();
   });
 
   if (SNAPSHOT_ENABLED) {

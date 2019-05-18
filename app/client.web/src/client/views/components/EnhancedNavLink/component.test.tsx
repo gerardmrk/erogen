@@ -12,7 +12,7 @@ describe("<EnhancedNavLink/>", () => {
   beforeEach(async () => {
     renderer = await createRenderer(<Component appHasUpdates={false} to={"/"} />);
     component = renderer.getInstance() as ReactTestInstance;
-  });
+    await (component as any).componentDidMount();});
 
   it("renders ok", () => {
     expect(component).toBeDefined();

@@ -30,6 +30,7 @@ describe("<GlobalMessage/>", () => {
       />,
     );
     component = renderer.getInstance() as ReactTestInstance;
+    await (component as any).componentDidMount();
   });
 
   if (SNAPSHOT_ENABLED) {

@@ -17,6 +17,7 @@ describe("<AppHeader/>", () => {
   beforeEach(async () => {
     renderer = await createRenderer(<Component isAuthenticated={true} />);
     component = renderer.getInstance() as ReactTestInstance;
+    await (component as any).componentDidMount();
   });
 
   if (SNAPSHOT_ENABLED) {

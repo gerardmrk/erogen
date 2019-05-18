@@ -19,7 +19,7 @@ describe("<Blog/>", () => {
   beforeEach(async () => {
     renderer = await createRenderer(<Component />);
     component = renderer.getInstance() as ReactTestInstance;
-  });
+    await (component as any).componentDidMount();});
 
   if (SNAPSHOT_ENABLED) {
     test("snapshot", () => {
