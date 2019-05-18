@@ -140,12 +140,11 @@ module.exports = async (args) => {
             historyApiFallback: true,
             watchOptions: { poll: true },
             stats: "errors-only",
-            setup: app => {
+            before: (app, server) => {
               app.use(bodyParser.json());
-              app.use(bodyParser.urlencoded());
+              app.use(bodyParser.urlencoded({ extended: false }));
               app.post(`${untranslatedPath.replace("{{ns}}", ":ns")}`, (req, res) => {
-                console.log(req.params);
-                console.log(req.body);
+                console.log(req.params, req.body);
                 res.status(201).end();
               });
             }

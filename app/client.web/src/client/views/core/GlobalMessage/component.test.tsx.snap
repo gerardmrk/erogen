@@ -8,16 +8,24 @@ exports[`<GlobalMessage/> snapshot 1`] = `
     className="ui container"
   >
     <div
-      className="ui floating info message"
+      className="ui blue floating icon message"
     >
+      <i
+        aria-hidden="true"
+        className="info circle icon"
+        onClick={[Function]}
+      />
       <div
-        className="ui container"
+        className="content"
       >
         <div
           className="content"
         >
           hello
         </div>
+        <ul
+          className="list"
+        />
       </div>
     </div>
   </div>

@@ -11,11 +11,20 @@ exports[`<App/> snapshot 1`] = `
       className="ui container"
     >
       <div
-        className="ui floating hidden info message"
+        className="ui blue floating hidden icon message"
       >
-        <div
-          className="ui container"
+        <i
+          aria-hidden="true"
+          className="info circle icon"
+          onClick={[Function]}
         />
+        <div
+          className="content"
+        >
+          <ul
+            className="list"
+          />
+        </div>
       </div>
     </div>
   </div>
