@@ -3,7 +3,7 @@ import { Middleware, MiddlewareAPI, ActionWithMeta } from ".";
 import * as actions from "@client/store/state/global-ui-loader/actions";
 
 // prettier-ignore
-export const globalUILoaderTrigger: Middleware = (api: MiddlewareAPI) => (next: Dispatcher) => (action: Action) => {
+export const uiLoaderTrigger: Middleware = (api: MiddlewareAPI) => (next: Dispatcher) => (action: Action) => {
   next(action);
 
   if (
@@ -21,4 +21,4 @@ export const globalUILoaderTrigger: Middleware = (api: MiddlewareAPI) => (next: 
   }
 };
 
-export default globalUILoaderTrigger;
+export default uiLoaderTrigger;

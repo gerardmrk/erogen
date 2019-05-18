@@ -7,6 +7,7 @@ import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // p
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { GlobalMessage } from "./component";
+import { MessageLevel } from "@client/store/state/global-ui-message";
 
 const Component = GlobalMessage;
 
@@ -15,7 +16,19 @@ describe("<GlobalMessage/>", () => {
   let component: ReactTestInstance;
 
   beforeEach(async () => {
-    renderer = await createRenderer(<Component />);
+    renderer = await createRenderer(
+      <Component
+        hide={() => {}}
+        msg={{
+          display: true,
+          level: MessageLevel.Info,
+          header: undefined,
+          content: "hello",
+          list: undefined,
+          autoDismiss: 500,
+        }}
+      />,
+    );
     component = renderer.getInstance() as ReactTestInstance;
   });
 

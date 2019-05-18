@@ -3,7 +3,7 @@ import { Middleware, MiddlewareAPI, ActionWithMeta } from ".";
 import * as actions from "@client/store/state/global-ui-message/actions";
 
 // prettier-ignore
-export const globalUIMessageTrigger: Middleware = (api: MiddlewareAPI) => (next: Dispatcher) => (action: Action) => {
+export const uiMessageTrigger: Middleware = (api: MiddlewareAPI) => (next: Dispatcher) => (action: Action) => {
   next(action);
 
   if (
@@ -25,4 +25,4 @@ export const globalUIMessageTrigger: Middleware = (api: MiddlewareAPI) => (next:
   }
 };
 
-export default globalUIMessageTrigger;
+export default uiMessageTrigger;

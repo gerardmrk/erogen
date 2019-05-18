@@ -15,7 +15,7 @@ export type DispatchProps = {
 };
 
 const mapStateToProps = (state: State, localProps: LocalProps): StoreProps => ({
-  msg: state.globalUIMessage,
+  msg: state.uiMessage,
 });
 
 const mapDispatchToProps = (dispatch: Dispatcher, localProps: LocalProps) => ({

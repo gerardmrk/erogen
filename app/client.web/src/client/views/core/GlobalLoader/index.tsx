@@ -12,8 +12,8 @@ export type StoreProps = {
 export type DispatchProps = {};
 
 const mapStateToProps = (state: State, localProps: LocalProps): StoreProps => ({
-  loading: state.globalUILoader.loading,
-  message: state.globalUILoader.message,
+  loading: state.uiLoader.loading,
+  message: state.uiLoader.message,
 });
 
 const mapDispatchToProps = (

@@ -5,27 +5,27 @@ import { IServices } from "@client/services";
 import { composeMiddleware } from "./middleware";
 import * as auth from "./state/auth";
 import * as i18n from "./state/i18n";
-import * as globalUILoader from "./state/global-ui-loader";
-import * as globalUIMessage from "./state/global-ui-message";
+import * as uiLoader from "./state/global-ui-loader";
+import * as uiMessage from "./state/global-ui-message";
 
 export type Store = _Store<State, Action>;
 export type State = StateType<typeof reducer>;
-export type Action = auth.Action | globalUILoader.Action | globalUIMessage.Action; // prettier-ignore
+export type Action = auth.Action | uiLoader.Action | uiMessage.Action; // prettier-ignore
 export type AsyncAction = ThunkAction<Promise<void>, State, IServices, Action>;
 export type Dispatcher = Dispatch<Action> & ThunkDispatch<State, IServices, Action>; // prettier-ignore
 
 type _State = {
   auth: auth.State;
   i18n: i18n.State;
-  globalUILoader: globalUILoader.State;
-  globalUIMessage: globalUIMessage.State;
+  uiLoader: uiLoader.State;
+  uiMessage: uiMessage.State;
 };
 
 const reducer: Reducer<_State, Action> = combineReducers({
   auth: auth.reducer,
   i18n: i18n.reducer,
-  globalUILoader: globalUILoader.reducer,
-  globalUIMessage: globalUIMessage.reducer,
+  uiLoader: uiLoader.reducer,
+  uiMessage: uiMessage.reducer,
 });
 
 export const storeCreator = (services: IServices, devMode: boolean = false) => (

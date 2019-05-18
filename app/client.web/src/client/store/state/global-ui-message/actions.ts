@@ -11,7 +11,7 @@ export type ShowPayload = {
 
 // prettier-ignore
 export const show = createAction(
-  "globalUIMessage.show",
+  "uiMessage.show",
   resolve => (payload: ShowPayload) => (resolve({
     level: payload.level || MessageLevel.Info,
     header: payload.header,
@@ -21,4 +21,4 @@ export const show = createAction(
   })),
 );
 
-export const hide = createAction("globalUIMessage.hide");
+export const hide = createAction("uiMessage.hide");
