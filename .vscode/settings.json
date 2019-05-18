@@ -82,6 +82,16 @@
       "icon": "git",
       "format": "svg",
       "extensions": [".hooks"]
+    },
+    {
+      "icon": "redux",
+      "format": "svg",
+      "extensions": ["store"]
+    },
+    {
+      "icon": "api",
+      "format": "svg",
+      "extensions": ["sdk", "sdks"]
     }
   ]
 }
