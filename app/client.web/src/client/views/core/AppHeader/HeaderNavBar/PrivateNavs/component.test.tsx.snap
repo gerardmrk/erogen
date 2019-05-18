@@ -5,9 +5,61 @@ exports[`<PrivateNavs/> snapshot 1`] = `
   className="main"
 >
   <div
-    className="container"
+    className="navs"
   >
-    PrivateNavs
+    navs
+  </div>
+  <div
+    className="userdropdown"
+  >
+    <div
+      aria-expanded={false}
+      className="ui dropdown"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      role="listbox"
+      tabIndex={0}
+    >
+      <div
+        aria-live="polite"
+        className="text"
+        role="alert"
+      />
+      <i
+        aria-hidden="true"
+        className="user circle icon"
+        onClick={[Function]}
+      />
+      <div
+        className="menu transition"
+      >
+        <div
+          className="header"
+        >
+          User
+        </div>
+        <div
+          className="divider"
+        />
+        <div
+          className="item"
+          onClick={[Function]}
+          role="option"
+        >
+          Settings
+        </div>
+        <div
+          className="item"
+          onClick={[Function]}
+          role="option"
+        >
+          Logout
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;

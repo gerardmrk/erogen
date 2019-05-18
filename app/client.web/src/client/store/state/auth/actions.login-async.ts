@@ -31,7 +31,7 @@ export const login = (
           level: MessageLevel.Success,
           header: "Success!",
           content: "You're now logged in.",
-          autoDismiss: 1200,
+          autoDismiss: 1000,
         },
       }),
     );

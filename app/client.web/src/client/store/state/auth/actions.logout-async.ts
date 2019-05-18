@@ -2,6 +2,7 @@ import { Dispatcher, State } from "@client/store";
 import { IServices } from "@client/services";
 import * as actions from "./actions";
 import { MessageLevel } from "../global-ui-message";
+import { sleep } from "@client/utils/sleep";
 
 export const logout = () => async (
   dispatch: Dispatcher,
@@ -11,14 +12,17 @@ export const logout = () => async (
   try {
     dispatch(actions.logoutPending({ loader: "Logging out..." }));
 
+    await sleep(1000);
+
     await services.auth.logout();
 
     dispatch(
       actions.logoutSuccess({
         loader: false,
         message: {
-          level: MessageLevel.Success,
-          content: "You've been logged out",
+          level: MessageLevel.Info,
+          content: "You've been logged out.",
+          autoDismiss: 800,
         },
       }),
     );

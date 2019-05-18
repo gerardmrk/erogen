@@ -46,7 +46,7 @@ export const reducer: Reducer<_State, Action> = (
       return state;
 
     case getType(actions.logoutSuccess):
-      return defaultState;
+      return { isAuthenticated: false, authKeys: undefined };
 
     case getType(actions.logoutFailure):
       return state;
@@ -55,3 +55,13 @@ export const reducer: Reducer<_State, Action> = (
       return state;
   }
 };
+
+// interface Red<S, A extends Action> {
+//   [k: string]: (state: S, action: A) => S;
+// }
+
+// const xo: Red<State, Action> = {
+//   [getType(actions.loginSuccess)]: (state, action) => {
+//     return state;
+//   },
+// };
