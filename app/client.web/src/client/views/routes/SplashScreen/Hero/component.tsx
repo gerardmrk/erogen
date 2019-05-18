@@ -1,7 +1,7 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
 import Container from "@client/views/components/ui.elements/Container";
-import { LocalProps } from ".";
+import { LocalProps } from "../Hero";
 
 type Props = LocalProps;
 

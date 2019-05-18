@@ -6,19 +6,20 @@ import * as React from "react";
 import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
-import { Landing } from "./component";
+import { SplashScreen } from "./component";
 import { withTranslationMock } from "@client/views/__fixtures__/withtranslation-mock";
 
-const Component = withTranslationMock()(Landing);
+const Component = withTranslationMock()(SplashScreen);
 
-describe("<Landing/>", () => {
+describe("<SplashScreen/>", () => {
   let renderer: ReactTestRenderer;
   let component: ReactTestInstance;
 
   beforeEach(async () => {
     renderer = await createRenderer(<Component />);
     component = renderer.getInstance() as ReactTestInstance;
-    await (component as any).componentDidMount();});
+    await (component as any).componentDidMount();
+  });
 
   if (SNAPSHOT_ENABLED) {
     test("snapshot", () => {

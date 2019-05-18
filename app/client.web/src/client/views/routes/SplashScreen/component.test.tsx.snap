@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Landing/> snapshot 1`] = `
+exports[`<SplashScreen/> snapshot 1`] = `
 <div
   className="main"
 >

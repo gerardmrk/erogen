@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<HomeFeed/> snapshot 1`] = `
+exports[`<Home/> snapshot 1`] = `
 <div
   className="main"
 >
@@ -8,7 +8,7 @@ exports[`<HomeFeed/> snapshot 1`] = `
     className="ui container"
   >
     <h1>
-      HomeFeed
+      Home
     </h1>
   </div>
 </div>

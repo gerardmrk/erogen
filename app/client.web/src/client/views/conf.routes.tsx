@@ -62,7 +62,7 @@ export const routeConfs: RouteConf[] = [
     guarded: false,
     prerender: true,
     defaultPublicRoute: true,
-    component: loadable(() => import("@client/views/routes/Landing")),
+    component: loadable(() => import("@client/views/routes/Home")),
   },
   {
     path: "/about/product",
@@ -135,13 +135,6 @@ export const routeConfs: RouteConf[] = [
     guarded: true,
     prerender: false,
     component: loadable(() => import("@client/views/routes/Dashboard")),
-  },
-  {
-    path: "/feed",
-    exact: true,
-    guarded: true,
-    prerender: false,
-    component: loadable(() => import("@client/views/routes/HomeFeed")),
   },
   {
     path: "/settings",
