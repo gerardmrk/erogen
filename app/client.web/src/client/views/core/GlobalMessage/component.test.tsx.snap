@@ -5,10 +5,15 @@ exports[`<GlobalMessage/> snapshot 1`] = `
   className="main"
 >
   <div
-    className="ui container"
+    className="ui container fade down visible transition"
+    style={
+      Object {
+        "animationDuration": undefined,
+      }
+    }
   >
     <div
-      className="ui blue floating icon message"
+      className="ui floating icon info message"
     >
       <i
         aria-hidden="true"

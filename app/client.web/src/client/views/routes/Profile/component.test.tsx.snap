@@ -4,8 +4,12 @@ exports[`<Profile/> snapshot 1`] = `
 <div
   className="main"
 >
-  <h1>
-    Profile
-  </h1>
+  <div
+    className="ui container"
+  >
+    <h1>
+      Profile
+    </h1>
+  </div>
 </div>
 `;

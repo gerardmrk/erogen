@@ -1,6 +1,7 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
 import HeadTags from "@client/views/components/HeadTags";
+import Container from "@client/views/components/ui.elements/Container";
 import { LocalProps } from ".";
 
 export type Props = LocalProps;
@@ -24,7 +25,9 @@ export class Auth extends React.PureComponent<Props, State> {
         />
 
         <div className={styles.main}>
-          <h1>{"Auth"}</h1>
+          <Container>
+            <h1>{"Auth"}</h1>
+          </Container>
         </div>
       </React.Fragment>
     );

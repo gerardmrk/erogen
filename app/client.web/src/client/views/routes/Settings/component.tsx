@@ -2,6 +2,7 @@ import * as React from "react";
 import styles from "./component.styles.scss";
 import { LocalProps } from ".";
 import HeadTags from "@client/views/components/HeadTags";
+import Container from "@client/views/components/ui.elements/Container";
 
 type Props = LocalProps;
 
@@ -24,7 +25,9 @@ export class Settings extends React.PureComponent<Props, State> {
         />
 
         <div className={styles.main}>
-          <h1>{"Settings"}</h1>
+          <Container>
+            <h1>{"Settings"}</h1>
+          </Container>
         </div>
       </React.Fragment>
     );

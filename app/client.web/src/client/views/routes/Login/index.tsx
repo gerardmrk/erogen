@@ -7,8 +7,11 @@ import { Login } from "./component";
 import { Omit } from "utility-types";
 import { State, Dispatcher } from "@client/store";
 import { connect } from "react-redux";
+import { RouteComponentProps } from "react-router";
 
-export type LocalProps = WithTranslation & Omit<RouteConf, "component"> & {};
+export type LocalProps = WithTranslation &
+  RouteComponentProps &
+  Omit<RouteConf, "component"> & {};
 
 export type StoreProps = {
   isAuthenticated: boolean;
