@@ -5,11 +5,102 @@ exports[`<Home/> snapshot 1`] = `
   className="main"
 >
   <div
-    className="ui container"
+    className="main"
   >
-    <h1>
-      Home
-    </h1>
+    <section
+      className="main"
+    >
+      <div
+        className="ui container container"
+      >
+        <div
+          className="canvas"
+        >
+          <div
+            className="leftPane"
+          >
+            <h1>
+              <em>
+                Where Is My Mind?
+              </em>
+            </h1>
+            <div
+              className="fluff"
+            >
+              <p>
+                Designer Drugs Et Al.
+              </p>
+              <br />
+              <p>
+                Alpha bravo charlie delta echo foxtrot golf
+              </p>
+              <br />
+              <p>
+                Hotel india juliet kilo lima mike november oscar papa
+              </p>
+              <br />
+              <p>
+                Quebec romeo sierra tango unicorn victor whiskey x-ray yankee zulu
+              </p>
+            </div>
+          </div>
+          <div
+            className="rightPane"
+          >
+            <div>
+              Nothing to see here
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section
+      className="main"
+    >
+      <div
+        className="ui container container"
+      >
+        <div
+          className="brandCarousel"
+        >
+          <div
+            className="brandItem"
+          >
+            <p>
+              Smashing
+            </p>
+          </div>
+          <div
+            className="brandItem"
+          >
+            <p>
+              Pumpkins
+            </p>
+          </div>
+          <div
+            className="brandItem"
+          >
+            <p>
+              2077 :(
+            </p>
+          </div>
+          <div
+            className="brandItem"
+          >
+            <p>
+              Arabian
+            </p>
+          </div>
+          <div
+            className="brandItem"
+          >
+            <p>
+              Nights
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </div>
 `;

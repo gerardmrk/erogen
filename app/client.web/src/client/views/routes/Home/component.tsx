@@ -1,10 +1,13 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
-import { LocalProps } from ".";
+import { LocalProps, StoreProps, DispatchProps } from ".";
 import HeadTags from "@client/views/components/HeadTags";
-import Container from "@client/views/components/ui.elements/Container";
+import loadable from "@loadable/component";
 
-type Props = LocalProps;
+const Dashboard = loadable(() => import("@client/views/routes/Home/Dashboard"));
+const SplashScreen = loadable(() => import("@client/views/routes/Home/SplashScreen")); // prettier-ignore
+
+type Props = LocalProps & StoreProps & DispatchProps;
 
 type State = {};
 
@@ -25,9 +28,7 @@ export class Home extends React.PureComponent<Props, State> {
         />
 
         <div className={styles.main}>
-          <Container>
-            <h1>{"Home"}</h1>
-          </Container>
+          {this.props.isAuthenticated ? <Dashboard /> : <SplashScreen />}
         </div>
       </React.Fragment>
     );
