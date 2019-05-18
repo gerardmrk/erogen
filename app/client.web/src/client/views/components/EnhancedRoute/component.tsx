@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Route as BaseRoute, Redirect } from "react-router-dom"; // prettier-ignore
 import { LocalProps, StoreProps, DispatchProps } from ".";
-import { DEFAULT_PRIVATE_PATH } from "@client/views/conf.routes"; // prettier-ignore
 
 export type Props = LocalProps & StoreProps & DispatchProps;
 
@@ -27,7 +26,7 @@ export class EnhancedRoute extends React.Component<Props, State> {
     if (props.location && props.location.pathname) {
       fromRoute = `${props.location.pathname}${props.location.search || ""}`
     } else {
-      fromRoute = DEFAULT_PRIVATE_PATH
+      fromRoute = "/"
     }
 
     this.redirectTo.state.from = fromRoute;

@@ -1,5 +1,5 @@
 {
-  "description": "Sign up for {{appName}}",
-  "form-heading": "Register",
-  "title": "Register"
+	"description": "Sign up for {{appName}}",
+	"form-heading": "Register",
+	"title": "Register"
 }

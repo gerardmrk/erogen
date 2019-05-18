@@ -26,12 +26,8 @@ export const headerNavsPublic = [
 
 export const headerNavsPrivate = [
   {
-    label: "Home",
-    to: "/feed",
-  },
-  {
     label: "Dashboard",
-    to: "/dashboard",
+    to: "/",
   },
 ];
 

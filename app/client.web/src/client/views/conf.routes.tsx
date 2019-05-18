@@ -37,10 +37,6 @@ export type RouteConf<P = any> = {
 
 export const ROUTE_CHUNK_NAME_PREFIX = "client-views-routes-";
 
-export const LOGIN_PATH = "/login";
-export const DEFAULT_PUBLIC_PATH = "/";
-export const DEFAULT_PRIVATE_PATH = "/dashboard";
-
 /**
  * IMPORTANT RULES:
  * - only the last route is allowed to have a non-specified path.
@@ -57,7 +53,7 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/Login")),
   },
   {
-    path: DEFAULT_PUBLIC_PATH,
+    path: "/",
     exact: true,
     guarded: false,
     prerender: true,
@@ -128,13 +124,6 @@ export const routeConfs: RouteConf[] = [
     guarded: false,
     prerender: true,
     component: loadable(() => import("@client/views/routes/Auth")),
-  },
-  {
-    path: DEFAULT_PRIVATE_PATH,
-    exact: true,
-    guarded: true,
-    prerender: false,
-    component: loadable(() => import("@client/views/routes/Dashboard")),
   },
   {
     path: "/settings",
