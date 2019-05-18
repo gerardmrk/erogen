@@ -4,7 +4,7 @@ import { MessageLevel } from ".";
 export type ShowPayload = {
   level?: MessageLevel;
   header?: TKey;
-  content: TKey;
+  content?: TKey;
   list?: TKey[];
   autoDismiss?: false | number;
 };

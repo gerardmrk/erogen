@@ -8,21 +8,14 @@ exports[`<App/> snapshot 1`] = `
     className="main"
   >
     <div
-      className="ui floating hidden info message"
+      className="ui container"
     >
       <div
-        className="ui text container"
+        className="ui floating hidden info message"
       >
         <div
-          className="header"
-        >
-          AUTODISMISS
-        </div>
-        <div
-          className="content"
-        >
-          AUTODISMISS
-        </div>
+          className="ui container"
+        />
       </div>
     </div>
   </div>

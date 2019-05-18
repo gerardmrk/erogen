@@ -9,8 +9,6 @@ type Props = LocalProps & StoreProps & DispatchProps;
 type State = {};
 
 export class GlobalMessage extends React.PureComponent<Props, State> {
-  public componentDidMount() {}
-
   public componentDidUpdate(prevProps: Props) {
     if (this.props.msg.display && this.props.msg.autoDismiss !== false) {
       setTimeout(() => {
@@ -23,30 +21,57 @@ export class GlobalMessage extends React.PureComponent<Props, State> {
     this.props.hide();
   };
 
+  // prettier-ignore
   public render() {
     const { msg } = this.props;
+
+    const body = (
+      <Container>
+        {msg.header && (
+          <Message.Header>{msg.header}</Message.Header>
+        )}
+
+        {msg.content && (
+          <Message.Content>{msg.content}</Message.Content>
+        )}
+
+        {msg.list && (
+          <Message.List>
+            {msg.list.map((item, i) => (
+              <Message.Item key={i}>{item}</Message.Item>
+            ))}
+          </Message.List>
+        )}
+      </Container>
+    );
 
     if (msg.autoDismiss === false && msg.display) {
       return (
         <div className={styles.main}>
-          <Message floating={true} info={true} onDismiss={this.onDismiss}>
-            <Container text={true}>
-              <Message.Header>{"HELLO"}</Message.Header>
-              <Message.Content>{"HELLO"}</Message.Content>
-            </Container>
-          </Message>
+          <Container>
+            <Message
+              floating={true}
+              info={true}
+              onDismiss={this.onDismiss}
+            >
+              {body}
+            </Message>
+          </Container>
         </div>
       );
     }
 
     return (
       <div className={styles.main}>
-        <Message hidden={!msg.display} floating={true} info={true}>
-          <Container text={true}>
-            <Message.Header>{"AUTODISMISS"}</Message.Header>
-            <Message.Content>{"AUTODISMISS"}</Message.Content>
-          </Container>
-        </Message>
+        <Container>
+          <Message
+            hidden={!msg.display}
+            floating={true}
+            info={true}
+          >
+            {body}
+          </Message>
+        </Container>
       </div>
     );
   }

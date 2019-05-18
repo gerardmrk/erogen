@@ -18,7 +18,7 @@ export const logout = () => async (
         loader: false,
         message: {
           level: MessageLevel.Success,
-          message: "You've been logged out",
+          content: "You've been logged out",
         },
       }),
     );
@@ -28,7 +28,7 @@ export const logout = () => async (
         loader: false,
         message: {
           level: MessageLevel.Error,
-          message: err.message,
+          content: err.message,
         },
       }),
     );

@@ -29,7 +29,8 @@ export const login = (
         loader: false,
         message: {
           level: MessageLevel.Success,
-          message: "Successfully logged in",
+          header: "Success!",
+          content: "You're now logged in.",
         },
       }),
     );
@@ -39,7 +40,7 @@ export const login = (
         loader: false,
         message: {
           level: MessageLevel.Error,
-          message: err.message,
+          content: err.message,
         },
       }),
     );
