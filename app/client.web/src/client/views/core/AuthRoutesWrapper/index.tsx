@@ -1,7 +1,7 @@
 import { AuthRoutesWrapper } from "./component";
 
 export type LocalProps = {
-  title: TranslationKey;
+  title: TKey;
 };
 
 export type StoreProps = {};

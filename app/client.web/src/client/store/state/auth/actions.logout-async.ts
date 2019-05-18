@@ -1,7 +1,7 @@
 import { Dispatcher, State } from "@client/store";
 import { IServices } from "@client/services";
 import * as actions from "./actions";
-import { MessageType } from "../global-ui-message";
+import { MessageLevel } from "../global-ui-message";
 
 export const logout = () => async (
   dispatch: Dispatcher,
@@ -9,15 +9,15 @@ export const logout = () => async (
   services: IServices,
 ) => {
   try {
-    dispatch(actions.logoutPending({ triggerLoader: "Logging out..." }));
+    dispatch(actions.logoutPending({ loader: "Logging out..." }));
 
     await services.auth.logout();
 
     dispatch(
       actions.logoutSuccess({
-        triggerLoader: false,
-        triggerMessage: {
-          messageType: MessageType.Success,
+        loader: false,
+        message: {
+          level: MessageLevel.Success,
           message: "You've been logged out",
         },
       }),
@@ -25,9 +25,9 @@ export const logout = () => async (
   } catch (err) {
     dispatch(
       actions.logoutFailure(<Error>err, {
-        triggerLoader: false,
-        triggerMessage: {
-          messageType: MessageType.Error,
+        loader: false,
+        message: {
+          level: MessageLevel.Error,
           message: err.message,
         },
       }),

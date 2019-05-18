@@ -17,10 +17,10 @@ type AppConfig = {
   appName: string;
   // [SEO] App's main description, and
   // default value to use if none provided by the current route.
-  appDescription: TranslationKey | string;
+  appDescription: TKey | string;
   // [SEO] App's main keywords, in comma-separated list, and
   // default value to use if none provided by the current route.
-  appKeywords?: TranslationKey | string;
+  appKeywords?: TKey | string;
   // [SEO] App's main image, in PNG format (500x500 at least), and
   // default value to use if none provided by the current route.
   appImagePath: string;
@@ -34,7 +34,7 @@ type AppConfig = {
   supportedLanguages: string[];
 };
 
-type TranslationKey = string;
+type TKey = string;
 
 interface Window {
   // Whether the app was built/configured specifically for SSR. Use

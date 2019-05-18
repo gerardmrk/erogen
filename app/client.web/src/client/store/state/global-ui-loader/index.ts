@@ -12,7 +12,7 @@ export type Action = ActionType<typeof actions>;
 
 type _State = DeepReadonly<{
   loading: boolean;
-  message: TranslationKey | undefined;
+  message: TKey | undefined;
 }>;
 
 // =============================================================================

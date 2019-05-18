@@ -8,7 +8,7 @@ exports[`<GlobalMessage/> snapshot 1`] = `
     className="ui container"
   >
     <div
-      className="ui message"
+      className="ui hidden message"
     >
       <div
         className="header"

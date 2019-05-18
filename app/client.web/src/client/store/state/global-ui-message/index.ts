@@ -7,7 +7,7 @@ import * as actions from "./actions";
 // =============================================================================
 // types
 
-export enum MessageType {
+export enum MessageLevel {
   Info,
   Warn,
   Error,
@@ -20,33 +20,43 @@ export type State = StateType<typeof reducer>;
 export type Action = ActionType<typeof actions>;
 
 type _State = DeepReadonly<{
-  messageType: MessageType;
-  message: TranslationKey | undefined;
-  autoDismiss: boolean;
-  duration: number;
+  display: boolean;
+  level: MessageLevel;
+  header: TKey | undefined;
+  content: TKey | undefined;
+  list: TKey[] | undefined;
+  autoDismiss: false | number;
 }>;
 
 // =============================================================================
 // reducer
 
 const defaultState = {
-  messageType: MessageType.Info,
-  message: undefined,
-  autoDismiss: true,
-  duration: 2000,
+  display: false,
+  level: MessageLevel.Info,
+  header: undefined,
+  content: undefined,
+  list: undefined,
+  autoDismiss: 1800,
 };
 
 export const reducer: Reducer<_State, Action> = (
   state = defaultState,
   action,
-) => {
+): State => {
   switch (action.type) {
     case getType(actions.show):
-      const { message, messageType } = action.payload;
-      return { ...state, message, messageType };
+      return { ...state, ...action.payload, display: true };
 
     case getType(actions.hide):
-      return defaultState;
+      return {
+        display: false,
+        level: MessageLevel.Info,
+        header: undefined,
+        content: undefined,
+        list: undefined,
+        autoDismiss: 1800,
+      };
 
     default:
       return state;

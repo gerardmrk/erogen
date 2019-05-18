@@ -1,8 +1,8 @@
 import { Dispatcher, State } from "@client/store";
 import { IServices } from "@client/services";
 import * as actions from "./actions";
-import { MessageType } from "../global-ui-message";
 import { sleep } from "@client/utils/sleep";
+import { MessageLevel } from "../global-ui-message";
 
 export const login = (
   alias: string,
@@ -14,7 +14,7 @@ export const login = (
   services: IServices,
 ) => {
   try {
-    dispatch(actions.loginPending({ triggerLoader: "Logging in..." }));
+    dispatch(actions.loginPending({ loader: "Logging in..." }));
 
     await sleep(2000);
 
@@ -26,19 +26,19 @@ export const login = (
 
     dispatch(
       actions.loginSuccess(authKeys, {
-        triggerLoader: false,
-        triggerMessage: {
-          messageType: MessageType.Success,
-          message: "Success",
+        loader: false,
+        message: {
+          level: MessageLevel.Success,
+          message: "Successfully logged in",
         },
       }),
     );
   } catch (err) {
     dispatch(
       actions.loginFailure(<Error>err, {
-        triggerLoader: false,
-        triggerMessage: {
-          messageType: MessageType.Error,
+        loader: false,
+        message: {
+          level: MessageLevel.Error,
           message: err.message,
         },
       }),
