@@ -13,7 +13,7 @@ export class GlobalMessage extends React.PureComponent<Props, State> {
     return (
       <div className={styles.main}>
         <Container>
-          <Message>
+          <Message hidden={true}>
             <Message.Header>{"HELLO"}</Message.Header>
             <Message.Content>{"HELLO"}</Message.Content>
           </Message>
