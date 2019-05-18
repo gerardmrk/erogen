@@ -12,7 +12,6 @@ export enum MessageLevel {
   Warn,
   Error,
   Success,
-  Failure,
   Important,
 }
 
@@ -31,13 +30,15 @@ type _State = {
 // =============================================================================
 // reducer
 
+export const DEFAULT_TTL = 2000;
+
 const defaultState = {
   display: false,
   level: MessageLevel.Info,
   header: undefined,
   content: undefined,
   list: [],
-  autoDismiss: 1800,
+  autoDismiss: DEFAULT_TTL,
 };
 
 export const reducer: Reducer<_State, Action> = (
@@ -54,12 +55,9 @@ export const reducer: Reducer<_State, Action> = (
 
     case getType(actions.hide):
       return {
+        ...state,
         display: false,
-        level: MessageLevel.Info,
-        header: undefined,
-        content: undefined,
-        list: undefined,
-        autoDismiss: 1800,
+        autoDismiss: DEFAULT_TTL,
       };
 
     default:

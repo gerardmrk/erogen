@@ -1,5 +1,5 @@
 import { createAction } from "typesafe-actions";
-import { MessageLevel } from ".";
+import { MessageLevel, DEFAULT_TTL } from ".";
 
 export type ShowPayload = {
   level?: MessageLevel;
@@ -18,7 +18,7 @@ export const show = createAction(
     content: payload.content,
     list: payload.list,
     autoDismiss: typeof payload.autoDismiss === "undefined"
-      ? 1800
+      ? DEFAULT_TTL
       : payload.autoDismiss
   })),
 );

@@ -1,6 +1,7 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
 import Container from "@client/views/components/ui.elements/Container";
+import Transition from "@client/views/components/ui.modules/Transition";
 import Message, { UiColors } from "@client/views/components/ui.collections/Message"; // prettier-ignore
 import Icon, { UiIcons } from "@client/views/components/ui.elements/Icon";
 import { MessageLevel } from "@client/store/state/global-ui-message";
@@ -12,18 +13,16 @@ const iconMappings = new Map<MessageLevel, UiIcons>([
   [MessageLevel.Warn, "warning circle"],
   [MessageLevel.Error, "exclamation triangle"],
   [MessageLevel.Success, "check circle"],
-  [MessageLevel.Failure, "exclamation triangle"],
   [MessageLevel.Important, "bell outline"],
 ]);
 
-const colorMappings = new Map<MessageLevel, UiColors>([
+const colorMappings = new Map<MessageLevel, UiColors | undefined>([
   [MessageLevel.Pending, "teal"],
-  [MessageLevel.Info, "blue"],
-  [MessageLevel.Warn, "yellow"],
-  [MessageLevel.Error, "red"],
-  [MessageLevel.Success, "green"],
-  [MessageLevel.Failure, "orange"],
-  [MessageLevel.Important, "purple"],
+  [MessageLevel.Info, undefined],
+  [MessageLevel.Warn, undefined],
+  [MessageLevel.Error, undefined],
+  [MessageLevel.Success, undefined],
+  [MessageLevel.Important, "pink"],
 ]);
 
 type Props = LocalProps & StoreProps & DispatchProps;
@@ -39,52 +38,53 @@ export class GlobalMessage extends React.PureComponent<Props, State> {
     }
   }
 
-  // prettier-ignore
   public render() {
     const { msg } = this.props;
 
-    const onDismissHandler = msg.autoDismiss === false
-      ? this.props.hide
-      : undefined;
+    const onDismissHandler =
+      msg.autoDismiss === false ? this.props.hide : undefined;
 
     return (
       <div className={styles.main}>
-        <Container>
-          <Message
-            icon={true}
-            hidden={!msg.display}
-            floating={true}
-            color={colorMappings.get(msg.level)}
-            onDismiss={onDismissHandler}
-          >
-            <Icon
-              name={iconMappings.get(msg.level)}
-              loading={msg.level === MessageLevel.Pending}
-            />
+        <Transition
+          visible={msg.display}
+          animation={"fade down"}
+          duration={500}
+        >
+          <Container>
+            <Message
+              icon={true}
+              floating={true}
+              info={msg.level === MessageLevel.Info}
+              warning={msg.level === MessageLevel.Warn}
+              positive={msg.level === MessageLevel.Success}
+              negative={msg.level === MessageLevel.Error}
+              color={colorMappings.get(msg.level)}
+              onDismiss={onDismissHandler}
+            >
+              <Icon
+                name={iconMappings.get(msg.level)}
+                loading={msg.level === MessageLevel.Pending}
+              />
 
-            <Message.Content>
-              {msg.header && (
-                <Message.Header>
-                  {msg.header}
-                </Message.Header>
-              )}
+              <Message.Content>
+                {msg.header && <Message.Header>{msg.header}</Message.Header>}
 
-              {msg.content && (
-                <Message.Content>
-                  {msg.content}
-                </Message.Content>
-              )}
+                {msg.content && (
+                  <Message.Content>{msg.content}</Message.Content>
+                )}
 
-              {msg.list && (
-                <Message.List>
-                  {msg.list.map((item, i) => (
-                    <Message.Item key={i}>{item}</Message.Item>
-                  ))}
-                </Message.List>
-              )}
-            </Message.Content>
-          </Message>
-        </Container>
+                {msg.list && (
+                  <Message.List>
+                    {msg.list.map((item, i) => (
+                      <Message.Item key={i}>{item}</Message.Item>
+                    ))}
+                  </Message.List>
+                )}
+              </Message.Content>
+            </Message>
+          </Container>
+        </Transition>
       </div>
     );
   }
