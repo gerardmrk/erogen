@@ -16,7 +16,7 @@ export const login = (
   try {
     dispatch(actions.loginPending({ loader: "Logging in..." }));
 
-    await sleep(2000);
+    await sleep(1000);
 
     const { authKeys } = await services.auth.login({
       alias,

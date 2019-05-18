@@ -24,7 +24,7 @@ describe("<GlobalMessage/>", () => {
           level: MessageLevel.Info,
           header: undefined,
           content: "hello",
-          list: undefined,
+          list: [],
           autoDismiss: 500,
         }}
       />,

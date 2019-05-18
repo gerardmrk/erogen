@@ -1,5 +1,4 @@
 import { Reducer } from "redux";
-import { DeepReadonly } from "utility-types";
 import { ActionType, getType, StateType } from "typesafe-actions";
 
 import * as actions from "./actions";
@@ -8,6 +7,7 @@ import * as actions from "./actions";
 // types
 
 export enum MessageLevel {
+  Pending = 1,
   Info,
   Warn,
   Error,
@@ -19,14 +19,14 @@ export enum MessageLevel {
 export type State = StateType<typeof reducer>;
 export type Action = ActionType<typeof actions>;
 
-type _State = DeepReadonly<{
+type _State = {
   display: boolean;
   level: MessageLevel;
   header: TKey | undefined;
   content: TKey | undefined;
   list: TKey[] | undefined;
   autoDismiss: false | number;
-}>;
+};
 
 // =============================================================================
 // reducer
@@ -36,7 +36,7 @@ const defaultState = {
   level: MessageLevel.Info,
   header: undefined,
   content: undefined,
-  list: undefined,
+  list: [],
   autoDismiss: 1800,
 };
 
@@ -46,7 +46,11 @@ export const reducer: Reducer<_State, Action> = (
 ): State => {
   switch (action.type) {
     case getType(actions.show):
-      return { ...state, ...action.payload, display: true };
+      return {
+        ...state,
+        ...action.payload,
+        display: true,
+      } as _State;
 
     case getType(actions.hide):
       return {

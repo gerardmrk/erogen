@@ -17,7 +17,9 @@ export const show = createAction(
     header: payload.header,
     content: payload.content,
     list: payload.list,
-    autoDismiss: payload.autoDismiss || 1800
+    autoDismiss: typeof payload.autoDismiss === "undefined"
+      ? 1800
+      : payload.autoDismiss
   })),
 );
 

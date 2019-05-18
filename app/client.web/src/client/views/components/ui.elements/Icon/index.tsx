@@ -4,5 +4,7 @@
  * --> https://react.semantic-ui.com/elements/icon/
  */
 import "semantic-ui-less/definitions/elements/icon.less";
-import { Icon } from "semantic-ui-react";
+import { Icon, SemanticICONS } from "semantic-ui-react";
+
+export type UiIcons = SemanticICONS;
 export default Icon;
