@@ -7,13 +7,13 @@ type Props = LocalProps;
 
 type State = {};
 
-export class Dashboard extends React.PureComponent<Props, State> {
+export class Feed extends React.PureComponent<Props, State> {
   public render() {
     return (
       <React.Fragment>
         <div className={styles.main}>
           <Container>
-            <h1>{"Dashboard"}</h1>
+            <h1>{"Feed"}</h1>
           </Container>
         </div>
       </React.Fragment>

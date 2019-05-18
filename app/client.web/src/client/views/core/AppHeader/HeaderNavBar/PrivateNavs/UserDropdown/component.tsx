@@ -17,6 +17,9 @@ export class UserDropdown extends React.PureComponent<Props, State> {
         <Dropdown.Menu>
           <Dropdown.Header>{"User"}</Dropdown.Header>
           <Dropdown.Divider />
+          <Dropdown.Item>{"Profile"}</Dropdown.Item>
+          <Dropdown.Item>{"Dashboard"}</Dropdown.Item>
+          <Dropdown.Divider />
           <Dropdown.Item>{"Settings"}</Dropdown.Item>
           <Dropdown.Item onClick={this.onLogoutClick}>{"Logout"}</Dropdown.Item>
         </Dropdown.Menu>

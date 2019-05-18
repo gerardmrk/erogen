@@ -1,18 +1,15 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
-import { LocalProps, StoreProps, DispatchProps } from ".";
+import Container from "@client/views/components/ui.elements/Container";
+import { LocalProps } from ".";
 import HeadTags from "@client/views/components/HeadTags";
-import loadable from "@loadable/component";
 
-const Feed = loadable(() => import("@client/views/routes/Home/Feed"));
-const SplashScreen = loadable(() => import("@client/views/routes/Home/SplashScreen")); // prettier-ignore
+export type Props = LocalProps;
 
-type Props = LocalProps & StoreProps & DispatchProps;
+export type State = {};
 
-type State = {};
-
-export class Home extends React.PureComponent<Props, State> {
-  public static i18nNamespace = "route_Home";
+export class Dashboard extends React.PureComponent<Props, State> {
+  public static i18nNamespace = "route_Dashboard";
 
   public render() {
     return (
@@ -28,7 +25,9 @@ export class Home extends React.PureComponent<Props, State> {
         />
 
         <div className={styles.main}>
-          {this.props.isAuthenticated ? <Feed /> : <SplashScreen />}
+          <Container>
+            <h1>{"Dashboard"}</h1>
+          </Container>
         </div>
       </React.Fragment>
     );

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Feed/> snapshot 1`] = `
+<div
+  className="main"
+>
+  <div
+    className="ui container"
+  >
+    <h1>
+      Feed
+    </h1>
+  </div>
+</div>
+`;

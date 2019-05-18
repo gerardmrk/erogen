@@ -38,6 +38,23 @@ exports[`<UserDropdown/> snapshot 1`] = `
       onClick={[Function]}
       role="option"
     >
+      Profile
+    </div>
+    <div
+      className="item"
+      onClick={[Function]}
+      role="option"
+    >
+      Dashboard
+    </div>
+    <div
+      className="divider"
+    />
+    <div
+      className="item"
+      onClick={[Function]}
+      role="option"
+    >
       Settings
     </div>
     <div
