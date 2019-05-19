@@ -1,7 +1,7 @@
 import { ActionType } from "typesafe-actions";
 import * as actions from "./actions";
 import { ProfileSettings, AccountSettings, BillingSettings } from "./models";
-import { createReducer } from "../../create-reducer";
+import { createReducer } from "../create-reducer";
 
 export type Action = ActionType<typeof actions>;
 

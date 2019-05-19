@@ -3,11 +3,11 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { StateType } from "typesafe-actions";
 import { IServices } from "@client/services";
 import { composeMiddleware } from "./middleware";
-import * as auth from "./state/auth";
-import * as user from "./state/user";
-import * as i18n from "./state/i18n";
-import * as uiLoader from "./state/ui-loader";
-import * as uiMessage from "./state/ui-message";
+import * as auth from "./auth";
+import * as user from "./user";
+import * as i18n from "./i18n";
+import * as uiLoader from "./ui-loader";
+import * as uiMessage from "./ui-message";
 
 export type Store = _Store<State, Action>;
 export type State = StateType<typeof reducer>;

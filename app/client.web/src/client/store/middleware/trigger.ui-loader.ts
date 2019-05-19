@@ -6,7 +6,7 @@
 
 import { Dispatcher, Action } from "..";
 import { Middleware, MiddlewareAPI, ActionWithMeta } from ".";
-import * as actions from "@client/store/state/ui-loader/actions";
+import * as actions from "@client/store/ui-loader/actions";
 
 // prettier-ignore
 export const uiLoaderTrigger: Middleware = (api: MiddlewareAPI) => (next: Dispatcher) => (action: Action) => {

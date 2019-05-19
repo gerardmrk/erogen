@@ -1,7 +1,7 @@
 import { UserDropdown } from "./component";
 import { connect } from "react-redux";
 import { State, Dispatcher } from "@client/store";
-import { logout } from "@client/store/state/auth/async.logout";
+import { logout } from "@client/store/auth/async.logout";
 
 export type LocalProps = {};
 

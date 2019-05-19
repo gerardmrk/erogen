@@ -5,7 +5,7 @@ import {
 } from "@client/views/core/I18nProvider";
 import { State, Dispatcher } from "@client/store";
 import { connect } from "react-redux";
-import { login } from "@client/store/state/auth/async.login";
+import { login } from "@client/store/auth/async.login";
 export type LocalProps = WithTranslation & {};
 
 export type StoreProps = {};

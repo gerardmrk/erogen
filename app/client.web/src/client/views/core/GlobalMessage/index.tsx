@@ -1,8 +1,8 @@
 import { GlobalMessage } from "./component";
 import { connect } from "react-redux";
 import { State, Dispatcher } from "@client/store";
-import { State as MessageState } from "@client/store/state/ui-message";
-import { hide } from "@client/store/state/ui-message/actions";
+import { State as MessageState } from "@client/store/ui-message";
+import { hide } from "@client/store/ui-message/actions";
 
 export type LocalProps = {};
 

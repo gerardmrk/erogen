@@ -6,7 +6,7 @@ import { Dispatcher, State, Action } from "@client/store";
 import uiMessageTrigger from "./trigger.ui-message";
 import uiLoaderTrigger from "./trigger.ui-loader";
 import errorHandler from "./error-handler";
-import { ShowPayload } from "../state/ui-message/actions";
+import { ShowPayload } from "../ui-message/actions";
 
 export type Middleware = _Middleware<void, State, Dispatcher>;
 export type MiddlewareAPI = _MiddlewareAPI<Dispatcher, State>;
