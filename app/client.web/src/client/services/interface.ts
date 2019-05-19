@@ -1,5 +1,5 @@
 import { IUserService } from "./user/interface";
-import { IAuthService } from "./auth/interface";
+import { IAuthService } from "./auth/definitions";
 import { IErrorReporterService } from "./error-reporter/interface";
 
 export interface IServices {

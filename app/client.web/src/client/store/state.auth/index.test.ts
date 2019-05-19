@@ -7,7 +7,7 @@ const state = (changes: Partial<State>) => ({
 });
 
 // prettier-ignore
-describe("store/state.auth", () => {
+describe("store/auth/state", () => {
   test("default state", () => {
     const next = reducer(undefined, {} as any);
     expect(next).toEqual(defaultState());

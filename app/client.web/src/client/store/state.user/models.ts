@@ -4,7 +4,7 @@ export type AccountSettings = {
 
 export type ProfileSettings = {
   username: string;
-  profilePicUrl: string;
+  displayPicUrl: string | undefined;
 };
 
 export type BillingSettings = {};

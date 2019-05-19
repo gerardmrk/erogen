@@ -3,8 +3,8 @@ import {
   LoginParams,
   LoginResp,
   RegisterParams,
-} from "./interface";
-export * from "./interface";
+} from "./definitions";
+export * from "./definitions";
 
 export class AuthService implements IAuthService {
   public constructor() {}

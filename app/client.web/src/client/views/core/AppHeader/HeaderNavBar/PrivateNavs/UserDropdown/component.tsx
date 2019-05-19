@@ -1,30 +1,57 @@
 import * as React from "react";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import Dropdown from "@client/views/components/ui.modules/Dropdown";
-import EnhancedNavLink from "@client/views/components/EnhancedNavLink";
 
 type Props = LocalProps & StoreProps & DispatchProps;
 
 type State = {};
 
 export class UserDropdown extends React.PureComponent<Props, State> {
-  private onLogoutClick = () => {
+  private onProfileNavClick = () => {
+    if (this.props.profile) {
+      this.props.history.push(`/user/${this.props.profile.username}`);
+    }
+  };
+
+  private onDashboardNavClick = () => {
+    this.props.history.push("/dashboard");
+  };
+
+  private onSettingsNavClick = () => {
+    this.props.history.push("/settings");
+  };
+
+  private onLogoutActionClick = () => {
     this.props.logout();
   };
 
   public render() {
     return (
-      <Dropdown icon={"user circle"}>
-        <Dropdown.Menu>
-          <Dropdown.Header>{"User"}</Dropdown.Header>
+      <Dropdown icon={"user circle"} direction={"left"}>
+        <Dropdown.Menu direction={"left"}>
+          <Dropdown.Header>
+            {this.props.profile ? this.props.profile.username : "user"}
+          </Dropdown.Header>
+
           <Dropdown.Divider />
-          <Dropdown.Item>{"Profile"}</Dropdown.Item>
-          <Dropdown.Item>
-            <EnhancedNavLink to={"/dashboard"}>{"Dashboard"}</EnhancedNavLink>
+
+          <Dropdown.Item onClick={this.onProfileNavClick}>
+            {"Profile"}
           </Dropdown.Item>
+
+          <Dropdown.Item onClick={this.onDashboardNavClick}>
+            {"Dashboard"}
+          </Dropdown.Item>
+
           <Dropdown.Divider />
-          <Dropdown.Item>{"Settings"}</Dropdown.Item>
-          <Dropdown.Item onClick={this.onLogoutClick}>{"Logout"}</Dropdown.Item>
+
+          <Dropdown.Item onClick={this.onSettingsNavClick}>
+            {"Settings"}
+          </Dropdown.Item>
+
+          <Dropdown.Item onClick={this.onLogoutActionClick}>
+            {"Logout"}
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     );

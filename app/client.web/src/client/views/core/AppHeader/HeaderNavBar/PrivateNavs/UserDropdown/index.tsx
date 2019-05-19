@@ -2,19 +2,22 @@ import { UserDropdown } from "./component";
 import { connect } from "react-redux";
 import { State, Dispatcher } from "@client/store";
 import { logout } from "@client/store/state.auth/async.logout";
+import { withRouter, RouteComponentProps } from "react-router";
+import { ProfileSettings } from "@client/store/state.user/models";
 
-export type LocalProps = {};
+export type LocalProps = RouteComponentProps & {};
 
-export type StoreProps = {};
+export type StoreProps = {
+  profile: ProfileSettings | undefined;
+};
 
 export type DispatchProps = {
   logout: () => void;
 };
 
-const mapStateToProps = (
-  state: State,
-  localProps: LocalProps,
-): StoreProps => ({});
+const mapStateToProps = (state: State, localProps: LocalProps): StoreProps => ({
+  profile: state.user.profile,
+});
 
 const mapDispatchToProps = (
   dispatch: Dispatcher,
@@ -25,7 +28,9 @@ const mapDispatchToProps = (
   },
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(UserDropdown);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(UserDropdown),
+);

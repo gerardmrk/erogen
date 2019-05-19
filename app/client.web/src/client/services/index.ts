@@ -1,5 +1,5 @@
 import { IServices } from "./interface";
-import { IAuthService, AuthService } from "./auth";
+import { IAuthService, AuthService } from "./auth/svc.static";
 import { IUserService, UserService } from "./user";
 import { IErrorReporterService, ErrorReporterService } from "./error-reporter";
 export * from "./interface";

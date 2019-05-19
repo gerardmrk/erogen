@@ -7,15 +7,21 @@ import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // p
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { UserDropdown } from "./component";
+import { withRouter } from "react-router";
 
-const Component = UserDropdown;
+const Component = withRouter(UserDropdown);
 
 describe("<UserDropdown/>", () => {
   let renderer: ReactTestRenderer;
   let component: ReactTestInstance;
 
   beforeEach(async () => {
-    renderer = await createRenderer(<Component logout={() => {}} />);
+    renderer = await createRenderer(
+      <Component
+        profile={{ username: "xoxo", displayPicUrl: undefined }}
+        logout={() => {}}
+      />,
+    );
     component = renderer.getInstance() as ReactTestInstance;
     await (component as any).componentDidMount();
   });

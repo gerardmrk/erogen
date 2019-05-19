@@ -13,7 +13,7 @@ export type State = DeepReadonly<{
 }>;
 
 export const defaultState = (): State => ({
-  profile: undefined,
+  profile: { username: "xoxo", displayPicUrl: undefined },
   account: undefined,
   billing: undefined,
 });

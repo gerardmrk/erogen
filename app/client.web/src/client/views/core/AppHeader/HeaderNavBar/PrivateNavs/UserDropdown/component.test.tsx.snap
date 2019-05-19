@@ -23,12 +23,12 @@ exports[`<UserDropdown/> snapshot 1`] = `
     onClick={[Function]}
   />
   <div
-    className="menu transition"
+    className="left menu transition left"
   >
     <div
       className="header"
     >
-      User
+      xoxo
     </div>
     <div
       className="divider"
@@ -45,13 +45,7 @@ exports[`<UserDropdown/> snapshot 1`] = `
       onClick={[Function]}
       role="option"
     >
-      <a
-        aria-current={null}
-        href="/dashboard"
-        onClick={[Function]}
-      >
-        Dashboard
-      </a>
+      Dashboard
     </div>
     <div
       className="divider"
