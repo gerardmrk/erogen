@@ -2,7 +2,7 @@ import { Dispatcher, State } from "@client/store";
 import { IServices } from "@client/services";
 import * as actions from "./actions";
 import { sleep } from "@client/utils/sleep";
-import { MessageLevel } from "@client/store/state.ui-message";
+import { MessageLevel } from "../state.ui-message/models";
 
 export const login = (
   alias: string,
@@ -37,13 +37,17 @@ export const login = (
     );
   } catch (err) {
     dispatch(
-      actions.loginFailure(<Error>err, {
-        loader: false,
-        message: {
-          level: MessageLevel.Error,
-          content: err.message,
+      actions.loginFailure(
+        { message: err.message },
+        {
+          error: err,
+          loader: false,
+          message: {
+            level: MessageLevel.Error,
+            content: err.message,
+          },
         },
-      }),
+      ),
     );
   }
 };

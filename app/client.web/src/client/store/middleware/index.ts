@@ -12,6 +12,7 @@ export type Middleware = _Middleware<void, State, Dispatcher>;
 export type MiddlewareAPI = _MiddlewareAPI<Dispatcher, State>;
 
 export type ActionMetaPayload = {
+  error?: Error;
   loader?: boolean | TKey;
   message?: boolean | ShowPayload;
 };

@@ -8,8 +8,8 @@ module.exports = {
       es6: true,
       browser: true,
       node: true,
-      commonjs: true
-    }
+      commonjs: true,
+    },
   },
   plugins: ["@typescript-eslint", "prettier"],
   extends: [
@@ -17,7 +17,7 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
   ],
   rules: {
     "prettier/prettier": [
@@ -26,8 +26,8 @@ module.exports = {
         printWidth: 80,
         semi: true,
         singleQuote: false,
-        trailingComma: "all"
-      }
-    ]
-  }
+        trailingComma: "all",
+      },
+    ],
+  },
 };

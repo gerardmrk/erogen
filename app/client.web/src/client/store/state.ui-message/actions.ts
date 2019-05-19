@@ -1,5 +1,6 @@
 import { createAction } from "typesafe-actions";
-import { MessageLevel, DEFAULT_TTL } from ".";
+import { DEFAULT_TTL } from ".";
+import { MessageLevel } from "./models";
 
 export type ShowPayload = {
   level?: MessageLevel;

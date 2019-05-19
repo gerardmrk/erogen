@@ -23,7 +23,7 @@ export type Action =
   | uiMessage.Action;
 
 // State
-type State = {
+export type State = {
   auth: auth.State;
   user: user.State;
   i18n: i18n.State;

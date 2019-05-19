@@ -1,8 +1,8 @@
 import { Dispatcher, State } from "@client/store";
 import { IServices } from "@client/services";
 import * as actions from "./actions";
-import { MessageLevel } from "@client/store/state.ui-message";
 import { sleep } from "@client/utils/sleep";
+import { MessageLevel } from "../state.ui-message/models";
 
 export const logout = () => async (
   dispatch: Dispatcher,
@@ -28,13 +28,17 @@ export const logout = () => async (
     );
   } catch (err) {
     dispatch(
-      actions.logoutFailure(<Error>err, {
-        loader: false,
-        message: {
-          level: MessageLevel.Error,
-          content: err.message,
+      actions.logoutFailure(
+        { message: err.message },
+        {
+          error: err,
+          loader: false,
+          message: {
+            level: MessageLevel.Error,
+            content: err.message,
+          },
         },
-      }),
+      ),
     );
   }
 };

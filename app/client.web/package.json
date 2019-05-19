@@ -13,7 +13,7 @@
     "start:rdr": "echo WIP",
     "start:srv": "ts-node --project tsconfig.server.json ./src/server/main.ts",
     "test": "yarn run test:app",
-    "test:app": "cross-env NODE_ENV=test jest --logHeapUsage --forceExit --detectOpenHandles",
+    "test:app": "cross-env NODE_ENV=test jest --logHeapUsage --forceExit --detectOpenHandles -t=\"store/\" --watch",
     "test:app:update": "cross-env NODE_ENV=test jest --updateSnapshot --logHeapUsage --forceExit --detectOpenHandles",
     "test:rdr": "echo WIP",
     "test:srv": "echo WIP",

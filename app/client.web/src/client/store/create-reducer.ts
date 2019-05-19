@@ -1,8 +1,6 @@
 import { Reducer, Action } from "typesafe-actions";
 
-export interface ActionHandler<S, A extends Action> {
-  (state: S, action: A): S;
-}
+export type ActionHandler<S, A extends Action> = (state: S, action: A) => S;
 
 export type ActionHandlers<S, A extends Action> = {
   [K in A["type"]]: ActionHandler<S, A extends { type: K } ? A : never>
