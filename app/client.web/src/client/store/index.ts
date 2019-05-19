@@ -3,7 +3,7 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { StateType } from "typesafe-actions";
 import { IServices } from "@client/services";
 import { composeMiddleware } from "./middleware";
-import * as auth from "./auth";
+import * as auth from "./state.auth";
 import * as user from "./user";
 import * as i18n from "./i18n";
 import * as uiLoader from "./ui-loader";
