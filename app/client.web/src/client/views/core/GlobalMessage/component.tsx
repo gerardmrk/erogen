@@ -4,7 +4,7 @@ import Container from "@client/views/components/ui.elements/Container";
 import Transition from "@client/views/components/ui.modules/Transition";
 import Message, { UiColors } from "@client/views/components/ui.collections/Message"; // prettier-ignore
 import Icon, { UiIcons } from "@client/views/components/ui.elements/Icon";
-import { MessageLevel } from "@client/store/state/global-ui-message";
+import { MessageLevel } from "@client/store/state/ui-message";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 
 const iconMappings = new Map<MessageLevel, UiIcons>([

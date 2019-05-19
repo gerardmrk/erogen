@@ -4,10 +4,16 @@ import * as actions from "./actions";
 
 export type Action = ActionType<typeof actions>;
 
-export type State = {};
+export type State = {
+  profile: {};
+  account: {};
+  billing: {};
+};
 
 const defaultState = (): State => ({
-  user: "",
+  profile: {},
+  account: {},
+  billing: {},
 });
 
 export const reducer: Reducer<State, Action> = (

@@ -6,15 +6,16 @@ import { composeMiddleware } from "./middleware";
 import * as auth from "./state/auth";
 import * as user from "./state/user";
 import * as i18n from "./state/i18n";
-import * as uiLoader from "./state/global-ui-loader";
-import * as uiMessage from "./state/global-ui-message";
+import * as uiLoader from "./state/ui-loader";
+import * as uiMessage from "./state/ui-message";
 
 export type Store = _Store<State, Action>;
 export type State = StateType<typeof reducer>;
-export type Action = auth.Action | uiLoader.Action | uiMessage.Action; // prettier-ignore
+export type Action = auth.Action | user.Action | uiLoader.Action | uiMessage.Action; // prettier-ignore
 export type AsyncAction = ThunkAction<Promise<void>, State, IServices, Action>;
 export type Dispatcher = Dispatch<Action> & ThunkDispatch<State, IServices, Action>; // prettier-ignore
 
+// root reducer type def
 type _State = {
   auth: auth.State;
   user: user.State;
@@ -23,6 +24,7 @@ type _State = {
   uiMessage: uiMessage.State;
 };
 
+// the root reducer (think: state store)
 const reducer: Reducer<_State, Action> = combineReducers({
   auth: auth.reducer,
   user: user.reducer,
