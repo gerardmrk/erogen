@@ -1,28 +1,27 @@
 import { Reducer } from "redux";
 import { DeepReadonly } from "utility-types";
-import { getType, ActionType, StateType } from "typesafe-actions";
+import { getType, ActionType } from "typesafe-actions";
 
 import * as actions from "./actions";
 
 // =============================================================================
 // types
 
-export type State = StateType<typeof reducer>;
 export type Action = ActionType<typeof actions>;
 
-type _State = DeepReadonly<{
+export type State = DeepReadonly<{
   lang: string;
 }>;
 
 // =============================================================================
 // reducer
 
-const defaultState = {
+const defaultState = (): State => ({
   lang: "en",
-};
+});
 
-export const reducer: Reducer<_State, Action> = (
-  state = defaultState,
+export const reducer: Reducer<State, Action> = (
+  state = defaultState(),
   action,
 ) => {
   switch (action.type) {

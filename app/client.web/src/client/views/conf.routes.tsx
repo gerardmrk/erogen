@@ -61,6 +61,13 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/Home")),
   },
   {
+    path: "/dashboard",
+    exact: true,
+    guarded: true,
+    prerender: true,
+    component: loadable(() => import("@client/views/routes/Dashboard")),
+  },
+  {
     path: "/about/product",
     exact: true,
     guarded: false,

@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { ActionType, getType, StateType } from "typesafe-actions";
+import { ActionType, getType } from "typesafe-actions";
 
 import * as actions from "./actions";
 
@@ -15,10 +15,9 @@ export enum MessageLevel {
   Important,
 }
 
-export type State = StateType<typeof reducer>;
 export type Action = ActionType<typeof actions>;
 
-type _State = {
+export type State = {
   display: boolean;
   level: MessageLevel;
   header: TKey | undefined;
@@ -32,17 +31,17 @@ type _State = {
 
 export const DEFAULT_TTL = 2000;
 
-const defaultState = {
+const defaultState = (): State => ({
   display: false,
   level: MessageLevel.Info,
   header: undefined,
   content: undefined,
-  list: [],
+  list: undefined,
   autoDismiss: DEFAULT_TTL,
-};
+});
 
-export const reducer: Reducer<_State, Action> = (
-  state = defaultState,
+export const reducer: Reducer<State, Action> = (
+  state = defaultState(),
   action,
 ): State => {
   switch (action.type) {
@@ -51,7 +50,7 @@ export const reducer: Reducer<_State, Action> = (
         ...state,
         ...action.payload,
         display: true,
-      } as _State;
+      } as State;
 
     case getType(actions.hide):
       return {

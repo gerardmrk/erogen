@@ -56,7 +56,13 @@ exports[`<PrivateNavs/> snapshot 1`] = `
           onClick={[Function]}
           role="option"
         >
-          Dashboard
+          <a
+            aria-current={null}
+            href="/dashboard"
+            onClick={[Function]}
+          >
+            Dashboard
+          </a>
         </div>
         <div
           className="divider"

@@ -1,6 +1,6 @@
 import { State, Dispatcher } from "@client/store";
-import connect from "react-redux/es/connect/connect";
 import { EnhancedNavLink } from "./component";
+import { connect } from "react-redux";
 
 export type LocalProps = {};
 

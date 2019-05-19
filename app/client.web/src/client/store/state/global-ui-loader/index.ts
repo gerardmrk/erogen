@@ -1,16 +1,15 @@
 import { Reducer } from "redux";
 import { DeepReadonly } from "utility-types";
-import { ActionType, getType, StateType } from "typesafe-actions";
+import { ActionType, getType } from "typesafe-actions";
 
 import * as actions from "./actions";
 
 // =============================================================================
 // types
 
-export type State = StateType<typeof reducer>;
 export type Action = ActionType<typeof actions>;
 
-type _State = DeepReadonly<{
+export type State = DeepReadonly<{
   loading: boolean;
   message: TKey | undefined;
 }>;
@@ -18,21 +17,21 @@ type _State = DeepReadonly<{
 // =============================================================================
 // reducer
 
-const defaultState = {
+const defaultState = (): State => ({
   loading: false,
   message: undefined,
-};
+});
 
-export const reducer: Reducer<_State, Action> = (
-  state = defaultState,
+export const reducer: Reducer<State, Action> = (
+  state = defaultState(),
   action,
-) => {
+): State => {
   switch (action.type) {
     case getType(actions.show):
       return { ...state, loading: true, message: action.payload.message };
 
     case getType(actions.hide):
-      return defaultState;
+      return defaultState();
 
     default:
       return state;

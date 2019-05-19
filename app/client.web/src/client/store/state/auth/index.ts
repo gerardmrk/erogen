@@ -1,6 +1,6 @@
 import { Reducer } from "redux";
 import { DeepReadonly } from "utility-types";
-import { ActionType, getType, StateType } from "typesafe-actions";
+import { ActionType, getType } from "typesafe-actions";
 
 import * as actions from "./actions";
 import { AuthKeys } from "@client/services/auth";
@@ -8,10 +8,9 @@ import { AuthKeys } from "@client/services/auth";
 // =============================================================================
 // types
 
-export type State = StateType<typeof reducer>;
 export type Action = ActionType<typeof actions>;
 
-type _State = DeepReadonly<{
+export type State = DeepReadonly<{
   isAuthenticated: boolean;
   authKeys: AuthKeys | undefined;
 }>;
@@ -19,15 +18,15 @@ type _State = DeepReadonly<{
 // =============================================================================
 // reducer
 
-const defaultState = {
+const defaultState = (): State => ({
   isAuthenticated: false,
   authKeys: undefined,
-};
+});
 
-export const reducer: Reducer<_State, Action> = (
-  state = defaultState,
+export const reducer: Reducer<State, Action> = (
+  state = defaultState(),
   action,
-) => {
+): State => {
   switch (action.type) {
     case getType(actions.loginPending):
       return state;
@@ -46,7 +45,7 @@ export const reducer: Reducer<_State, Action> = (
       return state;
 
     case getType(actions.logoutSuccess):
-      return { isAuthenticated: false, authKeys: undefined };
+      return defaultState();
 
     case getType(actions.logoutFailure):
       return state;
