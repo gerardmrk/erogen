@@ -16,7 +16,7 @@ describe("<AppContent/>", () => {
   let component: ReactTestInstance;
 
   beforeEach(async () => {
-    renderer = await createRenderer(
+    renderer = await createRenderer()(
       <MemoryRouter>
         <Component />
       </MemoryRouter>,

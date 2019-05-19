@@ -10,7 +10,7 @@ describe("<EnhancedNavLink/>", () => {
   let component: ReactTestInstance;
 
   beforeEach(async () => {
-    renderer = await createRenderer(<Component appHasUpdates={false} to={"/"} />);
+    renderer = await createRenderer()(<Component appHasUpdates={false} to={"/"} />);
     component = renderer.getInstance() as ReactTestInstance;
     await (component as any).componentDidMount();});
 

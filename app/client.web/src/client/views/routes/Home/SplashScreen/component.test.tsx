@@ -7,16 +7,15 @@ import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // p
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { SplashScreen } from "./component";
-import { withTranslationMock } from "@client/views/__fixtures__/withtranslation-mock";
 
-const Component = withTranslationMock()(SplashScreen);
+const Component = SplashScreen;
 
 describe("<SplashScreen/>", () => {
   let renderer: ReactTestRenderer;
   let component: ReactTestInstance;
 
   beforeEach(async () => {
-    renderer = await createRenderer(<Component />);
+    renderer = await createRenderer()(<Component />);
     component = renderer.getInstance() as ReactTestInstance;
     await (component as any).componentDidMount();
   });

@@ -15,7 +15,7 @@ describe("<AppHeader/>", () => {
   let component: ReactTestInstance;
 
   beforeEach(async () => {
-    renderer = await createRenderer(<Component isAuthenticated={true} />);
+    renderer = await createRenderer()(<Component isAuthenticated={true} />);
     component = renderer.getInstance() as ReactTestInstance;
     await (component as any).componentDidMount();
   });

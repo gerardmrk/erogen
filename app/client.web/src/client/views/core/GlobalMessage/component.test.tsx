@@ -16,7 +16,7 @@ describe("<GlobalMessage/>", () => {
   let component: ReactTestInstance;
 
   beforeEach(async () => {
-    renderer = await createRenderer(
+    renderer = await createRenderer()(
       <Component
         hide={() => {}}
         msg={{

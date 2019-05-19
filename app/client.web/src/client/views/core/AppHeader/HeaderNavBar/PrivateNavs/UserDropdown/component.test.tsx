@@ -16,7 +16,7 @@ describe("<UserDropdown/>", () => {
   let component: ReactTestInstance;
 
   beforeEach(async () => {
-    renderer = await createRenderer(
+    renderer = await createRenderer()(
       <Component
         profile={{ username: "xoxo", displayPicUrl: undefined }}
         logout={() => {}}

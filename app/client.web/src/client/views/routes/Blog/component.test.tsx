@@ -17,7 +17,7 @@ describe("<Blog/>", () => {
   let component: ReactTestInstance;
 
   beforeEach(async () => {
-    renderer = await createRenderer(<Component />);
+    renderer = await createRenderer()(<Component />);
     component = renderer.getInstance() as ReactTestInstance;
     await (component as any).componentDidMount();});
 

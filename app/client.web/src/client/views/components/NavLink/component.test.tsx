@@ -14,7 +14,7 @@ describe("<NavLink/>", () => {
   let component: ReactTestInstance;
 
   beforeEach(async () => {
-    renderer = await createRenderer(<Component path={"/"} label={"Home"} />);
+    renderer = await createRenderer()(<Component path={"/"} label={"Home"} />);
     component = renderer.getInstance() as ReactTestInstance;
     await (component as any).componentDidMount();});
 
