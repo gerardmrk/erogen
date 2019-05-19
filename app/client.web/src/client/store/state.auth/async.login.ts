@@ -2,7 +2,7 @@ import { Dispatcher, State } from "@client/store";
 import { IServices } from "@client/services";
 import * as actions from "./actions";
 import { sleep } from "@client/utils/sleep";
-import { MessageLevel } from "../ui-message";
+import { MessageLevel } from "@client/store/state.ui-message";
 
 export const login = (
   alias: string,

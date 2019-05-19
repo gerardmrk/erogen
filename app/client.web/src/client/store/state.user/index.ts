@@ -2,16 +2,17 @@ import { ActionType } from "typesafe-actions";
 import * as actions from "./actions";
 import { ProfileSettings, AccountSettings, BillingSettings } from "./models";
 import { createReducer } from "../create-reducer";
+import { DeepReadonly } from "utility-types";
 
 export type Action = ActionType<typeof actions>;
 
-export type State = {
+export type State = DeepReadonly<{
   profile: ProfileSettings | undefined;
   account: AccountSettings | undefined;
   billing: BillingSettings | undefined;
-};
+}>;
 
-const defaultState = (): State => ({
+export const defaultState = (): State => ({
   profile: undefined,
   account: undefined,
   billing: undefined,

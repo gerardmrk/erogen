@@ -4,9 +4,6 @@ import { ActionType } from "typesafe-actions";
 import * as actions from "./actions";
 import { createReducer } from "@client/store/create-reducer";
 
-// =============================================================================
-// types
-
 export type Action = ActionType<typeof actions>;
 
 export type State = DeepReadonly<{
@@ -14,10 +11,7 @@ export type State = DeepReadonly<{
   message: TKey | undefined;
 }>;
 
-// =============================================================================
-// reducer
-
-const defaultState = (): State => ({
+export const defaultState = (): State => ({
   loading: false,
   message: undefined,
 });

@@ -1,12 +1,8 @@
 import { DeepReadonly } from "utility-types";
 import { ActionType } from "typesafe-actions";
-
 import * as actions from "./actions";
 import { AuthKeys } from "@client/services/auth";
 import { createReducer } from "@client/store/create-reducer";
-
-// =============================================================================
-// types
 
 export type Action = ActionType<typeof actions>;
 
@@ -15,10 +11,7 @@ export type State = DeepReadonly<{
   authKeys: AuthKeys | undefined;
 }>;
 
-// =============================================================================
-// reducer
-
-const defaultState = (): State => ({
+export const defaultState = (): State => ({
   isAuthenticated: false,
   authKeys: undefined,
 });

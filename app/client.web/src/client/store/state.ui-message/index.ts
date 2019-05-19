@@ -2,36 +2,23 @@ import { ActionType } from "typesafe-actions";
 
 import * as actions from "./actions";
 import { createReducer } from "@client/store/create-reducer";
-
-// =============================================================================
-// types
-
-export enum MessageLevel {
-  Pending = 1,
-  Info,
-  Warn,
-  Error,
-  Success,
-  Important,
-}
+import { MessageLevel } from "./models";
+import { DeepReadonly } from "utility-types";
 
 export type Action = ActionType<typeof actions>;
 
-export type State = {
+export type State = DeepReadonly<{
   display: boolean;
   level: MessageLevel;
   header: TKey | undefined;
   content: TKey | undefined;
   list: TKey[] | undefined;
   autoDismiss: false | number;
-};
-
-// =============================================================================
-// reducer
+}>;
 
 export const DEFAULT_TTL = 2000;
 
-const defaultState = (): State => ({
+export const defaultState = (): State => ({
   display: false,
   level: MessageLevel.Info,
   header: undefined,

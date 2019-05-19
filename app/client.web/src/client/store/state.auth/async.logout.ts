@@ -1,7 +1,7 @@
 import { Dispatcher, State } from "@client/store";
 import { IServices } from "@client/services";
 import * as actions from "./actions";
-import { MessageLevel } from "../ui-message";
+import { MessageLevel } from "@client/store/state.ui-message";
 import { sleep } from "@client/utils/sleep";
 
 export const logout = () => async (

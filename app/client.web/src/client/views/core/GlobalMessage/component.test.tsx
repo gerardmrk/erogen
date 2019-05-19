@@ -7,7 +7,7 @@ import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // p
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { GlobalMessage } from "./component";
-import { MessageLevel } from "@client/store/ui-message";
+import { MessageLevel } from "@client/store/state.ui-message/models";
 
 const Component = GlobalMessage;
 
