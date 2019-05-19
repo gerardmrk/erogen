@@ -1,7 +1,7 @@
-import { Reducer } from "redux";
-import { ActionType, getType } from "typesafe-actions";
+import { ActionType } from "typesafe-actions";
 
 import * as actions from "./actions";
+import { createReducer } from "@client/store/create-reducer";
 
 // =============================================================================
 // types
@@ -40,26 +40,16 @@ const defaultState = (): State => ({
   autoDismiss: DEFAULT_TTL,
 });
 
-export const reducer: Reducer<State, Action> = (
-  state = defaultState(),
-  action,
-): State => {
-  switch (action.type) {
-    case getType(actions.show):
-      return {
-        ...state,
-        ...action.payload,
-        display: true,
-      } as State;
+export const reducer = createReducer<State, Action>(defaultState(), {
+  ["uiMessage.show"]: (state, action) => ({
+    ...state,
+    ...action.payload,
+    display: true,
+  }),
 
-    case getType(actions.hide):
-      return {
-        ...state,
-        display: false,
-        autoDismiss: DEFAULT_TTL,
-      };
-
-    default:
-      return state;
-  }
-};
+  ["uiMessage.hide"]: state => ({
+    ...state,
+    display: false,
+    autoDismiss: DEFAULT_TTL,
+  }),
+});

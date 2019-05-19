@@ -1,8 +1,9 @@
 import { Reducer } from "redux";
 import { DeepReadonly } from "utility-types";
-import { ActionType, getType } from "typesafe-actions";
+import { ActionType, getType, action } from "typesafe-actions";
 
 import * as actions from "./actions";
+import { createReducer } from "@client/store/create-reducer";
 
 // =============================================================================
 // types
@@ -22,18 +23,12 @@ const defaultState = (): State => ({
   message: undefined,
 });
 
-export const reducer: Reducer<State, Action> = (
-  state = defaultState(),
-  action,
-): State => {
-  switch (action.type) {
-    case getType(actions.show):
-      return { ...state, loading: true, message: action.payload.message };
+export const reducer = createReducer<State, Action>(defaultState(), {
+  ["uiLoader.show"]: (state, action) => ({
+    ...state,
+    loading: true,
+    message: action.payload.message,
+  }),
 
-    case getType(actions.hide):
-      return defaultState();
-
-    default:
-      return state;
-  }
-};
+  ["uiLoader.hide"]: (state, action) => defaultState(),
+});

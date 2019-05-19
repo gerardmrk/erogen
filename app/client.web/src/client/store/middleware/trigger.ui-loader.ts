@@ -1,3 +1,9 @@
+/**
+ * This middleware listens for any action with a meta payload containing
+ * the 'loader' field and dispatches an action with the appropriate fields to
+ * the ui-loader state reducer.
+ */
+
 import { Dispatcher, Action } from "..";
 import { Middleware, MiddlewareAPI, ActionWithMeta } from ".";
 import * as actions from "@client/store/state/ui-loader/actions";
