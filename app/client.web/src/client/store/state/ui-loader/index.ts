@@ -1,6 +1,5 @@
-import { Reducer } from "redux";
 import { DeepReadonly } from "utility-types";
-import { ActionType, getType, action } from "typesafe-actions";
+import { ActionType } from "typesafe-actions";
 
 import * as actions from "./actions";
 import { createReducer } from "@client/store/create-reducer";

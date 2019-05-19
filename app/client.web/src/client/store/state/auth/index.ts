@@ -1,9 +1,9 @@
-import { Reducer } from "redux";
 import { DeepReadonly } from "utility-types";
-import { ActionType, getType } from "typesafe-actions";
+import { ActionType } from "typesafe-actions";
 
 import * as actions from "./actions";
 import { AuthKeys } from "@client/services/auth";
+import { createReducer } from "@client/store/create-reducer";
 
 // =============================================================================
 // types
@@ -23,44 +23,30 @@ const defaultState = (): State => ({
   authKeys: undefined,
 });
 
-export const reducer: Reducer<State, Action> = (
-  state = defaultState(),
-  action,
-): State => {
-  switch (action.type) {
-    case getType(actions.loginPending):
-      return state;
+export const reducer = createReducer<State, Action>(defaultState(), {
+  ["auth.loginPending"]: (state, action) => {
+    return state;
+  },
 
-    case getType(actions.loginSuccess):
-      return {
-        ...state,
-        isAuthenticated: true,
-        authKeys: action.payload.authKeys,
-      };
+  ["auth.loginSuccess"]: (state, action) => ({
+    ...state,
+    isAuthenticated: true,
+    authKeys: { ...action.payload.authKeys },
+  }),
 
-    case getType(actions.loginFailure):
-      return state;
+  ["auth.loginFailure"]: (state, action) => ({
+    ...state,
+  }),
 
-    case getType(actions.logoutPending):
-      return state;
+  ["auth.logoutPending"]: (state, action) => {
+    return state;
+  },
 
-    case getType(actions.logoutSuccess):
-      return defaultState();
+  ["auth.logoutSuccess"]: (state, action) => {
+    return defaultState();
+  },
 
-    case getType(actions.logoutFailure):
-      return state;
-
-    default:
-      return state;
-  }
-};
-
-// interface Red<S, A extends Action> {
-//   [k: string]: (state: S, action: A) => S;
-// }
-
-// const xo: Red<State, Action> = {
-//   [getType(actions.loginSuccess)]: (state, action) => {
-//     return state;
-//   },
-// };
+  ["auth.logoutFailure"]: (state, action) => {
+    return state;
+  },
+});

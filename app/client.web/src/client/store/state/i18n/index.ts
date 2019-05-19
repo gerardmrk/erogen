@@ -1,8 +1,8 @@
-import { Reducer } from "redux";
 import { DeepReadonly } from "utility-types";
-import { getType, ActionType } from "typesafe-actions";
+import { ActionType } from "typesafe-actions";
 
 import * as actions from "./actions";
+import { createReducer } from "@client/store/create-reducer";
 
 // =============================================================================
 // types
@@ -20,15 +20,9 @@ const defaultState = (): State => ({
   lang: "en",
 });
 
-export const reducer: Reducer<State, Action> = (
-  state = defaultState(),
-  action,
-) => {
-  switch (action.type) {
-    case getType(actions.changeLanguage):
-      return { ...state, lang: action.payload.lang };
-
-    default:
-      return state;
-  }
-};
+export const reducer = createReducer<State, Action>(defaultState(), {
+  ["i18n.changeLanguage"]: (state, action) => ({
+    ...state,
+    lang: action.payload.lang,
+  }),
+});
