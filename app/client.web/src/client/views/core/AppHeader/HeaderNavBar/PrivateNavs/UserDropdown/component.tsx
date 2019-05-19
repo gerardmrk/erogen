@@ -1,5 +1,7 @@
 import * as React from "react";
 import { LocalProps, StoreProps, DispatchProps } from ".";
+import Icon from "@client/views/components/ui.elements/Icon";
+import Image from "@client/views/components/ui.elements/Image";
 import Dropdown from "@client/views/components/ui.modules/Dropdown";
 
 type Props = LocalProps & StoreProps & DispatchProps;
@@ -26,8 +28,18 @@ export class UserDropdown extends React.PureComponent<Props, State> {
   };
 
   public render() {
+    const trigger = (
+      <span>
+        {this.props.profile ? (
+          <Image avatar={true} src={this.props.profile.username} />
+        ) : (
+          <Icon name={"user circle outline"} />
+        )}
+      </span>
+    );
+
     return (
-      <Dropdown icon={"user circle"} direction={"left"}>
+      <Dropdown trigger={trigger} direction={"left"}>
         <Dropdown.Menu direction={"left"}>
           <Dropdown.Header>
             {this.props.profile ? this.props.profile.username : "user"}

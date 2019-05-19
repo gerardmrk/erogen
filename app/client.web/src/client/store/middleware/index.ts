@@ -27,7 +27,7 @@ export const composeMiddleware = (
 ) => {
   const middleware = applyMiddleware(
     asyncActionMiddleware.withExtraArgument(services),
-    errorHandler(services.errorReporter),
+    errorHandler(services.errors),
     uiMessageTrigger,
     uiLoaderTrigger,
   );

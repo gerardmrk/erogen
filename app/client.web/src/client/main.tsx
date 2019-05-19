@@ -79,7 +79,7 @@ import { ConfigProvider } from "@client/views/core/ConfigProvider";
       () => {
         initServiceWorker((error: Error | null) => {
           if (error) {
-            services.errorReporter.logError(error);
+            services.errors.logError(error);
             throw error;
           }
         });

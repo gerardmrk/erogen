@@ -12,14 +12,15 @@ exports[`<UserDropdown/> snapshot 1`] = `
   role="listbox"
   tabIndex={0}
 >
-  <div
-    aria-live="polite"
-    className="text"
-    role="alert"
-  />
+  <span>
+    <img
+      className="ui avatar image"
+      src="xoxo"
+    />
+  </span>
   <i
     aria-hidden="true"
-    className="user circle icon"
+    className="dropdown icon"
     onClick={[Function]}
   />
   <div

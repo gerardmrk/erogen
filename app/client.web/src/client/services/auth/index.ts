@@ -5,71 +5,62 @@ import {
   RegisterParams,
 } from "./definitions";
 
-export class StaticAuthService implements IAuthService {
-  public constructor() {}
+export * from "./definitions";
 
+export class AuthService implements IAuthService {
   login(params: LoginParams): LoginResp {
-    return {
-      success: true,
-      code: 200,
-      mfaRequired: false,
-      authKeys: {
-        idToken: "###",
-        accessToken: "###",
-        refreshToken: "###",
-      },
-    };
+    throw new Error("Method not implemented.");
   }
 
   logout(): void {
-    return;
+    throw new Error("Method not implemented.");
   }
 
   register(params: RegisterParams): void {
-    return;
+    throw new Error("Method not implemented.");
   }
 
   verifyEmailVToken(userId: string, token: string): void {
-    return;
+    throw new Error("Method not implemented.");
   }
 
   verifyMobileVCode(userId: string, code: string): void {
-    return;
+    throw new Error("Method not implemented.");
   }
 
   verifyMFACode(code: string): void {
-    return;
+    throw new Error("Method not implemented.");
   }
 
   enableMFA(): void {
-    return;
+    throw new Error("Method not implemented.");
   }
 
   requestPasswordReset(email: string): void {
-    return;
+    throw new Error("Method not implemented.");
   }
 
   verifyPasswordResetToken(userId: string, token: string): void {
-    return;
+    throw new Error("Method not implemented.");
   }
 
   resetPassword(newPassword: string): void {
-    return;
+    throw new Error("Method not implemented.");
   }
 
   changeEmail(userId: string, currentEmail: string, newEmail: string): void {
-    return;
+    throw new Error("Method not implemented.");
   }
 
   changeOrAddMobile(newMobile: string): void {
-    return;
+    throw new Error("Method not implemented.");
   }
 
   changePassword(currentPassword: string, newPassword: string): void {
-    return;
+    throw new Error("Method not implemented.");
   }
 
   answerSecurityQuestion(questionId: string, answer: string): void {
-    return;
+    throw new Error("Method not implemented.");
   }
 }

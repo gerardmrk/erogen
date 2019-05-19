@@ -23,14 +23,16 @@ exports[`<PrivateNavs/> snapshot 1`] = `
       role="listbox"
       tabIndex={0}
     >
-      <div
-        aria-live="polite"
-        className="text"
-        role="alert"
-      />
+      <span>
+        <i
+          aria-hidden="true"
+          className="user circle outline icon"
+          onClick={[Function]}
+        />
+      </span>
       <i
         aria-hidden="true"
-        className="user circle icon"
+        className="dropdown icon"
         onClick={[Function]}
       />
       <div
@@ -39,7 +41,7 @@ exports[`<PrivateNavs/> snapshot 1`] = `
         <div
           className="header"
         >
-          xoxo
+          user
         </div>
         <div
           className="divider"

@@ -1,8 +1,6 @@
 import { IUserService } from "./definitions";
 
-export * from "./definitions";
-
-export class UserService implements IUserService {
+export class MockUserService implements IUserService {
   public constructor() {}
 
   public get() {

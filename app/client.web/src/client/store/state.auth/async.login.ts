@@ -4,6 +4,7 @@ import * as actions from "./actions";
 import { sleep } from "@client/utils/sleep";
 import { MessageLevel } from "../state.ui-message/models";
 
+// prettier-ignore
 export const login = (
   alias: string,
   password: string,
@@ -24,30 +25,23 @@ export const login = (
       remember,
     });
 
-    dispatch(
-      actions.loginSuccess(authKeys, {
-        loader: false,
-        message: {
-          level: MessageLevel.Success,
-          header: "Success!",
-          content: "You're now logged in.",
-          autoDismiss: 1000,
-        },
-      }),
-    );
+    dispatch(actions.loginSuccess(authKeys, {
+      loader: false,
+      message: {
+        level: MessageLevel.Success,
+        header: "Success!",
+        content: "You're now logged in.",
+        autoDismiss: 1000,
+      },
+    }));
   } catch (err) {
-    dispatch(
-      actions.loginFailure(
-        { message: err.message },
-        {
-          error: err,
-          loader: false,
-          message: {
-            level: MessageLevel.Error,
-            content: err.message,
-          },
-        },
-      ),
-    );
+    dispatch(actions.loginFailure({ message: err.message }, {
+      error: err,
+      loader: false,
+      message: {
+        level: MessageLevel.Error,
+        content: err.message,
+      },
+    }));
   }
 };
