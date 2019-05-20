@@ -27,7 +27,7 @@ describe("store/auth/state", () => {
     const old = state({
       isResolving: false,
       isAuthenticated: true,
-      error: { code: "401", message: "wow" },
+      error: { code: "port au prince", message: "port of spain" },
     });
 
     expect(reducer(old, actions.loginPending({}))).toEqual(state({
@@ -40,11 +40,11 @@ describe("store/auth/state", () => {
   test("auth.loginSuccess", () => {
     const old = state({ isResolving: true });
 
-    expect(reducer(old, actions.loginSuccess({ accessToken: "at", refreshToken: "rt" }, {}))).toEqual(state({
+    expect(reducer(old, actions.loginSuccess({ accessToken: "uruguay", refreshToken: "paraguay" }, {}))).toEqual(state({
       isResolving: false,
       isAuthenticated: true,
       error: undefined,
-      authKeys: { accessToken: "at", refreshToken: "rt" },
+      authKeys: { accessToken: "uruguay", refreshToken: "paraguay" },
     }));
   });
 

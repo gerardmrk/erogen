@@ -1,8 +1,8 @@
 import { DeepReadonly } from "utility-types";
 import { ActionType } from "typesafe-actions";
 import * as actions from "./actions";
-import { AuthKeys } from "@client/services/auth/svc.static";
 import { createReducer } from "@client/store/create-reducer";
+import { AuthKeys } from "@client/services/auth";
 
 export type Action = ActionType<typeof actions>;
 

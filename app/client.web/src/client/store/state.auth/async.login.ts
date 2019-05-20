@@ -38,10 +38,7 @@ export const login = (
     dispatch(actions.loginFailure({ message: err.message }, {
       error: err,
       loader: false,
-      message: {
-        level: MessageLevel.Error,
-        content: err.message,
-      },
+      message: { level: MessageLevel.Error, content: err.message },
     }));
   }
 };
