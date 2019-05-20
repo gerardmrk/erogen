@@ -6,6 +6,6 @@ export class ErrorsService implements IErrorsService {
   public constructor() {}
 
   public logError(err: Error): void {
-    // ...
+    console.error(err);
   }
 }

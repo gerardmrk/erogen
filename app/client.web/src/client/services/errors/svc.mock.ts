@@ -1,10 +1,7 @@
 import { IErrorsService } from "./definitions";
-import { IMockService } from "../definitions";
 
-export class MockErrorsService implements IErrorsService, IMockService {
+export class MockErrorsService implements IErrorsService {
   public constructor() {}
-
-  public resetMocks() {}
 
   public logError(err: Error): void {
     // ...

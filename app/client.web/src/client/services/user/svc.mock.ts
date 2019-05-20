@@ -1,10 +1,7 @@
 import { IUserService } from "./definitions";
-import { IMockService } from "../definitions";
 
-export class MockUserService implements IUserService, IMockService {
+export class MockUserService implements IUserService {
   public constructor() {}
-
-  public resetMocks() {}
 
   public get() {
     throw new Error("Method not implemented.");

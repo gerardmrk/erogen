@@ -4,12 +4,11 @@ import {
   LoginResp,
   RegisterParams,
 } from "./definitions";
-import { IMockService } from "../definitions";
+import { recordMock } from "../__fixtures__/mocker";
 
-export class MockAuthService implements IAuthService, IMockService {
+@recordMock()
+export class MockAuthService implements IAuthService {
   public constructor() {}
-
-  public resetMocks() {}
 
   public login(params: LoginParams): LoginResp {
     throw new Error("Method not implemented.");

@@ -12,6 +12,7 @@ import { initI18N } from "@client/main.i18n";
 import { initServiceWorker } from "@client/main.offline";
 import { I18nProvider } from "@client/views/core/I18nProvider";
 import { ConfigProvider } from "@client/views/core/ConfigProvider";
+import { StaticServices } from "./services/svc.static";
 
 (async function init() {
   /**
@@ -40,7 +41,7 @@ import { ConfigProvider } from "@client/views/core/ConfigProvider";
   }
 
   try {
-    const services = new Services();
+    const services = new StaticServices();
 
     const createStore = storeCreator(services, devMode);
     const store = createStore(initialState as State);

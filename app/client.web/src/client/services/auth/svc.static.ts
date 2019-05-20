@@ -4,7 +4,9 @@ import {
   LoginResp,
   RegisterParams,
 } from "./definitions";
+import { recordMock } from "../__fixtures__/mocker";
 
+@recordMock()
 export class StaticAuthService implements IAuthService {
   public constructor() {}
 
