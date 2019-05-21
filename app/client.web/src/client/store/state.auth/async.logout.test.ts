@@ -18,17 +18,15 @@ describe("store/auth/action.logout", () => {
     services = new MockServices();
   });
 
-  beforeEach(async () => {
-    const asyncDispatch = logout();
-    await asyncDispatch(dispatch, getState, services);
-  });
-
   afterEach(() => {
     services.resetAll();
     dispatched = [];
   });
 
-  test("dispatched actions", async () => {
+  test("success flow", async () => {
+    const asyncDispatch = logout();
+    await asyncDispatch(dispatch, getState, services);
+
     expect(dispatched[0]).toEqual({
       type: "auth.logoutPending",
       meta: { loader: "Logging out..." },
@@ -45,9 +43,31 @@ describe("store/auth/action.logout", () => {
         },
       },
     });
+
+    expect(services.auth.recorded.get("logout")).toBeDefined();
   });
 
-  test("called services", () => {
+  test("failure flow", async () => {
+    const asyncDispatch = logout();
+    await asyncDispatch(dispatch, getState, services);
+
+    expect(dispatched[0]).toEqual({
+      type: "auth.logoutPending",
+      meta: { loader: "Logging out..." },
+    });
+
+    expect(dispatched[1]).toEqual({
+      type: "auth.logoutFailure",
+      meta: {
+        loader: false,
+        message: {
+          level: MessageLevel.Info,
+          content: "You've been logged out.",
+          autoDismiss: 800,
+        },
+      },
+    });
+
     expect(services.auth.recorded.get("logout")).toBeDefined();
   });
 });
