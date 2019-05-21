@@ -14,9 +14,9 @@ export class MockServices implements IServices {
     this.errors = new MockErrorsService();
   }
 
-  public resetMocks() {
-    this.auth.resetMocks();
-    this.user.resetMocks();
-    this.errors.resetMocks();
+  public resetAll() {
+    this.auth.resetAll();
+    this.user.resetAll();
+    this.errors.resetAll();
   }
 }

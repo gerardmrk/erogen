@@ -1,6 +1,6 @@
 import { createAction } from "typesafe-actions";
 import { ActionMetaPayload } from "@client/store/middleware";
-import { AuthKeys } from "@client/services/auth/svc.static";
+import { AuthKeys } from "@client/services/auth";
 
 export type LoginFailurePayload = {
   code?: string;

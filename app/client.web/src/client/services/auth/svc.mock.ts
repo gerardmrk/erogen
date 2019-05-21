@@ -4,11 +4,50 @@ import {
   LoginResp,
   RegisterParams,
 } from "./definitions";
-import { recordMock } from "../__fixtures__/mocker";
+import {
+  IMock,
+  RecordedMap,
+  ThrowsMap,
+  ReturnsMap,
+} from "@client/__fixtures__/mock";
+import { recordMock } from "@client/__fixtures__/mock-recorder";
+import { FunctionKeys } from "utility-types";
 
 @recordMock()
-export class MockAuthService implements IAuthService {
+export class MockAuthService implements IAuthService, IMock<MockAuthService> {
   public constructor() {}
+
+  /*****************************************************************************
+   * Recorder methods
+   ****************************************************************************/
+
+  public returns: ReturnsMap<IAuthService, FunctionKeys<IAuthService>> = new Map(); // prettier-ignore
+  public throws: ThrowsMap<IAuthService, FunctionKeys<IAuthService>> = new Map(); // prettier-ignore
+  public recorded: RecordedMap<IAuthService, FunctionKeys<IAuthService>> = new Map(); // prettier-ignore
+
+  public resetAll() {
+    this.returns.clear();
+    this.throws.clear();
+    this.recorded.clear();
+  }
+
+  public resetFor(n: FunctionKeys<IAuthService>) {
+    this.returns.delete(n);
+    this.throws.delete(n);
+    this.recorded.delete(n);
+  }
+
+  public throwFor(n: FunctionKeys<IAuthService>, err: Error) {
+    this.throws.set(n, err);
+  }
+
+  public returnFor(n: FunctionKeys<IAuthService>, ret: any) {
+    this.returns.set(n, ret);
+  }
+
+  /*****************************************************************************
+   * Actual methods
+   ****************************************************************************/
 
   public login(params: LoginParams): LoginResp {
     throw new Error("Method not implemented.");

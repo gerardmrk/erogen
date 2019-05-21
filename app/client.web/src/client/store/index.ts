@@ -35,8 +35,9 @@ export type State = {
 export type Store = _Store<State, Action>;
 
 // Dispatcher
-export type Dispatcher = Dispatch<Action> &
-  ThunkDispatch<State, IServices, Action>;
+export type Dispatcher =
+  | Dispatch<Action>
+  | ThunkDispatch<State, IServices, Action>;
 
 /*******************************************************************************
  * REDUCER

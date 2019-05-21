@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { HelmetProvider as HeadProvider } from "react-helmet-async";
 
 import App from "@client/views/core/App";
-import { Services } from "@client/services";
+// import { Services } from "@client/services";
 import { storeCreator, State } from "@client/store";
 import { initI18N } from "@client/main.i18n";
 import { initServiceWorker } from "@client/main.offline";
