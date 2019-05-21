@@ -1,7 +1,7 @@
-import { reducer, defaultState, State } from ".";
+import { reducer, defaultState, State, Action } from ".";
 import * as actions from "./actions";
 
-const state = (changes: Partial<State>) => ({
+const state = (changes: Partial<State>): State => ({
   ...defaultState(),
   ...changes,
 });
@@ -23,81 +23,82 @@ describe("store/auth/state", () => {
     expect(reducer(undefined, { type: "-x-o" } as any)).toEqual(defaultState());
   });
 
-  test("auth.loginPending", () => {
-    const old = state({
-      isResolving: false,
-      isAuthenticated: true,
-      error: { code: "port au prince", message: "port of spain" },
-    });
-
-    expect(reducer(old, actions.loginPending({}))).toEqual(state({
-      isResolving: true,
-      error: undefined,
-      isAuthenticated: true,
-    }));
-  });
-
-  test("auth.loginSuccess", () => {
-    const old = state({ isResolving: true });
-
-    expect(reducer(old, actions.loginSuccess({ accessToken: "uruguay", refreshToken: "paraguay" }, {}))).toEqual(state({
-      isResolving: false,
-      isAuthenticated: true,
-      error: undefined,
-      authKeys: { accessToken: "uruguay", refreshToken: "paraguay" },
-    }));
-  });
-
-  test("auth.loginFailure", () => {
-    const old = state({
-      isResolving: true,
-      isAuthenticated: true,
-    });
-
-    expect(reducer(old, actions.loginFailure({ message: "bahamas" }, {}))).toEqual(state({
-      isResolving: false,
-      isAuthenticated: true,
-      error: { message: "bahamas" },
-    }));
-  });
-
-  test("auth.logoutPending", () => {
-    const old = state({
-      isAuthenticated: true,
-      error: { code: "grenada", message: "costa rica" },
-    });
-
-    expect(reducer(old, actions.logoutPending({}))).toEqual(state({
-      isAuthenticated: true,
-      isResolving: true,
-      error: undefined,
-    }));
-  });
-
-  test("auth.logoutSuccess", () => {
-    const old = state({
-      isAuthenticated: true,
-      isResolving: true,
-      authKeys: { accessToken: "antigua" },
-    });
-
-    expect(reducer(old, actions.logoutSuccess({}))).toEqual(state({
-      isAuthenticated: false,
-      isResolving: false,
-      authKeys: undefined,
-    }));
-  });
-
-  test("auth.logoutFailure", () => {
-    const old = state({
-      isAuthenticated: true,
-      isResolving: true,
-    });
-
-    expect(reducer(old, actions.logoutFailure({ code: "cuba", message: "panama" }, {}))).toEqual(state({
-      isAuthenticated: true,
-      isResolving: false,
-      error: { code: "cuba", message: "panama" },
-    }));
+  test.each<[Action, Partial<State>, Partial<State>]>([
+    [
+      actions.loginPending({}),
+      {
+        isResolving: false,
+        isAuthenticated: true,
+        error: { code: "port au prince", message: "port of spain" },
+      },
+      {
+        isResolving: true,
+        error: undefined,
+        isAuthenticated: true,
+      }
+    ],
+    [
+      actions.loginSuccess({ accessToken: "uruguay", refreshToken: "paraguay" }, {}),
+      {
+        isResolving: true
+      },
+      {
+        isResolving: false,
+        isAuthenticated: true,
+        error: undefined,
+        authKeys: { accessToken: "uruguay", refreshToken: "paraguay" },
+      },
+    ],
+    [
+      actions.loginFailure({ message: "bahamas" }, {}),
+      {
+        isResolving: true,
+        isAuthenticated: true,
+      },
+      {
+        isResolving: false,
+        isAuthenticated: true,
+        error: { message: "bahamas" },
+      },
+    ],
+    [
+      actions.logoutPending({}),
+      {
+        isAuthenticated: true,
+        error: { code: "grenada", message: "costa rica" },
+      },
+      {
+        isAuthenticated: true,
+        isResolving: true,
+        error: undefined,
+      },
+    ],
+    [
+      actions.logoutSuccess({}),
+      {
+        isAuthenticated: true,
+        isResolving: true,
+        authKeys: { accessToken: "antigua" },
+      },
+      {
+        isAuthenticated: false,
+        isResolving: false,
+        authKeys: undefined,
+      },
+    ],
+    [
+      actions.logoutFailure({ code: "cuba", message: "panama" }, {}),
+      {
+        isAuthenticated: true,
+        isResolving: true,
+      },
+      {
+        isAuthenticated: true,
+        isResolving: false,
+        error: { code: "cuba", message: "panama" },
+      },
+    ],
+  ])('A(%o): S(%o) -> S(%o)', (action, prevState, nextState) => {
+    expect(reducer(state(prevState), action)).toEqual(state(nextState));
   });
 });

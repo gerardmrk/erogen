@@ -54,7 +54,7 @@ export class MockAuthService implements IAuthService, IMock<MockAuthService> {
   }
 
   public logout(): void {
-    throw new Error("Method not implemented.");
+    return;
   }
 
   public register(params: RegisterParams): void {
