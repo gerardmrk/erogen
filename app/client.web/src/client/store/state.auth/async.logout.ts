@@ -1,11 +1,11 @@
-import { Dispatcher, State } from "@client/store";
+import { Dispatcher, State, AsyncAction } from "@client/store";
 import { IServices } from "@client/services";
 import * as actions from "./actions";
 import { sleep } from "@client/utils/sleep";
 import { MessageLevel } from "../state.ui-message/models";
 
 // prettier-ignore
-export const logout = () => async (
+export const logout = (): AsyncAction => async (
   dispatch: Dispatcher,
   getState: () => State,
   services: IServices,

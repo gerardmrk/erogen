@@ -25,6 +25,24 @@ module.exports = {
     // "@loadable/component": "<rootDir>/src/client/__fixtures__/jest.mock.loadable.js",
   },
   snapshotResolver: "<rootDir>/src/client/__fixtures__/jest.resolve.snapshots.js",
+  coverageDirectory: paths.coverageDir,
+  coverageReporters: [
+    "json",
+    "json-summary",
+    "lcov",
+    "text",
+    "clover"
+  ],
+  collectCoverageFrom: [
+    "**/*.{ts,tsx}",
+    "!**/*.mock.{ts,tsx}",
+    "!**/*.static.{ts,tsx}",
+    "!**/node_modules/**",
+    "!**/dist/**",
+    "!**/.cache/**",
+    "!**/__fixtures__/**",
+    "!**/ui.*/**"
+  ],
   globals: {
     "ts-jest": {
       // tsConfig: paths.tsconfigClientTest,

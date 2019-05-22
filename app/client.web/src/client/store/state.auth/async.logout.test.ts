@@ -3,8 +3,6 @@ import { MockServices } from "@client/services/svc.mock";
 import { logout } from "./async.logout";
 import { MessageLevel } from "../state.ui-message/models";
 
-// import { logout } from "./async.logout";
-
 describe("store/auth/action.logout", () => {
   let dispatch;
   let getState;

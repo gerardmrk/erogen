@@ -71,6 +71,7 @@ Desktop.ini
 *.log
 
 # generated reports for e.g. test coverage, container-scanning, deps auditing
+.coverage/
 .reports/coverage/*
 !.reports/coverage/.gitkeep
 

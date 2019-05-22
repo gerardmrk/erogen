@@ -58,4 +58,5 @@ exports.paths = {
   protobufDir: `${rendererSrc}/proto`,
 
   translationsDir: `${i18nDir}/translations`,
+  coverageDir: `${appDir}/.coverage`,
 };

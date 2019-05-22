@@ -54,7 +54,12 @@ export class MockAuthService implements IAuthService, IMock<MockAuthService> {
    ****************************************************************************/
 
   public login(params: LoginParams): LoginResp {
-    throw new Error("Method not implemented.");
+    return {
+      code: 200,
+      success: true,
+      mfaRequired: false,
+      authKeys: { accessToken: "###" },
+    };
   }
 
   public logout(): void {

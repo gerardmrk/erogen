@@ -1,4 +1,4 @@
-import { Dispatcher, State } from "@client/store";
+import { Dispatcher, State, AsyncAction } from "@client/store";
 import { IServices } from "@client/services";
 import * as actions from "./actions";
 import { sleep } from "@client/utils/sleep";
@@ -9,7 +9,7 @@ export const login = (
   alias: string,
   password: string,
   remember: boolean,
-) => async (
+): AsyncAction => async (
   dispatch: Dispatcher,
   getState: () => State,
   services: IServices,
