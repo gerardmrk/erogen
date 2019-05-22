@@ -31,7 +31,7 @@ export class UserDropdown extends React.PureComponent<Props, State> {
     const trigger = (
       <span>
         {this.props.profile ? (
-          <Image avatar={true} src={this.props.profile.username} />
+          <Image avatar={true} src={this.props.profile.displayPicUrl} />
         ) : (
           <Icon name={"user circle outline"} />
         )}

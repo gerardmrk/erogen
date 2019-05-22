@@ -1,32 +1,32 @@
 // prettier-ignore
 export interface IAuthService {
-  login(params: LoginParams): LoginResp;
+  login(params: LoginParams): Promise<LoginResp>;
 
-  logout(): void;
+  logout(): Promise<void>;
 
-  register(params: RegisterParams): void;
+  register(params: RegisterParams): Promise<void>;
 
-  verifyEmailVToken(userId: string, token: string): void;
+  verifyEmailVToken(userId: string, token: string): Promise<void>;
 
-  verifyMobileVCode(userId: string, code: string): void;
+  verifyMobileVCode(userId: string, code: string): Promise<void>;
 
-  verifyMFACode(code: string): void;
+  verifyMFACode(code: string): Promise<void>;
 
-  enableMFA(): void;
+  enableMFA(): Promise<void>;
 
-  requestPasswordReset(email: string): void;
+  requestPasswordReset(email: string): Promise<void>;
 
-  verifyPasswordResetToken(userId: string, token: string): void;
+  verifyPasswordResetToken(userId: string, token: string): Promise<void>;
 
-  resetPassword(newPassword: string): void;
+  resetPassword(newPassword: string): Promise<void>;
 
-  changeEmail(userId: string, currentEmail: string, newEmail: string): void;
+  changeEmail(userId: string, currentEmail: string, newEmail: string): Promise<void>;
 
-  changeOrAddMobile(newMobile: string): void;
+  changeOrAddMobile(newMobile: string): Promise<void>;
 
-  changePassword(currentPassword: string, newPassword: string): void;
+  changePassword(currentPassword: string, newPassword: string): Promise<void>;
 
-  answerSecurityQuestion(questionId: string, answer: string): void;
+  answerSecurityQuestion(questionId: string, answer: string): Promise<void>;
 }
 
 export interface BaseAuthResp {

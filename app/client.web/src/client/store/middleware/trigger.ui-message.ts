@@ -4,29 +4,27 @@
  * the ui-message state reducer.
  */
 
-import { Dispatcher, Action } from "..";
-import { Middleware, MiddlewareAPI, ActionWithMeta } from ".";
+import { Middleware, ActionWithMeta } from ".";
 import * as actions from "@client/store/state.ui-message/actions";
 
-// prettier-ignore
-export const uiMessageTrigger: Middleware = (api: MiddlewareAPI) => (next: Dispatcher) => (action: Action) => {
+export const uiMessageTrigger: Middleware = api => next => action => {
   next(action);
 
   if (
-    !(<ActionWithMeta>action).meta ||
-    (<ActionWithMeta>action).meta.message === undefined
+    !(action as ActionWithMeta).meta ||
+    (action as ActionWithMeta).meta.message === undefined
   ) {
     return;
   }
 
-  const messagePayload: unknown = (<ActionWithMeta>action).meta.message;
+  const messagePayload: unknown = (action as ActionWithMeta).meta.message;
   if (messagePayload === false) {
     api.dispatch(actions.hide());
   } else {
     api.dispatch(
-      actions.show(
-        <ReturnType<typeof actions.show>["payload"]>messagePayload,
-      ),
+      actions.show(messagePayload as ReturnType<
+        typeof actions.show
+      >["payload"]),
     );
   }
 };

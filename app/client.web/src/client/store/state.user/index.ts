@@ -22,9 +22,12 @@ export const reducer = createReducer<State, Action>(defaultState(), {
   ["user.getPending"]: (state, action) => {
     return state;
   },
-  ["user.getSuccess"]: (state, action) => {
-    return state;
-  },
+  ["user.getSuccess"]: (state, action) => ({
+    ...state,
+    profile: { ...action.payload.profile },
+    account: { ...action.payload.account },
+    billing: { ...action.payload.billing },
+  }),
   ["user.getFailure"]: (state, action) => {
     return state;
   },

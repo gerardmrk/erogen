@@ -4,24 +4,22 @@
  * the ui-loader state reducer.
  */
 
-import { Dispatcher, Action } from "..";
-import { Middleware, MiddlewareAPI, ActionWithMeta } from ".";
+import { Middleware, ActionWithMeta } from ".";
 import * as actions from "@client/store/state.ui-loader/actions";
 
-// prettier-ignore
-export const uiLoaderTrigger: Middleware = (api: MiddlewareAPI) => (next: Dispatcher) => (action: Action) => {
+export const uiLoaderTrigger: Middleware = api => next => action => {
   next(action);
 
   if (
-    !(<ActionWithMeta>action).meta ||
-    (<ActionWithMeta>action).meta.loader === undefined
+    !(action as ActionWithMeta).meta ||
+    (action as ActionWithMeta).meta.loader === undefined
   ) {
     return;
   }
 
-  const { loader } = (<ActionWithMeta>action).meta;
+  const { loader } = (action as ActionWithMeta).meta;
   if (loader === true || typeof loader === "string") {
-    api.dispatch(actions.show(<string>loader));
+    api.dispatch(actions.show(loader as string));
   } else {
     api.dispatch(actions.hide());
   }

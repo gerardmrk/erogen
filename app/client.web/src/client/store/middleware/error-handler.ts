@@ -1,17 +1,19 @@
-import { Dispatcher, Action } from "..";
-import { Middleware, MiddlewareAPI, ActionWithMeta } from ".";
+import { Middleware, ActionWithMeta } from ".";
 import { IErrorsService } from "@client/services/errors";
 
-export const errorHandler = (errorsService: IErrorsService): Middleware => (
-  api: MiddlewareAPI,
-) => (next: Dispatcher) => (action: Action) => {
+export const errorHandler = (
+  errorsService: IErrorsService,
+): Middleware => api => next => action => {
   next(action);
 
-  if (!(<ActionWithMeta>action).meta || !(<ActionWithMeta>action).meta.error) {
+  if (
+    !(action as ActionWithMeta).meta ||
+    !(action as ActionWithMeta).meta.error
+  ) {
     return;
   }
 
-  errorsService.logError((<ActionWithMeta>action).meta.error as Error);
+  errorsService.logError((action as ActionWithMeta).meta.error as Error);
 };
 
 export default errorHandler;

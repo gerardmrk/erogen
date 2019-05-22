@@ -1,33 +1,55 @@
+import faker from "faker";
 import { IUserService } from "./definitions";
+import { sleep } from "@client/utils/sleep";
 
 export class StaticUserService implements IUserService {
   public constructor() {}
 
-  public get() {
-    throw new Error("Method not implemented.");
+  public async get() {
+    await sleep(1000);
+    return {
+      profile: {
+        username: faker.internet.userName(),
+        displayPicUrl: faker.image.avatar(),
+      },
+      account: {
+        email: faker.internet.email(),
+      },
+      billing: {},
+    };
   }
 
-  public getProfile() {
-    throw new Error("Method not implemented.");
+  public async getProfile() {
+    return {
+      username: faker.internet.userName(),
+      displayPicUrl: faker.image.avatar(),
+    };
   }
 
-  public updateProfile() {
-    throw new Error("Method not implemented.");
+  public async updateProfile() {
+    return {
+      username: faker.internet.userName(),
+      displayPicUrl: faker.image.avatar(),
+    };
   }
 
-  public getAccount() {
-    throw new Error("Method not implemented.");
+  public async getAccount() {
+    return {
+      email: faker.internet.email(),
+    };
   }
 
-  public updateAccount() {
-    throw new Error("Method not implemented.");
+  public async updateAccount() {
+    return {
+      email: faker.internet.email(),
+    };
   }
 
-  public getBilling() {
-    throw new Error("Method not implemented.");
+  public async getBilling() {
+    return {};
   }
 
-  public updateBilling() {
-    throw new Error("Method not implemented.");
+  public async updateBilling() {
+    return {};
   }
 }

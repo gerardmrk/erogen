@@ -48,31 +48,45 @@ export class MockUserService implements IUserService, IMock<IUserService> {
    * Actual methods
    ****************************************************************************/
 
-  public get() {
-    throw new Error("Method not implemented.");
+  public async get() {
+    return {
+      profile: { username: "", displayPicUrl: "" },
+      account: { email: "" },
+      billing: {},
+    };
   }
 
-  public getProfile() {
-    throw new Error("Method not implemented.");
+  public async getProfile() {
+    return {
+      username: "",
+      displayPicUrl: "",
+    };
   }
 
-  public updateProfile() {
-    throw new Error("Method not implemented.");
+  public async updateProfile() {
+    return {
+      username: "",
+      displayPicUrl: "",
+    };
   }
 
-  public getAccount() {
-    throw new Error("Method not implemented.");
+  public async getAccount() {
+    return {
+      email: "",
+    };
   }
 
-  public updateAccount() {
-    throw new Error("Method not implemented.");
+  public async updateAccount() {
+    return {
+      email: "",
+    };
   }
 
-  public getBilling() {
-    throw new Error("Method not implemented.");
+  public async getBilling() {
+    return {};
   }
 
-  public updateBilling() {
-    throw new Error("Method not implemented.");
+  public async updateBilling() {
+    return {};
   }
 }

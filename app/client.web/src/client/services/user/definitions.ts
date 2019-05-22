@@ -1,15 +1,25 @@
+import {
+  AccountSettings,
+  ProfileSettings,
+  BillingSettings,
+} from "@client/store/state.user/models";
+
 export interface IUserService {
-  get();
+  get(): Promise<{
+    profile: ProfileSettings;
+    account: AccountSettings;
+    billing: BillingSettings;
+  }>;
 
-  getProfile();
+  getProfile(): Promise<ProfileSettings>;
 
-  updateProfile();
+  updateProfile(): Promise<ProfileSettings>;
 
-  getAccount();
+  getAccount(): Promise<AccountSettings>;
 
-  updateAccount();
+  updateAccount(): Promise<AccountSettings>;
 
-  getBilling();
+  getBilling(): Promise<BillingSettings>;
 
-  updateBilling();
+  updateBilling(): Promise<BillingSettings>;
 }

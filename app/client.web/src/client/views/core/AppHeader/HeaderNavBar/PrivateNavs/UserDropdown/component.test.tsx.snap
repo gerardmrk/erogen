@@ -15,7 +15,6 @@ exports[`<UserDropdown/> snapshot 1`] = `
   <span>
     <img
       className="ui avatar image"
-      src="xoxo"
     />
   </span>
   <i

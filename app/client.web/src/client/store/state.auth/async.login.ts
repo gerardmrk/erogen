@@ -1,7 +1,5 @@
-import { Dispatcher, State, AsyncAction } from "@client/store";
-import { IServices } from "@client/services";
+import { AsyncAction } from "@client/store";
 import * as actions from "./actions";
-import { sleep } from "@client/utils/sleep";
 import { MessageLevel } from "../state.ui-message/models";
 
 // prettier-ignore
@@ -10,14 +8,12 @@ export const login = (
   password: string,
   remember: boolean,
 ): AsyncAction => async (
-  dispatch: Dispatcher,
-  getState: () => State,
-  services: IServices,
+  dispatch,
+  getState,
+  services,
 ) => {
   try {
     dispatch(actions.loginPending({ loader: "Logging in..." }));
-
-    await sleep(900);
 
     const { authKeys } = await services.auth.login({
       alias,

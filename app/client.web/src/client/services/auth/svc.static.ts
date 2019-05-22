@@ -4,11 +4,13 @@ import {
   LoginResp,
   RegisterParams,
 } from "./definitions";
+import { sleep } from "@client/utils/sleep";
 
 export class StaticAuthService implements IAuthService {
   public constructor() {}
 
-  login(params: LoginParams): LoginResp {
+  public async login(params: LoginParams): Promise<LoginResp> {
+    await sleep(1000);
     return {
       success: true,
       code: 200,
@@ -21,55 +23,68 @@ export class StaticAuthService implements IAuthService {
     };
   }
 
-  logout(): void {
+  public async logout(): Promise<void> {
     return;
   }
 
-  register(params: RegisterParams): void {
+  public async register(params: RegisterParams): Promise<void> {
     return;
   }
 
-  verifyEmailVToken(userId: string, token: string): void {
+  public async verifyEmailVToken(userId: string, token: string): Promise<void> {
     return;
   }
 
-  verifyMobileVCode(userId: string, code: string): void {
+  public async verifyMobileVCode(userId: string, code: string): Promise<void> {
     return;
   }
 
-  verifyMFACode(code: string): void {
+  public async verifyMFACode(code: string): Promise<void> {
     return;
   }
 
-  enableMFA(): void {
+  public async enableMFA(): Promise<void> {
     return;
   }
 
-  requestPasswordReset(email: string): void {
+  public async requestPasswordReset(email: string): Promise<void> {
     return;
   }
 
-  verifyPasswordResetToken(userId: string, token: string): void {
+  public async verifyPasswordResetToken(
+    userId: string,
+    token: string,
+  ): Promise<void> {
     return;
   }
 
-  resetPassword(newPassword: string): void {
+  public async resetPassword(newPassword: string): Promise<void> {
     return;
   }
 
-  changeEmail(userId: string, currentEmail: string, newEmail: string): void {
+  public async changeEmail(
+    userId: string,
+    currentEmail: string,
+    newEmail: string,
+  ): Promise<void> {
     return;
   }
 
-  changeOrAddMobile(newMobile: string): void {
+  public async changeOrAddMobile(newMobile: string): Promise<void> {
     return;
   }
 
-  changePassword(currentPassword: string, newPassword: string): void {
+  public async changePassword(
+    currentPassword: string,
+    newPassword: string,
+  ): Promise<void> {
     return;
   }
 
-  answerSecurityQuestion(questionId: string, answer: string): void {
+  public async answerSecurityQuestion(
+    questionId: string,
+    answer: string,
+  ): Promise<void> {
     return;
   }
 }

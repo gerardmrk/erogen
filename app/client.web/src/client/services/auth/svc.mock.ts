@@ -53,7 +53,7 @@ export class MockAuthService implements IAuthService, IMock<MockAuthService> {
    * Actual methods
    ****************************************************************************/
 
-  public login(params: LoginParams): LoginResp {
+  public async login(params: LoginParams): Promise<LoginResp> {
     return {
       code: 200,
       success: true,
@@ -62,59 +62,68 @@ export class MockAuthService implements IAuthService, IMock<MockAuthService> {
     };
   }
 
-  public logout(): void {
+  public async logout(): Promise<void> {
     return;
   }
 
-  public register(params: RegisterParams): void {
+  public async register(params: RegisterParams): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  public verifyEmailVToken(userId: string, token: string): void {
+  public async verifyEmailVToken(userId: string, token: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  public verifyMobileVCode(userId: string, code: string): void {
+  public async verifyMobileVCode(userId: string, code: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  public verifyMFACode(code: string): void {
+  public async verifyMFACode(code: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  public enableMFA(): void {
+  public async enableMFA(): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  public requestPasswordReset(email: string): void {
+  public async requestPasswordReset(email: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  public verifyPasswordResetToken(userId: string, token: string): void {
+  public async verifyPasswordResetToken(
+    userId: string,
+    token: string,
+  ): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  public resetPassword(newPassword: string): void {
+  public async resetPassword(newPassword: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  public changeEmail(
+  public async changeEmail(
     userId: string,
     currentEmail: string,
     newEmail: string,
-  ): void {
+  ): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  public changeOrAddMobile(newMobile: string): void {
+  public async changeOrAddMobile(newMobile: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  public changePassword(currentPassword: string, newPassword: string): void {
+  public async changePassword(
+    currentPassword: string,
+    newPassword: string,
+  ): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  public answerSecurityQuestion(questionId: string, answer: string): void {
+  public async answerSecurityQuestion(
+    questionId: string,
+    answer: string,
+  ): Promise<void> {
     throw new Error("Method not implemented.");
   }
 }
