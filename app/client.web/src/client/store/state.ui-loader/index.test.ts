@@ -1,13 +1,11 @@
 import { reducer, defaultState } from ".";
 
-describe("store/auth/state", () => {
+describe("store/ui-loader/state", () => {
   test("default state", () => {
     const next = reducer(undefined, {} as any);
     expect(next).toEqual(defaultState());
-    expect(next.authKeys).not.toBeDefined();
-    expect(next.error).not.toBeDefined();
-    expect(next.isResolving).toBe(false);
-    expect(next.isAuthenticated).toBe(false);
+    expect(next.loading).toBe(false);
+    expect(next.message).toBeUndefined();
   });
 
   test("invalid actions", () => {

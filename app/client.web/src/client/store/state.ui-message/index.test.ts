@@ -1,13 +1,16 @@
 import { reducer, defaultState } from ".";
+import { MessageLevel } from "./models";
 
-describe("store/auth/state", () => {
+describe("store/ui-message/state", () => {
   test("default state", () => {
     const next = reducer(undefined, {} as any);
     expect(next).toEqual(defaultState());
-    expect(next.authKeys).not.toBeDefined();
-    expect(next.error).not.toBeDefined();
-    expect(next.isResolving).toBe(false);
-    expect(next.isAuthenticated).toBe(false);
+    expect(next.display).toBe(false);
+    expect(next.level).toBe(MessageLevel.Info);
+    expect(next.header).toBeUndefined();
+    expect(next.content).toBeUndefined();
+    expect(next.list).toBeUndefined();
+    expect(typeof next.autoDismiss).toBe("number");
   });
 
   test("invalid actions", () => {

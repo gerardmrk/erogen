@@ -34,14 +34,16 @@ module.exports = {
     "clover"
   ],
   collectCoverageFrom: [
-    "**/*.{ts,tsx}",
-    "!**/*.mock.{ts,tsx}",
-    "!**/*.static.{ts,tsx}",
-    "!**/node_modules/**",
-    "!**/dist/**",
-    "!**/.cache/**",
-    "!**/__fixtures__/**",
-    "!**/ui.*/**"
+    "**/*.{ts,tsx}", // include all TS/TSX source
+    "!**/*.d.ts", // ignore declaration files
+    "!**/*.mock.{ts,tsx}", // ignore mocks
+    "!**/*.static.{ts,tsx}", // ignore static services
+    "!**/node_modules/**", // ignore 3rd-party modules
+    "!**/dist/**", // ignore build
+    "!**/.cache/**", // ignore cache
+    "!**/__fixtures__/**", // ignore fixtures
+    "!**/ui.*/**", // ignore reexported semantic ui components
+    "!**/server/**" // TODO: reenable
   ],
   globals: {
     "ts-jest": {
