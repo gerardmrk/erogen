@@ -27,6 +27,8 @@ describe("store/auth/action.logout", () => {
     const asyncDispatch = logout();
     await asyncDispatch(dispatch, getState, services);
 
+    expect(services.auth.recorded("logout").count).toBe(1);
+
     expect(dispatched[0]).toEqual({
       type: "auth.logoutPending",
       meta: { loader: "Logging out..." },
@@ -43,13 +45,16 @@ describe("store/auth/action.logout", () => {
         },
       },
     });
-
-    expect(services.auth.recorded.get("logout")).toBeDefined();
   });
 
   test("failure flow", async () => {
+    const err = new Error("reykjavik");
+    services.auth.throwFor("logout", err);
+
     const asyncDispatch = logout();
     await asyncDispatch(dispatch, getState, services);
+
+    expect(services.auth.recorded("logout").count).toBe(1);
 
     expect(dispatched[0]).toEqual({
       type: "auth.logoutPending",
@@ -58,16 +63,17 @@ describe("store/auth/action.logout", () => {
 
     expect(dispatched[1]).toEqual({
       type: "auth.logoutFailure",
+      payload: {
+        message: err.message,
+      },
       meta: {
+        error: err,
         loader: false,
         message: {
-          level: MessageLevel.Info,
-          content: "You've been logged out.",
-          autoDismiss: 800,
+          level: MessageLevel.Error,
+          content: err.message,
         },
       },
     });
-
-    expect(services.auth.recorded.get("logout")).toBeDefined();
   });
 });

@@ -4,8 +4,8 @@ import {
   ReturnsMap,
   ThrowsMap,
   RecordedMap,
+  RecordableName,
 } from "@client/__fixtures__/mock";
-import { FunctionKeys } from "utility-types";
 import { recordMock } from "@client/__fixtures__/mock-recorder";
 
 // prettier-ignore
@@ -17,28 +17,32 @@ export class MockErrorsService implements IErrorsService, IMock<MockErrorsServic
    * Recorder methods
    ****************************************************************************/
 
-  public returns: ReturnsMap<IErrorsService, FunctionKeys<IErrorsService>> = new Map(); // prettier-ignore
-  public throws: ThrowsMap<IErrorsService, FunctionKeys<IErrorsService>> = new Map(); // prettier-ignore
-  public recorded: RecordedMap<IErrorsService, FunctionKeys<IErrorsService>> = new Map(); // prettier-ignore
+  public returns: ReturnsMap<IErrorsService, RecordableName<IErrorsService>> = new Map(); // prettier-ignore
+  public throws: ThrowsMap<IErrorsService, RecordableName<IErrorsService>> = new Map(); // prettier-ignore
+  public records: RecordedMap<IErrorsService, RecordableName<IErrorsService>> = new Map(); // prettier-ignore
 
   public resetAll() {
     this.returns.clear();
     this.throws.clear();
-    this.recorded.clear();
+    this.records.clear();
   }
 
-  public resetFor(n: FunctionKeys<IErrorsService>) {
+  public resetFor(n: RecordableName<IErrorsService>) {
     this.returns.delete(n);
     this.throws.delete(n);
-    this.recorded.delete(n);
+    this.records.delete(n);
   }
 
-  public throwFor(n: FunctionKeys<IErrorsService>, err: Error) {
+  public throwFor(n: RecordableName<IErrorsService>, err: Error) {
     this.throws.set(n, err);
   }
 
-  public returnFor(n: FunctionKeys<IErrorsService>, ret: any) {
+  public returnFor(n: RecordableName<IErrorsService>, ret: any) {
     this.returns.set(n, ret);
+  }
+
+  public recorded(n: RecordableName<IErrorsService>) {
+    return this.records.get(n) || { count: 0, args: [], rets: [] };
   }
 
   /*****************************************************************************

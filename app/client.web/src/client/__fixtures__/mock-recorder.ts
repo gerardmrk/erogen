@@ -10,9 +10,9 @@ export const recordMock = (): ClassDecorator => <C extends IMock<C>>(Class: C) =
 
     // convenience setups
 
-    if (!c.recorded) {
-      console.warn(`'${c.constructor.name}.recorded' undeclared. Setting default`);
-      c.recorded = new Map();
+    if (!c.records) {
+      console.warn(`'${c.constructor.name}.records' undeclared. Setting default`);
+      c.records = new Map();
     }
 
     if (!c.returns) {
@@ -30,7 +30,7 @@ export const recordMock = (): ClassDecorator => <C extends IMock<C>>(Class: C) =
       c.resetAll = () => {
         c.returns.clear();
         c.throws.clear();
-        c.recorded.clear();
+        c.records.clear();
       }
     }
 
@@ -39,7 +39,7 @@ export const recordMock = (): ClassDecorator => <C extends IMock<C>>(Class: C) =
       c.resetFor = (m) => {
         c.returns.delete(m);
         c.throws.delete(m);
-        c.recorded.delete(m);
+        c.records.delete(m);
       }
     }
 
@@ -53,13 +53,18 @@ export const recordMock = (): ClassDecorator => <C extends IMock<C>>(Class: C) =
       c.returnFor = (m, ret) => { c.returns.set(m, ret); }
     }
 
+    if (!c.recorded) {
+      console.warn(`${c.constructor.name}.recorded() undeclared. Setting default`);
+      c.recorded = (m) => c.records.has(m) ? c.records.get(m) : { count: 0, args: 0, rets: 0 };
+    }
+
     const methods = getMethodNames(c);
 
     methods.forEach(m => {
       const fn = c[m];
       // @ts-ignore
       c[m] = (aa) => {
-        let prev = c.recorded.get(m);
+        let prev = c.records.get(m);
         if (!prev) prev = { count: 0, args: [], rets: [] };
 
         let ret;
@@ -69,7 +74,7 @@ export const recordMock = (): ClassDecorator => <C extends IMock<C>>(Class: C) =
           ret = fn(aa);
         }
 
-        c.recorded.set(m, {
+        c.records.set(m, {
           count: prev.count + 1,
           args: [...prev.args, aa],
           rets: [...prev.rets, ret]
@@ -102,6 +107,7 @@ function getMethodNames<C extends IMock<C>>(c: C): Array<keyof Omit<C, "resetFor
         p !== "resetFor" &&
         p !== "throwFor" &&
         p !== "returnFor" &&
+        p !== "recorded" &&
         (i == 0 || p !== arr[i - 1]) &&
         props.indexOf(p as keyof Omit<C, "resetFor" | "resetAll">) === -1
       ));

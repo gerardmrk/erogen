@@ -9,9 +9,9 @@ import {
   RecordedMap,
   ThrowsMap,
   ReturnsMap,
+  RecordableName,
 } from "@client/__fixtures__/mock";
 import { recordMock } from "@client/__fixtures__/mock-recorder";
-import { FunctionKeys } from "utility-types";
 
 @recordMock()
 export class MockAuthService implements IAuthService, IMock<MockAuthService> {
@@ -21,28 +21,32 @@ export class MockAuthService implements IAuthService, IMock<MockAuthService> {
    * Recorder methods
    ****************************************************************************/
 
-  public returns: ReturnsMap<IAuthService, FunctionKeys<IAuthService>> = new Map(); // prettier-ignore
-  public throws: ThrowsMap<IAuthService, FunctionKeys<IAuthService>> = new Map(); // prettier-ignore
-  public recorded: RecordedMap<IAuthService, FunctionKeys<IAuthService>> = new Map(); // prettier-ignore
+  public returns: ReturnsMap<IAuthService, RecordableName<IAuthService>> = new Map(); // prettier-ignore
+  public throws: ThrowsMap<IAuthService, RecordableName<IAuthService>> = new Map(); // prettier-ignore
+  public records: RecordedMap<IAuthService, RecordableName<IAuthService>> = new Map(); // prettier-ignore
 
   public resetAll() {
     this.returns.clear();
     this.throws.clear();
-    this.recorded.clear();
+    this.records.clear();
   }
 
-  public resetFor(n: FunctionKeys<IAuthService>) {
+  public resetFor(n: RecordableName<IAuthService>) {
     this.returns.delete(n);
     this.throws.delete(n);
-    this.recorded.delete(n);
+    this.records.delete(n);
   }
 
-  public throwFor(n: FunctionKeys<IAuthService>, err: Error) {
+  public throwFor(n: RecordableName<IAuthService>, err: Error) {
     this.throws.set(n, err);
   }
 
-  public returnFor(n: FunctionKeys<IAuthService>, ret: any) {
+  public returnFor(n: RecordableName<IAuthService>, ret: any) {
     this.returns.set(n, ret);
+  }
+
+  public recorded(n: RecordableName<IAuthService>) {
+    return this.records.get(n) || { count: 0, args: [], rets: [] };
   }
 
   /*****************************************************************************

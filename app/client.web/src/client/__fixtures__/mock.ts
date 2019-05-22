@@ -1,5 +1,12 @@
 import { FunctionKeys, Omit } from "utility-types";
 
+export type RecordableName<T extends object> = FunctionKeys<
+  Omit<
+    T,
+    "recorded" | "returnFor" | "throwFor" | "resetFor" | "resetAll" | "records"
+  >
+>;
+
 export type Recorded<M extends (...args: any) => any> = {
   count: number;
   args: Array<Parameters<M>>;
@@ -23,13 +30,14 @@ export type ReturnsMap<T extends object, K extends keyof T> = Map<
 
 // prettier-ignore
 export interface IMock<T extends object> {
-  resetFor(mname: FunctionKeys<T>): void;
+  recorded(mname: RecordableName<T>): Recorded<any>;
+  resetFor(mname: RecordableName<T>): void;
   resetAll(): void;
 
-  throwFor(mname: FunctionKeys<T>, err: Error): void;
-  returnFor(mname: FunctionKeys<T>, ret: any): void;
+  throwFor(mname: RecordableName<T>, err: Error): void;
+  returnFor(mname: RecordableName<T>, ret: any): void;
 
-  recorded: RecordedMap<T, FunctionKeys<Omit<T, "returnFor" | "throwFor" | "resetFor" | "resetAll" | "recorded">>>;
-  throws: ThrowsMap<T, FunctionKeys<Omit<T, "returnFor" | "throwFor" | "resetFor" | "resetAll" | "recorded">>>;
-  returns: ReturnsMap<T, FunctionKeys<Omit<T, "returnFor" | "throwFor" | "resetFor" | "resetAll" | "recorded">>>;
+  records: RecordedMap<T, RecordableName<T>>;
+  throws: ThrowsMap<T, RecordableName<T>>;
+  returns: ReturnsMap<T, RecordableName<T>>;
 }
