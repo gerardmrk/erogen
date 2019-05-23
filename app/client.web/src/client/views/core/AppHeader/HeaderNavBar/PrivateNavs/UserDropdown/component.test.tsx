@@ -18,6 +18,7 @@ describe("<UserDropdown/>", () => {
   beforeEach(async () => {
     renderer = await createRenderer()(
       <Component
+        isLoadingUser={false}
         profile={{ username: "xoxo", displayPicUrl: undefined }}
         logout={() => {}}
       />,

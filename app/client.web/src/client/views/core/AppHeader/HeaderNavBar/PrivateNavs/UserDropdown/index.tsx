@@ -8,6 +8,7 @@ import { ProfileSettings } from "@client/store/state.user/models";
 export type LocalProps = RouteComponentProps & {};
 
 export type StoreProps = {
+  isLoadingUser: boolean;
   profile: ProfileSettings | undefined;
 };
 
@@ -16,6 +17,7 @@ export type DispatchProps = {
 };
 
 const mapStateToProps = (state: State, localProps: LocalProps): StoreProps => ({
+  isLoadingUser: state.user.isLoading,
   profile: state.user.profile,
 });
 

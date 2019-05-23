@@ -50,6 +50,10 @@ export class MockErrorsService implements IErrorsService, IMock<MockErrorsServic
    * Actual methods
    ****************************************************************************/
 
+  public logError(err: Error, meta?: ErrorMetaInfo): void {
+    return;
+  }
+
   public logViewError(err: Error, meta?: ErrorMetaInfo): void {
     return;
   }

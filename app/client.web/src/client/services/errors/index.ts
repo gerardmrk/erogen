@@ -6,11 +6,15 @@ export * from "./definitions";
 export class ErrorsService implements IErrorsService {
   public constructor() {}
 
-  public logViewError(err: Error, meta: ErrorMetaInfo): void {
+  public logError(err: Error, meta?: ErrorMetaInfo): void {
     console.error(err);
   }
 
-  public logStoreError(err: Error, state: State, meta: ErrorMetaInfo): void {
+  public logViewError(err: Error, meta?: ErrorMetaInfo): void {
+    console.error(err);
+  }
+
+  public logStoreError(err: Error, state: State, meta?: ErrorMetaInfo): void {
     console.error(err);
   }
 }

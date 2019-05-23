@@ -1,4 +1,5 @@
 import * as React from "react";
+import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import Icon from "@client/views/components/ui.elements/Icon";
 import Image from "@client/views/components/ui.elements/Image";
@@ -28,20 +29,40 @@ export class UserDropdown extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    const trigger = (
-      <span>
-        {this.props.profile ? (
-          <Image avatar={true} src={this.props.profile.displayPicUrl} />
-        ) : (
-          <Icon name={"user circle outline"} />
-        )}
-      </span>
-    );
+    let trigger;
+
+    if (this.props.isLoadingUser) {
+      trigger = (
+        <Icon loading={true} bordered={true} circular={true} name={"spinner"} />
+      );
+    } else if (!this.props.profile) {
+      trigger = (
+        <Icon bordered={true} circular={true} name={"user circle outline"} />
+      );
+    } else {
+      trigger = (
+        <Image
+          fluid={true}
+          avatar={true}
+          bordered={true}
+          circular={true}
+          src={this.props.profile.displayPicUrl}
+        />
+      );
+    }
 
     return (
-      <Dropdown trigger={trigger} direction={"left"}>
+      <Dropdown
+        icon={null}
+        trigger={trigger}
+        direction={"left"}
+        pointing={"top"}
+      >
         <Dropdown.Menu direction={"left"}>
-          <Dropdown.Header>
+          <Dropdown.Header
+            onClick={this.onProfileNavClick}
+            className={styles.dropdownHeader}
+          >
             {this.props.profile ? this.props.profile.username : "user"}
           </Dropdown.Header>
 
