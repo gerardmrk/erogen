@@ -3,7 +3,7 @@
 exports[`<UserDropdown/> snapshot 1`] = `
 <div
   aria-expanded={false}
-  className="ui dropdown"
+  className="ui top pointing dropdown"
   onBlur={[Function]}
   onChange={[Function]}
   onClick={[Function]}
@@ -12,23 +12,21 @@ exports[`<UserDropdown/> snapshot 1`] = `
   role="listbox"
   tabIndex={0}
 >
-  <span>
-    <img
-      className="ui avatar image"
-    />
-  </span>
   <i
     aria-hidden="true"
-    className="dropdown icon"
+    className="user outline bordered circular icon"
     onClick={[Function]}
   />
   <div
     className="left menu transition left"
   >
     <div
-      className="header"
+      className="header dropdownHeader"
+      onClick={[Function]}
     >
-      xoxo
+      <span>
+        xoxo
+      </span>
     </div>
     <div
       className="divider"

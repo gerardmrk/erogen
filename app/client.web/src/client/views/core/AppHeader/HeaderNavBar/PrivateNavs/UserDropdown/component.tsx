@@ -4,6 +4,7 @@ import { LocalProps, StoreProps, DispatchProps } from ".";
 import Icon from "@client/views/components/ui.elements/Icon";
 import Image from "@client/views/components/ui.elements/Image";
 import Dropdown from "@client/views/components/ui.modules/Dropdown";
+import Placeholder from "@client/views/components/ui.elements/Placeholder";
 
 type Props = LocalProps & StoreProps & DispatchProps;
 
@@ -29,27 +30,19 @@ export class UserDropdown extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    let trigger;
-
-    if (this.props.isLoadingUser) {
-      trigger = (
-        <Icon loading={true} bordered={true} circular={true} name={"spinner"} />
-      );
-    } else if (!this.props.profile) {
-      trigger = (
-        <Icon bordered={true} circular={true} name={"user circle outline"} />
-      );
-    } else {
-      trigger = (
+    const trigger =
+      this.props.isLoadingUser || !this.props.profile ? (
+        <Icon loading={true} circular={true} bordered={true} name={"spinner"} />
+      ) : this.props.profile.displayPicUrl ? (
         <Image
-          fluid={true}
           avatar={true}
-          bordered={true}
           circular={true}
+          bordered={true}
           src={this.props.profile.displayPicUrl}
         />
+      ) : (
+        <Icon circular={true} bordered={true} name={"user outline"} />
       );
-    }
 
     return (
       <Dropdown
@@ -63,7 +56,15 @@ export class UserDropdown extends React.PureComponent<Props, State> {
             onClick={this.onProfileNavClick}
             className={styles.dropdownHeader}
           >
-            {this.props.profile ? this.props.profile.username : "user"}
+            {this.props.isLoadingUser || !this.props.profile ? (
+              <Placeholder>
+                <Placeholder.Header>
+                  <Placeholder.Line length={"full"} />
+                </Placeholder.Header>
+              </Placeholder>
+            ) : (
+              <span>{this.props.profile.username}</span>
+            )}
           </Dropdown.Header>
 
           <Dropdown.Divider />

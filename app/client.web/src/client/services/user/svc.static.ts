@@ -6,7 +6,7 @@ export class StaticUserService implements IUserService {
   public constructor() {}
 
   public async get() {
-    await sleep(2000);
+    await sleep(5000);
     return {
       profile: {
         username: faker.internet.userName(),

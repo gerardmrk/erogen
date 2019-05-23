@@ -17,7 +17,7 @@ exports[`<HeaderNavBar/> snapshot 1`] = `
     >
       <div
         aria-expanded={false}
-        className="ui dropdown"
+        className="ui top pointing dropdown"
         onBlur={[Function]}
         onChange={[Function]}
         onClick={[Function]}
@@ -26,25 +26,29 @@ exports[`<HeaderNavBar/> snapshot 1`] = `
         role="listbox"
         tabIndex={0}
       >
-        <span>
-          <i
-            aria-hidden="true"
-            className="user circle outline icon"
-            onClick={[Function]}
-          />
-        </span>
         <i
           aria-hidden="true"
-          className="dropdown icon"
+          className="spinner bordered circular loading icon"
           onClick={[Function]}
         />
         <div
           className="left menu transition left"
         >
           <div
-            className="header"
+            className="header dropdownHeader"
+            onClick={[Function]}
           >
-            user
+            <div
+              className="ui placeholder"
+            >
+              <div
+                className="header"
+              >
+                <div
+                  className="line full"
+                />
+              </div>
+            </div>
           </div>
           <div
             className="divider"

@@ -1,4 +1,5 @@
 .main {
+  height: 100%;
   background-color: inherit;
   display: flex;
   flex-direction: row;
@@ -10,9 +11,11 @@
   background-color: inherit;
 }
 
-.userdropdown {
-}
-
 .dropdownHeader {
   cursor: pointer;
+}
+
+.avatarPlaceholder {
+  border-radius: 50%;
+  border: 1px solid #ddd;
 }
