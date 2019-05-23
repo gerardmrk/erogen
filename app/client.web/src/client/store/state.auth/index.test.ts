@@ -6,7 +6,7 @@ describe("store/auth/state", () => {
     expect(next).toEqual(defaultState());
     expect(next.authKeys).not.toBeDefined();
     expect(next.error).not.toBeDefined();
-    expect(next.isResolving).toBe(false);
+    expect(next.isLoading).toBe(false);
     expect(next.isAuthenticated).toBe(false);
   });
 

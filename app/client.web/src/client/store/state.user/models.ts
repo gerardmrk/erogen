@@ -1,4 +1,5 @@
 export type AccountSettings = {
+  id: string;
   email: string;
 };
 

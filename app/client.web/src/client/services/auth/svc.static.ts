@@ -24,6 +24,7 @@ export class StaticAuthService implements IAuthService {
   }
 
   public async logout(): Promise<void> {
+    await sleep(415);
     return;
   }
 

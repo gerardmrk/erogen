@@ -8,7 +8,7 @@ export class UserService implements IUserService {
   public async get() {
     return {
       profile: { username: "", displayPicUrl: "" },
-      account: { email: "" },
+      account: { id: "", email: "" },
       billing: {},
     };
   }
@@ -22,11 +22,11 @@ export class UserService implements IUserService {
   }
 
   public async getAccount() {
-    return { email: "" };
+    return { id: "", email: "" };
   }
 
   public async updateAccount() {
-    return { email: "" };
+    return { id: "", email: "" };
   }
 
   public async getBilling() {

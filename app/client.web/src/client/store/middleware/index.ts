@@ -31,9 +31,9 @@ export const composeMiddleware = (
 ) => {
   const middleware = applyMiddleware(
     asyncActionMiddleware.withExtraArgument(services),
+    postLogin(services.user),
     uiMessageTrigger,
     uiLoaderTrigger,
-    postLogin(services.user),
     errorHandler(services.errors),
   );
 

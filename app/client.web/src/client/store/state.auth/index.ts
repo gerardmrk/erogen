@@ -3,18 +3,20 @@ import { ActionType } from "typesafe-actions";
 import * as actions from "./actions";
 import { createReducer } from "@client/store/create-reducer";
 import { AuthKeys } from "@client/services/auth";
+import { AsyncState } from "../definitions";
 
 export type Action = ActionType<typeof actions>;
 
-export type State = DeepReadonly<{
-  isResolving: boolean;
-  isAuthenticated: boolean;
-  authKeys: AuthKeys | undefined;
-  error: { code?: string; message: string } | undefined;
-}>;
+export type State = DeepReadonly<
+  {
+    isLoading: boolean;
+    isAuthenticated: boolean;
+    authKeys: AuthKeys | undefined;
+  } & AsyncState<Action>
+>;
 
 export const defaultState = (): State => ({
-  isResolving: false,
+  isLoading: false,
   isAuthenticated: false,
   authKeys: undefined,
   error: undefined,
@@ -24,20 +26,21 @@ export const reducer = createReducer<State, Action>(defaultState(), {
   ["auth.loginPending"]: (state, action) => ({
     ...state,
     error: undefined,
-    isResolving: true,
+    isLoading: true,
   }),
 
   ["auth.loginSuccess"]: (state, action) => ({
     ...state,
-    isResolving: false,
+    isLoading: false,
     isAuthenticated: true,
     authKeys: { ...action.payload.authKeys },
   }),
 
   ["auth.loginFailure"]: (state, action) => ({
     ...state,
-    isResolving: false,
+    isLoading: false,
     error: {
+      actionType: "auth.loginFailure",
       ...action.payload,
     },
   }),
@@ -45,20 +48,21 @@ export const reducer = createReducer<State, Action>(defaultState(), {
   ["auth.logoutPending"]: (state, action) => ({
     ...state,
     error: undefined,
-    isResolving: true,
+    isLoading: true,
   }),
 
   ["auth.logoutSuccess"]: (state, action) => ({
     ...state,
-    isResolving: false,
+    isLoading: false,
     isAuthenticated: false,
     authKeys: undefined,
   }),
 
   ["auth.logoutFailure"]: (state, action) => ({
     ...state,
-    isResolving: false,
+    isLoading: false,
     error: {
+      actionType: "auth.logoutFailure",
       ...action.payload,
     },
   }),

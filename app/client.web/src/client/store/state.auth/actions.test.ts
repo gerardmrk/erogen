@@ -12,12 +12,12 @@ describe("store/auth/actions", () => {
     [
       actions.loginPending({}),
       {
-        isResolving: false,
+        isLoading: false,
         isAuthenticated: true,
         error: { code: "port au prince", message: "port of spain" },
       },
       {
-        isResolving: true,
+        isLoading: true,
         error: undefined,
         isAuthenticated: true,
       }
@@ -25,10 +25,10 @@ describe("store/auth/actions", () => {
     [
       actions.loginSuccess({ accessToken: "uruguay", refreshToken: "paraguay" }, {}),
       {
-        isResolving: true
+        isLoading: true
       },
       {
-        isResolving: false,
+        isLoading: false,
         isAuthenticated: true,
         error: undefined,
         authKeys: { accessToken: "uruguay", refreshToken: "paraguay" },
@@ -37,13 +37,13 @@ describe("store/auth/actions", () => {
     [
       actions.loginFailure({ message: "bahamas" }, {}),
       {
-        isResolving: true,
+        isLoading: true,
         isAuthenticated: true,
       },
       {
-        isResolving: false,
+        isLoading: false,
         isAuthenticated: true,
-        error: { message: "bahamas" },
+        error: { actionType: "auth.loginFailure", message: "bahamas" },
       },
     ],
     [
@@ -54,7 +54,7 @@ describe("store/auth/actions", () => {
       },
       {
         isAuthenticated: true,
-        isResolving: true,
+        isLoading: true,
         error: undefined,
       },
     ],
@@ -62,12 +62,12 @@ describe("store/auth/actions", () => {
       actions.logoutSuccess({}),
       {
         isAuthenticated: true,
-        isResolving: true,
+        isLoading: true,
         authKeys: { accessToken: "antigua" },
       },
       {
         isAuthenticated: false,
-        isResolving: false,
+        isLoading: false,
         authKeys: undefined,
       },
     ],
@@ -75,12 +75,12 @@ describe("store/auth/actions", () => {
       actions.logoutFailure({ code: "cuba", message: "panama" }, {}),
       {
         isAuthenticated: true,
-        isResolving: true,
+        isLoading: true,
       },
       {
         isAuthenticated: true,
-        isResolving: false,
-        error: { code: "cuba", message: "panama" },
+        isLoading: false,
+        error: { actionType: "auth.logoutFailure", code: "cuba", message: "panama" },
       },
     ],
   ])('A(%o): S(%o) -> S(%o)', (action, prevState, nextState) => {

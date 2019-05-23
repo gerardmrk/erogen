@@ -13,6 +13,7 @@ export class StaticUserService implements IUserService {
         displayPicUrl: faker.image.avatar(),
       },
       account: {
+        id: faker.random.uuid(),
         email: faker.internet.email(),
       },
       billing: {},
@@ -35,12 +36,14 @@ export class StaticUserService implements IUserService {
 
   public async getAccount() {
     return {
+      id: faker.random.uuid(),
       email: faker.internet.email(),
     };
   }
 
   public async updateAccount() {
     return {
+      id: faker.random.uuid(),
       email: faker.internet.email(),
     };
   }

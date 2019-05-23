@@ -1,4 +1,4 @@
-import { IErrorsService } from "./definitions";
+import { IErrorsService, ErrorMetaInfo } from "./definitions";
 import {
   IMock,
   ReturnsMap,
@@ -7,6 +7,7 @@ import {
   RecordableName,
 } from "@client/__fixtures__/mock";
 import { recordMock } from "@client/__fixtures__/mock-recorder";
+import { State } from "@client/store";
 
 // prettier-ignore
 @recordMock()
@@ -49,7 +50,11 @@ export class MockErrorsService implements IErrorsService, IMock<MockErrorsServic
    * Actual methods
    ****************************************************************************/
 
-  public logError(err: Error): void {
-    // ...
+  public logViewError(err: Error, meta?: ErrorMetaInfo): void {
+    return;
+  }
+
+  public logStoreError(err: Error, state: State, meta?: ErrorMetaInfo): void {
+    return;
   }
 }

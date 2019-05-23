@@ -51,7 +51,7 @@ export class MockUserService implements IUserService, IMock<IUserService> {
   public async get() {
     return {
       profile: { username: "", displayPicUrl: "" },
-      account: { email: "" },
+      account: { id: "", email: "" },
       billing: {},
     };
   }
@@ -72,12 +72,14 @@ export class MockUserService implements IUserService, IMock<IUserService> {
 
   public async getAccount() {
     return {
+      id: "",
       email: "",
     };
   }
 
   public async updateAccount() {
     return {
+      id: "",
       email: "",
     };
   }
