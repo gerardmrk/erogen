@@ -9,7 +9,7 @@ import { IErrorsService } from "@client/services/errors";
 
 export const errorHandler = (
   errorsService: IErrorsService,
-): Middleware => api => next => action => {
+): Middleware => api => next => async action => {
   try {
     next(action);
 
@@ -20,12 +20,12 @@ export const errorHandler = (
       return;
     }
 
-    errorsService.logStoreError(
+    await errorsService.logStoreError(
       (action as ActionWithMeta).meta.error as Error,
       api.getState(),
     );
   } catch (err) {
-    errorsService.logStoreError(err, api.getState(), { unhandled: true });
+    await errorsService.logStoreError(err, api.getState(), { unhandled: true });
   }
 };
 

@@ -4,15 +4,19 @@ import { State } from "@client/store";
 export class StaticErrorsService implements IErrorsService {
   public constructor() {}
 
-  public logError(err: Error, meta?: ErrorMetaInfo): void {
+  public async logError(err: Error, meta?: ErrorMetaInfo): Promise<void> {
     console.error(err);
   }
 
-  public logViewError(err: Error, meta?: ErrorMetaInfo): void {
+  public async logViewError(err: Error, meta?: ErrorMetaInfo): Promise<void> {
     console.error(err);
   }
 
-  public logStoreError(err: Error, state: State, meta?: ErrorMetaInfo): void {
+  public async logStoreError(
+    err: Error,
+    state: State,
+    meta?: ErrorMetaInfo,
+  ): Promise<void> {
     console.error(err);
   }
 }

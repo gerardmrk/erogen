@@ -10,10 +10,10 @@ import { ShowPayload } from "@client/store/state.ui-message/actions";
 import postLogin from "./post-login";
 
 export interface Middleware {
-  (api: _MiddlewareAPI<Dispatcher, State>): (
-    next: Dispatch<Action>,
-  ) => (action: Action) => void;
+  (api: MiddlewareAPI): (next: Dispatch<Action>) => (action: Action) => void;
 }
+
+export type MiddlewareAPI = _MiddlewareAPI<Dispatcher, State>;
 
 export type ActionWithMeta = Action & {
   meta: ActionMetaPayload;

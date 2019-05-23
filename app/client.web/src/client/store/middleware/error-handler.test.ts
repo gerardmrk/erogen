@@ -1,22 +1,30 @@
-// import { MockErrorsService } from "@client/services/errors/svc.mock";
-// import { MiddlewareAPI } from "redux";
-// import errorHandler from "./error-handler";
-// import { Dispatcher } from "..";
+import { MockErrorsService } from "@client/services/errors/svc.mock";
+import errorHandler from "./error-handler";
+import { Dispatcher } from "..";
+import { MiddlewareAPI } from ".";
 
 describe("store/middleware/error-handler", () => {
-  // let api: MiddlewareAPI;
-  // let service: MockErrorsService;
-  // let dispatch: Dispatcher;
+  let api: MiddlewareAPI;
+  let service: MockErrorsService;
+  let dispatchNext: Dispatcher;
 
-  // let handleError;
+  let handleNext;
 
-  // beforeAll(() => {
-  //   api = {};
-  //   service = new MockErrorsService();
-  //   handleError = errorHandler(service)(api);
-  // });
+  beforeAll(() => {
+    service = new MockErrorsService();
+    api = { getState: jest.fn(), dispatch: jest.fn() };
+    dispatchNext = jest.fn();
+    handleNext = errorHandler(service)(api)(dispatchNext);
+  });
 
-  test("normal flow", () => {
+  test("miss", async () => {
+    await handleNext({});
     expect(true).toBe(true);
+  });
+
+  test("hit", async () => {
+    await handleNext({});
+    expect(true).toBe(true);
+    // assert error not escaped
   });
 });

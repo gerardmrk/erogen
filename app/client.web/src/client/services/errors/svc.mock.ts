@@ -50,15 +50,15 @@ export class MockErrorsService implements IErrorsService, IMock<MockErrorsServic
    * Actual methods
    ****************************************************************************/
 
-  public logError(err: Error, meta?: ErrorMetaInfo): void {
+  public async logError(err: Error, meta?: ErrorMetaInfo): Promise<void> {
     return;
   }
 
-  public logViewError(err: Error, meta?: ErrorMetaInfo): void {
+  public async logViewError(err: Error, meta?: ErrorMetaInfo): Promise<void> {
     return;
   }
 
-  public logStoreError(err: Error, state: State, meta?: ErrorMetaInfo): void {
+  public async logStoreError(err: Error, state: State, meta?: ErrorMetaInfo): Promise<void> {
     return;
   }
 }

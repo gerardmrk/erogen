@@ -6,9 +6,9 @@ export type ErrorMetaInfo = {
 };
 
 export interface IErrorsService {
-  logError(err: Error, meta?: ErrorMetaInfo): void;
+  logError(err: Error, meta?: ErrorMetaInfo): Promise<void>;
 
-  logViewError(err: Error, meta?: ErrorMetaInfo): void;
+  logViewError(err: Error, meta?: ErrorMetaInfo): Promise<void>;
 
-  logStoreError(err: Error, state: State, meta?: ErrorMetaInfo): void;
+  logStoreError(err: Error, state: State, meta?: ErrorMetaInfo): Promise<void>;
 }
