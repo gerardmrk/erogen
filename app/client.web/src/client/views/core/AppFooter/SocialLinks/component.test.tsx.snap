@@ -7,7 +7,31 @@ exports[`<SocialLinks/> snapshot 1`] = `
   <div
     className="container"
   >
-    SocialLinks
+    <i
+      aria-hidden="true"
+      className="linkedin large icon"
+      onClick={[Function]}
+    />
+    <i
+      aria-hidden="true"
+      className="instagram large icon"
+      onClick={[Function]}
+    />
+    <i
+      aria-hidden="true"
+      className="youtube large icon"
+      onClick={[Function]}
+    />
+    <i
+      aria-hidden="true"
+      className="twitter large icon"
+      onClick={[Function]}
+    />
+    <i
+      aria-hidden="true"
+      className="facebook official large icon"
+      onClick={[Function]}
+    />
   </div>
 </div>
 `;

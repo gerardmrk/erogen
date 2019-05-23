@@ -247,7 +247,57 @@ exports[`<App/> snapshot 1`] = `
     <div
       className="ui container container"
     >
-      F O O T E R
+      <div
+        className="main"
+      >
+        <div
+          className="container"
+        >
+          SiteMap
+        </div>
+      </div>
+      <div
+        className="main"
+      >
+        <div
+          className="container"
+        >
+          <i
+            aria-hidden="true"
+            className="linkedin large icon"
+            onClick={[Function]}
+          />
+          <i
+            aria-hidden="true"
+            className="instagram large icon"
+            onClick={[Function]}
+          />
+          <i
+            aria-hidden="true"
+            className="youtube large icon"
+            onClick={[Function]}
+          />
+          <i
+            aria-hidden="true"
+            className="twitter large icon"
+            onClick={[Function]}
+          />
+          <i
+            aria-hidden="true"
+            className="facebook official large icon"
+            onClick={[Function]}
+          />
+        </div>
+      </div>
+      <div
+        className="main"
+      >
+        <div
+          className="container"
+        >
+          Copyright
+        </div>
+      </div>
     </div>
   </footer>
 </div>

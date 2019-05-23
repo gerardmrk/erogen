@@ -10,7 +10,7 @@ export class CopyRight extends React.PureComponent<Props, State> {
   public render() {
     return (
       <div className={styles.main}>
-        <div className={styles.container}>{"CopyRight"}</div>
+        <div className={styles.container}>{"Copyright"}</div>
       </div>
     );
   }

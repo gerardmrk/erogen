@@ -7,7 +7,7 @@ exports[`<CopyRight/> snapshot 1`] = `
   <div
     className="container"
   >
-    CopyRight
+    Copyright
   </div>
 </div>
 `;
