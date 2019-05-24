@@ -19,7 +19,9 @@ export const ConfigContext = React.createContext<WithConfig>({
       appTwitterHandle: "",
       appTwitterCardType: "summary_large_image",
       defaultLanguage: "en",
-      supportedLanguages: ["en"],
+      supportedLanguages: [["en", "English"]],
+      copyright: "",
+      socialLinks: {},
     },
   },
 });

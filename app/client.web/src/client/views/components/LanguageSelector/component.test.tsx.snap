@@ -5,9 +5,48 @@ exports[`<LanguageSelector/> snapshot 1`] = `
   className="main"
 >
   <div
-    className="container"
+    aria-expanded={false}
+    className="ui fluid selection dropdown"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    role="listbox"
+    tabIndex={0}
   >
-    LanguageSelector
+    <div
+      aria-live="polite"
+      className="text"
+      role="alert"
+    />
+    <i
+      aria-hidden="true"
+      className="dropdown icon"
+      onClick={[Function]}
+    />
+    <div
+      className="menu transition"
+    >
+      <div
+        aria-checked={false}
+        aria-selected={true}
+        className="selected item"
+        onClick={[Function]}
+        role="option"
+        style={
+          Object {
+            "pointerEvents": "all",
+          }
+        }
+      >
+        <span
+          className="text"
+        >
+          English
+        </span>
+      </div>
+    </div>
   </div>
 </div>
 `;

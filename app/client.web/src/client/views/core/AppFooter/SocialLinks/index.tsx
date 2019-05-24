@@ -1,9 +1,10 @@
 import { SocialLinks } from "./component";
+import { WithConfig, withConfig } from "@client/views/core/ConfigProvider";
 
-export type LocalProps = {};
+export type LocalProps = WithConfig & {};
 
 export type StoreProps = {};
 
 export type DispatchProps = {};
 
-export default SocialLinks;
+export default withConfig(SocialLinks);

@@ -6,11 +6,13 @@ type Props = LocalProps & StoreProps & DispatchProps;
 
 type State = {};
 
-export class CopyRight extends React.PureComponent<Props, State> {
+export class Copyright extends React.PureComponent<Props, State> {
   public render() {
     return (
       <div className={styles.main}>
-        <div className={styles.container}>{"Copyright"}</div>
+        <div className={styles.container}>
+          {this.props.config.app.copyright}
+        </div>
       </div>
     );
   }

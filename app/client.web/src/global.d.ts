@@ -30,8 +30,18 @@ type AppConfig = {
   appTwitterCardType?: "summary" | "summary_large_image" | "app" | "player";
   // [I18N] Default/fallback language's ISO code.
   defaultLanguage: string;
-  // [I18N] list of supported languages, in ISO 639-1 format.
-  supportedLanguages: string[];
+  // [I18N] list of tuples of supported languages and their locale code, in ISO 639-1 format (code first).
+  supportedLanguages: [string, string][];
+  // [LEGAL] copyright label for the app's footer
+  copyright: string;
+  // [NAVS]
+  socialLinks: {
+    linkedin?: string;
+    instagram?: string;
+    youtube?: string;
+    twitter?: string;
+    facebook?: string;
+  };
 };
 
 type TKey = string;

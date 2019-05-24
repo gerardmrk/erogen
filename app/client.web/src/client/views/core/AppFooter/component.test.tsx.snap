@@ -21,41 +21,67 @@ exports[`<AppFooter/> snapshot 1`] = `
     >
       <div
         className="container"
-      >
-        <i
-          aria-hidden="true"
-          className="linkedin large icon"
-          onClick={[Function]}
-        />
-        <i
-          aria-hidden="true"
-          className="instagram large icon"
-          onClick={[Function]}
-        />
-        <i
-          aria-hidden="true"
-          className="youtube large icon"
-          onClick={[Function]}
-        />
-        <i
-          aria-hidden="true"
-          className="twitter large icon"
-          onClick={[Function]}
-        />
-        <i
-          aria-hidden="true"
-          className="facebook official large icon"
-          onClick={[Function]}
-        />
-      </div>
+      />
     </div>
     <div
-      className="main"
+      className="footerEnd"
     >
       <div
-        className="container"
+        className="main"
       >
-        Copyright
+        <div
+          className="container"
+        >
+          
+        </div>
+      </div>
+      <div
+        className="main"
+      >
+        <div
+          aria-expanded={false}
+          className="ui fluid selection dropdown"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onMouseDown={[Function]}
+          role="listbox"
+          tabIndex={0}
+        >
+          <div
+            aria-live="polite"
+            className="text"
+            role="alert"
+          />
+          <i
+            aria-hidden="true"
+            className="dropdown icon"
+            onClick={[Function]}
+          />
+          <div
+            className="menu transition"
+          >
+            <div
+              aria-checked={false}
+              aria-selected={true}
+              className="selected item"
+              onClick={[Function]}
+              role="option"
+              style={
+                Object {
+                  "pointerEvents": "all",
+                }
+              }
+            >
+              <span
+                className="text"
+              >
+                English
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

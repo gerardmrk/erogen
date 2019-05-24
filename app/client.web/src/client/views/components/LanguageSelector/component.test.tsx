@@ -7,8 +7,10 @@ import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // p
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { LanguageSelector } from "./component";
+import { withConfig } from "@client/views/core/ConfigProvider";
+import { withTranslation } from "@client/views/core/I18nProvider";
 
-const Component = LanguageSelector;
+const Component = withTranslation()(withConfig(LanguageSelector));
 
 describe("<LanguageSelector/>", () => {
   let renderer: ReactTestRenderer;
@@ -17,7 +19,8 @@ describe("<LanguageSelector/>", () => {
   beforeEach(async () => {
     renderer = await createRenderer()(<Component />);
     component = renderer.getInstance() as ReactTestInstance;
-    await (component as any).componentDidMount();});
+    await (component as any).componentDidMount();
+  });
 
   if (SNAPSHOT_ENABLED) {
     test("snapshot", () => {

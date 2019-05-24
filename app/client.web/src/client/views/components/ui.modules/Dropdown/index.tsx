@@ -5,5 +5,13 @@
  */
 import "semantic-ui-less/definitions/modules/dropdown.less";
 // import "semantic-ui-less/definitions/collections/menu.less";
-import { Dropdown } from "semantic-ui-react";
+import {
+  Dropdown,
+  DropdownProps as _DropdownProps,
+  DropdownItemProps as _DropdownItemProps,
+} from "semantic-ui-react";
+
+export type DropdownProps = _DropdownProps;
+export type DropdownItemProps = _DropdownItemProps;
+
 export default Dropdown;

@@ -6,18 +6,20 @@ import * as React from "react";
 import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
-import { CopyRight } from "./component";
+import { Copyright } from "./component";
+import { withConfig } from "../../ConfigProvider";
 
-const Component = CopyRight;
+const Component = withConfig(Copyright);
 
-describe("<CopyRight/>", () => {
+describe("<Copyright/>", () => {
   let renderer: ReactTestRenderer;
   let component: ReactTestInstance;
 
   beforeEach(async () => {
     renderer = await createRenderer()(<Component />);
     component = renderer.getInstance() as ReactTestInstance;
-    await (component as any).componentDidMount();});
+    await (component as any).componentDidMount();
+  });
 
   if (SNAPSHOT_ENABLED) {
     test("snapshot", () => {

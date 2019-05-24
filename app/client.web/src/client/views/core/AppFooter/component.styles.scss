@@ -1,13 +1,21 @@
 @import "~@client/views/styles.dimens.scss";
 
 .main {
+  border-top: 1px solid #ddd;
   height: $app-footer-height;
 }
 
 .container {
+  position: relative;
   height: 100%;
   display: flex !important;
   flex-direction: column;
   align-items: stretch;
   justify-content: space-around;
+}
+
+.footerEnd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

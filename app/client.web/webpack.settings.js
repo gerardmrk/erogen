@@ -59,7 +59,25 @@ module.exports = rootAppDir => ({
     appTwitterHandle: `@404`,
     appTwitterCardType: "summary_large_image",
     defaultLanguage: "en",
-    supportedLanguages: ["en", "de", "es", "fr", "hi", "ms", "pt", "ru", "zh"],
+    supportedLanguages: [
+      ["zh", "Chinese"],
+      ["en", "English"],
+      ["fr", "French"],
+      ["de", "German"],
+      ["hi", "Hindi"],
+      ["ms", "Malay"],
+      ["pt", "Portugese"],
+      ["ru", "Russian"],
+      ["es", "Spanish"],
+    ],
+    copyright: "© 2019 Erogen, Inc. All rights reserved.",
+    socialLinks: {
+      linkedin: "https://google.com/",
+      instagram: "https://google.com/",
+      youtube: "https://google.com/",
+      twitter: "https://google.com/",
+      facebook: "https://google.com/",
+    },
   };
 
   const devHost = "127.0.0.1";

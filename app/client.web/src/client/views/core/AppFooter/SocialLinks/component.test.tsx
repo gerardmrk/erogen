@@ -4,11 +4,12 @@ const SNAPSHOT_ENABLED = true;
 
 import * as React from "react";
 import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
+import { withConfig } from "@client/views/core/ConfigProvider";
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { SocialLinks } from "./component";
 
-const Component = SocialLinks;
+const Component = withConfig(SocialLinks);
 
 describe("<SocialLinks/>", () => {
   let renderer: ReactTestRenderer;
@@ -17,7 +18,8 @@ describe("<SocialLinks/>", () => {
   beforeEach(async () => {
     renderer = await createRenderer()(<Component />);
     component = renderer.getInstance() as ReactTestInstance;
-    await (component as any).componentDidMount();});
+    await (component as any).componentDidMount();
+  });
 
   if (SNAPSHOT_ENABLED) {
     test("snapshot", () => {
