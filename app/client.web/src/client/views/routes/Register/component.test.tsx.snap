@@ -18,7 +18,7 @@ exports[`<Register/> snapshot 1`] = `
           className="header"
         >
           <h1>
-            Register
+            form-heading
           </h1>
         </div>
       </div>

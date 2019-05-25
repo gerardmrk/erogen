@@ -21,6 +21,7 @@ export const ConfigContext = React.createContext<WithConfig>({
       defaultLanguage: "en",
       supportedLanguages: [["en", "English"]],
       copyright: "",
+      siteMap: {},
       socialLinks: {},
     },
   },

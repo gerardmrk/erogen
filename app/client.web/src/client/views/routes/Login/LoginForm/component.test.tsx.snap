@@ -11,7 +11,7 @@ exports[`<LoginForm/> snapshot 1`] = `
   >
     <label>
       <span>
-        Username
+        form-label-username
       </span>
       <div
         className="ui fluid input"
@@ -31,7 +31,7 @@ exports[`<LoginForm/> snapshot 1`] = `
   >
     <label>
       <span>
-        Password
+        form-label-password
       </span>
       <div
         className="ui fluid input"
@@ -63,7 +63,7 @@ exports[`<LoginForm/> snapshot 1`] = `
         type="checkbox"
       />
       <label>
-        Remember Me
+        form-label-remember
       </label>
     </div>
   </div>
@@ -72,7 +72,7 @@ exports[`<LoginForm/> snapshot 1`] = `
     onClick={[Function]}
     type="submit"
   >
-    Login
+    form-heading
   </button>
 </form>
 `;
