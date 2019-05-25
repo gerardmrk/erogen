@@ -1,43 +1,39 @@
-import { Action } from "@client/store";
+import { Store, reducer } from "@client/store";
 import { MockErrorsService } from "@client/services/errors/svc.mock";
 import errorHandler from "./error-handler";
 import { MiddlewareAPI } from ".";
 import { show } from "@client/store/state.ui-loader/actions";
 import { logoutFailure } from "../state.auth/actions";
+import { createStore } from "redux";
 
 describe("store/middleware/error-handler", () => {
-  let state: object;
-
-  let getState: jest.Mock;
-  let dispatch: jest.Mock;
-  let dispatchNext: jest.Mock;
-
+  let store: Store;
   let api: MiddlewareAPI;
   let service: MockErrorsService;
 
-  let handleNext: (action: Action) => void;
+  let next: jest.Mock;
+  let dispatch: jest.Mock;
 
   beforeAll(() => {
-    state = { switzerland: "bern", italy: "rome" };
-    getState = jest.fn().mockReturnValue(state);
-
+    next = jest.fn();
     dispatch = jest.fn();
-    dispatchNext = jest.fn();
-    api = { getState, dispatch };
+
+    store = createStore(reducer);
     service = new MockErrorsService();
-    handleNext = errorHandler(service)(api)(dispatchNext);
+    api = { dispatch, getState: store.getState };
   });
 
   afterEach(() => {
     service.resetAll();
-    getState.mockClear();
-    dispatch.mockReset();
-    dispatchNext.mockReset();
+    dispatch.mockClear();
+    next.mockClear();
   });
 
   test("miss", async () => {
-    await handleNext(show());
-    expect(dispatchNext).toBeCalledTimes(1);
+    const dispatchNext = errorHandler(service)(api)(next);
+    await dispatchNext(show());
+
+    expect(next).toBeCalledTimes(1);
     expect(service.recorded("logError").count).toEqual(0);
     expect(service.recorded("logViewError").count).toEqual(0);
     expect(service.recorded("logStoreError").count).toEqual(0);
@@ -45,11 +41,13 @@ describe("store/middleware/error-handler", () => {
 
   test("hit: handled", async () => {
     const error = new Error("senegal");
-    await handleNext(logoutFailure({ message: "tuvalu" }, { error }));
-    expect(dispatchNext).toBeCalledTimes(1);
+    const dispatchNext = errorHandler(service)(api)(next);
+    await dispatchNext(logoutFailure({ message: "tuvalu" }, { error }));
+
+    expect(next).toBeCalledTimes(1);
     expect(service.recorded("logError").count).toEqual(0);
     expect(service.recorded("logViewError").count).toEqual(0);
     expect(service.recorded("logStoreError").count).toEqual(1);
-    expect(service.recorded("logStoreError").args[0]).toEqual([error, state]);
+    expect(service.recorded("logStoreError").args[0]).toEqual([error, store.getState()]); // prettier-ignore
   });
 });

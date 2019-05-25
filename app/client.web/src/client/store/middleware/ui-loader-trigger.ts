@@ -7,7 +7,7 @@
 import { Middleware, ActionWithMeta } from ".";
 import * as actions from "@client/store/state.ui-loader/actions";
 
-export const uiLoaderTrigger: Middleware = api => next => action => {
+export const uiLoaderTrigger = (): Middleware => api => next => action => {
   next(action);
 
   if (

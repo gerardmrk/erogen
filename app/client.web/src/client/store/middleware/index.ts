@@ -3,11 +3,11 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { Middleware as _Middleware, MiddlewareAPI as _MiddlewareAPI, applyMiddleware, Dispatch } from "redux"; // prettier-ignore
 import { IServices } from "@client/services";
 import { State, Action, Dispatcher } from "@client/store";
-import uiMessageTrigger from "./trigger.ui-message";
-import uiLoaderTrigger from "./trigger.ui-loader";
-import errorHandler from "./error-handler";
 import { ShowPayload } from "@client/store/state.ui-message/actions";
-import postLogin from "./post-login";
+import uiMessageTriggerMiddleware from "./ui-message-trigger";
+import uiLoaderTriggerMiddleware from "./ui-loader-trigger";
+import errorHandlerMiddleware from "./error-handler";
+import postLoginMiddleware from "./post-login";
 
 export interface Middleware {
   (api: MiddlewareAPI): (next: Dispatch<Action>) => (action: Action) => void;
@@ -31,10 +31,10 @@ export const composeMiddleware = (
 ) => {
   const middleware = applyMiddleware(
     asyncActionMiddleware.withExtraArgument(services),
-    postLogin(services.user),
-    uiMessageTrigger,
-    uiLoaderTrigger,
-    errorHandler(services.errors),
+    postLoginMiddleware(),
+    uiMessageTriggerMiddleware(),
+    uiLoaderTriggerMiddleware(),
+    errorHandlerMiddleware(services.errors),
   );
 
   if (addDevToolsMiddleware) {

@@ -42,8 +42,8 @@ export type Dispatcher = Dispatch<Action> &
  * REDUCER
  ******************************************************************************/
 
-// the root reducer (think: state store)
-const reducer: Reducer<State, Action> = combineReducers({
+// the root reducer
+export const reducer: Reducer<State, Action> = combineReducers({
   auth: auth.reducer,
   user: user.reducer,
   i18n: i18n.reducer,

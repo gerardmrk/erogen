@@ -11,7 +11,7 @@
 <!-- prettier-ignore-start -->
 | Statements                                    | Branches                                  | Functions                                   | Lines                               |
 | --------------------------------------------- | ----------------------------------------- | ------------------------------------------- | ----------------------------------- |
-| ![Statements](https://img.shields.io/badge/Coverage-56.3%25-red.svg "Make me better!") | ![Branches](https://img.shields.io/badge/Coverage-28.93%25-red.svg "Make me better!") | ![Functions](https://img.shields.io/badge/Coverage-49.15%25-red.svg "Make me better!") | ![Lines](https://img.shields.io/badge/Coverage-55.78%25-red.svg "Make me better!") |
+| ![Statements](https://img.shields.io/badge/Coverage-57.06%25-red.svg "Make me better!") | ![Branches](https://img.shields.io/badge/Coverage-30.99%25-red.svg "Make me better!") | ![Functions](https://img.shields.io/badge/Coverage-50.51%25-red.svg "Make me better!") | ![Lines](https://img.shields.io/badge/Coverage-56.37%25-red.svg "Make me better!") |
 <!-- prettier-ignore-end -->
 
 ## Requirements

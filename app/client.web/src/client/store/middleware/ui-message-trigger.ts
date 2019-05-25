@@ -7,7 +7,7 @@
 import { Middleware, ActionWithMeta } from ".";
 import * as actions from "@client/store/state.ui-message/actions";
 
-export const uiMessageTrigger: Middleware = api => next => action => {
+export const uiMessageTrigger = (): Middleware => api => next => action => {
   next(action);
 
   if (
