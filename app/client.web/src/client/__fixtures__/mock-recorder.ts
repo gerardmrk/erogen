@@ -63,7 +63,7 @@ export const recordMock = (): ClassDecorator => <C extends IMock<C>>(Class: C) =
     methods.forEach(m => {
       const fn = c[m];
       // @ts-ignore
-      c[m] = (aa) => {
+      c[m] = (...aa) => {
         let prev = c.records.get(m);
         if (!prev) prev = { count: 0, args: [], rets: [] };
 
@@ -71,7 +71,7 @@ export const recordMock = (): ClassDecorator => <C extends IMock<C>>(Class: C) =
         if (c.returns.has(m)) {
           ret = c.returns.get(m);
         } else {
-          ret = fn(aa);
+          ret = fn(...aa);
         }
 
         c.records.set(m, {

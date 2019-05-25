@@ -16,7 +16,7 @@
     "test:app": "cross-env NODE_ENV=test jest --logHeapUsage --forceExit --detectOpenHandles",
     "test:app:watch": "cross-env NODE_ENV=test jest --logHeapUsage --forceExit --detectOpenHandles --watch",
     "test:app:snapshot": "cross-env NODE_ENV=test jest --updateSnapshot --logHeapUsage --forceExit --detectOpenHandles",
-    "test:app:coverage": "cross-env NODE_ENV=test jest --logHeapUsage --forceExit --detectOpenHandles --collectCoverage",
+    "test:app:coverage": "cross-env NODE_ENV=test jest --logHeapUsage --forceExit --detectOpenHandles --collectCoverage && yarn run gen-readme",
     "test:rdr": "echo WIP",
     "test:srv": "echo WIP",
     "build": "node_modules/.bin/gulp",

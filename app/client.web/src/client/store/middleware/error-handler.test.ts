@@ -6,6 +6,8 @@ import { show } from "@client/store/state.ui-loader/actions";
 import { logoutFailure } from "../state.auth/actions";
 
 describe("store/middleware/error-handler", () => {
+  let state: object;
+
   let getState: jest.Mock;
   let dispatch: jest.Mock;
   let dispatchNext: jest.Mock;
@@ -16,7 +18,9 @@ describe("store/middleware/error-handler", () => {
   let handleNext: (action: Action) => void;
 
   beforeAll(() => {
-    getState = jest.fn();
+    state = { switzerland: "bern", italy: "rome" };
+    getState = jest.fn().mockReturnValue(state);
+
     dispatch = jest.fn();
     dispatchNext = jest.fn();
     api = { getState, dispatch };
@@ -25,7 +29,8 @@ describe("store/middleware/error-handler", () => {
   });
 
   afterEach(() => {
-    getState.mockReset();
+    service.resetAll();
+    getState.mockClear();
     dispatch.mockReset();
     dispatchNext.mockReset();
   });
@@ -40,12 +45,11 @@ describe("store/middleware/error-handler", () => {
 
   test("hit: handled", async () => {
     const error = new Error("senegal");
-
     await handleNext(logoutFailure({ message: "tuvalu" }, { error }));
     expect(dispatchNext).toBeCalledTimes(1);
     expect(service.recorded("logError").count).toEqual(0);
     expect(service.recorded("logViewError").count).toEqual(0);
     expect(service.recorded("logStoreError").count).toEqual(1);
-    expect(service.recorded("logStoreError").args[0]).toEqual(error);
+    expect(service.recorded("logStoreError").args[0]).toEqual([error, state]);
   });
 });
