@@ -1,5 +1,8 @@
 {
 	"description": "Sign in to {{appName}}",
 	"form-heading": "Login",
+	"form-label-password": "Password",
+	"form-label-remember": "Remember me",
+	"form-label-username": "Username/email",
 	"title": "Login"
 }

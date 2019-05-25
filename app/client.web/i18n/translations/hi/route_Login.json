@@ -1,5 +1,8 @@
 {
 	"description": " {{appName}}में साइन इन करें",
 	"form-heading": "लॉग इन करें",
+	"form-label-password": "पारण शब्द",
+	"form-label-remember": "मुझे याद रखना",
+	"form-label-username": "उपयोगकर्ता नाम / ईमेल",
 	"title": "लॉग इन करें"
 }

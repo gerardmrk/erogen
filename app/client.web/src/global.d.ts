@@ -35,6 +35,8 @@ type AppConfig = {
   // [LEGAL] copyright label for the app's footer
   copyright: string;
   // [NAVS]
+  siteMap: { [k: string]: { [k: string]: string } };
+  // [NAVS]
   socialLinks: {
     linkedin?: string;
     instagram?: string;

@@ -1,5 +1,8 @@
 {
 	"description": "Bei {{appName}}anmelden",
 	"form-heading": "Anmeldung",
+	"form-label-password": "Passwort",
+	"form-label-remember": "Erinnere dich an mich",
+	"form-label-username": "Benutzername / E-Mail",
 	"title": "Anmeldung"
 }

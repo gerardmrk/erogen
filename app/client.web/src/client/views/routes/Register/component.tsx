@@ -24,7 +24,7 @@ export class Register extends React.PureComponent<Props, State> {
           metaTwitterCardType={this.props.metaTwitterCardType}
         />
 
-        <AuthRoutesWrapper title={"Register"}>
+        <AuthRoutesWrapper title={this.props.t("form-heading")}>
           <div className={styles.main}>{"x"}</div>
         </AuthRoutesWrapper>
       </React.Fragment>

@@ -1,5 +1,8 @@
 {
 	"description": "Masuk ke {{appName}}",
 	"form-heading": "Log masuk",
+	"form-label-password": "Kata laluan",
+	"form-label-remember": "Ingat saya",
+	"form-label-username": "Nama pengguna / e-mel",
 	"title": "Log masuk"
 }
