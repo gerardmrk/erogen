@@ -36,7 +36,7 @@ describe("store/auth/action.login", () => {
 
     expect(dispatched[0]).toEqual({
       type: "auth.loginPending",
-      meta: { loader: "Logging in..." },
+      meta: { loader: "messages.logging-in" },
     });
 
     expect(dispatched[1]).toEqual({
@@ -50,8 +50,8 @@ describe("store/auth/action.login", () => {
         loader: false,
         message: {
           level: MessageLevel.Success,
-          header: "Success!",
-          content: "You're now logged in.",
+          header: "messages.login-success.header",
+          content: "messages.login-success.message",
           autoDismiss: 1000,
         },
       },
@@ -69,7 +69,7 @@ describe("store/auth/action.login", () => {
 
     expect(dispatched[0]).toEqual({
       type: "auth.loginPending",
-      meta: { loader: "Logging in..." },
+      meta: { loader: "messages.logging-in" },
     });
 
     expect(dispatched[1]).toEqual({

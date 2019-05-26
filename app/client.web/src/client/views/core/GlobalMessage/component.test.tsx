@@ -7,9 +7,10 @@ import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // p
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { GlobalMessage } from "./component";
-import { MessageLevel } from "@client/store/state.ui-message/models";
+// import { MessageLevel } from "@client/store/state.ui-message/models";
+import { withTranslationMock } from "@client/views/__fixtures__/withtranslation-mock";
 
-const Component = GlobalMessage;
+const Component = withTranslationMock()(GlobalMessage);
 
 describe("<GlobalMessage/>", () => {
   let renderer: ReactTestRenderer;
@@ -18,15 +19,15 @@ describe("<GlobalMessage/>", () => {
   beforeEach(async () => {
     renderer = await createRenderer()(
       <Component
-        hide={() => {}}
-        msg={{
-          display: true,
-          level: MessageLevel.Info,
-          header: undefined,
-          content: "hello",
-          list: [],
-          autoDismiss: 500,
-        }}
+      // hide={() => {}}
+      // msg={{
+      //   display: true,
+      //   level: MessageLevel.Info,
+      //   header: undefined,
+      //   content: "hello",
+      //   list: [],
+      //   autoDismiss: 500,
+      // }}
       />,
     );
     component = renderer.getInstance() as ReactTestInstance;

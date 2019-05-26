@@ -16,7 +16,9 @@ export class GlobalLoader extends React.PureComponent<Props, State> {
       <div className={styles.main}>
         <div className={styles.container}>
           <Dimmer active={true}>
-            <Loader size={"big"}>{this.props.message}</Loader>
+            <Loader size={"big"}>
+              {this.props.message && this.props.t(this.props.message)}
+            </Loader>
           </Dimmer>
         </div>
       </div>

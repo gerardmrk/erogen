@@ -13,7 +13,7 @@ export const login = (
   services,
 ) => {
   try {
-    dispatch(actions.loginPending({ loader: "Logging in..." }));
+    dispatch(actions.loginPending({ loader: "messages.logging-in" }));
 
     const { authKeys } = await services.auth.login({
       alias,
@@ -25,8 +25,8 @@ export const login = (
       loader: false,
       message: {
         level: MessageLevel.Success,
-        header: "Success!",
-        content: "You're now logged in.",
+        header: "messages.login-success.header",
+        content: "messages.login-success.message",
         autoDismiss: 1000,
       },
     }));

@@ -1,0 +1,11 @@
+{
+	"messages": {
+		"login-success": {
+			"header": "सफलता",
+			"message": "अब आप लॉग इन हो गए हैं।"
+		},
+		"logout-success": {
+			"message": "आपको लॉग आउट कर दिया गया है।"
+		}
+	}
+}

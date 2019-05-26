@@ -8,8 +8,9 @@ import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { Copyright } from "./component";
 import { withConfig } from "../../ConfigProvider";
+import { withTranslationMock } from "@client/views/__fixtures__/withtranslation-mock";
 
-const Component = withConfig(Copyright);
+const Component = withTranslationMock()(withConfig(Copyright));
 
 describe("<Copyright/>", () => {
   let renderer: ReactTestRenderer;

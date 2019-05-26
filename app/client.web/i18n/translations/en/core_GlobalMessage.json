@@ -1,0 +1,11 @@
+{
+	"messages": {
+		"login-success": {
+			"header": "Success",
+			"message": "You're now logged in."
+		},
+		"logout-success": {
+			"message": "You've been logged out."
+		}
+	}
+}

@@ -7,8 +7,9 @@ import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // p
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { GlobalLoader } from "./component";
+import { withTranslationMock } from "@client/views/__fixtures__/withtranslation-mock";
 
-const Component = GlobalLoader;
+const Component = withTranslationMock()(GlobalLoader);
 
 describe("<GlobalLoader/>", () => {
   let renderer: ReactTestRenderer;
@@ -16,7 +17,10 @@ describe("<GlobalLoader/>", () => {
 
   beforeEach(async () => {
     renderer = await createRenderer()(
-      <Component loading={false} message={"message"} />,
+      <Component
+      // loading={false}
+      // message={"message"}
+      />,
     );
     component = renderer.getInstance() as ReactTestInstance;
     await (component as any).componentDidMount();

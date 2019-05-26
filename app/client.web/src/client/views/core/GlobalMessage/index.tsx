@@ -3,8 +3,12 @@ import { connect } from "react-redux";
 import { State, Dispatcher } from "@client/store";
 import { State as MessageState } from "@client/store/state.ui-message";
 import { hide } from "@client/store/state.ui-message/actions";
+import {
+  withTranslation,
+  WithTranslation,
+} from "@client/views/core/I18nProvider";
 
-export type LocalProps = {};
+export type LocalProps = WithTranslation & {};
 
 export type StoreProps = {
   msg: MessageState;
@@ -24,7 +28,9 @@ const mapDispatchToProps = (dispatch: Dispatcher, localProps: LocalProps) => ({
   },
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(GlobalMessage);
+export default withTranslation("core_GlobalMessage")(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(GlobalMessage),
+);

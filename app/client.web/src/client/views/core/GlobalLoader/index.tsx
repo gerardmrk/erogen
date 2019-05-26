@@ -1,8 +1,12 @@
 import { GlobalLoader } from "./component";
 import { State, Dispatcher } from "@client/store";
 import { connect } from "react-redux";
+import {
+  withTranslation,
+  WithTranslation,
+} from "@client/views/core/I18nProvider";
 
-export type LocalProps = {};
+export type LocalProps = WithTranslation & {};
 
 export type StoreProps = {
   loading: boolean;
@@ -21,7 +25,9 @@ const mapDispatchToProps = (
   localProps: LocalProps,
 ): DispatchProps => ({});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(GlobalLoader);
+export default withTranslation("core_GlobalLoader")(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(GlobalLoader),
+);

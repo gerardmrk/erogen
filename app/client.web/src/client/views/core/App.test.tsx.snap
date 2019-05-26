@@ -269,7 +269,7 @@ exports[`<App/> snapshot 1`] = `
           <div
             className="container"
           >
-            
+            copyright
           </div>
         </div>
         <div

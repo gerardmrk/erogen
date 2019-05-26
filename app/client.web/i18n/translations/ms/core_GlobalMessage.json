@@ -1,0 +1,11 @@
+{
+	"messages": {
+		"login-success": {
+			"header": "Kejayaan",
+			"message": "Anda kini log masuk."
+		},
+		"logout-success": {
+			"message": "Anda telah dilog keluar."
+		}
+	}
+}

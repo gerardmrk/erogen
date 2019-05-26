@@ -1,0 +1,11 @@
+{
+	"messages": {
+		"login-success": {
+			"header": "успех",
+			"message": "Вы вошли в систему."
+		},
+		"logout-success": {
+			"message": "Вы вышли из системы."
+		}
+	}
+}

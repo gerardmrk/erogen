@@ -11,7 +11,10 @@ export class Copyright extends React.PureComponent<Props, State> {
     return (
       <div className={styles.main}>
         <div className={styles.container}>
-          {this.props.config.app.copyright}
+          {this.props.t("copyright", {
+            year: "2019",
+            orgName: this.props.config.app.appName,
+          })}
         </div>
       </div>
     );

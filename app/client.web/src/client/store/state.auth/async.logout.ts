@@ -9,7 +9,7 @@ export const logout = (): AsyncAction => async (
   services,
 ) => {
   try {
-    dispatch(actions.logoutPending({ loader: "Logging out..." }));
+    dispatch(actions.logoutPending({ loader: "messages.logging-out" }));
 
     await services.auth.logout();
 
@@ -17,7 +17,7 @@ export const logout = (): AsyncAction => async (
       loader: false,
       message: {
         level: MessageLevel.Info,
-        content: "You've been logged out.",
+        content: "messages.logout-success.message",
         autoDismiss: 800,
       },
     }));

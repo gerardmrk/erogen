@@ -68,16 +68,18 @@ export class GlobalMessage extends React.PureComponent<Props, State> {
               />
 
               <Message.Content>
-                {msg.header && <Message.Header>{msg.header}</Message.Header>}
+                {msg.header && (
+                  <Message.Header>{this.props.t(msg.header)}</Message.Header>
+                )}
 
                 {msg.content && (
-                  <Message.Content>{msg.content}</Message.Content>
+                  <Message.Content>{this.props.t(msg.content)}</Message.Content>
                 )}
 
                 {msg.list && (
                   <Message.List>
                     {msg.list.map((item, i) => (
-                      <Message.Item key={i}>{item}</Message.Item>
+                      <Message.Item key={i}>{this.props.t(item)}</Message.Item>
                     ))}
                   </Message.List>
                 )}

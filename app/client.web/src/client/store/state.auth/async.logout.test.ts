@@ -29,7 +29,7 @@ describe("store/auth/action.logout", () => {
 
     expect(dispatched[0]).toEqual({
       type: "auth.logoutPending",
-      meta: { loader: "Logging out..." },
+      meta: { loader: "messages.logging-out" },
     });
 
     expect(dispatched[1]).toEqual({
@@ -38,7 +38,7 @@ describe("store/auth/action.logout", () => {
         loader: false,
         message: {
           level: MessageLevel.Info,
-          content: "You've been logged out.",
+          content: "messages.logout-success.message",
           autoDismiss: 800,
         },
       },
@@ -56,7 +56,7 @@ describe("store/auth/action.logout", () => {
 
     expect(dispatched[0]).toEqual({
       type: "auth.logoutPending",
-      meta: { loader: "Logging out..." },
+      meta: { loader: "messages.logging-out" },
     });
 
     expect(dispatched[1]).toEqual({
