@@ -3,7 +3,6 @@ import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import Dropdown, {
   DropdownProps,
-  DropdownItemProps,
 } from "@client/views/components/ui.modules/Dropdown";
 
 type Props = LocalProps & StoreProps & DispatchProps;
@@ -11,16 +10,8 @@ type Props = LocalProps & StoreProps & DispatchProps;
 type State = {};
 
 export class LanguageSelector extends React.PureComponent<Props, State> {
-  private options: DropdownItemProps[] = [];
-
   public constructor(props: Props) {
     super(props);
-
-    this.options = props.config.app.supportedLanguages.map(([code, lang]) => ({
-      key: code,
-      text: lang,
-      value: code,
-    }));
   }
 
   private onLanguageChange = async (
@@ -31,12 +22,20 @@ export class LanguageSelector extends React.PureComponent<Props, State> {
   };
 
   public render() {
+    const options = this.props.config.app.supportedLanguages.map(
+      ([code, lang]) => ({
+        key: code,
+        text: this.props.t(`languages.${code}`),
+        value: code,
+      }),
+    );
+
     return (
       <div className={styles.main}>
         <Dropdown
           fluid={true}
           selection={true}
-          options={this.options}
+          options={options}
           onChange={this.onLanguageChange}
           value={this.props.i18n.language}
         />

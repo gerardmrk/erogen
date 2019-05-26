@@ -6,7 +6,7 @@ type Props = {};
 
 type State = {};
 
-const TMP_TEST = ["Smashing", "Pumpkins", "2077 :(", "Arabian", "Nights"];
+const TMP_TEST = ["Smashing", "Pumpkins", "Radiohead", "Chilli", "Peppers"];
 
 export class NameDropper extends React.PureComponent<Props, State> {
   public render() {

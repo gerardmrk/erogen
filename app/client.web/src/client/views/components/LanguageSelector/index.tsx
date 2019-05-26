@@ -9,4 +9,4 @@ export type StoreProps = {};
 
 export type DispatchProps = {};
 
-export default withConfig(withTranslation()(LanguageSelector));
+export default withConfig(withTranslation("main")(LanguageSelector));

@@ -12,7 +12,7 @@ export class PrivateNavs extends React.PureComponent<Props, State> {
   public render() {
     return (
       <div className={styles.main}>
-        <div className={styles.navs}>{"navs"}</div>
+        <div className={styles.navs}>{"..."}</div>
         <div className={styles.userdropdown}>
           <UserDropdown />
         </div>

@@ -1,4 +1,15 @@
 {
 	"app-description": "Pemimpin industri dalam teknologi grafik generasi akan datang.",
-	"app-title": "{{appName}}"
+	"app-title": "{{appName}}",
+	"languages": {
+		"de": "Jerman",
+		"en": "Bahasa Inggeris",
+		"es": "Sepanyol",
+		"fr": "Perancis",
+		"hi": "Hindi",
+		"ms": "Melayu",
+		"pt": "Portugis",
+		"ru": "Rusia",
+		"zh": "Cina"
+	}
 }

@@ -1,4 +1,15 @@
 {
 	"app-description": "Líder da indústria em tecnologia de grafeno de última geração.",
-	"app-title": "{{appName}}"
+	"app-title": "{{appName}}",
+	"languages": {
+		"de": "alemão",
+		"en": "Inglês",
+		"es": "espanhol",
+		"fr": "francês",
+		"hi": "hindi",
+		"ms": "malaio",
+		"pt": "português",
+		"ru": "russo",
+		"zh": "chinês"
+	}
 }

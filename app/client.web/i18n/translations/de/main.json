@@ -1,4 +1,15 @@
 {
 	"app-description": "Branchenführer in der nächsten Generation von Graphen-Technologie.",
-	"app-title": "{{appName}}"
+	"app-title": "{{appName}}",
+	"languages": {
+		"de": "Deutsche",
+		"en": "Englisch",
+		"es": "Spanisch",
+		"fr": "Französisch",
+		"hi": "Hindi",
+		"ms": "malaiisch",
+		"pt": "Portugiesisch",
+		"ru": "Russisch",
+		"zh": "Chinesisch"
+	}
 }

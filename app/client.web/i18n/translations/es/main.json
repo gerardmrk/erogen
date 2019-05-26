@@ -1,4 +1,15 @@
 {
 	"app-description": "Líder de la industria en tecnología de grafeno de próxima generación.",
-	"app-title": "{{appName}}"
+	"app-title": "{{appName}}",
+	"languages": {
+		"de": "alemán",
+		"en": "Inglés",
+		"es": "español",
+		"fr": "francés",
+		"hi": "hindi",
+		"ms": "malayo",
+		"pt": "Portugueses",
+		"ru": "ruso",
+		"zh": "chino"
+	}
 }

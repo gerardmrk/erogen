@@ -1,4 +1,15 @@
 {
 	"app-description": "Industry leader in next-generation graphene technology.",
-	"app-title": "{{appName}}"
+	"app-title": "{{appName}}",
+	"languages": {
+		"de": "German",
+		"en": "English",
+		"es": "Spanish",
+		"fr": "French",
+		"hi": "Hindi",
+		"ms": "Malay",
+		"pt": "Portugese",
+		"ru": "Russian",
+		"zh": "Chinese"
+	}
 }
