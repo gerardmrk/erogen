@@ -8,7 +8,7 @@ type Props = LocalProps & StoreProps & DispatchProps;
 
 type State = {};
 
-export class AuthRoutesWrapper extends React.PureComponent<Props, State> {
+export class AuthLayout extends React.PureComponent<Props, State> {
   public render() {
     return (
       <div className={styles.main}>

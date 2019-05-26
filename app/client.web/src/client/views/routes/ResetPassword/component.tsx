@@ -1,6 +1,6 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
-import AuthRoutesWrapper from "@client/views/core/AuthRoutesWrapper";
+import AuthLayout from "@client/views/core/AuthLayout";
 import { LocalProps } from ".";
 import HeadTags from "@client/views/components/HeadTags";
 
@@ -24,9 +24,9 @@ export class ResetPassword extends React.PureComponent<Props, State> {
           metaTwitterCardType={this.props.metaTwitterCardType}
         />
 
-        <AuthRoutesWrapper title={"Reset Your Password"}>
+        <AuthLayout title={"Reset Your Password"}>
           <div className={styles.main}>{"Form"}</div>
-        </AuthRoutesWrapper>
+        </AuthLayout>
       </React.Fragment>
     );
   }

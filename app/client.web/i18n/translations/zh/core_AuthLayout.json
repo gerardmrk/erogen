@@ -1,0 +1,7 @@
+{
+	"navs": {
+		"login": "登录",
+		"register": "寄存器",
+		"reset-password": "重设密码"
+	}
+}

@@ -6,16 +6,21 @@ import * as React from "react";
 import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
-import { AuthRoutesWrapper } from "./component";
+import { AuthLayout } from "./component";
+import { withTranslationMock } from "@client/views/__fixtures__/withtranslation-mock";
 
-const Component = AuthRoutesWrapper;
+const Component = withTranslationMock()(AuthLayout);
 
-describe("<AuthRoutesWrapper/>", () => {
+describe("<AuthLayout/>", () => {
   let renderer: ReactTestRenderer;
   let component: ReactTestInstance;
 
   beforeEach(async () => {
-    renderer = await createRenderer()(<Component title={"x"} />);
+    renderer = await createRenderer()(
+      <Component
+      // title={"x"}
+      />,
+    );
     component = renderer.getInstance() as ReactTestInstance;
     await (component as any).componentDidMount();
   });

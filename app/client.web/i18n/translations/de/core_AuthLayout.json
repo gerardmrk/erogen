@@ -1,0 +1,7 @@
+{
+	"navs": {
+		"login": "Anmeldung",
+		"register": "Registrieren",
+		"reset-password": "Passwort zurücksetzen"
+	}
+}

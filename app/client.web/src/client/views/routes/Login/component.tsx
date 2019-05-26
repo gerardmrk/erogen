@@ -1,6 +1,6 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
-import AuthRoutesWrapper from "@client/views/core/AuthRoutesWrapper";
+import AuthLayout from "@client/views/core/AuthLayout";
 import LoginForm from "./LoginForm";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import HeadTags from "@client/views/components/HeadTags";
@@ -54,11 +54,11 @@ export class Login extends React.PureComponent<Props, State> {
           metaTwitterCardType={this.props.metaTwitterCardType}
         />
 
-        <AuthRoutesWrapper title={t("form.heading")}>
+        <AuthLayout title={t("form.heading")}>
           <div className={styles.main}>
             <LoginForm />
           </div>
-        </AuthRoutesWrapper>
+        </AuthLayout>
       </React.Fragment>
     );
   }

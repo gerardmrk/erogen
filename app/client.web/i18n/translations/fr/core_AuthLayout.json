@@ -1,0 +1,7 @@
+{
+	"navs": {
+		"login": "S'identifier",
+		"register": "registre",
+		"reset-password": "Réinitialiser le mot de passe"
+	}
+}

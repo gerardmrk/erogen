@@ -1,0 +1,7 @@
+{
+	"navs": {
+		"login": "Login",
+		"register": "Register",
+		"reset-password": "Reset password"
+	}
+}

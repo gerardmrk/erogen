@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<AuthRoutesWrapper/> snapshot 1`] = `
+exports[`<AuthLayout/> snapshot 1`] = `
 <div
   className="main"
 >

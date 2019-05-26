@@ -33,15 +33,15 @@ export const headerNavsPrivate = [
 
 export const authNavs = [
   {
-    label: "Login",
+    label: "navs.login",
     to: "/login",
   },
   {
-    label: "Register",
+    label: "navs.register",
     to: "/register",
   },
   {
-    label: "Reset Password",
+    label: "navs.reset-password",
     to: "/reset-password",
   },
 ];

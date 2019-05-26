@@ -70,17 +70,20 @@ export class LoginForm extends React.PureComponent<Props, State> {
           </label>
         </Form.Field>
 
-        <Form.Field>
+        <Form.Field className={styles.actions}>
           <Checkbox
             label={this.props.t("form.remember-label")}
             checked={this.state.remember}
             onChange={this.onRememberChange}
           />
+          <Button
+            floated={"right"}
+            type={"submit"}
+            onClick={this.onLoginSubmit}
+          >
+            {this.props.t("form.login-action")}
+          </Button>
         </Form.Field>
-
-        <Button type={"submit"} onClick={this.onLoginSubmit}>
-          {this.props.t("form.login-action")}
-        </Button>
       </Form>
     );
   }

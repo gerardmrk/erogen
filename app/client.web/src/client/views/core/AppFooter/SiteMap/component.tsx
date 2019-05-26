@@ -10,7 +10,7 @@ export class SiteMap extends React.PureComponent<Props, State> {
   public render() {
     return (
       <div className={styles.main}>
-        <div className={styles.container}>{"SiteMap"}</div>
+        <div className={styles.container}>{""}</div>
       </div>
     );
   }

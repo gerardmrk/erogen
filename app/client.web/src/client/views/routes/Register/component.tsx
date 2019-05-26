@@ -1,8 +1,9 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
-import AuthRoutesWrapper from "@client/views/core/AuthRoutesWrapper";
+import AuthLayout from "@client/views/core/AuthLayout";
 import { LocalProps } from ".";
 import HeadTags from "@client/views/components/HeadTags";
+import Input from "@client/views/components/ui.elements/Input";
 
 type Props = LocalProps;
 
@@ -24,9 +25,11 @@ export class Register extends React.PureComponent<Props, State> {
           metaTwitterCardType={this.props.metaTwitterCardType}
         />
 
-        <AuthRoutesWrapper title={this.props.t("form-heading")}>
-          <div className={styles.main}>{"x"}</div>
-        </AuthRoutesWrapper>
+        <AuthLayout title={this.props.t("form-heading")}>
+          <div className={styles.main}>
+            <Input type={"text"} />
+          </div>
+        </AuthLayout>
       </React.Fragment>
     );
   }
