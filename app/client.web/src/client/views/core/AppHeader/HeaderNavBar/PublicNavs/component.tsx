@@ -15,7 +15,7 @@ export class PublicNavs extends React.PureComponent<Props, State> {
         <div className={styles.otherNavsGroup}>
           {headerNavsPublic.map((n, i) => (
             <div className={styles.navBox} key={i}>
-              <NavLink path={n.to} label={n.label} />
+              <NavLink path={n.to} label={this.props.t(n.label)} />
             </div>
           ))}
         </div>

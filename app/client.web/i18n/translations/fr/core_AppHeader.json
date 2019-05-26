@@ -1,8 +1,12 @@
 {
 	"navs": {
 		"public": {
+			"blog": "Blog",
+			"docs": "Documentation",
 			"login": "S'identifier",
-			"register": "registre"
+			"product": "Produit",
+			"register": "registre",
+			"support": "Soutien"
 		}
 	}
 }

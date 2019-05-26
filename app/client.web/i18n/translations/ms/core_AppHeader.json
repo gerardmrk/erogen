@@ -1,8 +1,12 @@
 {
 	"navs": {
 		"public": {
+			"blog": "Blog",
+			"docs": "Dokumentasi",
 			"login": "Log masuk",
-			"register": "Daftar"
+			"product": "Produk",
+			"register": "Daftar",
+			"support": "Sokongan"
 		}
 	}
 }

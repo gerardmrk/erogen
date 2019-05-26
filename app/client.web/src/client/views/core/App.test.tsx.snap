@@ -48,7 +48,7 @@ exports[`<App/> snapshot 1`] = `
                 onClick={[Function]}
               >
                 <span>
-                  Product
+                  navs.public.product
                 </span>
               </a>
             </div>
@@ -61,7 +61,7 @@ exports[`<App/> snapshot 1`] = `
                 onClick={[Function]}
               >
                 <span>
-                  Blog
+                  navs.public.blog
                 </span>
               </a>
             </div>
@@ -74,7 +74,7 @@ exports[`<App/> snapshot 1`] = `
                 onClick={[Function]}
               >
                 <span>
-                  Docs
+                  navs.public.docs
                 </span>
               </a>
             </div>
@@ -87,7 +87,7 @@ exports[`<App/> snapshot 1`] = `
                 onClick={[Function]}
               >
                 <span>
-                  Support
+                  navs.public.support
                 </span>
               </a>
             </div>

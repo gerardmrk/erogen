@@ -7,26 +7,26 @@ export type NavConf = {
 
 export const headerNavsPublic = [
   {
-    label: "Product",
+    label: "navs.public.product",
     to: "/about/product",
   },
   {
-    label: "Blog",
+    label: "navs.public.blog",
     to: "/blog",
   },
   {
-    label: "Docs",
+    label: "navs.public.docs",
     to: "/documentation",
   },
   {
-    label: "Support",
+    label: "navs.public.support",
     to: "/support",
   },
 ];
 
 export const headerNavsPrivate = [
   {
-    label: "Dashboard",
+    label: "navs.private.dashboard",
     to: "/",
   },
 ];

@@ -1,8 +1,12 @@
 {
 	"navs": {
 		"public": {
+			"blog": "ब्लॉग",
+			"docs": "प्रलेखन",
 			"login": "लॉग इन करें",
-			"register": "रजिस्टर"
+			"product": "उत्पाद",
+			"register": "रजिस्टर",
+			"support": "समर्थन"
 		}
 	}
 }
