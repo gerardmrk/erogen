@@ -1,4 +1,7 @@
 {
 	"description": "Leader de l'industrie dans la technologie du graphène de prochaine génération.",
+	"hero": {
+		"heading": "Où ai-je l'esprit?"
+	},
 	"title": "{{appName}}"
 }

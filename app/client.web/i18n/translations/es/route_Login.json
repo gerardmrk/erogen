@@ -1,8 +1,11 @@
 {
 	"description": "Inicia sesión en {{appName}}",
-	"form-heading": "Iniciar sesión",
-	"form-label-password": "Contraseña",
-	"form-label-remember": "Recuérdame",
-	"form-label-username": "Nombre de usuario / correo electrónico",
+	"form": {
+		"heading": "Iniciar sesión",
+		"login-action": "Iniciar sesión",
+		"password-label": "Contraseña",
+		"remember-label": "Recuérdame",
+		"username-label": "Nombre de usuario / correo electrónico"
+	},
 	"title": "Iniciar sesión"
 }

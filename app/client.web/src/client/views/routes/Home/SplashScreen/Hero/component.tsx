@@ -15,7 +15,7 @@ export class Hero extends React.PureComponent<Props, State> {
           <div className={styles.canvas}>
             <div className={styles.leftPane}>
               <h1>
-                <em>{"Where Is My Mind?"}</em>
+                <em>{this.props.t("hero.heading")}</em>
               </h1>
               <div className={styles.fluff}>
                 <p>{"Designer Drugs Et Al."}</p>

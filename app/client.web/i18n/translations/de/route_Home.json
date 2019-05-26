@@ -1,4 +1,7 @@
 {
 	"description": "Branchenführer in der nächsten Generation von Graphen-Technologie.",
+	"hero": {
+		"heading": "Wo sind meine Gedanken?"
+	},
 	"title": "{{appName}}"
 }

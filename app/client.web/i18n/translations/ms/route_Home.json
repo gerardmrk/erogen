@@ -1,4 +1,7 @@
 {
 	"description": "Pemimpin industri dalam teknologi grafik generasi akan datang.",
+	"hero": {
+		"heading": "Di manakah fikiran saya?"
+	},
 	"title": "{{appName}}"
 }

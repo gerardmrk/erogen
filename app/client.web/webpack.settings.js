@@ -71,6 +71,7 @@ module.exports = rootAppDir => ({
       ["es", "Spanish"],
     ],
     copyright: "© 2019 Erogen, Inc. All rights reserved.",
+    siteMap: {},
     socialLinks: {
       linkedin: "https://google.com/",
       instagram: "https://google.com/",

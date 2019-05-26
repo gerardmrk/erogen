@@ -1,8 +1,11 @@
 {
 	"description": "Connectez-vous à {{appName}}",
-	"form-heading": "S'identifier",
-	"form-label-password": "Mot de passe",
-	"form-label-remember": "Souviens-toi de moi",
-	"form-label-username": "Nom d'utilisateur / Email",
+	"form": {
+		"heading": "S'identifier",
+		"login-action": "S'identifier",
+		"password-label": "Mot de passe",
+		"remember-label": "Souviens-toi de moi",
+		"username-label": "Nom d'utilisateur / Email"
+	},
 	"title": "S'identifier"
 }

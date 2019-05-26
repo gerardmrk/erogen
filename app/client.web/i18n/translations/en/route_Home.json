@@ -1,4 +1,7 @@
 {
 	"description": "Industry leader in next-generation graphene technology.",
+	"hero": {
+		"heading": "Where is my mind?"
+	},
 	"title": "{{appName}}"
 }

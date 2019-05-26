@@ -1,8 +1,11 @@
 {
 	"description": "Войдите в {{appName}}",
-	"form-heading": "Авторизоваться",
-	"form-label-password": "пароль",
-	"form-label-remember": "Запомни меня",
-	"form-label-username": "Имя пользователя / адрес электронной почты",
+	"form": {
+		"heading": "Авторизоваться",
+		"login-action": "Авторизоваться",
+		"password-label": "пароль",
+		"remember-label": "Запомни меня",
+		"username-label": "Имя пользователя / адрес электронной почты"
+	},
 	"title": "Авторизоваться"
 }

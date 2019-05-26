@@ -1,8 +1,11 @@
 {
 	"description": "登录 {{appName}}",
-	"form-heading": "登录",
-	"form-label-password": "密码",
-	"form-label-remember": "记住账号",
-	"form-label-username": "用户名/电子邮件",
+	"form": {
+		"heading": "登录",
+		"login-action": "登录",
+		"password-label": "密码",
+		"remember-label": "记住账号",
+		"username-label": "用户名/电子邮件"
+	},
 	"title": "登录"
 }

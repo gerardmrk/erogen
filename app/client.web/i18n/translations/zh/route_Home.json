@@ -1,4 +1,7 @@
 {
 	"description": "下一代石墨烯技术的行业领导者。",
+	"hero": {
+		"heading": "我的心思到哪去了？"
+	},
 	"title": "{{appName}}"
 }

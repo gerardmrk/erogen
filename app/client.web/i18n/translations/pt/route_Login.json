@@ -1,8 +1,11 @@
 {
 	"description": "Faça login em {{appName}}",
-	"form-heading": "Entrar",
-	"form-label-password": "Senha",
-	"form-label-remember": "Lembre de mim",
-	"form-label-username": "Nome de usuário / email",
+	"form": {
+		"heading": "Entrar",
+		"login-action": "Entrar",
+		"password-label": "Senha",
+		"remember-label": "Lembre de mim",
+		"username-label": "Nome de usuário / email"
+	},
 	"title": "Entrar"
 }

@@ -46,7 +46,7 @@ export class LoginForm extends React.PureComponent<Props, State> {
       <Form className={styles.main}>
         <Form.Field widths={"equal"}>
           <label>
-            <span>{this.props.t("form-label-username")}</span>
+            <span>{this.props.t("form.username-label")}</span>
             <Input
               fluid={true}
               type={"text"}
@@ -59,7 +59,7 @@ export class LoginForm extends React.PureComponent<Props, State> {
 
         <Form.Field widths={"equal"}>
           <label>
-            <span>{this.props.t("form-label-password")}</span>
+            <span>{this.props.t("form.password-label")}</span>
             <Input
               fluid={true}
               type={"password"}
@@ -72,14 +72,14 @@ export class LoginForm extends React.PureComponent<Props, State> {
 
         <Form.Field>
           <Checkbox
-            label={this.props.t("form-label-remember")}
+            label={this.props.t("form.remember-label")}
             checked={this.state.remember}
             onChange={this.onRememberChange}
           />
         </Form.Field>
 
         <Button type={"submit"} onClick={this.onLoginSubmit}>
-          {this.props.t("form-heading")}
+          {this.props.t("form.login-action")}
         </Button>
       </Form>
     );

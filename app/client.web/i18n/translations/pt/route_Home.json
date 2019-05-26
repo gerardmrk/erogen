@@ -1,4 +1,7 @@
 {
 	"description": "Líder da indústria em tecnologia de grafeno de última geração.",
+	"hero": {
+		"heading": "Onde está minha mente?"
+	},
 	"title": "{{appName}}"
 }
