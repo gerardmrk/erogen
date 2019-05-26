@@ -1,5 +1,11 @@
 {
 	"navs": {
+		"private": {
+			"dashboard": "Tableau de bord",
+			"logout": "Connectez - Out",
+			"profile": "Profil",
+			"settings": "Réglages"
+		},
 		"public": {
 			"blog": "Blog",
 			"docs": "Documentation",

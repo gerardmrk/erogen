@@ -1,5 +1,11 @@
 {
 	"navs": {
+		"private": {
+			"dashboard": "Приборная доска",
+			"logout": "Выйти",
+			"profile": "профиль",
+			"settings": "настройки"
+		},
 		"public": {
 			"blog": "Блог",
 			"docs": "Документация",

@@ -1,5 +1,11 @@
 {
 	"navs": {
+		"private": {
+			"dashboard": "डैशबोर्ड",
+			"logout": "लोग आउट",
+			"profile": "प्रोफाइल",
+			"settings": "सेटिंग्स"
+		},
 		"public": {
 			"blog": "ब्लॉग",
 			"docs": "प्रलेखन",

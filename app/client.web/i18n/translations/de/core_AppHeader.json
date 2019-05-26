@@ -1,5 +1,11 @@
 {
 	"navs": {
+		"private": {
+			"dashboard": "Instrumententafel",
+			"logout": "Ausloggen",
+			"profile": "Profil",
+			"settings": "die Einstellungen"
+		},
 		"public": {
 			"blog": "Blog",
 			"docs": "Dokumentation",

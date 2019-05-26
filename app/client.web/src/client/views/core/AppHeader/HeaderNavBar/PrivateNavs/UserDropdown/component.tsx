@@ -70,21 +70,21 @@ export class UserDropdown extends React.PureComponent<Props, State> {
           <Dropdown.Divider />
 
           <Dropdown.Item onClick={this.onProfileNavClick}>
-            {"Profile"}
+            {this.props.t("navs.private.profile")}
           </Dropdown.Item>
 
           <Dropdown.Item onClick={this.onDashboardNavClick}>
-            {"Dashboard"}
+            {this.props.t("navs.private.dashboard")}
           </Dropdown.Item>
 
           <Dropdown.Divider />
 
           <Dropdown.Item onClick={this.onSettingsNavClick}>
-            {"Settings"}
+            {this.props.t("navs.private.settings")}
           </Dropdown.Item>
 
           <Dropdown.Item onClick={this.onLogoutActionClick}>
-            {"Logout"}
+            {this.props.t("navs.private.logout")}
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

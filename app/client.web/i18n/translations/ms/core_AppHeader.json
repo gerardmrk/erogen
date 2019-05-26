@@ -1,5 +1,11 @@
 {
 	"navs": {
+		"private": {
+			"dashboard": "Papan Pemuka",
+			"logout": "Log keluar",
+			"profile": "Profil",
+			"settings": "Tetapan"
+		},
 		"public": {
 			"blog": "Blog",
 			"docs": "Dokumentasi",

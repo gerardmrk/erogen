@@ -1,5 +1,11 @@
 {
 	"navs": {
+		"private": {
+			"dashboard": "painel de controle",
+			"logout": "Sair",
+			"profile": "Perfil",
+			"settings": "Definições"
+		},
 		"public": {
 			"blog": "Blog",
 			"docs": "Documentação",
