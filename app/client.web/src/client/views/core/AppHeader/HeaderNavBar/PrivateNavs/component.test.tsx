@@ -7,8 +7,9 @@ import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // p
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { PrivateNavs } from "./component";
+import { withTranslationMock } from "@client/views/__fixtures__/withtranslation-mock";
 
-const Component = PrivateNavs;
+const Component = withTranslationMock()(PrivateNavs);
 
 describe("<PrivateNavs/>", () => {
   let renderer: ReactTestRenderer;

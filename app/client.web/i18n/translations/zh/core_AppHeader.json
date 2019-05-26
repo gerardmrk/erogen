@@ -1,0 +1,8 @@
+{
+	"navs": {
+		"public": {
+			"login": "登录",
+			"register": "寄存器"
+		}
+	}
+}

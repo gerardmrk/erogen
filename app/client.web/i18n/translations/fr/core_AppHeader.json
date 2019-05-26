@@ -1,0 +1,8 @@
+{
+	"navs": {
+		"public": {
+			"login": "S'identifier",
+			"register": "registre"
+		}
+	}
+}

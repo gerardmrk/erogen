@@ -1,8 +1,10 @@
 import * as React from "react";
+import loadable from "@loadable/component";
 import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
-import PrivateNavs from "./PrivateNavs";
-import PublicNavs from "./PublicNavs";
+
+const PublicNavs = loadable(() => import("./PublicNavs"));
+const PrivateNavs = loadable(() => import("./PrivateNavs"));
 
 export type Props = LocalProps & StoreProps & DispatchProps;
 export type State = {};

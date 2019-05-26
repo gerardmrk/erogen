@@ -4,8 +4,12 @@ import { State, Dispatcher } from "@client/store";
 import { logout } from "@client/store/state.auth/async.logout";
 import { withRouter, RouteComponentProps } from "react-router";
 import { ProfileSettings } from "@client/store/state.user/models";
+import {
+  withTranslation,
+  WithTranslation,
+} from "@client/views/core/I18nProvider";
 
-export type LocalProps = RouteComponentProps & {};
+export type LocalProps = RouteComponentProps & WithTranslation & {};
 
 export type StoreProps = {
   isLoadingUser: boolean;
@@ -30,9 +34,11 @@ const mapDispatchToProps = (
   },
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(UserDropdown),
+export default withTranslation("core_AppHeader")(
+  withRouter(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    )(UserDropdown),
+  ),
 );

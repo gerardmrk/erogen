@@ -7,15 +7,16 @@ import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // p
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { AppHeader } from "./component";
+import { withTranslationMock } from "@client/views/__fixtures__/withtranslation-mock";
 
-const Component = AppHeader;
+const Component = withTranslationMock(AppHeader.i18nNamespace)(AppHeader);
 
 describe("<AppHeader/>", () => {
   let renderer: ReactTestRenderer;
   let component: ReactTestInstance;
 
   beforeEach(async () => {
-    renderer = await createRenderer()(<Component isAuthenticated={true} />);
+    renderer = await createRenderer()(<Component />);
     component = renderer.getInstance() as ReactTestInstance;
     await (component as any).componentDidMount();
   });

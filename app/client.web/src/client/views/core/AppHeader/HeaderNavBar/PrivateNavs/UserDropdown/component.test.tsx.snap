@@ -14,7 +14,7 @@ exports[`<UserDropdown/> snapshot 1`] = `
 >
   <i
     aria-hidden="true"
-    className="user outline bordered circular icon"
+    className="spinner bordered circular loading icon"
     onClick={[Function]}
   />
   <div
@@ -24,9 +24,17 @@ exports[`<UserDropdown/> snapshot 1`] = `
       className="header dropdownHeader"
       onClick={[Function]}
     >
-      <span>
-        xoxo
-      </span>
+      <div
+        className="ui placeholder"
+      >
+        <div
+          className="header"
+        >
+          <div
+            className="line full"
+          />
+        </div>
+      </div>
     </div>
     <div
       className="divider"

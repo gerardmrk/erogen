@@ -7,8 +7,9 @@ import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // p
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { Hero } from "./component";
+import { withTranslationMock } from "@client/views/__fixtures__/withtranslation-mock";
 
-const Component = Hero;
+const Component = withTranslationMock()(Hero);
 
 describe("<Hero/>", () => {
   let renderer: ReactTestRenderer;
@@ -17,7 +18,8 @@ describe("<Hero/>", () => {
   beforeEach(async () => {
     renderer = await createRenderer()(<Component />);
     component = renderer.getInstance() as ReactTestInstance;
-    await (component as any).componentDidMount();});
+    await (component as any).componentDidMount();
+  });
 
   if (SNAPSHOT_ENABLED) {
     test("snapshot", () => {

@@ -18,7 +18,7 @@ exports[`<Login/> snapshot 1`] = `
           className="header"
         >
           <h1>
-            form-heading
+            form.heading
           </h1>
         </div>
       </div>
@@ -41,7 +41,7 @@ exports[`<Login/> snapshot 1`] = `
               >
                 <label>
                   <span>
-                    form-label-username
+                    form.username-label
                   </span>
                   <div
                     className="ui fluid input"
@@ -61,7 +61,7 @@ exports[`<Login/> snapshot 1`] = `
               >
                 <label>
                   <span>
-                    form-label-password
+                    form.password-label
                   </span>
                   <div
                     className="ui fluid input"
@@ -93,7 +93,7 @@ exports[`<Login/> snapshot 1`] = `
                     type="checkbox"
                   />
                   <label>
-                    form-label-remember
+                    form.remember-label
                   </label>
                 </div>
               </div>
@@ -102,7 +102,7 @@ exports[`<Login/> snapshot 1`] = `
                 onClick={[Function]}
                 type="submit"
               >
-                form-heading
+                form.login-action
               </button>
             </form>
           </div>

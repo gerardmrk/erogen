@@ -1,0 +1,8 @@
+{
+	"navs": {
+		"public": {
+			"login": "Iniciar sesión",
+			"register": "Registro"
+		}
+	}
+}

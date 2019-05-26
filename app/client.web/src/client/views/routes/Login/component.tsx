@@ -54,7 +54,7 @@ export class Login extends React.PureComponent<Props, State> {
           metaTwitterCardType={this.props.metaTwitterCardType}
         />
 
-        <AuthRoutesWrapper title={t("form-heading")}>
+        <AuthRoutesWrapper title={t("form.heading")}>
           <div className={styles.main}>
             <LoginForm />
           </div>

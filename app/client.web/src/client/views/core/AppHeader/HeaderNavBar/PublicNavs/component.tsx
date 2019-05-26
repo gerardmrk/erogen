@@ -22,13 +22,19 @@ export class PublicNavs extends React.PureComponent<Props, State> {
 
         <div className={styles.defaultNavsGroup}>
           <div className={styles.navBox}>
-            <NavLink path={"/login"} label={"Login"} />
+            <NavLink
+              path={"/login"}
+              label={this.props.t("navs.public.login")}
+            />
           </div>
 
           <div className={styles.navBox}>{"/"}</div>
 
           <div className={styles.navBox}>
-            <NavLink path={"/register"} label={"Register"} />
+            <NavLink
+              path={"/register"}
+              label={this.props.t("navs.public.register")}
+            />
           </div>
         </div>
       </nav>

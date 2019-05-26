@@ -72,7 +72,7 @@ exports[`<PublicNavs/> snapshot 1`] = `
         onClick={[Function]}
       >
         <span>
-          Login
+          navs.public.login
         </span>
       </a>
     </div>
@@ -90,7 +90,7 @@ exports[`<PublicNavs/> snapshot 1`] = `
         onClick={[Function]}
       >
         <span>
-          Register
+          navs.public.register
         </span>
       </a>
     </div>

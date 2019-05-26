@@ -8,8 +8,9 @@ import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { UserDropdown } from "./component";
 import { withRouter } from "react-router";
+import { withTranslationMock } from "@client/views/__fixtures__/withtranslation-mock";
 
-const Component = withRouter(UserDropdown);
+const Component = withTranslationMock()(withRouter(UserDropdown));
 
 describe("<UserDropdown/>", () => {
   let renderer: ReactTestRenderer;
@@ -18,9 +19,9 @@ describe("<UserDropdown/>", () => {
   beforeEach(async () => {
     renderer = await createRenderer()(
       <Component
-        isLoadingUser={false}
-        profile={{ username: "xoxo", displayPicUrl: undefined }}
-        logout={() => {}}
+      // isLoadingUser={false}
+      // profile={{ username: "xoxo", displayPicUrl: undefined }}
+      // logout={() => {}}
       />,
     );
     component = renderer.getInstance() as ReactTestInstance;

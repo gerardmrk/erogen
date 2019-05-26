@@ -7,8 +7,9 @@ import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // p
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
 
 import { PublicNavs } from "./component";
+import { withTranslationMock } from "@client/views/__fixtures__/withtranslation-mock";
 
-const Component = PublicNavs;
+const Component = withTranslationMock()(PublicNavs);
 
 describe("<PublicNavs/>", () => {
   let renderer: ReactTestRenderer;
@@ -17,7 +18,8 @@ describe("<PublicNavs/>", () => {
   beforeEach(async () => {
     renderer = await createRenderer()(<Component />);
     component = renderer.getInstance() as ReactTestInstance;
-    await (component as any).componentDidMount();});
+    await (component as any).componentDidMount();
+  });
 
   if (SNAPSHOT_ENABLED) {
     test("snapshot", () => {

@@ -2,8 +2,12 @@ import { connect } from "react-redux";
 import { State, Dispatcher } from "@client/store";
 
 import { AppHeader } from "./component";
+import {
+  withTranslation,
+  WithTranslation,
+} from "@client/views/core/I18nProvider";
 
-export type LocalProps = {};
+export type LocalProps = WithTranslation & {};
 
 export type StoreProps = {
   isAuthenticated: boolean;
@@ -17,7 +21,9 @@ const mapStateToProps = (state: State): StoreProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatcher): DispatchProps => ({});
 
-export default connect<StoreProps, DispatchProps, LocalProps, State>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(AppHeader);
+export default withTranslation(AppHeader.i18nNamespace)(
+  connect<StoreProps, DispatchProps, LocalProps, State>(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(AppHeader),
+);

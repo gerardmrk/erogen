@@ -104,7 +104,7 @@ exports[`<App/> snapshot 1`] = `
                 onClick={[Function]}
               >
                 <span>
-                  Login
+                  navs.public.login
                 </span>
               </a>
             </div>
@@ -122,7 +122,7 @@ exports[`<App/> snapshot 1`] = `
                 onClick={[Function]}
               >
                 <span>
-                  Register
+                  navs.public.register
                 </span>
               </a>
             </div>
@@ -157,15 +157,12 @@ exports[`<App/> snapshot 1`] = `
                 >
                   <h1>
                     <em>
-                      Where Is My Mind?
+                      hero.heading
                     </em>
                   </h1>
                   <div
                     className="fluff"
                   >
-                    <p>
-                      Designer Drugs Et Al.
-                    </p>
                     <br />
                     <p>
                       Alpha bravo charlie delta echo foxtrot golf
@@ -183,9 +180,9 @@ exports[`<App/> snapshot 1`] = `
                 <div
                   className="rightPane"
                 >
-                  <div>
-                    Nothing to see here
-                  </div>
+                  <img
+                    src="astro.svg"
+                  />
                 </div>
               </div>
             </div>

@@ -2,6 +2,7 @@ import * as React from "react";
 import styles from "./component.styles.scss";
 import Container from "@client/views/components/ui.elements/Container";
 import { LocalProps } from "../Hero";
+import image from "./astro.svg";
 
 type Props = LocalProps;
 
@@ -18,7 +19,6 @@ export class Hero extends React.PureComponent<Props, State> {
                 <em>{this.props.t("hero.heading")}</em>
               </h1>
               <div className={styles.fluff}>
-                <p>{"Designer Drugs Et Al."}</p>
                 <br />
                 <p>{"Alpha bravo charlie delta echo foxtrot golf"}</p>
                 <br />
@@ -32,7 +32,7 @@ export class Hero extends React.PureComponent<Props, State> {
               </div>
             </div>
             <div className={styles.rightPane}>
-              <div>{"Nothing to see here"}</div>
+              <img src={image} />
             </div>
           </div>
         </Container>
