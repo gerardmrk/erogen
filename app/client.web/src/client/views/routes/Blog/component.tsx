@@ -32,7 +32,7 @@ export class Blog extends React.PureComponent<Props, State> {
 
         <div className={styles.main}>
           <Container>
-            <h1>{"Blog"}</h1>
+            <h1>{this.props.t("heading")}</h1>
 
             <Switch>
               {this.props.routes.map((r, i) => (

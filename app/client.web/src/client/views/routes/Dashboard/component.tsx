@@ -26,7 +26,7 @@ export class Dashboard extends React.PureComponent<Props, State> {
 
         <div className={styles.main}>
           <Container>
-            <h1>{"Dashboard"}</h1>
+            <h1>{this.props.t("heading")}</h1>
           </Container>
         </div>
       </React.Fragment>

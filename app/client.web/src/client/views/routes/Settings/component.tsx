@@ -26,7 +26,7 @@ export class Settings extends React.PureComponent<Props, State> {
 
         <div className={styles.main}>
           <Container>
-            <h1>{"Settings"}</h1>
+            <h1>{this.props.t("heading")}</h1>
           </Container>
         </div>
       </React.Fragment>

@@ -13,7 +13,7 @@ export class Feed extends React.PureComponent<Props, State> {
       <React.Fragment>
         <div className={styles.main}>
           <Container>
-            <h1>{"Feed"}</h1>
+            <h1>{this.props.t("heading")}</h1>
           </Container>
         </div>
       </React.Fragment>
