@@ -278,10 +278,12 @@ module.exports = async (args) => {
                             loader: "css-loader",
                             options: {
                                 sourceMap: enableSourceMap,
-                                modules: true,
                                 importLoaders: 1,
-                                camelCase: true,
-                                localIdentName: devMode ? "[name]_[local]_[hash:base64:7]" : "[hash:base64:7]"
+                                localsConvention: 'camelCase',
+                                modules: {
+                                  mode: 'local',
+                                  localIdentName: devMode ? "[name]_[local]_[hash:base64:7]" : "[hash:base64:7]",
+                                },
                             }
                         },
                         {
