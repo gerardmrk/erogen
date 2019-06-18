@@ -66,4 +66,16 @@ export const reducer = createReducer<State, Action>(defaultState(), {
       ...action.payload,
     },
   }),
+
+  ["auth.loadSessionPending"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.loadSessionSuccess"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.loadSessionFailure"]: (state, action) => ({
+    ...state,
+  }),
 });

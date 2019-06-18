@@ -53,3 +53,24 @@ export const logoutFailure = createAction(
     return resolve(payload, meta);
   },
 );
+
+export const loadSessionPending = createAction(
+  "auth.loadSessionPending",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const loadSessionSuccess = createAction(
+  "auth.loadSessionSuccess",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const loadSessionFailure = createAction(
+  "auth.loadSessionFailure",
+  resolve => () => {
+    return resolve();
+  },
+);
