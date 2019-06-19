@@ -78,21 +78,21 @@ exports[`<Home/> snapshot 1`] = `
             className="brandItem"
           >
             <p>
-              2077 :(
+              Radiohead
             </p>
           </div>
           <div
             className="brandItem"
           >
             <p>
-              Arabian
+              Chilli
             </p>
           </div>
           <div
             className="brandItem"
           >
             <p>
-              Nights
+              Peppers
             </p>
           </div>
         </div>

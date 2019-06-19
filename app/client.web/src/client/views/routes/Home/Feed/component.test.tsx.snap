@@ -8,7 +8,7 @@ exports[`<Feed/> snapshot 1`] = `
     className="ui container"
   >
     <h1>
-      Feed
+      heading
     </h1>
   </div>
 </div>

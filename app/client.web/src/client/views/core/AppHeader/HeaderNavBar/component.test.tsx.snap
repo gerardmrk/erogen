@@ -10,7 +10,7 @@ exports[`<HeaderNavBar/> snapshot 1`] = `
     <div
       className="navs"
     >
-      navs
+      ...
     </div>
     <div
       className="userdropdown"
@@ -58,14 +58,14 @@ exports[`<HeaderNavBar/> snapshot 1`] = `
             onClick={[Function]}
             role="option"
           >
-            Profile
+            navs.private.profile
           </div>
           <div
             className="item"
             onClick={[Function]}
             role="option"
           >
-            Dashboard
+            navs.private.dashboard
           </div>
           <div
             className="divider"
@@ -75,14 +75,14 @@ exports[`<HeaderNavBar/> snapshot 1`] = `
             onClick={[Function]}
             role="option"
           >
-            Settings
+            navs.private.settings
           </div>
           <div
             className="item"
             onClick={[Function]}
             role="option"
           >
-            Logout
+            navs.private.logout
           </div>
         </div>
       </div>

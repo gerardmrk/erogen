@@ -8,7 +8,7 @@ exports[`<Dashboard/> snapshot 1`] = `
     className="ui container"
   >
     <h1>
-      Dashboard
+      heading
     </h1>
   </div>
 </div>

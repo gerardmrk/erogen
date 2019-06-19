@@ -46,7 +46,7 @@ exports[`<LoginForm/> snapshot 1`] = `
     </label>
   </div>
   <div
-    className="field"
+    className="field actions"
   >
     <div
       className="ui checkbox"
@@ -66,13 +66,13 @@ exports[`<LoginForm/> snapshot 1`] = `
         form.remember-label
       </label>
     </div>
+    <button
+      className="ui right floated button"
+      onClick={[Function]}
+      type="submit"
+    >
+      form.login-action
+    </button>
   </div>
-  <button
-    className="ui button"
-    onClick={[Function]}
-    type="submit"
-  >
-    form.login-action
-  </button>
 </form>
 `;

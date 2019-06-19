@@ -16,6 +16,7 @@ exports[`<LanguageSelector/> snapshot 1`] = `
     tabIndex={0}
   >
     <div
+      aria-atomic={true}
       aria-live="polite"
       className="text"
       role="alert"
@@ -43,7 +44,7 @@ exports[`<LanguageSelector/> snapshot 1`] = `
         <span
           className="text"
         >
-          English
+          languages.en
         </span>
       </div>
     </div>

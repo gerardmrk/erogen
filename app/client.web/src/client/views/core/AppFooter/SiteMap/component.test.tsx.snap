@@ -7,7 +7,7 @@ exports[`<SiteMap/> snapshot 1`] = `
   <div
     className="container"
   >
-    SiteMap
+    
   </div>
 </div>
 `;

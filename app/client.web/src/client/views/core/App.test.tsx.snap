@@ -214,21 +214,21 @@ exports[`<App/> snapshot 1`] = `
                   className="brandItem"
                 >
                   <p>
-                    2077 :(
+                    Radiohead
                   </p>
                 </div>
                 <div
                   className="brandItem"
                 >
                   <p>
-                    Arabian
+                    Chilli
                   </p>
                 </div>
                 <div
                   className="brandItem"
                 >
                   <p>
-                    Nights
+                    Peppers
                   </p>
                 </div>
               </div>
@@ -250,7 +250,7 @@ exports[`<App/> snapshot 1`] = `
         <div
           className="container"
         >
-          SiteMap
+          
         </div>
       </div>
       <div
@@ -287,6 +287,7 @@ exports[`<App/> snapshot 1`] = `
             tabIndex={0}
           >
             <div
+              aria-atomic={true}
               aria-live="polite"
               className="text"
               role="alert"
@@ -314,7 +315,7 @@ exports[`<App/> snapshot 1`] = `
                 <span
                   className="text"
                 >
-                  English
+                  languages.en
                 </span>
               </div>
             </div>

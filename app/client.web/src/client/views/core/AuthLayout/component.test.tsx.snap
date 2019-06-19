@@ -17,9 +17,7 @@ exports[`<AuthLayout/> snapshot 1`] = `
         <div
           className="header"
         >
-          <h1>
-            x
-          </h1>
+          <h1 />
         </div>
       </div>
       <div
@@ -31,7 +29,27 @@ exports[`<AuthLayout/> snapshot 1`] = `
           <nav
             className="main"
           >
-            nav1 nav2 nav3
+            <a
+              aria-current={null}
+              href="/login"
+              onClick={[Function]}
+            >
+              navs.login
+            </a>
+            <a
+              aria-current={null}
+              href="/register"
+              onClick={[Function]}
+            >
+              navs.register
+            </a>
+            <a
+              aria-current={null}
+              href="/reset-password"
+              onClick={[Function]}
+            >
+              navs.reset-password
+            </a>
           </nav>
         </div>
       </div>
