@@ -14,23 +14,17 @@ export class EnhancedRoute extends React.Component<Props, State> {
 
   private redirectTo = {
     pathname: "/login",
-    search: "",
-    state: { from: "" },
+    state: {},
   };
 
   public constructor(props) {
     super(props);
 
-    let fromRoute;
-
-    if (props.location && props.location.pathname) {
-      fromRoute = `${props.location.pathname}${props.location.search || ""}`
-    } else {
-      fromRoute = "/"
+    if (props.location && props.location.pathname && props.location.pathname !== "/") {
+      const from = `${props.location.pathname}${props.location.search || ""}`
+      this.redirectTo.state["from"] = from;
+      this.redirectTo["search"] = `?from=${encodeURIComponent(from)}`;
     }
-
-    this.redirectTo.state.from = fromRoute;
-    this.redirectTo.search = `?from=${encodeURIComponent(fromRoute)}`;
   }
 
   private renderRoute = routeProps => {

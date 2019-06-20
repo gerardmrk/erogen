@@ -46,26 +46,18 @@ export const ROUTE_CHUNK_NAME_PREFIX = "client-views-routes-";
 // prettier-ignore
 export const routeConfs: RouteConf[] = [
   {
+    path: "/",
+    exact: true,
+    guarded: true,
+    prerender: true,
+    component: loadable(() => import("@client/views/routes/Dashboard")),
+  },
+  {
     path: "/login",
     exact: true,
     guarded: false,
     prerender: true,
     component: loadable(() => import("@client/views/routes/Login")),
-  },
-  {
-    path: "/",
-    exact: true,
-    guarded: false,
-    prerender: true,
-    defaultPublicRoute: true,
-    component: loadable(() => import("@client/views/routes/Home")),
-  },
-  {
-    path: "/dashboard",
-    exact: true,
-    guarded: true,
-    prerender: true,
-    component: loadable(() => import("@client/views/routes/Dashboard")),
   },
   {
     path: "/register",

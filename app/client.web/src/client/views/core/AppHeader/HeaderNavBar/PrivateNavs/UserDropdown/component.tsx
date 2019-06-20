@@ -18,7 +18,7 @@ export class UserDropdown extends React.PureComponent<Props, State> {
   };
 
   private onDashboardNavClick = () => {
-    this.props.history.push("/dashboard");
+    this.props.history.push("/");
   };
 
   private onSettingsNavClick = () => {
