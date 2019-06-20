@@ -5,13 +5,16 @@ import {
 } from "@client/views/core/I18nProvider";
 import { State, Dispatcher } from "@client/store";
 import { connect } from "react-redux";
-import { login } from "@client/store/state.auth/async.login";
+import { register } from "@client/store/state.auth/async.register";
 export type LocalProps = WithTranslation & {};
 
 export type StoreProps = {};
 
 export type DispatchProps = {
-  login: (alias: string, password: string, remember: boolean) => void;
+  register: (
+    payload: { username: string; email: string; password: string },
+    callback: (err: Error | null) => void,
+  ) => void;
 };
 
 const mapStateToProps = (state: State, localProps: LocalProps) => ({});
@@ -20,8 +23,8 @@ const mapDispatchToProps = (
   dispatch: Dispatcher,
   localProps: LocalProps,
 ): DispatchProps => ({
-  login: (alias: string, password: string, remember: boolean) => {
-    dispatch(login(alias, password, remember));
+  register: (payload, callback) => {
+    dispatch(register(payload, callback));
   },
 });
 

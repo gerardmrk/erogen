@@ -78,4 +78,52 @@ export const reducer = createReducer<State, Action>(defaultState(), {
   ["auth.loadSessionFailure"]: (state, action) => ({
     ...state,
   }),
+
+  ["auth.requestPswdResetPending"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.requestPswdResetSuccess"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.requestPswdResetFailure"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.resetPasswordPending"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.resetPasswordSuccess"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.resetPasswordFailure"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.checkVCodePending"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.checkVCodeSuccess"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.checkVCodeFailure"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.registerPending"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.registerSuccess"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.registerFailure"]: (state, action) => ({
+    ...state,
+  }),
 });

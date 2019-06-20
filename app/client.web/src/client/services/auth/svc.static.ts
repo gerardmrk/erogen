@@ -29,6 +29,7 @@ export class StaticAuthService implements IAuthService {
   }
 
   public async register(params: RegisterParams): Promise<void> {
+    await sleep(1000);
     return;
   }
 

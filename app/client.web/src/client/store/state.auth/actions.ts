@@ -74,3 +74,87 @@ export const loadSessionFailure = createAction(
     return resolve();
   },
 );
+
+export const registerPending = createAction(
+  "auth.registerPending",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const registerSuccess = createAction(
+  "auth.registerSuccess",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const registerFailure = createAction(
+  "auth.registerFailure",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const requestNewPasswordPending = createAction(
+  "auth.requestPswdResetPending",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const requestNewPasswordSuccess = createAction(
+  "auth.requestPswdResetSuccess",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const requestNewPasswordFailure = createAction(
+  "auth.requestPswdResetFailure",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const resetPasswordPending = createAction(
+  "auth.resetPasswordPending",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const resetPasswordSuccess = createAction(
+  "auth.resetPasswordSuccess",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const resetPasswordFailure = createAction(
+  "auth.resetPasswordFailure",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const checkVerificationCodePending = createAction(
+  "auth.checkVCodePending",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const checkVerificationCodeSuccess = createAction(
+  "auth.checkVCodeSuccess",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const checkVerificationCodeFailure = createAction(
+  "auth.checkVCodeFailure",
+  resolve => () => {
+    return resolve();
+  },
+);
