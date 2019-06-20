@@ -1,7 +1,7 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
-import Dimmer from "@client/views/components/ui.modules/Dimmer";
-import Loader from "@client/views/components/ui.elements/Loader";
+import Dimmer from "@client/views/components/ui-modules/Dimmer";
+import Loader from "@client/views/components/ui-elements/Loader";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 
 type Props = LocalProps & StoreProps & DispatchProps;

@@ -1,8 +1,8 @@
 import * as React from "react";
-import Form from "@client/views/components/ui.collections/Form";
-import Input from "@client/views/components/ui.elements/Input";
-import Button from "@client/views/components/ui.elements/Button";
-import Checkbox from "@client/views/components/ui.modules/Checkbox";
+import Form from "@client/views/components/ui-collections/Form";
+import Input from "@client/views/components/ui-elements/Input";
+import Button from "@client/views/components/ui-elements/Button";
+import Checkbox from "@client/views/components/ui-modules/Checkbox";
 import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import NavLink from "@client/views/components/EnhancedNavLink";

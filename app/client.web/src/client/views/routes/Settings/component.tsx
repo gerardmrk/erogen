@@ -2,7 +2,7 @@ import * as React from "react";
 import styles from "./component.styles.scss";
 import { LocalProps } from ".";
 import HeadTags from "@client/views/components/HeadTags";
-import Container from "@client/views/components/ui.elements/Container";
+import Container from "@client/views/components/ui-elements/Container";
 import { Switch } from "react-router";
 import EnhancedRoute from "@client/views/components/EnhancedRoute";
 

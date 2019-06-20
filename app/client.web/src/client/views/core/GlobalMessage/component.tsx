@@ -1,9 +1,9 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
-import Container from "@client/views/components/ui.elements/Container";
-import Transition from "@client/views/components/ui.modules/Transition";
-import Message, { UiColors } from "@client/views/components/ui.collections/Message"; // prettier-ignore
-import Icon, { UiIcons } from "@client/views/components/ui.elements/Icon";
+import Container from "@client/views/components/ui-elements/Container";
+import Transition from "@client/views/components/ui-modules/Transition";
+import Message, { UiColors } from "@client/views/components/ui-collections/Message"; // prettier-ignore
+import Icon, { UiIcons } from "@client/views/components/ui-elements/Icon";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import { MessageLevel } from "@client/store/state.ui-message/models";
 

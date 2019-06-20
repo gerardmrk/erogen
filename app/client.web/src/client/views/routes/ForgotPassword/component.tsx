@@ -2,7 +2,7 @@ import * as React from "react";
 import styles from "./component.styles.scss";
 import AuthLayout from "@client/views/core/AuthLayout";
 import { LocalProps } from ".";
-import Form from "@client/views/components/ui.collections/Form";
+import Form from "@client/views/components/ui-collections/Form";
 import HeadTags from "@client/views/components/HeadTags";
 
 type Props = LocalProps;

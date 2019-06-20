@@ -1,10 +1,10 @@
 import * as React from "react";
 import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
-import Icon from "@client/views/components/ui.elements/Icon";
-import Image from "@client/views/components/ui.elements/Image";
-import Dropdown from "@client/views/components/ui.modules/Dropdown";
-import Placeholder from "@client/views/components/ui.elements/Placeholder";
+import Icon from "@client/views/components/ui-elements/Icon";
+import Image from "@client/views/components/ui-elements/Image";
+import Dropdown from "@client/views/components/ui-modules/Dropdown";
+import Placeholder from "@client/views/components/ui-elements/Placeholder";
 
 type Props = LocalProps & StoreProps & DispatchProps;
 

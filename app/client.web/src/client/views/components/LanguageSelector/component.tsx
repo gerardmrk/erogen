@@ -3,7 +3,7 @@ import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 import Dropdown, {
   DropdownProps,
-} from "@client/views/components/ui.modules/Dropdown";
+} from "@client/views/components/ui-modules/Dropdown";
 
 type Props = LocalProps & StoreProps & DispatchProps;
 

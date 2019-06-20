@@ -1,8 +1,8 @@
 import * as React from "react";
-import Form from "@client/views/components/ui.collections/Form";
-import Input from "@client/views/components/ui.elements/Input";
-import Button from "@client/views/components/ui.elements/Button";
-import Checkbox from "@client/views/components/ui.modules/Checkbox";
+import Form from "@client/views/components/ui-collections/Form";
+import Input from "@client/views/components/ui-elements/Input";
+import Button from "@client/views/components/ui-elements/Button";
+import Checkbox from "@client/views/components/ui-modules/Checkbox";
 import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 
@@ -27,6 +27,7 @@ type State = {
   confirmPasswordError: string | undefined;
 
   agreeToTOS: boolean;
+  agreeToTOSTouched: boolean;
   agreeToTOSError: string | undefined;
 
   // meta
@@ -56,6 +57,7 @@ export class RegisterForm extends React.Component<Props, State> {
     confirmPasswordError: "form.confirm-password-required",
 
     agreeToTOS: false,
+    agreeToTOSTouched: false,
     agreeToTOSError: "form.agree-to-tos-required",
 
     loading: false,
@@ -113,6 +115,13 @@ export class RegisterForm extends React.Component<Props, State> {
         this.state.password,
       ),
     });
+  }
+
+  private onAgreeToTOSBlur = () => {
+    this.setState({
+      agreeToTOSTouched: true,
+      agreeToTOSError: validateAgreeToTOS(this.state.agreeToTOS),
+    })
   }
 
   private onRegisterSubmit = () => {
@@ -216,6 +225,7 @@ export class RegisterForm extends React.Component<Props, State> {
           <Checkbox
             checked={this.state.agreeToTOS}
             onChange={this.onAgreeToTosChange}
+            onBlur={this.onAgreeToTOSBlur}
             label={this.props.t("form.agree-to-tos-label")}
           />
         </Form.Field>
@@ -242,7 +252,6 @@ function validateUsername(username: string): string | undefined {
   if (username.length < 3 || username.length > 35) {
     return "form.invalid-username-length";
   }
-
   return undefined;
 }
 
@@ -250,7 +259,6 @@ function validateEmail(email: string): string | undefined {
   if (email.trim() === "") {
     return "form.email-required";
   }
-
   return undefined;
 }
 
@@ -258,7 +266,6 @@ function validatePassword(password: string): string | undefined {
   if (password.length < 8) {
     return "form.invalid-password-length";
   }
-
   return undefined;
 }
 
@@ -269,6 +276,12 @@ function validateConfirmPassword(
   if (reentered !== original) {
     return "form.invalid-password-match";
   }
+  return undefined;
+}
 
+function validateAgreeToTOS(checked: boolean) {
+  if (checked !== true) {
+    return "form.agree-to-tos-required";
+  }
   return undefined;
 }

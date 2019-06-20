@@ -1,5 +1,5 @@
 import * as React from "react";
-import Card from "@client/views/components/ui.views/Card";
+import Card from "@client/views/components/ui-views/Card";
 import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 

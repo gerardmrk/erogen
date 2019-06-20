@@ -13,7 +13,7 @@ Basically any directory not prefixed with `ui.`.
 `ui.(...)` directories houses re-exported [**Semantic UI React**](https://react.semantic-ui.com/) components alongside their respective **Less** styles, e.g:
 
 ```js
-// @client/views/components/ui.elements/Button
+// @client/views/components/ui-elements/Button
 
 import "semantic-ui-less/definitions/elements/button.less";
 import { Button } from "semantic-ui-react";
