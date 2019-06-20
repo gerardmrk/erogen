@@ -1,5 +1,13 @@
 {
 	"description": "Regístrate en {{appName}}",
+	"form": {
+		"agree-to-tos-label": "Estoy de acuerdo con los términos y condiciones",
+		"confirm-password-label": "Escriba la contraseña otra vez",
+		"email-label": "Email",
+		"password-label": "Contraseña",
+		"register-action": "Regístrate",
+		"username-label": "Nombre de usuario"
+	},
 	"form-heading": "Registro",
 	"title": "Registro"
 }

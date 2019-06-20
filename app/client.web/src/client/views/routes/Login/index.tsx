@@ -8,8 +8,10 @@ import { Omit } from "utility-types";
 import { State, Dispatcher } from "@client/store";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
+import { withConfig, WithConfig } from "@client/views/core/ConfigProvider";
 
-export type LocalProps = WithTranslation &
+export type LocalProps = WithConfig &
+  WithTranslation &
   RouteComponentProps &
   Omit<RouteConf, "component"> & {};
 
@@ -31,4 +33,4 @@ const mapDispatchToProps = (
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation(Login.i18nNamespace)(Login));
+)(withConfig(withTranslation(Login.i18nNamespace)(Login)));

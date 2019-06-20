@@ -4,28 +4,8 @@
 .main {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-}
-
-.otherNavsGroup {
-  display: flex;
-  justify-content: flex-end;
-
-  .navBox {
-    @include fp(margin-right, 9, 35);
-    display: flex;
-    align-items: center;
-  }
-
-  @media only screen and (max-width: $mobile-max-width) {
-    justify-content: flex-start;
-  }
-}
-
-.defaultNavsGroup {
-  display: flex;
-  justify-content: flex-end;
 
   .navBox {
     margin-left: 0.8em;

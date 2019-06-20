@@ -1,7 +1,8 @@
 {
 	"description": "Sign in to {{appName}}",
 	"form": {
-		"heading": "Login",
+		"forgot-password": "Forgot password?",
+		"heading": "Sign in to {{appName}}",
 		"login-action": "login",
 		"password-label": "Password",
 		"remember-label": "Remember me",

@@ -1,7 +1,8 @@
 {
 	"description": "Inicia sesión en {{appName}}",
 	"form": {
-		"heading": "Iniciar sesión",
+		"forgot-password": "¿Se te olvidó tu contraseña?",
+		"heading": "Inicia sesión en {{appName}}",
 		"login-action": "Iniciar sesión",
 		"password-label": "Contraseña",
 		"remember-label": "Recuérdame",

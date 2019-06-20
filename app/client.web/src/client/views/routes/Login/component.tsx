@@ -36,7 +36,12 @@ export class Login extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { t } = this.props;
+    const {
+      t,
+      config: {
+        app: { appName },
+      },
+    } = this.props;
 
     if (this.props.isAuthenticated) {
       return <Redirect to={this.referrerRoute} />;
@@ -47,14 +52,14 @@ export class Login extends React.PureComponent<Props, State> {
         <HeadTags
           path={this.props.path}
           title={t("title")}
-          description={t("description", { appName: "xo" })}
+          description={t("description", { appName })}
           metaType={this.props.metaType}
           metaImgPath={this.props.metaImgPath}
           metaImgAlt={this.props.metaImgAlt}
           metaTwitterCardType={this.props.metaTwitterCardType}
         />
 
-        <AuthLayout title={t("form.heading")}>
+        <AuthLayout title={t("form.heading", { appName })}>
           <div className={styles.main}>
             <LoginForm />
           </div>

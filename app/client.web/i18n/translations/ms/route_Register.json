@@ -1,5 +1,13 @@
 {
 	"description": "Daftar untuk {{appName}}",
+	"form": {
+		"agree-to-tos-label": "Saya bersetuju dengan Terma dan Syarat",
+		"confirm-password-label": "Masukkan semula Kata Laluan",
+		"email-label": "E-mel",
+		"password-label": "Kata laluan",
+		"register-action": "Daftar",
+		"username-label": "Nama pengguna"
+	},
 	"form-heading": "Daftar",
 	"title": "Daftar"
 }

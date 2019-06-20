@@ -17,6 +17,11 @@
 
 .header {
   padding: 1em 1.7em !important;
+  text-align: center;
+
+  & h1 {
+    font-weight: 400;
+  }
 }
 
 .content {

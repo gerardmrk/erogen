@@ -1,7 +1,8 @@
 {
 	"description": "Войдите в {{appName}}",
 	"form": {
-		"heading": "Авторизоваться",
+		"forgot-password": "Забыли пароль?",
+		"heading": "Войдите в {{appName}}",
 		"login-action": "Авторизоваться",
 		"password-label": "пароль",
 		"remember-label": "Запомни меня",

@@ -1,7 +1,6 @@
 @import "~@client/views/styles.mixins.scss";
 
 .main {
-  @include fp(width, 280, 310);
-  // @include fp(height, 300, 420);
+  @include fp(width, 300, 350);
   @include fp(padding, 7, 12);
 }

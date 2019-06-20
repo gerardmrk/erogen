@@ -2,7 +2,6 @@ import * as React from "react";
 import Card from "@client/views/components/ui.views/Card";
 import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
-import AuthNavs from "./AuthNavs";
 
 type Props = LocalProps & StoreProps & DispatchProps;
 
@@ -21,10 +20,7 @@ export class AuthLayout extends React.PureComponent<Props, State> {
             </Card.Content>
 
             <Card.Content>
-              <div className={styles.content}>
-                {this.props.children}
-                <AuthNavs />
-              </div>
+              <div className={styles.content}>{this.props.children}</div>
             </Card.Content>
           </Card>
         </div>

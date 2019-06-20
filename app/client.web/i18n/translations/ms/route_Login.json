@@ -1,7 +1,8 @@
 {
 	"description": "Masuk ke {{appName}}",
 	"form": {
-		"heading": "Log masuk",
+		"forgot-password": "Lupa kata laluan?",
+		"heading": "Masuk ke {{appName}}",
 		"login-action": "Log masuk",
 		"password-label": "Kata laluan",
 		"remember-label": "Ingat saya",

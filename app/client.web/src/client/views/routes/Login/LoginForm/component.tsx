@@ -5,6 +5,7 @@ import Button from "@client/views/components/ui.elements/Button";
 import Checkbox from "@client/views/components/ui.modules/Checkbox";
 import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
+import NavLink from "@client/views/components/EnhancedNavLink";
 
 type Props = LocalProps & StoreProps & DispatchProps;
 
@@ -45,29 +46,31 @@ export class LoginForm extends React.PureComponent<Props, State> {
     return (
       <Form className={styles.main}>
         <Form.Field widths={"equal"}>
-          <label>
-            <span>{this.props.t("form.username-label")}</span>
-            <Input
-              fluid={true}
-              type={"text"}
-              autoComplete={"username"}
-              value={this.state.alias}
-              onChange={this.onAliasChange}
-            />
+          <label htmlFor={"login-alias"}>
+            {this.props.t("form.username-label")}
           </label>
+          <Input
+            fluid={true}
+            type={"text"}
+            id={"login-alias"}
+            autoComplete={"username"}
+            value={this.state.alias}
+            onChange={this.onAliasChange}
+          />
         </Form.Field>
 
         <Form.Field widths={"equal"}>
-          <label>
-            <span>{this.props.t("form.password-label")}</span>
-            <Input
-              fluid={true}
-              type={"password"}
-              autoComplete={"current-password"}
-              value={this.state.password}
-              onChange={this.onPasswordChange}
-            />
+          <label htmlFor={"login-password"}>
+            {this.props.t("form.password-label")}
           </label>
+          <Input
+            fluid={true}
+            type={"password"}
+            id={"login-password"}
+            autoComplete={"current-password"}
+            value={this.state.password}
+            onChange={this.onPasswordChange}
+          />
         </Form.Field>
 
         <Form.Field className={styles.actions}>
@@ -76,11 +79,14 @@ export class LoginForm extends React.PureComponent<Props, State> {
             checked={this.state.remember}
             onChange={this.onRememberChange}
           />
-          <Button
-            floated={"right"}
-            type={"submit"}
-            onClick={this.onLoginSubmit}
-          >
+
+          <NavLink to={"/forgot-password"}>
+            {this.props.t("form.forgot-password")}
+          </NavLink>
+        </Form.Field>
+
+        <Form.Field widths={"equal"}>
+          <Button fluid={true} type={"submit"} onClick={this.onLoginSubmit}>
             {this.props.t("form.login-action")}
           </Button>
         </Form.Field>

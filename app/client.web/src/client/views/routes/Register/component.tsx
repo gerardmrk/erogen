@@ -3,7 +3,7 @@ import styles from "./component.styles.scss";
 import AuthLayout from "@client/views/core/AuthLayout";
 import { LocalProps } from ".";
 import HeadTags from "@client/views/components/HeadTags";
-import Input from "@client/views/components/ui.elements/Input";
+import RegisterForm from "./RegisterForm";
 
 type Props = LocalProps;
 
@@ -27,7 +27,7 @@ export class Register extends React.PureComponent<Props, State> {
 
         <AuthLayout title={this.props.t("form-heading")}>
           <div className={styles.main}>
-            <Input type={"text"} />
+            <RegisterForm />
           </div>
         </AuthLayout>
       </React.Fragment>

@@ -1,3 +1,6 @@
+@import "~@client/views/styles.mixins.scss";
+
 .main {
-  background-color: #fff;
+  @include fp(width, 300, 350);
+  @include fp(padding, 7, 12);
 }

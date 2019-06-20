@@ -1,5 +1,13 @@
 {
 	"description": "注册 {{appName}}",
+	"form": {
+		"agree-to-tos-label": "我同意这条款和条件",
+		"confirm-password-label": "重新输入密码",
+		"email-label": "电子邮件",
+		"password-label": "密码",
+		"register-action": "注册",
+		"username-label": "用户名"
+	},
 	"form-heading": "寄存器",
 	"title": "寄存器"
 }

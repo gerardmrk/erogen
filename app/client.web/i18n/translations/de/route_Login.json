@@ -1,7 +1,8 @@
 {
 	"description": "Bei {{appName}}anmelden",
 	"form": {
-		"heading": "Anmeldung",
+		"forgot-password": "Passwort vergessen?",
+		"heading": "Bei {{appName}}anmelden",
 		"login-action": "Anmeldung",
 		"password-label": "Passwort",
 		"remember-label": "Erinnere dich an mich",

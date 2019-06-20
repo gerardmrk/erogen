@@ -3,20 +3,23 @@
 const SNAPSHOT_ENABLED = true;
 
 import * as React from "react";
-import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer";
+import { ReactTestRenderer, ReactTestInstance } from "react-test-renderer"; // prettier-ignore
 import { createRenderer } from "@client/views/__fixtures__/create-renderer";
-import { NavLink } from "./component";
 
-const Component = NavLink;
+import { RegisterForm } from "./component";
+import { withTranslationMock } from "@client/views/__fixtures__/withtranslation-mock";
 
-describe("<NavLink/>", () => {
+const Component = withTranslationMock()(RegisterForm);
+
+describe("<RegisterForm/>", () => {
   let renderer: ReactTestRenderer;
   let component: ReactTestInstance;
 
   beforeEach(async () => {
-    renderer = await createRenderer()(<Component path={"/"} label={"Home"} />);
+    renderer = await createRenderer()(<Component />);
     component = renderer.getInstance() as ReactTestInstance;
-    await (component as any).componentDidMount();});
+    await (component as any).componentDidMount();
+  });
 
   if (SNAPSHOT_ENABLED) {
     test("snapshot", () => {

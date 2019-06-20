@@ -1,7 +1,8 @@
 {
 	"description": " {{appName}}में साइन इन करें",
 	"form": {
-		"heading": "लॉग इन करें",
+		"forgot-password": "पासवर्ड भूल गए?",
+		"heading": " {{appName}}में साइन इन करें",
 		"login-action": "लॉग इन करें",
 		"password-label": "पारण शब्द",
 		"remember-label": "मुझे याद रखना",

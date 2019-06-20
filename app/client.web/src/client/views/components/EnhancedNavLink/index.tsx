@@ -1,8 +1,13 @@
 import { State, Dispatcher } from "@client/store";
 import { EnhancedNavLink } from "./component";
 import { connect } from "react-redux";
+import { withRouter, RouteComponentProps } from "react-router";
+import { NavLinkProps } from "react-router-dom";
 
-export type LocalProps = {};
+export type LocalProps = RouteComponentProps &
+  NavLinkProps & {
+    disableActiveStyle?: boolean;
+  };
 
 export type StoreProps = {
   appHasUpdates: boolean;
@@ -19,7 +24,9 @@ const mapDispatchToProps = (
   localProps: LocalProps,
 ): DispatchProps => ({});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(EnhancedNavLink);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(EnhancedNavLink),
+);

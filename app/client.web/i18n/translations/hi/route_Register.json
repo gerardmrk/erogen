@@ -1,5 +1,13 @@
 {
 	"description": " {{appName}}के लिए साइन अप करें",
+	"form": {
+		"agree-to-tos-label": "मैं नियमों और शर्तों से सहमत हु",
+		"confirm-password-label": "पासवर्ड फिर से दर्ज करें",
+		"email-label": "ईमेल",
+		"password-label": "पारण शब्द",
+		"register-action": "साइन अप करें",
+		"username-label": "उपयोगकर्ता नाम"
+	},
 	"form-heading": "रजिस्टर",
 	"title": "रजिस्टर"
 }

@@ -1,7 +1,8 @@
 {
 	"description": "Connectez-vous à {{appName}}",
 	"form": {
-		"heading": "S'identifier",
+		"forgot-password": "Mot de passe oublié?",
+		"heading": "Connectez-vous à {{appName}}",
 		"login-action": "S'identifier",
 		"password-label": "Mot de passe",
 		"remember-label": "Souviens-toi de moi",

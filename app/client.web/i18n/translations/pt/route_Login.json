@@ -1,7 +1,8 @@
 {
 	"description": "Faça login em {{appName}}",
 	"form": {
-		"heading": "Entrar",
+		"forgot-password": "Esqueceu a senha?",
+		"heading": "Faça login em {{appName}}",
 		"login-action": "Entrar",
 		"password-label": "Senha",
 		"remember-label": "Lembre de mim",

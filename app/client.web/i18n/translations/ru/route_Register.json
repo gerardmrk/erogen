@@ -1,5 +1,13 @@
 {
 	"description": "Подписаться на {{appName}}",
+	"form": {
+		"agree-to-tos-label": "Я согласен с Условиями использования",
+		"confirm-password-label": "Повторно введите пароль",
+		"email-label": "Эл. адрес",
+		"password-label": "пароль",
+		"register-action": "Подписаться",
+		"username-label": "имя пользователя"
+	},
 	"form-heading": "регистр",
 	"title": "регистр"
 }

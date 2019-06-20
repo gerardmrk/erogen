@@ -10,9 +10,18 @@ describe("<EnhancedNavLink/>", () => {
   let component: ReactTestInstance;
 
   beforeEach(async () => {
-    renderer = await createRenderer()(<Component appHasUpdates={false} to={"/"} />);
+    renderer = await createRenderer()(
+      <Component
+        appHasUpdates={false}
+        to={"/"}
+        match={{} as any}
+        location={{ pathname: "", state: {}, search: "", hash: "" }}
+        history={{} as any}
+      />,
+    );
     component = renderer.getInstance() as ReactTestInstance;
-    await (component as any).componentDidMount();});
+    await (component as any).componentDidMount();
+  });
 
   it("renders ok", () => {
     expect(component).toBeDefined();
