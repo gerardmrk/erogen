@@ -7,12 +7,8 @@
 			"settings": "Settings"
 		},
 		"public": {
-			"blog": "Blog",
-			"docs": "Documentation",
 			"login": "Login",
-			"product": "Product",
-			"register": "Register",
-			"support": "Support"
+			"register": "Register"
 		}
 	}
 }

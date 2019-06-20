@@ -68,43 +68,6 @@ export const routeConfs: RouteConf[] = [
     component: loadable(() => import("@client/views/routes/Dashboard")),
   },
   {
-    path: "/about/product",
-    exact: true,
-    guarded: false,
-    prerender: true,
-    component: loadable(() => import("@client/views/routes/Product")),
-  },
-  {
-    path: "/blog",
-    exact: false,
-    guarded: false,
-    prerender: true,
-    component: loadable(() => import("@client/views/routes/Blog")),
-    routes: [
-      {
-        path: "/blog/:post",
-        exact: true,
-        guarded: false,
-        prerender: false,
-        component: loadable(() => import("@client/views/routes/BlogPost")),
-      },
-    ],
-  },
-  {
-    path: "/documentation",
-    exact: true,
-    guarded: false,
-    prerender: true,
-    component: loadable(() => import("@client/views/routes/Documentation")),
-  },
-  {
-    path: "/support",
-    exact: true,
-    guarded: false,
-    prerender: true,
-    component: loadable(() => import("@client/views/routes/Support")),
-  },
-  {
     path: "/register",
     exact: true,
     guarded: false,

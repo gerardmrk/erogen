@@ -7,12 +7,8 @@
 			"settings": "Definições"
 		},
 		"public": {
-			"blog": "Blog",
-			"docs": "Documentação",
 			"login": "Entrar",
-			"product": "produtos",
-			"register": "registo",
-			"support": "Apoio, suporte"
+			"register": "registo"
 		}
 	}
 }

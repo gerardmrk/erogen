@@ -7,12 +7,8 @@
 			"settings": "设置"
 		},
 		"public": {
-			"blog": "博客",
-			"docs": "文档",
 			"login": "登录",
-			"product": "产品",
-			"register": "寄存器",
-			"support": "支持"
+			"register": "寄存器"
 		}
 	}
 }

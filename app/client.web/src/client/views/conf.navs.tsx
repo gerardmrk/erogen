@@ -5,25 +5,6 @@ export type NavConf = {
   icon?: React.ReactElement;
 };
 
-export const headerNavsPublic = [
-  {
-    label: "navs.public.product",
-    to: "/about/product",
-  },
-  {
-    label: "navs.public.blog",
-    to: "/blog",
-  },
-  {
-    label: "navs.public.docs",
-    to: "/documentation",
-  },
-  {
-    label: "navs.public.support",
-    to: "/support",
-  },
-];
-
 export const headerNavsPrivate = [
   {
     label: "navs.private.dashboard",
@@ -41,7 +22,7 @@ export const authNavs = [
     to: "/register",
   },
   {
-    label: "navs.reset-password",
-    to: "/reset-password",
+    label: "navs.forgot-password",
+    to: "/forgot-password",
   },
 ];

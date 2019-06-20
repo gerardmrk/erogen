@@ -10,8 +10,9 @@
 }
 
 .container {
-  @include fp(width, 300, 420);
-  @include fp(min-height, 300, 420);
+  background-color: inherit;
+  // @include fp(min-width, 300, 420);
+  // @include fp(min-height, 300, 420);
 }
 
 .header {
@@ -19,5 +20,5 @@
 }
 
 .content {
-  @include fp(padding, 8, 14);
+  // @include fp(padding, 8, 14);
 }
