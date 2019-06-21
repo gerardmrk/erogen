@@ -3,6 +3,7 @@ import Form from "@client/views/components/ui-collections/Form";
 import Input from "@client/views/components/ui-elements/Input";
 import Button from "@client/views/components/ui-elements/Button";
 import Checkbox from "@client/views/components/ui-modules/Checkbox";
+import Message from "@client/views/components/ui-collections/Message";
 import styles from "./component.styles.scss";
 import { LocalProps, StoreProps, DispatchProps } from ".";
 
@@ -11,34 +12,41 @@ type Props = LocalProps & StoreProps & DispatchProps;
 type State = {
   // form fields
   username: string;
-  usernameTouched: boolean;
-  usernameError: string | undefined;
+  usernameError: TKey | undefined;
 
   email: string;
-  emailTouched: boolean;
-  emailError: string | undefined;
+  emailError: TKey | undefined;
 
   password: string;
-  passwordTouched: boolean;
-  passwordError: string | undefined;
+  passwordError: TKey | undefined;
 
   confirmPassword: string;
-  confirmPasswordTouched: boolean;
-  confirmPasswordError: string | undefined;
+  confirmPasswordError: TKey | undefined;
 
   agreeToTOS: boolean;
-  agreeToTOSTouched: boolean;
-  agreeToTOSError: string | undefined;
+  agreeToTOSError: TKey | undefined;
 
   // meta
   loading: boolean;
   showAllErrors: boolean;
-  registerError: string | undefined;
+  registerError: TKey | undefined;
   registerSuccess: boolean;
 };
 
 // prettier-ignore
 export class RegisterForm extends React.Component<Props, State> {
+  private usernameDirty = false;
+  private usernameTouched = false;
+  private emailDirty = false;
+  private emailTouched = false;
+  private passwordDirty = false;
+  private passwordTouched = false;
+  private confirmPasswordDirty = false;
+  private confirmPasswordTouched = false;
+  private agreeToTOSDirty = false;
+  private agreeToTOSTouched = false;
+
+
   public state = {
     username: "",
     usernameTouched: false,
@@ -66,6 +74,10 @@ export class RegisterForm extends React.Component<Props, State> {
     registerSuccess: false,
   };
 
+  public componentDidUpdate() {
+
+  }
+
   private onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ username: e.currentTarget.value });
   };
@@ -88,14 +100,14 @@ export class RegisterForm extends React.Component<Props, State> {
 
   private onUsernameBlur = () => {
     this.setState({
-      usernameTouched: true,
+      usernameTouched: this.state.username !== "",
       usernameError: validateUsername(this.state.username),
     });
   }
 
   private onEmailBlur = () => {
     this.setState({
-      emailTouched: true,
+      emailTouched: this.state.email !== "",
       emailError: validateEmail(this.state.email),
     });
   }
@@ -156,7 +168,7 @@ export class RegisterForm extends React.Component<Props, State> {
     }
 
     return (
-      <Form className={styles.main} loading={this.state.loading}>
+      <Form className={styles.main} loading={this.state.loading} error={this.state.showAllErrors}>
         <Form.Field widths={"equal"}>
           <label htmlFor={"register-username"}>
             {this.props.t("form.username-label")}
@@ -169,8 +181,9 @@ export class RegisterForm extends React.Component<Props, State> {
             value={this.state.username}
             onChange={this.onUsernameChange}
             onBlur={this.onUsernameBlur}
-            error={!!this.state.usernameError}
+            error={!!this.state.usernameError && this.state.usernameTouched}
           />
+          <Message size={'mini'} error={true} content={this.state.usernameError} />
         </Form.Field>
 
         <Form.Field widths={"equal"}>
@@ -185,8 +198,9 @@ export class RegisterForm extends React.Component<Props, State> {
             value={this.state.email}
             onChange={this.onEmailChange}
             onBlur={this.onEmailBlur}
-            error={!!this.state.emailError}
+            error={!!this.state.emailError && this.state.emailTouched}
           />
+          <Message size={'mini'} error={true} content={this.state.emailError} />
         </Form.Field>
 
         <Form.Field widths={"equal"}>
@@ -201,7 +215,7 @@ export class RegisterForm extends React.Component<Props, State> {
             value={this.state.password}
             onChange={this.onPasswordChange}
             onBlur={this.onPasswordBlur}
-            error={!!this.state.passwordError}
+            error={!!this.state.passwordError && this.state.passwordTouched}
           />
         </Form.Field>
 
@@ -217,16 +231,17 @@ export class RegisterForm extends React.Component<Props, State> {
             value={this.state.confirmPassword}
             onChange={this.onConfirmPasswordChange}
             onBlur={this.onConfirmPasswordBlur}
-            error={!!this.state.confirmPasswordError}
+            error={!!this.state.confirmPasswordError && this.state.confirmPasswordTouched}
           />
         </Form.Field>
 
         <Form.Field className={styles.actions}>
-          <Checkbox
+          <Form.Checkbox
             checked={this.state.agreeToTOS}
             onChange={this.onAgreeToTosChange}
             onBlur={this.onAgreeToTOSBlur}
             label={this.props.t("form.agree-to-tos-label")}
+            error={!!this.state.agreeToTOSError && this.state.agreeToTOSTouched}
           />
         </Form.Field>
 
