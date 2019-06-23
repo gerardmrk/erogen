@@ -3,10 +3,18 @@
 	"form": {
 		"agree-to-tos-label": "I agree to the Terms and Conditions",
 		"confirm-password-label": "Re-enter Password",
+		"confirm-password-non-matching": "Passwords do not match.",
+		"confirm-password-required": "Please re-type the password.",
+		"email-invalid": "Please provide a valid email address.",
 		"email-label": "Email",
+		"password-invalid-chars": "Password must include at least 1 numeric digit.",
+		"password-invalid-length": "Please enter a password with {{min}} or more characters.",
 		"password-label": "Password",
 		"register-action": "Sign Up",
-		"username-label": "Username"
+		"username-invalid-chars": "Username can only contain alphanumeric characters.",
+		"username-invalid-length": "Username cannot be longer than {{max}} characters.",
+		"username-label": "Username",
+		"username-required": "Please enter a username."
 	},
 	"form-heading": "Register",
 	"title": "Register"

@@ -3,10 +3,18 @@
 	"form": {
 		"agree-to-tos-label": "J'accepte les termes et conditions",
 		"confirm-password-label": "Retaper le mot de passe",
+		"confirm-password-non-matching": "Les mots de passe ne correspondent pas.",
+		"confirm-password-required": "Veuillez ressaisir le mot de passe.",
+		"email-invalid": "Veuillez fournir une adresse email valide.",
 		"email-label": "Email",
+		"password-invalid-chars": "Le mot de passe doit inclure au moins 1 chiffre.",
+		"password-invalid-length": "Veuillez entrer un mot de passe avec {{min}} ou plusieurs caractères.",
 		"password-label": "Mot de passe",
 		"register-action": "S'inscrire",
-		"username-label": "Nom d'utilisateur"
+		"username-invalid-chars": "Le nom d'utilisateur ne peut contenir que des caractères alphanumériques.",
+		"username-invalid-length": "Le nom d'utilisateur ne peut pas contenir plus de {{max}} caractères.",
+		"username-label": "Nom d'utilisateur",
+		"username-required": "Merci d'entrer un nom d'utilisateur."
 	},
 	"form-heading": "registre",
 	"title": "registre"

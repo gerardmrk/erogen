@@ -3,10 +3,18 @@
 	"form": {
 		"agree-to-tos-label": "我同意这条款和条件",
 		"confirm-password-label": "重新输入密码",
+		"confirm-password-non-matching": "密码不匹配。",
+		"confirm-password-required": "请重新输入密码。",
+		"email-invalid": "请提供一个有效的电子邮件地址。",
 		"email-label": "电子邮件",
+		"password-invalid-chars": "密码必须包含至少1个数字。",
+		"password-invalid-length": "请输入包含 {{min}} 个或更多字符的密码。",
 		"password-label": "密码",
 		"register-action": "注册",
-		"username-label": "用户名"
+		"username-invalid-chars": "用户名只能包含字母数字字符。",
+		"username-invalid-length": "用户名不能超过 {{max}} 个字符。",
+		"username-label": "用户名",
+		"username-required": "请填入一个用户名。"
 	},
 	"form-heading": "寄存器",
 	"title": "寄存器"

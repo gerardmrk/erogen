@@ -3,10 +3,18 @@
 	"form": {
 		"agree-to-tos-label": "Estoy de acuerdo con los términos y condiciones",
 		"confirm-password-label": "Escriba la contraseña otra vez",
+		"confirm-password-non-matching": "Las contraseñas no coinciden.",
+		"confirm-password-required": "Por favor, vuelva a escribir la contraseña.",
+		"email-invalid": "Por favor ingrese su dirección de correo electrónico válida.",
 		"email-label": "Email",
+		"password-invalid-chars": "La contraseña debe incluir al menos 1 dígito numérico.",
+		"password-invalid-length": "Por favor ingrese una contraseña con {{min}} o más caracteres.",
 		"password-label": "Contraseña",
 		"register-action": "Regístrate",
-		"username-label": "Nombre de usuario"
+		"username-invalid-chars": "El nombre de usuario solo puede contener caracteres alfanuméricos.",
+		"username-invalid-length": "El nombre de usuario no puede tener más de {{max}} caracteres.",
+		"username-label": "Nombre de usuario",
+		"username-required": "Por favor, ingrese un nombre de usuario."
 	},
 	"form-heading": "Registro",
 	"title": "Registro"

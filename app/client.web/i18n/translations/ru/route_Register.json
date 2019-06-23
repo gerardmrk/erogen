@@ -3,10 +3,18 @@
 	"form": {
 		"agree-to-tos-label": "Я согласен с Условиями использования",
 		"confirm-password-label": "Повторно введите пароль",
+		"confirm-password-non-matching": "Пароли не совпадают.",
+		"confirm-password-required": "Пожалуйста, введите пароль еще раз.",
+		"email-invalid": "Пожалуйста, укажите действующий адрес электронной почты.",
 		"email-label": "Эл. адрес",
+		"password-invalid-chars": "Пароль должен содержать не менее 1 цифры.",
+		"password-invalid-length": "Пожалуйста, введите пароль с {{min}} или более символами.",
 		"password-label": "пароль",
 		"register-action": "Подписаться",
-		"username-label": "имя пользователя"
+		"username-invalid-chars": "Имя пользователя может содержать только буквенно-цифровые символы.",
+		"username-invalid-length": "Имя пользователя не может быть длиннее {{max}} символов.",
+		"username-label": "имя пользователя",
+		"username-required": "Пожалуйста введите имя пользователя."
 	},
 	"form-heading": "регистр",
 	"title": "регистр"

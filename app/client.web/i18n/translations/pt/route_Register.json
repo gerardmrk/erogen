@@ -3,10 +3,18 @@
 	"form": {
 		"agree-to-tos-label": "Eu concordo com os Termos e Condições",
 		"confirm-password-label": "Digite novamente a senha",
+		"confirm-password-non-matching": "As senhas não coincidem.",
+		"confirm-password-required": "Por favor, digite novamente a senha.",
+		"email-invalid": "Por favor, forneça um endereço de e-mail válido.",
 		"email-label": "O email",
+		"password-invalid-chars": "A senha deve incluir pelo menos 1 dígito numérico.",
+		"password-invalid-length": "Por favor, digite uma senha com {{min}} ou mais caracteres.",
 		"password-label": "Senha",
 		"register-action": "Inscrever-se",
-		"username-label": "Nome de usuário"
+		"username-invalid-chars": "O nome de usuário pode conter apenas caracteres alfanuméricos.",
+		"username-invalid-length": "O nome de usuário não pode ter mais de {{max}} caracteres.",
+		"username-label": "Nome de usuário",
+		"username-required": "Por favor coloque um nome de usuário."
 	},
 	"form-heading": "registo",
 	"title": "registo"

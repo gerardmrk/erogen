@@ -3,10 +3,18 @@
 	"form": {
 		"agree-to-tos-label": "Saya bersetuju dengan Terma dan Syarat",
 		"confirm-password-label": "Masukkan semula Kata Laluan",
+		"confirm-password-non-matching": "Kata laluan tidak sepadan.",
+		"confirm-password-required": "Sila taip semula kata laluan.",
+		"email-invalid": "Sila berikan alamat e-mel yang sah.",
 		"email-label": "E-mel",
+		"password-invalid-chars": "Kata laluan mesti mengandungi sekurang-kurangnya 1 digit angka.",
+		"password-invalid-length": "Sila masukkan kata laluan dengan {{min}} atau lebih aksara.",
 		"password-label": "Kata laluan",
 		"register-action": "Daftar",
-		"username-label": "Nama pengguna"
+		"username-invalid-chars": "Nama pengguna hanya boleh mengandungi aksara abjad angka.",
+		"username-invalid-length": "Nama pengguna tidak boleh melebihi {{max}} aksara.",
+		"username-label": "Nama pengguna",
+		"username-required": "Sila masukkan nama pengguna."
 	},
 	"form-heading": "Daftar",
 	"title": "Daftar"

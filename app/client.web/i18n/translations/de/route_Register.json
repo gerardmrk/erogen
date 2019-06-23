@@ -3,10 +3,18 @@
 	"form": {
 		"agree-to-tos-label": "Ich stimme den AGB zu",
 		"confirm-password-label": "Kennwort erneut eingeben",
+		"confirm-password-non-matching": "Passwörter stimmen nicht überein.",
+		"confirm-password-required": "Bitte geben Sie das Passwort erneut ein.",
+		"email-invalid": "Bitte geben Sie eine gültige E-Mail Adresse an.",
 		"email-label": "Email",
+		"password-invalid-chars": "Das Passwort muss mindestens eine Ziffer enthalten.",
+		"password-invalid-length": "Bitte geben Sie ein Passwort mit {{min}} oder mehr Zeichen ein.",
 		"password-label": "Passwort",
 		"register-action": "Anmelden",
-		"username-label": "Nutzername"
+		"username-invalid-chars": "Der Benutzername darf nur alphanumerische Zeichen enthalten.",
+		"username-invalid-length": "Der Benutzername darf nicht länger als {{max}} Zeichen sein.",
+		"username-label": "Nutzername",
+		"username-required": "Bitte geben Sie einen Benutzernamen ein."
 	},
 	"form-heading": "Registrieren",
 	"title": "Registrieren"
