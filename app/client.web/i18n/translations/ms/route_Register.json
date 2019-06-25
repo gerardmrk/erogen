@@ -14,7 +14,8 @@
 		"username-invalid-chars": "Nama pengguna hanya boleh mengandungi aksara abjad angka.",
 		"username-invalid-length": "Nama pengguna tidak boleh melebihi {{max}} aksara.",
 		"username-label": "Nama pengguna",
-		"username-required": "Sila masukkan nama pengguna."
+		"username-required": "Sila masukkan nama pengguna.",
+		"username-taken": "Nama pengguna sudah diambil."
 	},
 	"form-heading": "Daftar",
 	"title": "Daftar"

@@ -6,6 +6,7 @@ import {
 import { State, Dispatcher } from "@client/store";
 import { connect } from "react-redux";
 import { register } from "@client/store/state.auth/async.register";
+import { checkUsernameExists } from "@client/store/state.auth/async.checkUsernameExists";
 export type LocalProps = WithTranslation & {};
 
 export type StoreProps = {};
@@ -15,6 +16,7 @@ export type DispatchProps = {
     payload: { username: string; email: string; password: string },
     callback: (err: Error | null) => void,
   ) => void;
+  checkUsernameExists: (username: string) => Promise<boolean>;
 };
 
 const mapStateToProps = (state: State, localProps: LocalProps) => ({});
@@ -25,6 +27,16 @@ const mapDispatchToProps = (
 ): DispatchProps => ({
   register: (payload, callback) => {
     dispatch(register(payload, callback));
+  },
+  checkUsernameExists: username => {
+    return new Promise((resolve, reject) => {
+      dispatch(
+        checkUsernameExists(username, (err, exists) => {
+          if (err) return resolve(true);
+          return resolve(exists);
+        }),
+      );
+    });
   },
 });
 

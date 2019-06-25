@@ -77,4 +77,8 @@ export class AuthService implements IAuthService {
   ): Promise<void> {
     throw new Error("Method not implemented.");
   }
+
+  public async checkUsernameExists(username: string): Promise<boolean> {
+    throw new Error("Method not implemented.");
+  }
 }

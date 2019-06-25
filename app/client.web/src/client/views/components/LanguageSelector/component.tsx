@@ -25,7 +25,7 @@ export class LanguageSelector extends React.PureComponent<Props, State> {
     const options = this.props.config.app.supportedLanguages.map(
       ([code, lang]) => ({
         key: code,
-        text: this.props.t(`languages.${code}`),
+        text: lang,
         value: code,
       }),
     );

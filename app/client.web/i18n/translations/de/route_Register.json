@@ -14,7 +14,8 @@
 		"username-invalid-chars": "Der Benutzername darf nur alphanumerische Zeichen enthalten.",
 		"username-invalid-length": "Der Benutzername darf nicht länger als {{max}} Zeichen sein.",
 		"username-label": "Nutzername",
-		"username-required": "Bitte geben Sie einen Benutzernamen ein."
+		"username-required": "Bitte geben Sie einen Benutzernamen ein.",
+		"username-taken": "Benutzername ist bereits vergeben."
 	},
 	"form-heading": "Registrieren",
 	"title": "Registrieren"

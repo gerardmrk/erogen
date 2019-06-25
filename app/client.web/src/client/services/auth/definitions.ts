@@ -27,6 +27,8 @@ export interface IAuthService {
   changePassword(currentPassword: string, newPassword: string): Promise<void>;
 
   answerSecurityQuestion(questionId: string, answer: string): Promise<void>;
+
+  checkUsernameExists(username: string): Promise<boolean>;
 }
 
 export interface BaseAuthResp {

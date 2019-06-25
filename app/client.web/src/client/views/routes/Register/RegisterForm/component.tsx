@@ -10,20 +10,26 @@ type Props = LocalProps & StoreProps & DispatchProps;
 type State = {
   // form fields
   username: string;
+  usernameError: string | undefined;
+  usernameLoading: boolean;
 
   email: string;
+  emailError: string | undefined;
 
   password: string;
+  passwordError: string | undefined;
 
   confirmPassword: string;
+  confirmPasswordError: string | undefined;
 
   agreeToTOS: boolean;
+  agreeToTOSError: string | undefined;
 
   // meta
   loading: boolean;
-  isFormValid: boolean;
   forceDisplayErrors: boolean;
   registerSuccess: boolean;
+  registerError: string | undefined;
 };
 
 const USERNAME_REGEX = /^[a-zA-Z0-9_-]*$/;
@@ -34,62 +40,79 @@ const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"
 export class RegisterForm extends React.Component<Props, State> {
   public state = {
     username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    agreeToTOS: false,
+    usernameError: undefined,
+    usernameLoading: false,
 
-    loading: false,
-    isFormValid: true,
+    email: "",
+    emailError: undefined,
+
+    password: "",
+    passwordError: undefined,
+
+    confirmPassword: "",
+    confirmPasswordError: undefined,
+
+    agreeToTOS: false,
+    agreeToTOSError: undefined,
+
+    loading: true,
     forceDisplayErrors: false,
 
     registerError: undefined,
     registerSuccess: false,
   };
 
-  public componentDidMount() {
-
+  public async componentDidUpdate(prevProps: Props) {
+    if (!prevProps.tReady && this.props.tReady) {
+      this.setState({ loading: false });
+    }
   }
 
-  private onUsernameChange = (value: string, isValid: boolean) => {
+  private onUsernameChange = async (value: string) => {
     this.setState({
       username: value,
-      isFormValid: this.state.isFormValid && isValid,
+      usernameLoading: true
+    }, async () => {
+      this.setState({
+        usernameError: await this.validateUsername(value),
+        usernameLoading: false,
+      })
     });
   };
 
-  private onEmailChange = (value: string, isValid: boolean) => {
+  private onEmailChange = (value: string) => {
     this.setState({
       email: value,
-      isFormValid: this.state.isFormValid && isValid,
+      emailError: this.validateEmail(value),
     });
   };
 
-  private onPasswordChange = (value: string, isValid: boolean) => {
+  private onPasswordChange = (value: string) => {
     this.setState({
       password: value,
-      isFormValid: this.state.isFormValid && isValid,
+      passwordError: this.validatePassword(value),
     });
   };
 
-  private onConfirmPasswordChange = (value: string, isValid: boolean) => {
+  private onConfirmPasswordChange = (value: string) => {
     this.setState({
       confirmPassword: value,
-      isFormValid: this.state.isFormValid && isValid,
+      confirmPasswordError: this.validateConfirmPassword(value),
     });
   };
 
   private onAgreeToTosChange = () => {
     this.setState({
       agreeToTOS: !this.state.agreeToTOS,
-      isFormValid: this.state.isFormValid && this.state.agreeToTOS,
+      agreeToTOSError: this.validateAgreeToTOS(!this.state.agreeToTOS),
     });
   };
 
-  private validateUsername = (value: string) => {
+  private validateUsername = async (value: string) => {
     if (value === "") return this.props.t("form.username-required");
     if (!USERNAME_REGEX.test(value)) return this.props.t("form.username-invalid-chars");
     if (value.length > 35) return this.props.t("form.username-invalid-length", { max: 35 });
+    if (await this.props.checkUsernameExists(value)) return this.props.t("form.username-taken");
     return undefined;
   }
 
@@ -115,33 +138,24 @@ export class RegisterForm extends React.Component<Props, State> {
     return undefined;
   }
 
-  private onRegisterSubmit = () => {
-    if (!this.state.isFormValid) {
+  private onRegisterSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (this.state.usernameError) {
       return this.setState({ forceDisplayErrors: true });
     }
-    // if (
-    //   !!this.state.usernameError ||
-    //   !!this.state.emailError ||
-    //   !!this.state.passwordError ||
-    //   !!this.state.confirmPasswordError ||
-    //   !!this.state.agreeToTOSError
-    // ) {
-    //   return this.setState({ forceDisplayErrors: true });
-    // }
     
-    // this.setState({ loading: true });
+    this.setState({ loading: true });
 
-    // this.props.register({
-    //   username: this.state.username,
-    //   email: this.state.email,
-    //   password: this.state.password,
-    // }, (err: Error | null) => {
-    //   this.setState({
-    //     loading: false,
-    //     registerSuccess: !err,
-    //     registerError: err ? err.message : undefined
-    //   });
-    // });
+    this.props.register({
+      username: this.state.username,
+      email: this.state.email,
+      password: this.state.password,
+    }, (err: Error | null) => {
+      this.setState({
+        loading: false,
+        registerSuccess: !err,
+        registerError: err ? err.message : undefined
+      });
+    });
   };
 
   public render() {
@@ -156,8 +170,9 @@ export class RegisterForm extends React.Component<Props, State> {
           id={'register-username'}
           autoComplete={"username"}
           label={this.props.t("form.username-label")}
-          disabled={!this.props.tReady}
-          validate={this.validateUsername}
+          error={this.state.usernameError}
+          loading={this.state.usernameLoading}
+          disabled={this.state.loading}
           onChange={this.onUsernameChange}
           forceDisplayError={this.state.forceDisplayErrors}
         />
@@ -167,8 +182,8 @@ export class RegisterForm extends React.Component<Props, State> {
           id={"register-email"}
           autoComplete={"email"}
           label={this.props.t("form.email-label")}
-          disabled={!this.props.tReady}
-          validate={this.validateEmail}
+          error={this.state.emailError}
+          disabled={this.state.loading}
           onChange={this.onEmailChange}
           forceDisplayError={this.state.forceDisplayErrors}
         />
@@ -178,8 +193,8 @@ export class RegisterForm extends React.Component<Props, State> {
           id={"register-password"}
           autoComplete={"new-password"}
           label={this.props.t("form.password-label")}
-          disabled={!this.props.tReady}
-          validate={this.validatePassword}
+          error={this.state.passwordError}
+          disabled={this.state.loading}
           onChange={this.onPasswordChange}
           forceDisplayError={this.state.forceDisplayErrors}
         />
@@ -189,8 +204,8 @@ export class RegisterForm extends React.Component<Props, State> {
           id={"register-confirm-password"}
           autoComplete={"new-password"}
           label={this.props.t("form.confirm-password-label")}
-          disabled={!this.props.tReady}
-          validate={this.validateConfirmPassword}
+          error={this.state.confirmPasswordError}
+          disabled={this.state.loading}
           onChange={this.onConfirmPasswordChange}
           forceDisplayError={this.state.forceDisplayErrors}
         />

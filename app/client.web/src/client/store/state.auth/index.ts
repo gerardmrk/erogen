@@ -126,4 +126,16 @@ export const reducer = createReducer<State, Action>(defaultState(), {
   ["auth.registerFailure"]: (state, action) => ({
     ...state,
   }),
+
+  ["auth.checkUsernameExistsPending"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.checkUsernameExistsSuccess"]: (state, action) => ({
+    ...state,
+  }),
+
+  ["auth.checkUsernameExistsFailure"]: (state, action) => ({
+    ...state,
+  }),
 });

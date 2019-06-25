@@ -158,3 +158,24 @@ export const checkVerificationCodeFailure = createAction(
     return resolve();
   },
 );
+
+export const checkUsernameExistsPending = createAction(
+  "auth.checkUsernameExistsPending",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const checkUsernameExistsSuccess = createAction(
+  "auth.checkUsernameExistsSuccess",
+  resolve => () => {
+    return resolve();
+  },
+);
+
+export const checkUsernameExistsFailure = createAction(
+  "auth.checkUsernameExistsFailure",
+  resolve => () => {
+    return resolve();
+  },
+);

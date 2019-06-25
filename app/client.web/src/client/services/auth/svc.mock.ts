@@ -67,38 +67,38 @@ export class MockAuthService implements IAuthService, IMock<MockAuthService> {
   }
 
   public async register(params: RegisterParams): Promise<void> {
-    throw new Error("Method not implemented.");
+    return;
   }
 
   public async verifyEmailVToken(userId: string, token: string): Promise<void> {
-    throw new Error("Method not implemented.");
+    return;
   }
 
   public async verifyMobileVCode(userId: string, code: string): Promise<void> {
-    throw new Error("Method not implemented.");
+    return;
   }
 
   public async verifyMFACode(code: string): Promise<void> {
-    throw new Error("Method not implemented.");
+    return;
   }
 
   public async enableMFA(): Promise<void> {
-    throw new Error("Method not implemented.");
+    return;
   }
 
   public async requestPasswordReset(email: string): Promise<void> {
-    throw new Error("Method not implemented.");
+    return;
   }
 
   public async verifyPasswordResetToken(
     userId: string,
     token: string,
   ): Promise<void> {
-    throw new Error("Method not implemented.");
+    return;
   }
 
   public async resetPassword(newPassword: string): Promise<void> {
-    throw new Error("Method not implemented.");
+    return;
   }
 
   public async changeEmail(
@@ -106,24 +106,28 @@ export class MockAuthService implements IAuthService, IMock<MockAuthService> {
     currentEmail: string,
     newEmail: string,
   ): Promise<void> {
-    throw new Error("Method not implemented.");
+    return;
   }
 
   public async changeOrAddMobile(newMobile: string): Promise<void> {
-    throw new Error("Method not implemented.");
+    return;
   }
 
   public async changePassword(
     currentPassword: string,
     newPassword: string,
   ): Promise<void> {
-    throw new Error("Method not implemented.");
+    return;
   }
 
   public async answerSecurityQuestion(
     questionId: string,
     answer: string,
   ): Promise<void> {
-    throw new Error("Method not implemented.");
+    return;
+  }
+
+  public async checkUsernameExists(username: string): Promise<boolean> {
+    return true;
   }
 }

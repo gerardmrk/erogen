@@ -14,7 +14,8 @@
 		"username-invalid-chars": "El nombre de usuario solo puede contener caracteres alfanuméricos.",
 		"username-invalid-length": "El nombre de usuario no puede tener más de {{max}} caracteres.",
 		"username-label": "Nombre de usuario",
-		"username-required": "Por favor, ingrese un nombre de usuario."
+		"username-required": "Por favor, ingrese un nombre de usuario.",
+		"username-taken": "Este nombre de usuario ya está tomado."
 	},
 	"form-heading": "Registro",
 	"title": "Registro"

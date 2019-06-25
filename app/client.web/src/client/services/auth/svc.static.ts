@@ -89,4 +89,9 @@ export class StaticAuthService implements IAuthService {
   ): Promise<void> {
     return;
   }
+
+  public async checkUsernameExists(username: string): Promise<boolean> {
+    await sleep(1000);
+    return false;
+  }
 }

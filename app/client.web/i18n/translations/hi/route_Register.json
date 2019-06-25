@@ -14,7 +14,8 @@
 		"username-invalid-chars": "उपयोगकर्ता नाम में केवल अल्फ़ान्यूमेरिक वर्ण हो सकते हैं।",
 		"username-invalid-length": "उपयोगकर्ता नाम {{max}} वर्णों से अधिक लंबा नहीं हो सकता।",
 		"username-label": "उपयोगकर्ता नाम",
-		"username-required": "कृपया उपयोगकर्तानाम डालें।"
+		"username-required": "कृपया उपयोगकर्तानाम डालें।",
+		"username-taken": "उपयोगकर्ता का नाम पहले से लिया है।"
 	},
 	"form-heading": "रजिस्टर",
 	"title": "रजिस्टर"

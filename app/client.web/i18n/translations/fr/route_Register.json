@@ -14,7 +14,8 @@
 		"username-invalid-chars": "Le nom d'utilisateur ne peut contenir que des caractères alphanumériques.",
 		"username-invalid-length": "Le nom d'utilisateur ne peut pas contenir plus de {{max}} caractères.",
 		"username-label": "Nom d'utilisateur",
-		"username-required": "Merci d'entrer un nom d'utilisateur."
+		"username-required": "Merci d'entrer un nom d'utilisateur.",
+		"username-taken": "Nom d'utilisateur déjà pris."
 	},
 	"form-heading": "registre",
 	"title": "registre"

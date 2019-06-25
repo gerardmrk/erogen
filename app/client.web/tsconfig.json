@@ -5,7 +5,15 @@
     "moduleResolution": "node",
     "module": "esnext",
     "target": "esnext",
-    "lib": ["dom", "scripthost", "es6", "es2017", "es2017.object"],
+    "lib": [
+      "dom",
+      "scripthost",
+      "es6",
+      "es2018",
+      "es2017.object",
+      "dom.iterable",
+      "es2015.iterable"
+    ],
     "jsx": "react",
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
