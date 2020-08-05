@@ -87,7 +87,7 @@
     "eslint-plugin-react": "^7.13.0",
     "extract-css-chunks-webpack-plugin": "^4.5.2",
     "faker": "^4.1.0",
-    "fastify": "^2.5.0",
+    "fastify": "^2.15.1",
     "fastify-helmet": "^3.0.0",
     "fastify-static": "^2.5.0",
     "fibers": "^4.0.1",
