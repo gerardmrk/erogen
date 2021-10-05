@@ -89,7 +89,7 @@
     "faker": "^4.1.0",
     "fastify": "^2.5.0",
     "fastify-helmet": "^3.0.0",
-    "fastify-static": "^2.5.0",
+    "fastify-static": "^4.2.4",
     "fibers": "^4.0.1",
     "file-loader": "^4.0.0",
     "gulp": "^4.0.2",
